@@ -5,3 +5,4 @@ src/com/android/launcher3/backup/BackupProtos.java
 src/com/fairphone/fplauncher3/backup/BackupProtos.java
 assets/crashlytics-build.properties
 res/values/com_crashlytics_export_strings.xml
+.settings/
