@@ -95,6 +95,11 @@ public class DynamicGrid {
         deviceProfiles.add(new DeviceProfile("20-inch Tablet",
                 1527, 2527,  7, 7,  100, 20,  7, 72, R.xml.default_workspace_4x4,
                 R.xml.default_workspace_4x4_no_all_apps));
+        
+        deviceProfiles.add(new DeviceProfile("FP1",
+                334.66666f, 614.667f, 5, 4,  DEFAULT_ICON_SIZE_DP, 13, (hasAA ? 5 : 5), 56, R.xml.default_workspace_4x4,
+                R.xml.default_workspace_4x4_no_all_apps));
+        
         mMinWidth = dpiFromPx(minWidthPx, dm);
         mMinHeight = dpiFromPx(minHeightPx, dm);
         mProfile = new DeviceProfile(context, deviceProfiles,

@@ -1263,14 +1263,11 @@ public class Workspace extends SmoothPagedView
             if (mCustomContentCallbacks != null) {
                 mCustomContentCallbacks.onShow(false);
                 mCustomContentShowTime = System.currentTimeMillis();
-                mLauncher.updateVoiceButtonProxyVisible(false);
             }
         } else if (hasCustomContent() && getNextPage() != 0 && mCustomContentShowing) {
             mCustomContentShowing = false;
             if (mCustomContentCallbacks != null) {
                 mCustomContentCallbacks.onHide();
-                mLauncher.resetQSBScroll();
-                mLauncher.updateVoiceButtonProxyVisible(false);
             }
         }
     }
@@ -2294,7 +2291,6 @@ public class Workspace extends SmoothPagedView
             }
         }
 
-        final View searchBar = mLauncher.getQsbBar();
         final View overviewPanel = mLauncher.getOverviewPanel();
         final View hotseat = mLauncher.getHotseat();
         final View pageIndicator = getPageIndicator();
@@ -2356,10 +2352,6 @@ public class Workspace extends SmoothPagedView
                 .alpha(finalHotseatAndPageIndicatorAlpha).withLayer();
             hotseatAlpha.addListener(new AlphaUpdateListener(hotseat));
 
-            Animator searchBarAlpha = new LauncherViewPropertyAnimator(searchBar)
-                .alpha(finalSearchBarAlpha).withLayer();
-            searchBarAlpha.addListener(new AlphaUpdateListener(searchBar));
-
             Animator overviewPanelAlpha = new LauncherViewPropertyAnimator(overviewPanel)
                 .alpha(finalOverviewPanelAlpha).withLayer();
             overviewPanelAlpha.addListener(new AlphaUpdateListener(overviewPanel));
@@ -2367,11 +2359,9 @@ public class Workspace extends SmoothPagedView
             // For animation optimations, we may need to provide the Launcher transition
             // with a set of views on which to force build layers in certain scenarios.
             hotseat.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-            searchBar.setLayerType(View.LAYER_TYPE_HARDWARE, null);
             overviewPanel.setLayerType(View.LAYER_TYPE_HARDWARE, null);
             if (layerViews != null) {
                 layerViews.add(hotseat);
-                layerViews.add(searchBar);
                 layerViews.add(overviewPanel);
             }
 
@@ -2388,11 +2378,9 @@ public class Workspace extends SmoothPagedView
             overviewPanelAlpha.setDuration(duration);
             pageIndicatorAlpha.setDuration(duration);
             hotseatAlpha.setDuration(duration);
-            searchBarAlpha.setDuration(duration);
 
             anim.play(overviewPanelAlpha);
             anim.play(hotseatAlpha);
-            anim.play(searchBarAlpha);
             anim.play(pageIndicatorAlpha);
             anim.setStartDelay(delay);
         } else {
@@ -2404,14 +2392,11 @@ public class Workspace extends SmoothPagedView
                 pageIndicator.setAlpha(finalHotseatAndPageIndicatorAlpha);
                 AlphaUpdateListener.updateVisibility(pageIndicator);
             }
-            searchBar.setAlpha(finalSearchBarAlpha);
-            AlphaUpdateListener.updateVisibility(searchBar);
             updateCustomContentVisibility();
             setScaleX(mNewScale);
             setScaleY(mNewScale);
             setTranslationY(finalWorkspaceTranslationY);
         }
-        mLauncher.updateVoiceButtonProxyVisible(false);
 
         if (stateIsNormal) {
             animateBackgroundGradient(0f, animated);

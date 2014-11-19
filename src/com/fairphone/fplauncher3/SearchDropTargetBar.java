@@ -38,12 +38,10 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
     private static final int sTransitionOutDuration = 175;
 
     private ObjectAnimator mDropTargetBarAnim;
-    private ObjectAnimator mQSBSearchBarAnim;
     private static final AccelerateInterpolator sAccelerateInterpolator =
             new AccelerateInterpolator();
 
     private boolean mIsSearchBarHidden;
-    private View mQSBSearchBar;
     private View mDropTargetBar;
     private ButtonDropTarget mInfoDropTarget;
     private ButtonDropTarget mDeleteDropTarget;
@@ -70,14 +68,6 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
         dragController.setFlingToDeleteDropTarget(mDeleteDropTarget);
         mInfoDropTarget.setLauncher(launcher);
         mDeleteDropTarget.setLauncher(launcher);
-        mQSBSearchBar = launcher.getQsbBar();
-        if (mEnableDropDownDropTargets) {
-            mQSBSearchBarAnim = LauncherAnimUtils.ofFloat(mQSBSearchBar, "translationY", 0,
-                    -mBarHeight);
-        } else {
-            mQSBSearchBarAnim = LauncherAnimUtils.ofFloat(mQSBSearchBar, "alpha", 1f, 0f);
-        }
-        setupAnimation(mQSBSearchBarAnim, mQSBSearchBar);
     }
 
     private void prepareStartAnimation(View v) {
@@ -131,44 +121,6 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
     public void finishAnimations() {
         prepareStartAnimation(mDropTargetBar);
         mDropTargetBarAnim.reverse();
-        prepareStartAnimation(mQSBSearchBar);
-        mQSBSearchBarAnim.reverse();
-    }
-
-    /*
-     * Shows and hides the search bar.
-     */
-    public void showSearchBar(boolean animated) {
-        boolean needToCancelOngoingAnimation = mQSBSearchBarAnim.isRunning() && !animated;
-        if (!mIsSearchBarHidden && !needToCancelOngoingAnimation) return;
-        if (animated) {
-            prepareStartAnimation(mQSBSearchBar);
-            mQSBSearchBarAnim.reverse();
-        } else {
-            mQSBSearchBarAnim.cancel();
-            if (mEnableDropDownDropTargets) {
-                mQSBSearchBar.setTranslationY(0);
-            } else {
-                mQSBSearchBar.setAlpha(1f);
-            }
-        }
-        mIsSearchBarHidden = false;
-    }
-    public void hideSearchBar(boolean animated) {
-        boolean needToCancelOngoingAnimation = mQSBSearchBarAnim.isRunning() && !animated;
-        if (mIsSearchBarHidden && !needToCancelOngoingAnimation) return;
-        if (animated) {
-            prepareStartAnimation(mQSBSearchBar);
-            mQSBSearchBarAnim.start();
-        } else {
-            mQSBSearchBarAnim.cancel();
-            if (mEnableDropDownDropTargets) {
-                mQSBSearchBar.setTranslationY(-mBarHeight);
-            } else {
-                mQSBSearchBar.setAlpha(0f);
-            }
-        }
-        mIsSearchBarHidden = true;
     }
 
     /*
@@ -189,10 +141,6 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
         // Animate out the QSB search bar, and animate in the drop target bar
         prepareStartAnimation(mDropTargetBar);
         mDropTargetBarAnim.start();
-        if (!mIsSearchBarHidden) {
-            prepareStartAnimation(mQSBSearchBar);
-            mQSBSearchBarAnim.start();
-        }
     }
 
     public void deferOnDragEnd() {
@@ -205,42 +153,8 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
             // Restore the QSB search bar, and animate out the drop target bar
             prepareStartAnimation(mDropTargetBar);
             mDropTargetBarAnim.reverse();
-            if (!mIsSearchBarHidden) {
-                prepareStartAnimation(mQSBSearchBar);
-                mQSBSearchBarAnim.reverse();
-            }
         } else {
             mDeferOnDragEnd = false;
-        }
-    }
-
-    public void onSearchPackagesChanged(boolean searchVisible, boolean voiceVisible) {
-        if (mQSBSearchBar != null) {
-            Drawable bg = mQSBSearchBar.getBackground();
-            if (bg != null && (!searchVisible && !voiceVisible)) {
-                // Save the background and disable it
-                mPreviousBackground = bg;
-                mQSBSearchBar.setBackgroundResource(0);
-            } else if (mPreviousBackground != null && (searchVisible || voiceVisible)) {
-                // Restore the background
-                mQSBSearchBar.setBackground(mPreviousBackground);
-            }
-        }
-    }
-
-    public Rect getSearchBarBounds() {
-        if (mQSBSearchBar != null) {
-            final int[] pos = new int[2];
-            mQSBSearchBar.getLocationOnScreen(pos);
-
-            final Rect rect = new Rect();
-            rect.left = pos[0];
-            rect.top = pos[1];
-            rect.right = pos[0] + mQSBSearchBar.getWidth();
-            rect.bottom = pos[1] + mQSBSearchBar.getHeight();
-            return rect;
-        } else {
-            return null;
         }
     }
 }

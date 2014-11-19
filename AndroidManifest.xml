@@ -23,7 +23,7 @@
     android:versionCode="1"
     android:versionName="1 (FP2 - 1.0)">
     
-    <uses-sdk android:targetSdkVersion="21" android:minSdkVersion="16"/>
+    <uses-sdk android:targetSdkVersion="21" android:minSdkVersion="17"/>
 
     <permission
         android:name="com.android.launcher.permission.INSTALL_SHORTCUT"

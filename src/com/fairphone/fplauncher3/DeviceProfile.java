@@ -122,9 +122,7 @@ public class DeviceProfile {
     int allAppsNumRows;
     int allAppsNumCols;
     int searchBarSpaceWidthPx;
-    int searchBarSpaceMaxWidthPx;
     int searchBarSpaceHeightPx;
-    int searchBarHeightPx;
     int pageIndicatorHeightPx;
     int allAppsButtonVisualSize;
 
@@ -376,8 +374,8 @@ public class DeviceProfile {
         hotseatIconSizePx = (int) (DynamicGrid.pxFromDp(hotseatIconSize, dm) * scale);
 
         // Search Bar
-        searchBarSpaceMaxWidthPx = resources.getDimensionPixelSize(R.dimen.dynamic_grid_search_bar_max_width);
-        searchBarHeightPx = resources.getDimensionPixelSize(R.dimen.dynamic_grid_search_bar_height);
+        int searchBarSpaceMaxWidthPx = resources.getDimensionPixelSize(R.dimen.dynamic_grid_search_bar_max_width);
+        int searchBarHeightPx = resources.getDimensionPixelSize(R.dimen.dynamic_grid_search_bar_height);
         searchBarSpaceWidthPx = Math.min(searchBarSpaceMaxWidthPx, widthPx);
         searchBarSpaceHeightPx = searchBarHeightPx + getSearchBarTopOffset();
 
@@ -593,16 +591,15 @@ public class DeviceProfile {
         return getWorkspacePadding(isLandscape ? CellLayout.LANDSCAPE : CellLayout.PORTRAIT);
     }
     Rect getWorkspacePadding(int orientation) {
-        Rect searchBarBounds = getSearchBarBounds(orientation);
         Rect padding = new Rect();
         if (orientation == CellLayout.LANDSCAPE &&
                 transposeLayoutWithOrientation) {
             // Pad the left and right of the workspace with search/hotseat bar sizes
             if (isLayoutRtl) {
                 padding.set(hotseatBarHeightPx, edgeMarginPx,
-                        searchBarBounds.width(), edgeMarginPx);
+                        0, edgeMarginPx);
             } else {
-                padding.set(searchBarBounds.width(), edgeMarginPx,
+                padding.set(0, edgeMarginPx,
                         hotseatBarHeightPx, edgeMarginPx);
             }
         } else {
@@ -616,7 +613,7 @@ public class DeviceProfile {
                 int height = (orientation != CellLayout.LANDSCAPE)
                         ? Math.max(widthPx, heightPx)
                         : Math.min(widthPx, heightPx);
-                int paddingTop = searchBarBounds.bottom;
+                int paddingTop = 0;
                 int paddingBottom = hotseatBarHeightPx + pageIndicatorHeightPx;
                 int availableWidth = Math.max(0, width - (int) ((numColumns * cellWidthPx) +
                         (numColumns * gapScale * cellWidthPx)));
@@ -627,7 +624,7 @@ public class DeviceProfile {
             } else {
                 // Pad the top and bottom of the workspace with search/hotseat bar sizes
                 padding.set(desiredWorkspaceLeftRightMarginPx - defaultWidgetPadding.left,
-                        searchBarBounds.bottom,
+                        0,
                         desiredWorkspaceLeftRightMarginPx - defaultWidgetPadding.right,
                         hotseatBarHeightPx + pageIndicatorHeightPx);
             }
@@ -743,20 +740,6 @@ public class DeviceProfile {
                     2 * edgeMarginPx, 0);
         }
         searchBar.setLayoutParams(lp);
-
-        // Layout the voice proxy
-        View voiceButtonProxy = launcher.findViewById(R.id.voice_button_proxy);
-        if (voiceButtonProxy != null) {
-            if (hasVerticalBarLayout) {
-                // TODO: MOVE THIS INTO SEARCH BAR MEASURE
-            } else {
-                lp = (FrameLayout.LayoutParams) voiceButtonProxy.getLayoutParams();
-                lp.gravity = Gravity.TOP | Gravity.END;
-                lp.width = (widthPx - searchBarSpaceWidthPx) / 2 +
-                        2 * iconSizePx;
-                lp.height = searchBarSpaceHeightPx;
-            }
-        }
 
         // Layout the workspace
         PagedView workspace = (PagedView) launcher.findViewById(R.id.workspace);

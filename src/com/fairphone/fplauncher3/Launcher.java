@@ -330,10 +330,6 @@ public class Launcher extends Activity
     // match the sensor state.
     private final int mRestoreScreenOrientationDelay = 500;
 
-    // External icons saved in case of resource changes, orientation, etc.
-    private static Drawable.ConstantState[] sGlobalSearchIcon = new Drawable.ConstantState[2];
-    private static Drawable.ConstantState[] sVoiceSearchIcon = new Drawable.ConstantState[2];
-
     private Drawable mWorkspaceBackgroundDrawable;
 
     private final ArrayList<Integer> mSynchronouslyBoundPages = new ArrayList<Integer>();
@@ -493,8 +489,6 @@ public class Launcher extends Activity
         IntentFilter filter = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(mCloseSystemDialogsReceiver, filter);
 
-        updateGlobalIcons();
-
         // On large interfaces, we want the screen to auto-rotate based on the current orientation
         unlockScreenOrientation(true);
 
@@ -540,29 +534,7 @@ public class Launcher extends Activity
             mWorkspace.removeCustomContentPage();
         }
     }
-
-    private void updateGlobalIcons() {
-        boolean searchVisible = false;
-        boolean voiceVisible = false;
-        // If we have a saved version of these external icons, we load them up immediately
-        int coi = getCurrentOrientationIndexForGlobalIcons();
-        if (sGlobalSearchIcon[coi] == null || sVoiceSearchIcon[coi] == null) {
-            searchVisible = updateGlobalSearchIcon();
-            voiceVisible = updateVoiceSearchIcon(searchVisible);
-        }
-        if (sGlobalSearchIcon[coi] != null) {
-             updateGlobalSearchIcon(sGlobalSearchIcon[coi]);
-             searchVisible = true;
-        }
-        if (sVoiceSearchIcon[coi] != null) {
-            updateVoiceSearchIcon(sVoiceSearchIcon[coi]);
-            voiceVisible = true;
-        }
-        if (mSearchDropTargetBar != null) {
-            mSearchDropTargetBar.onSearchPackagesChanged(searchVisible, voiceVisible);
-        }
-    }
-
+    
     private void checkForLocaleChange() {
         if (sLocaleConfiguration == null) {
             new AsyncTask<Void, Void, LocaleConfiguration>() {
@@ -1038,12 +1010,6 @@ public class Launcher extends Activity
         // Process any items that were added while Launcher was away.
         InstallShortcutReceiver.disableAndFlushInstallQueue(this);
 
-        // Update the voice search button proxy
-        updateVoiceButtonProxyVisible(false);
-
-        // Again, as with the above scenario, it's possible that one or more of the global icons
-        // were updated in the wrong orientation.
-        updateGlobalIcons();
         if (DEBUG_RESUME_TIME) {
             Log.d(TAG, "Time spent in onResume: " + (System.currentTimeMillis() - startTime));
         }
@@ -1080,25 +1046,6 @@ public class Launcher extends Activity
         }
     }
 
-    QSBScroller mQsbScroller = new QSBScroller() {
-        int scrollY = 0;
-
-        @Override
-        public void setScrollY(int scroll) {
-            scrollY = scroll;
-
-            if (mWorkspace.isOnOrMovingToCustomContent()) {
-                mSearchDropTargetBar.setTranslationY(- scrollY);
-                getQsbBar().setTranslationY(-scrollY);
-            }
-        }
-    };
-
-    public void resetQSBScroll() {
-        mSearchDropTargetBar.animate().translationY(0).start();
-        getQsbBar().animate().translationY(0).start();
-    }
-
     public interface CustomContentCallbacks {
         // Custom content is completely shown. {@code fromResume} indicates whether this was caused
         // by a onResume or by scrolling otherwise.
@@ -1116,16 +1063,6 @@ public class Launcher extends Activity
 
     protected boolean hasSettings() {
         return false;
-    }
-
-    public interface QSBScroller {
-        public void setScrollY(int scrollY);
-    }
-
-    public QSBScroller addToCustomContentPage(View customContent,
-            CustomContentCallbacks callbacks, String description) {
-        mWorkspace.addToCustomContentPage(customContent, callbacks, description);
-        return mQsbScroller;
     }
 
     // The custom content needs to offset its content to account for the QSB
@@ -2070,9 +2007,6 @@ public class Launcher extends Activity
             appSearchData.putString("source", "launcher-search");
         }
         Rect sourceBounds = new Rect();
-        if (mSearchDropTargetBar != null) {
-            sourceBounds = mSearchDropTargetBar.getSearchBarBounds();
-        }
 
         boolean clearTextImmediately = startSearch(initialQuery, selectInitialQuery,
                 appSearchData, sourceBounds);
@@ -3370,11 +3304,6 @@ public class Launcher extends Activity
                         page.setLayerType(View.LAYER_TYPE_NONE, null);
                     }
                     content.setPageBackgroundsVisible(true);
-
-                    // Hide the search bar
-                    if (mSearchDropTargetBar != null) {
-                        mSearchDropTargetBar.hideSearchBar(false);
-                    }
                 }
 
             });
@@ -3422,12 +3351,6 @@ public class Launcher extends Activity
             toView.setVisibility(View.VISIBLE);
             toView.bringToFront();
 
-            if (!springLoaded && !LauncherAppState.getInstance().isScreenLarge()) {
-                // Hide the search bar
-                if (mSearchDropTargetBar != null) {
-                    mSearchDropTargetBar.hideSearchBar(false);
-                }
-            }
             dispatchOnLauncherTransitionPrepare(fromView, animated, false);
             dispatchOnLauncherTransitionStart(fromView, animated, false);
             dispatchOnLauncherTransitionEnd(fromView, animated, false);
@@ -3722,12 +3645,6 @@ public class Launcher extends Activity
             mWorkspace.setVisibility(View.VISIBLE);
             hideAppsCustomizeHelper(Workspace.State.NORMAL, animated, false, onCompleteRunnable);
 
-            // Show the search bar (only animate if we were showing the drop target bar in spring
-            // loaded mode)
-            if (mSearchDropTargetBar != null) {
-                mSearchDropTargetBar.showSearchBar(animated && wasInSpringLoadedMode);
-            }
-
             // Set focus to the AppsCustomize button
             if (mAllAppsButton != null) {
                 mAllAppsButton.requestFocus();
@@ -3945,145 +3862,11 @@ public class Launcher extends Activity
 
     }
 
-    private void updateTextButtonWithDrawable(int buttonId, Drawable d) {
-        TextView button = (TextView) findViewById(buttonId);
-        button.setCompoundDrawables(d, null, null, null);
-    }
-
-    private void updateButtonWithDrawable(int buttonId, Drawable.ConstantState d) {
-        ImageView button = (ImageView) findViewById(buttonId);
-        button.setImageDrawable(d.newDrawable(getResources()));
-    }
-
-    private void invalidatePressedFocusedStates(View container, View button) {
-        if (container instanceof HolographicLinearLayout) {
-            HolographicLinearLayout layout = (HolographicLinearLayout) container;
-            layout.invalidatePressedFocusedStates();
-        } else if (button instanceof HolographicImageView) {
-            HolographicImageView view = (HolographicImageView) button;
-            view.invalidatePressedFocusedStates();
-        }
-    }
-
-    public View getQsbBar() {
-        if (mQsb == null) {
-            mQsb = mInflater.inflate(R.layout.qsb, mSearchDropTargetBar, false);
-            mSearchDropTargetBar.addView(mQsb);
-        }
-        return mQsb;
-    }
-
     protected boolean updateGlobalSearchIcon() {
-        final View searchButtonContainer = findViewById(R.id.search_button_container);
-        final ImageView searchButton = (ImageView) findViewById(R.id.search_button);
-        final View voiceButtonContainer = findViewById(R.id.voice_button_container);
-        final View voiceButton = findViewById(R.id.voice_button);
-
         final SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         ComponentName activityName = searchManager.getGlobalSearchActivity();
-        if (activityName != null) {
-            int coi = getCurrentOrientationIndexForGlobalIcons();
-            sGlobalSearchIcon[coi] = updateButtonWithIconFromExternalActivity(
-                    R.id.search_button, activityName, R.drawable.ic_home_search_normal_holo,
-                    TOOLBAR_SEARCH_ICON_METADATA_NAME);
-            if (sGlobalSearchIcon[coi] == null) {
-                sGlobalSearchIcon[coi] = updateButtonWithIconFromExternalActivity(
-                        R.id.search_button, activityName, R.drawable.ic_home_search_normal_holo,
-                        TOOLBAR_ICON_METADATA_NAME);
-            }
-
-            if (searchButtonContainer != null) searchButtonContainer.setVisibility(View.VISIBLE);
-            searchButton.setVisibility(View.VISIBLE);
-            invalidatePressedFocusedStates(searchButtonContainer, searchButton);
-            return true;
-        } else {
-            // We disable both search and voice search when there is no global search provider
-            if (searchButtonContainer != null) searchButtonContainer.setVisibility(View.GONE);
-            if (voiceButtonContainer != null) voiceButtonContainer.setVisibility(View.GONE);
-            if (searchButton != null) searchButton.setVisibility(View.GONE);
-            if (voiceButton != null) voiceButton.setVisibility(View.GONE);
-            updateVoiceButtonProxyVisible(false);
-            return false;
-        }
-    }
-
-    protected void updateGlobalSearchIcon(Drawable.ConstantState d) {
-        final View searchButtonContainer = findViewById(R.id.search_button_container);
-        final View searchButton = (ImageView) findViewById(R.id.search_button);
-        updateButtonWithDrawable(R.id.search_button, d);
-        invalidatePressedFocusedStates(searchButtonContainer, searchButton);
-    }
-
-    protected boolean updateVoiceSearchIcon(boolean searchVisible) {
-        final View voiceButtonContainer = findViewById(R.id.voice_button_container);
-        final View voiceButton = findViewById(R.id.voice_button);
-
-        // We only show/update the voice search icon if the search icon is enabled as well
-        final SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        ComponentName globalSearchActivity = searchManager.getGlobalSearchActivity();
-
-        ComponentName activityName = null;
-        if (globalSearchActivity != null) {
-            // Check if the global search activity handles voice search
-            Intent intent = new Intent(RecognizerIntent.ACTION_WEB_SEARCH);
-            intent.setPackage(globalSearchActivity.getPackageName());
-            activityName = intent.resolveActivity(getPackageManager());
-        }
-
-        if (activityName == null) {
-            // Fallback: check if an activity other than the global search activity
-            // resolves this
-            Intent intent = new Intent(RecognizerIntent.ACTION_WEB_SEARCH);
-            activityName = intent.resolveActivity(getPackageManager());
-        }
-        if (searchVisible && activityName != null) {
-            int coi = getCurrentOrientationIndexForGlobalIcons();
-            sVoiceSearchIcon[coi] = updateButtonWithIconFromExternalActivity(
-                    R.id.voice_button, activityName, R.drawable.ic_home_voice_search_holo,
-                    TOOLBAR_VOICE_SEARCH_ICON_METADATA_NAME);
-            if (sVoiceSearchIcon[coi] == null) {
-                sVoiceSearchIcon[coi] = updateButtonWithIconFromExternalActivity(
-                        R.id.voice_button, activityName, R.drawable.ic_home_voice_search_holo,
-                        TOOLBAR_ICON_METADATA_NAME);
-            }
-            if (voiceButtonContainer != null) voiceButtonContainer.setVisibility(View.VISIBLE);
-            voiceButton.setVisibility(View.VISIBLE);
-            updateVoiceButtonProxyVisible(false);
-            invalidatePressedFocusedStates(voiceButtonContainer, voiceButton);
-            return true;
-        } else {
-            if (voiceButtonContainer != null) voiceButtonContainer.setVisibility(View.GONE);
-            if (voiceButton != null) voiceButton.setVisibility(View.GONE);
-            updateVoiceButtonProxyVisible(false);
-            return false;
-        }
-    }
-
-    protected void updateVoiceSearchIcon(Drawable.ConstantState d) {
-        final View voiceButtonContainer = findViewById(R.id.voice_button_container);
-        final View voiceButton = findViewById(R.id.voice_button);
-        updateButtonWithDrawable(R.id.voice_button, d);
-        invalidatePressedFocusedStates(voiceButtonContainer, voiceButton);
-    }
-
-    public void updateVoiceButtonProxyVisible(boolean forceDisableVoiceButtonProxy) {
-        final View voiceButtonProxy = findViewById(R.id.voice_button_proxy);
-        if (voiceButtonProxy != null) {
-            boolean visible = !forceDisableVoiceButtonProxy &&
-                    mWorkspace.shouldVoiceButtonProxyBeVisible();
-            voiceButtonProxy.setVisibility(visible ? View.VISIBLE : View.GONE);
-            voiceButtonProxy.bringToFront();
-        }
-    }
-
-    /**
-     * This is an overrid eot disable the voice button proxy.  If disabled is true, then the voice button proxy
-     * will be hidden regardless of what shouldVoiceButtonProxyBeVisible() returns.
-     */
-    public void disableVoiceButtonProxy(boolean disabled) {
-        updateVoiceButtonProxyVisible(disabled);
+        return activityName != null;
     }
 
     @Override
@@ -4662,10 +4445,6 @@ public class Launcher extends Activity
     @Override
     public void bindSearchablesChanged() {
         boolean searchVisible = updateGlobalSearchIcon();
-        boolean voiceVisible = updateVoiceSearchIcon(searchVisible);
-        if (mSearchDropTargetBar != null) {
-            mSearchDropTargetBar.onSearchPackagesChanged(searchVisible, voiceVisible);
-        }
     }
 
     /**
@@ -5053,14 +4832,12 @@ public class Launcher extends Activity
         if (mWorkspace != null) mWorkspace.setAlpha(1f);
         if (mHotseat != null) mHotseat.setAlpha(1f);
         if (mPageIndicators != null) mPageIndicators.setAlpha(1f);
-        if (mSearchDropTargetBar != null) mSearchDropTargetBar.showSearchBar(false);
     }
 
     void hideWorkspaceSearchAndHotseat() {
         if (mWorkspace != null) mWorkspace.setAlpha(0f);
         if (mHotseat != null) mHotseat.setAlpha(0f);
         if (mPageIndicators != null) mPageIndicators.setAlpha(0f);
-        if (mSearchDropTargetBar != null) mSearchDropTargetBar.hideSearchBar(false);
     }
 
     public ItemInfo createAppDragInfo(Intent appLaunchIntent) {
