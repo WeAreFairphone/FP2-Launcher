@@ -24,24 +24,24 @@
     android:layout_height="match_parent"
     android:background="@drawable/workspace_bg">
 
-    <com.android.launcher3.DragLayer
+    <com.fairphone.fplauncher3.DragLayer
         android:id="@+id/drag_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.android.launcher3.FocusIndicatorView
+        <com.fairphone.fplauncher3.FocusIndicatorView
             android:id="@+id/focus_indicator"
             android:layout_width="52dp"
             android:layout_height="52dp" />
 
         <!-- The workspace contains 5 screens of cells -->
-        <com.android.launcher3.Workspace
+        <com.fairphone.fplauncher3.Workspace
             android:id="@+id/workspace"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             launcher:defaultScreen="@integer/config_workspaceDefaultScreen"
             launcher:pageIndicator="@+id/page_indicator">
-        </com.android.launcher3.Workspace>
+        </com.fairphone.fplauncher3.Workspace>
 
         <include layout="@layout/hotseat"
             android:id="@+id/hotseat"
@@ -67,7 +67,7 @@
 
         <!-- This is the search bar voice button proxy view.  It allows us to have a larger
              touch target than the microphone constrained by the search bar bounds. -->
-        <com.android.launcher3.DrawableStateProxyView
+        <com.fairphone.fplauncher3.DrawableStateProxyView
             android:id="@+id/voice_button_proxy"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -82,5 +82,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible" />
-    </com.android.launcher3.DragLayer>
+    </com.fairphone.fplauncher3.DragLayer>
 </FrameLayout>

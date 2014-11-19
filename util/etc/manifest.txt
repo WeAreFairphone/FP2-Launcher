@@ -1,1 +1,1 @@
-Main-Class: com.android.launcher3.DecoderRing
+Main-Class: com.fairphone.fplauncher3.DecoderRing

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
- package launcher_backup;
+ package fplauncher_backup;
 
-option java_package = "com.android.launcher3.backup";
+option java_package = "com.fairphone.fplauncher3.backup";
 option java_outer_classname = "BackupProtos";
 
 message Key {

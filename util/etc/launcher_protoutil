@@ -34,7 +34,7 @@ progdir=`pwd`
 prog="${progdir}"/`basename "${prog}"`
 cd "${oldwd}"
 
-jarfile=launcher_protoutil_lib.jar
+jarfile=fplauncher_protoutil_lib.jar
 libdir="$progdir"
 
 if [ ! -r "$libdir/$jarfile" ]; then

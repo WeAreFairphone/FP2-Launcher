@@ -1,1 +1,5 @@
 db_files
+bin/
+src/com/google/protobuf/
+src/com/android/launcher3/backup/BackupProtos.java
+src/com/fairphone/fplauncher3/backup/BackupProtos.java

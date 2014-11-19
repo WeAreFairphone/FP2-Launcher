@@ -26,6 +26,6 @@ LOCAL_PACKAGE_NAME := LauncherRotationStressTest
 
 LOCAL_CERTIFICATE := shared
 
-LOCAL_INSTRUMENTATION_FOR := Launcher2
+LOCAL_INSTRUMENTATION_FOR := FairphoneLauncher3
 
 include $(BUILD_PACKAGE)
