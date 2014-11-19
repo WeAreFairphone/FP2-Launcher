@@ -17,11 +17,13 @@
 package com.fairphone.fplauncher3;
 
 import android.app.Application;
+import com.crashlytics.android.Crashlytics;
 
 public class LauncherApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Crashlytics.start(this);
         LauncherAppState.setApplicationContext(this);
         LauncherAppState.getInstance();
     }

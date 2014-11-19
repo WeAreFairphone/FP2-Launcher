@@ -23,7 +23,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE_TAGS := optional
 
-LOCAL_STATIC_JAVA_LIBRARIES := android-support-v13
+LOCAL_STATIC_JAVA_LIBRARIES := flcrashlytics android-support-v13
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src) \
     $(call all-java-files-under, WallpaperPicker/src) \
@@ -47,6 +47,17 @@ Launcher3
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 
 include $(BUILD_PACKAGE)
+
+#
+# Add prebuilt jar
+#
+include $(CLEAR_VARS)
+
+LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := flcrashlytics:libs/crashlytics.jar
+
+include $(BUILD_MULTI_PREBUILT)
+
+####
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
 

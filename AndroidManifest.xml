@@ -72,6 +72,7 @@
     <uses-permission android:name="com.android.launcher3.permission.WRITE_SETTINGS" />
     <uses-permission android:name="com.android.launcher3.permission.RECEIVE_LAUNCH_BROADCASTS" />
     <uses-permission android:name="com.android.launcher3.permission.RECEIVE_FIRST_LOAD_BROADCAST" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name="com.fairphone.fplauncher3.LauncherApplication"
@@ -226,5 +227,7 @@
 
         <meta-data android:name="android.nfc.disable_beam_default"
                        android:value="true" />
+        
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="743d6f60e29372e7b75de8137a5585979710dd7a"/>
     </application>
 </manifest>
