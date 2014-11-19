@@ -18,5 +18,5 @@ package com.fairphone.fplauncher3.config;
 
 public class ProviderConfig {
 
-    public static final String AUTHORITY = "com.fairphone.launcher3.settings";
+    public static final String AUTHORITY = "com.fairphone.fplauncher3.settings";
 }
