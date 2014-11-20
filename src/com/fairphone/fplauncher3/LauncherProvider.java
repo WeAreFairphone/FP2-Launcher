@@ -569,9 +569,6 @@ public class LauncherProvider extends ContentProvider {
                     LauncherSettings.Favorites.CONTAINER + " <> " +
                     LauncherSettings.Favorites.CONTAINER_DESKTOP +
                     " AND "
-                    + LauncherSettings.Favorites.CONTAINER + " <> " +
-                    LauncherSettings.Favorites.CONTAINER_HOTSEAT +
-                    " AND "
                     + LauncherSettings.Favorites.CONTAINER + " NOT IN (SELECT " +
                     LauncherSettings.Favorites._ID + " FROM " + TABLE_FAVORITES +
                     " WHERE " + LauncherSettings.Favorites.ITEM_TYPE + " = " +
@@ -2006,13 +2003,11 @@ public class LauncherProvider extends ContentProvider {
                         final DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
                         final int width = (int) grid.numColumns;
                         final int height = (int) grid.numRows;
-                        final int hotseatWidth = (int) grid.numHotseatIcons;
 
                         final HashSet<String> seenIntents = new HashSet<String>(c.getCount());
 
                         final ArrayList<ContentValues> shortcuts = new ArrayList<ContentValues>();
                         final ArrayList<ContentValues> folders = new ArrayList<ContentValues>();
-                        final SparseArray<ContentValues> hotseat = new SparseArray<ContentValues>();
 
                         while (c.moveToNext()) {
                             final int itemType = c.getInt(itemTypeIndex);
@@ -2108,12 +2103,8 @@ public class LauncherProvider extends ContentProvider {
                                     c.getInt(displayModeIndex));
                             values.put(LauncherSettings.Favorites.PROFILE_ID, userSerialNumber);
 
-                            if (container == LauncherSettings.Favorites.CONTAINER_HOTSEAT) {
-                                hotseat.put(screen, values);
-                            }
-
                             if (container != LauncherSettings.Favorites.CONTAINER_DESKTOP) {
-                                // In a folder or in the hotseat, preserve position
+                                // In a folder, preserve position
                                 values.put(LauncherSettings.Favorites.SCREEN, screen);
                                 values.put(LauncherSettings.Favorites.CELLX, cellX);
                                 values.put(LauncherSettings.Favorites.CELLY, cellY);
@@ -2128,31 +2119,6 @@ public class LauncherProvider extends ContentProvider {
                                 shortcuts.add(values);
                             } else {
                                 folders.add(values);
-                            }
-                        }
-
-                        // Now that we have all the hotseat icons, let's go through them left-right
-                        // and assign valid locations for them in the new hotseat
-                        final int N = hotseat.size();
-                        for (int idx=0; idx<N; idx++) {
-                            int hotseatX = hotseat.keyAt(idx);
-                            ContentValues values = hotseat.valueAt(idx);
-
-                            if (hotseatX == grid.hotseatAllAppsRank) {
-                                // let's drop this in the next available hole in the hotseat
-                                while (++hotseatX < hotseatWidth) {
-                                    if (hotseat.get(hotseatX) == null) {
-                                        // found a spot! move it here
-                                        values.put(LauncherSettings.Favorites.SCREEN,
-                                                hotseatX);
-                                        break;
-                                    }
-                                }
-                            }
-                            if (hotseatX >= hotseatWidth) {
-                                // no room for you in the hotseat? it's off to the desktop with you
-                                values.put(LauncherSettings.Favorites.CONTAINER,
-                                           Favorites.CONTAINER_DESKTOP);
                             }
                         }
 

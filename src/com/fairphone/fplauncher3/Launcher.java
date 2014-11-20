@@ -273,7 +273,6 @@ public class Launcher extends Activity
 
     private FolderInfo mFolderInfo;
 
-    private Hotseat mHotseat;
     private ViewGroup mOverviewPanel;
 
     private View mAllAppsButton;
@@ -282,7 +281,6 @@ public class Launcher extends Activity
     private AppsCustomizeTabHost mAppsCustomizeTabHost;
     private AppsCustomizePagedView mAppsCustomizeContent;
     private boolean mAutoAdvanceRunning = false;
-    private View mQsb;
 
     private Bundle mSavedState;
     // We set the state in both onCreate and then onNewIntent in some cases, which causes both
@@ -1230,13 +1228,6 @@ public class Launcher extends Activity
         // Setup the drag layer
         mDragLayer.setup(this, dragController);
 
-        // Setup the hotseat
-        mHotseat = (Hotseat) findViewById(R.id.hotseat);
-        if (mHotseat != null) {
-            mHotseat.setup(this);
-            mHotseat.setOnLongClickListener(this);
-        }
-
         mOverviewPanel = (ViewGroup) findViewById(R.id.overview_panel);
         View widgetButton = findViewById(R.id.widget_button);
         widgetButton.setOnClickListener(new OnClickListener() {
@@ -1321,15 +1312,8 @@ public class Launcher extends Activity
         }
     }
 
-    /**
-     * Sets the all apps button. This method is called from {@link Hotseat}.
-     */
-    public void setAllAppsButton(View allAppsButton) {
-        mAllAppsButton = allAppsButton;
-    }
-
-    public View getAllAppsButton() {
-        return mAllAppsButton;
+    public View getPageIndicator() {
+        return mPageIndicators;
     }
 
     /**
@@ -1407,7 +1391,7 @@ public class Launcher extends Activity
         }
 
         if (!foundCellSpan) {
-            showOutOfSpaceMessage(isHotseatLayout(layout));
+            showOutOfSpaceMessage();
             return;
         }
 
@@ -1500,7 +1484,7 @@ public class Launcher extends Activity
                     }
                 }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void) null);
             }
-            showOutOfSpaceMessage(isHotseatLayout(layout));
+            showOutOfSpaceMessage();
             return;
         }
 
@@ -1757,8 +1741,8 @@ public class Launcher extends Activity
         launcherInfo.hostView = null;
     }
 
-    void showOutOfSpaceMessage(boolean isHotseatLayout) {
-        int strId = (isHotseatLayout ? R.string.hotseat_out_of_space : R.string.out_of_space);
+    void showOutOfSpaceMessage() {
+        int strId = R.string.out_of_space;
         Toast.makeText(this, getString(strId), Toast.LENGTH_SHORT).show();
     }
 
@@ -1768,10 +1752,6 @@ public class Launcher extends Activity
 
     public Workspace getWorkspace() {
         return mWorkspace;
-    }
-
-    public Hotseat getHotseat() {
-        return mHotseat;
     }
 
     public ViewGroup getOverviewPanel() {
@@ -2862,11 +2842,6 @@ public class Launcher extends Activity
         PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat("scaleY", 1.5f);
 
         FolderInfo info = (FolderInfo) fi.getTag();
-        if (info.container == LauncherSettings.Favorites.CONTAINER_HOTSEAT) {
-            CellLayout cl = (CellLayout) fi.getParent().getParent();
-            CellLayout.LayoutParams lp = (CellLayout.LayoutParams) fi.getLayoutParams();
-            cl.setFolderLeaveBehindCell(lp.cellX, lp.cellY);
-        }
 
         // Push an ImageView copy of the FolderIcon into the DragLayer and hide the original
         copyFolderIconToImage(fi);
@@ -2993,10 +2968,7 @@ public class Launcher extends Activity
             resetAddInfo();
         }
 
-        // The hotseat touch handling does not go through Workspace, and we always allow long press
-        // on hotseat items.
-        final boolean inHotseat = isHotseatLayout(v);
-        boolean allowLongPress = inHotseat || mWorkspace.allowLongPress();
+        boolean allowLongPress = mWorkspace.allowLongPress();
         if (allowLongPress && !mDragController.isDragging()) {
             if (itemUnderLongClick == null) {
                 // User long pressed on empty space
@@ -3008,11 +2980,7 @@ public class Launcher extends Activity
                     mWorkspace.enterOverviewMode();
                 }
             } else {
-                final boolean isAllAppsButton = inHotseat && isAllAppsButtonRank(
-                        mHotseat.getOrderInHotseat(
-                                longClickCellInfo.cellX,
-                                longClickCellInfo.cellY));
-                if (!(itemUnderLongClick instanceof Folder || isAllAppsButton)) {
+                if (!(itemUnderLongClick instanceof Folder)) {
                     // User long pressed on an item
                     mWorkspace.startDrag(longClickCellInfo);
                 }
@@ -3021,24 +2989,11 @@ public class Launcher extends Activity
         return true;
     }
 
-    boolean isHotseatLayout(View layout) {
-        return mHotseat != null && layout != null &&
-                (layout instanceof CellLayout) && (layout == mHotseat.getLayout());
-    }
-
     /**
      * Returns the CellLayout of the specified container at the specified screen.
      */
     CellLayout getCellLayout(long container, long screenId) {
-        if (container == LauncherSettings.Favorites.CONTAINER_HOTSEAT) {
-            if (mHotseat != null) {
-                return mHotseat.getLayout();
-            } else {
-                return null;
-            }
-        } else {
-            return (CellLayout) mWorkspace.getScreenWithId(screenId);
-        }
+    	return (CellLayout) mWorkspace.getScreenWithId(screenId);
     }
 
     public boolean isAllAppsVisible() {
@@ -3175,7 +3130,7 @@ public class Launcher extends Activity
         }
 
         // If for some reason our views aren't initialized, don't animate
-        boolean initialized = getAllAppsButton() != null;
+        boolean initialized = getPageIndicator() != null;
 
         if (animated && initialized) {
             mStateAnimation = LauncherAnimUtils.createAnimatorSet();
@@ -3209,7 +3164,7 @@ public class Launcher extends Activity
 
             // Get the y delta between the center of the page and the center of the all apps button
             int[] allAppsToPanelDelta = Utilities.getCenterDeltaInScreenSpace(revealView,
-                    getAllAppsButton(), null);
+                    getPageIndicator(), null);
 
             float alpha = 0;
             float xDrift = 0;
@@ -3268,7 +3223,7 @@ public class Launcher extends Activity
             mStateAnimation.play(indicatorsAlpha);
 
             if (material) {
-                final View allApps = getAllAppsButton();
+                final View pageIndicator = getPageIndicator();
                 int allAppsButtonSize = LauncherAppState.getInstance().
                         getDynamicGrid().getDeviceProfile().allAppsButtonVisualSize;
                 float startRadius = isWidgetTray ? 0 : allAppsButtonSize / 2;
@@ -3280,12 +3235,12 @@ public class Launcher extends Activity
                 reveal.addListener(new AnimatorListenerAdapter() {
                     public void onAnimationStart(Animator animation) {
                         if (!isWidgetTray) {
-                            allApps.setVisibility(View.INVISIBLE);
+                            pageIndicator.setVisibility(View.INVISIBLE);
                         }
                     }
                     public void onAnimationEnd(Animator animation) {
                         if (!isWidgetTray) {
-                            allApps.setVisibility(View.VISIBLE);
+                            pageIndicator.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -3400,7 +3355,7 @@ public class Launcher extends Activity
         }
 
         // If for some reason our views aren't initialized, don't animate
-        boolean initialized = getAllAppsButton() != null;
+        boolean initialized = getPageIndicator() != null;
 
         if (animated && initialized) {
             mStateAnimation = LauncherAnimUtils.createAnimatorSet();
@@ -3445,10 +3400,10 @@ public class Launcher extends Activity
                 revealView.setVisibility(View.VISIBLE);
                 content.setPageBackgroundsVisible(false);
 
-                final View allAppsButton = getAllAppsButton();
+                final View pageIndicatorView = getPageIndicator();
                 revealView.setTranslationY(0);
                 int[] allAppsToPanelDelta = Utilities.getCenterDeltaInScreenSpace(revealView,
-                        allAppsButton, null);
+                        pageIndicatorView, null);
 
                 float xDrift = 0;
                 float yDrift = 0;
@@ -3523,7 +3478,7 @@ public class Launcher extends Activity
 
                 if (material) {
                     if (!isWidgetTray) {
-                        allAppsButton.setVisibility(View.INVISIBLE);
+                        pageIndicatorView.setVisibility(View.INVISIBLE);
                     }
                     int allAppsButtonSize = LauncherAppState.getInstance().
                             getDynamicGrid().getDeviceProfile().allAppsButtonVisualSize;
@@ -3539,7 +3494,7 @@ public class Launcher extends Activity
                         public void onAnimationEnd(Animator animation) {
                             revealView.setVisibility(View.INVISIBLE);
                             if (!isWidgetTray) {
-                                allAppsButton.setVisibility(View.VISIBLE);
+                                pageIndicatorView.setVisibility(View.VISIBLE);
                             }
                         }
                     });
@@ -3750,31 +3705,12 @@ public class Launcher extends Activity
     }
 
     /**
-     * Hides the hotseat area.
-     */
-    void hideHotseat(boolean animated) {
-        if (!LauncherAppState.getInstance().isScreenLarge()) {
-            if (animated) {
-                if (mHotseat.getAlpha() != 0f) {
-                    int duration = 0;
-                    if (mSearchDropTargetBar != null) {
-                        duration = mSearchDropTargetBar.getTransitionOutDuration();
-                    }
-                    mHotseat.animate().alpha(0f).setDuration(duration);
-                }
-            } else {
-                mHotseat.setAlpha(0f);
-            }
-        }
-    }
-
-    /**
      * Add an item from all apps or customize onto the given workspace screen.
      * If layout is null, add to the current screen.
      */
     void addExternalItemToScreen(ItemInfo itemInfo, final CellLayout layout) {
         if (!mWorkspace.addExternalItemToScreen(itemInfo, layout)) {
-            showOutOfSpaceMessage(isHotseatLayout(layout));
+            showOutOfSpaceMessage();
         }
     }
 
@@ -3996,9 +3932,6 @@ public class Launcher extends Activity
         mWorkspace.removeAllWorkspaceScreens();
 
         mWidgetsToAdvance.clear();
-        if (mHotseat != null) {
-            mHotseat.resetLayout();
-        }
     }
 
     @Override
@@ -4116,12 +4049,6 @@ public class Launcher extends Activity
         long newShortcutsScreenId = -1;
         for (int i = start; i < end; i++) {
             final ItemInfo item = shortcuts.get(i);
-
-            // Short circuit if we are loading dock items for a configuration which has no dock
-            if (item.container == LauncherSettings.Favorites.CONTAINER_HOTSEAT &&
-                    mHotseat == null) {
-                continue;
-            }
 
             switch (item.itemType) {
                 case LauncherSettings.Favorites.ITEM_TYPE_APPLICATION:
@@ -4410,9 +4337,6 @@ public class Launcher extends Activity
     }
 
     public boolean isAllAppsButtonRank(int rank) {
-        if (mHotseat != null) {
-            return mHotseat.isAllAppsButtonRank(rank);
-        }
         return false;
     }
 
@@ -4455,10 +4379,6 @@ public class Launcher extends Activity
     public void bindAllApplications(final ArrayList<AppInfo> apps) {
         if (LauncherAppState.isDisableAllApps()) {
             if (mIntentsOnWorkspaceFromUpgradePath != null) {
-                if (LauncherModel.UPGRADE_USE_MORE_APPS_FOLDER) {
-                    getHotseat().addAllAppsFolder(mIconCache, apps,
-                            mIntentsOnWorkspaceFromUpgradePath, Launcher.this, mWorkspace);
-                }
                 mIntentsOnWorkspaceFromUpgradePath = null;
             }
             if (mAppsCustomizeContent != null) {
@@ -4830,13 +4750,11 @@ public class Launcher extends Activity
 
     void showWorkspaceSearchAndHotseat() {
         if (mWorkspace != null) mWorkspace.setAlpha(1f);
-        if (mHotseat != null) mHotseat.setAlpha(1f);
         if (mPageIndicators != null) mPageIndicators.setAlpha(1f);
     }
 
     void hideWorkspaceSearchAndHotseat() {
         if (mWorkspace != null) mWorkspace.setAlpha(0f);
-        if (mHotseat != null) mHotseat.setAlpha(0f);
         if (mPageIndicators != null) mPageIndicators.setAlpha(0f);
     }
 

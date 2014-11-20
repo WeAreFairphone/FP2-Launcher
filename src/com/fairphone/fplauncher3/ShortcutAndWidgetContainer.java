@@ -33,8 +33,6 @@ public class ShortcutAndWidgetContainer extends ViewGroup {
 
     private final WallpaperManager mWallpaperManager;
 
-    private boolean mIsHotseatLayout;
-
     private int mCellWidth;
     private int mCellHeight;
 
@@ -119,22 +117,16 @@ public class ShortcutAndWidgetContainer extends ViewGroup {
         mInvertIfRtl = invert;
     }
 
-    public void setIsHotseat(boolean isHotseat) {
-        mIsHotseatLayout = isHotseat;
-    }
-
     int getCellContentWidth() {
         final LauncherAppState app = LauncherAppState.getInstance();
         final DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
-        return Math.min(getMeasuredHeight(), mIsHotseatLayout ?
-                grid.hotseatCellWidthPx: grid.cellWidthPx);
+        return Math.min(getMeasuredHeight(), grid.cellWidthPx);
     }
 
     int getCellContentHeight() {
         final LauncherAppState app = LauncherAppState.getInstance();
         final DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
-        return Math.min(getMeasuredHeight(), mIsHotseatLayout ?
-                grid.hotseatCellHeightPx : grid.cellHeightPx);
+        return Math.min(getMeasuredHeight(), grid.cellHeightPx);
     }
 
     public void measureChild(View child) {

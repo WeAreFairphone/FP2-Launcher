@@ -43,8 +43,6 @@
     <string name="group_widgets" msgid="1569030723286851002">"Moduler"</string>
     <string name="completely_out_of_space" msgid="6106288382070760318">"Ikke mer plass på startsidene dine."</string>
     <string name="out_of_space" msgid="4691004494942118364">"Denne startsiden er full."</string>
-    <string name="hotseat_out_of_space" msgid="7448809638125333693">"Favoritter-skuffen er full"</string>
-    <string name="invalid_hotseat_item" msgid="5779907847267573691">"Denne modulen er for stor for Favoritter-skuffen."</string>
     <string name="shortcut_installed" msgid="1701742129426969556">"Snarveien «<xliff:g id="NAME">%s</xliff:g>» er opprettet."</string>
     <string name="shortcut_uninstalled" msgid="8176767991305701821">"Snarveien «<xliff:g id="NAME">%s</xliff:g>» er fjernet."</string>
     <string name="shortcut_duplicate" msgid="9167217446062498127">"Snarveien «<xliff:g id="NAME">%s</xliff:g>» fins allerede."</string>

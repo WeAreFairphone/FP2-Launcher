@@ -44,11 +44,6 @@
             launcher:pageIndicator="@id/page_indicator">
         </com.fairphone.fplauncher3.Workspace>
 
-        <include layout="@layout/hotseat"
-            android:id="@+id/hotseat"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
         <include
             android:id="@+id/search_drop_target_bar"
             layout="@layout/search_drop_target_bar" />

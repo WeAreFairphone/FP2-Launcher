@@ -630,7 +630,6 @@ public class FocusHelper {
         final Workspace workspace = (Workspace) layout.getParent();
         final ViewGroup launcher = (ViewGroup) workspace.getParent();
         final ViewGroup tabs = (ViewGroup) launcher.findViewById(R.id.search_drop_target_bar);
-        final ViewGroup hotseat = (ViewGroup) launcher.findViewById(R.id.hotseat);
         int pageIndex = workspace.indexOfChild(layout);
         int pageCount = workspace.getChildCount();
 
@@ -706,10 +705,7 @@ public class FocusHelper {
                         newIcon.requestFocus();
                         v.playSoundEffect(SoundEffectConstants.NAVIGATION_DOWN);
                         wasHandled = true;
-                    } else if (hotseat != null) {
-                        hotseat.requestFocus();
-                        v.playSoundEffect(SoundEffectConstants.NAVIGATION_DOWN);
-                    }
+                    } 
                 }
                 break;
             case KeyEvent.KEYCODE_PAGE_UP:

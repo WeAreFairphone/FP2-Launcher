@@ -43,8 +43,6 @@
     <string name="group_widgets" msgid="1569030723286851002">"Виџети"</string>
     <string name="completely_out_of_space" msgid="6106288382070760318">"Нема повеќе простор на вашите екрани на почетна страница."</string>
     <string name="out_of_space" msgid="4691004494942118364">"Нема повеќе простор на овој екран на почетната страница."</string>
-    <string name="hotseat_out_of_space" msgid="7448809638125333693">"Нема повеќе простор на лентата „Омилени“"</string>
-    <string name="invalid_hotseat_item" msgid="5779907847267573691">"Овој виџет е премногу голем за лентата „Омилени“"</string>
     <string name="shortcut_installed" msgid="1701742129426969556">"Кратенката „<xliff:g id="NAME">%s</xliff:g>“ е создадена."</string>
     <string name="shortcut_uninstalled" msgid="8176767991305701821">"Кратенката „<xliff:g id="NAME">%s</xliff:g>“ е отстранета."</string>
     <string name="shortcut_duplicate" msgid="9167217446062498127">"Кратенката „<xliff:g id="NAME">%s</xliff:g>“ веќе постои."</string>

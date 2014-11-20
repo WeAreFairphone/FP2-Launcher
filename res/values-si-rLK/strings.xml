@@ -44,8 +44,6 @@
     <string name="group_widgets" msgid="1569030723286851002">"විජට්"</string>
     <string name="completely_out_of_space" msgid="6106288382070760318">"මෙම මුල් පිටු තිර මත තවත් ඉඩ නැත."</string>
     <string name="out_of_space" msgid="4691004494942118364">"මෙම මුල් පිටු තිරය මත තවත් අවසර නැත."</string>
-    <string name="hotseat_out_of_space" msgid="7448809638125333693">"ප්‍රියතම දෑ ඇති තැටියේ තවත් ඉඩ නොමැත"</string>
-    <string name="invalid_hotseat_item" msgid="5779907847267573691">"ප්‍රියතම දෑ ඇති තැටිය සඳහා මෙම විජටය ඉතා විශාලය"</string>
     <string name="shortcut_installed" msgid="1701742129426969556">"\"<xliff:g id="NAME">%s</xliff:g>\" කෙටිමග සාදන ලදි."</string>
     <string name="shortcut_uninstalled" msgid="8176767991305701821">"\"<xliff:g id="NAME">%s</xliff:g>\" කෙටිමග ඉවත් කෙරිණි."</string>
     <string name="shortcut_duplicate" msgid="9167217446062498127">"\"<xliff:g id="NAME">%s</xliff:g>\" කෙටිමග දැනටමත් පවතී."</string>

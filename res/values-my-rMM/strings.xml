@@ -43,8 +43,6 @@
     <string name="group_widgets" msgid="1569030723286851002">"ဝဒ်ဂျက်များ"</string>
     <string name="completely_out_of_space" msgid="6106288382070760318">"ပင်မမျက်နှာစာတွင် နေရာလွတ် မကျန်တော့ပါ"</string>
     <string name="out_of_space" msgid="4691004494942118364">"ဤပင်မမျက်နှာစာတွင် နေရာလွတ် မကျန်တော့ပါ"</string>
-    <string name="hotseat_out_of_space" msgid="7448809638125333693">"အနှစ်သက်ဆုံးများ ထားရာတွင် နေရာလွတ် မကျန်တော့ပါ"</string>
-    <string name="invalid_hotseat_item" msgid="5779907847267573691">"ဤဝဒ်ဂျက်မှာ အနှစ်သက်ဆုံးအရာများထားရာနေရာ အတွက် ကြီးလွန်းနေပါသည်"</string>
     <string name="shortcut_installed" msgid="1701742129426969556">"အတိုကောက်မှတ်သားမှု \"<xliff:g id="NAME">%s</xliff:g>\" ကို ပြုလုပ်ပြီးပါပြီ"</string>
     <string name="shortcut_uninstalled" msgid="8176767991305701821">"အတိုကောက်မှတ်သားမှု \"<xliff:g id="NAME">%s</xliff:g>\" ကို ဖယ်ရှားပြီးပါပြီ"</string>
     <string name="shortcut_duplicate" msgid="9167217446062498127">"အတိုကောက်မှတ်သားမှု \"<xliff:g id="NAME">%s</xliff:g>\" ရှိပြီးသား ဖြစ်နေပါသည်"</string>

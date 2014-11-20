@@ -44,8 +44,6 @@
     <string name="group_widgets" msgid="1569030723286851002">"Виджеттер"</string>
     <string name="completely_out_of_space" msgid="6106288382070760318">"Негізгі экранда орын жоқ."</string>
     <string name="out_of_space" msgid="4691004494942118364">"Бұл Негізгі экранда орын қалмады."</string>
-    <string name="hotseat_out_of_space" msgid="7448809638125333693">"Қалаулылар науасында орын қалмады"</string>
-    <string name="invalid_hotseat_item" msgid="5779907847267573691">"Бұл виджет Қалаулылар науасы үшін тым үлкен"</string>
     <string name="shortcut_installed" msgid="1701742129426969556">"\"<xliff:g id="NAME">%s</xliff:g>\" төте пернесі жасақталды."</string>
     <string name="shortcut_uninstalled" msgid="8176767991305701821">"\"<xliff:g id="NAME">%s</xliff:g>\" төте пернесі алынды."</string>
     <string name="shortcut_duplicate" msgid="9167217446062498127">"\"<xliff:g id="NAME">%s</xliff:g>\" төте пернесі бұрыннан бар."</string>

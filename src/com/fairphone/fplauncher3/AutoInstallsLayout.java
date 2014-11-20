@@ -107,9 +107,6 @@ public class AutoInstallsLayout implements WorkspaceLoader {
     private static final String ATTR_KEY = "key";
     private static final String ATTR_VALUE = "value";
 
-    private static final String HOTSEAT_CONTAINER_NAME =
-            Favorites.containerToString(Favorites.CONTAINER_HOTSEAT);
-
     private static final String ACTION_APPWIDGET_DEFAULT_WORKSPACE_CONFIGURE =
             "com.fairphone.launcher.action.APPWIDGET_DEFAULT_WORKSPACE_CONFIGURE";
 
@@ -151,8 +148,6 @@ public class AutoInstallsLayout implements WorkspaceLoader {
 
     private int parseLayout(Resources res, int layoutId, ArrayList<Long> screenIds)
             throws XmlPullParserException, IOException {
-        final int hotseatAllAppsRank = LauncherAppState.getInstance()
-                .getDynamicGrid().getDeviceProfile().hotseatAllAppsRank;
 
         XmlResourceParser parser = res.getXml(layoutId);
         beginDocument(parser, TAG_WORKSPACE);
@@ -171,20 +166,11 @@ public class AutoInstallsLayout implements WorkspaceLoader {
             final int container;
             final long screenId;
 
-            if (HOTSEAT_CONTAINER_NAME.equals(getAttributeValue(parser, ATTR_CONTAINER))) {
-                container = Favorites.CONTAINER_HOTSEAT;
+            container = Favorites.CONTAINER_DESKTOP;
+            screenId = Long.parseLong(getAttributeValue(parser, ATTR_SCREEN));
 
-                // Hack: hotseat items are stored using screen ids
-                long rank = Long.parseLong(getAttributeValue(parser, ATTR_RANK));
-                screenId = (rank < hotseatAllAppsRank) ? rank : (rank + 1);
-
-            } else {
-                container = Favorites.CONTAINER_DESKTOP;
-                screenId = Long.parseLong(getAttributeValue(parser, ATTR_SCREEN));
-
-                mValues.put(Favorites.CELLX, getAttributeValue(parser, ATTR_X));
-                mValues.put(Favorites.CELLY, getAttributeValue(parser, ATTR_Y));
-            }
+            mValues.put(Favorites.CELLX, getAttributeValue(parser, ATTR_X));
+            mValues.put(Favorites.CELLY, getAttributeValue(parser, ATTR_Y));
 
             mValues.put(Favorites.CONTAINER, container);
             mValues.put(Favorites.SCREEN, screenId);

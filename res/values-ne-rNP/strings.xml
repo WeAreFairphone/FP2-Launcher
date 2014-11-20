@@ -44,8 +44,6 @@
     <string name="group_widgets" msgid="1569030723286851002">"विजेटहरू"</string>
     <string name="completely_out_of_space" msgid="6106288382070760318">"यो गृह स्क्रिनहरूमा कुनै थप ठाउँ छैन"</string>
     <string name="out_of_space" msgid="4691004494942118364">"यो गृह स्क्रिनमा कुनै थप ठाउँ छैन।"</string>
-    <string name="hotseat_out_of_space" msgid="7448809638125333693">"मनपर्ने ट्रे अब कुनै ठाँउ छैन"</string>
-    <string name="invalid_hotseat_item" msgid="5779907847267573691">"यो विजेट मनपर्ने ट्रे को लागि निकै ठूलो छ"</string>
     <string name="shortcut_installed" msgid="1701742129426969556">"सर्टकट \"<xliff:g id="NAME">%s</xliff:g>\" सिर्जित गरियो।"</string>
     <string name="shortcut_uninstalled" msgid="8176767991305701821">"सर्टकट \"<xliff:g id="NAME">%s</xliff:g>\" हटाइयो।"</string>
     <string name="shortcut_duplicate" msgid="9167217446062498127">"सर्टकट \"<xliff:g id="NAME">%s</xliff:g>\" पहिल्यै अवस्थित छ।"</string>

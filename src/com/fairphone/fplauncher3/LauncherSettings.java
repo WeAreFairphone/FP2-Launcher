@@ -169,12 +169,10 @@ class LauncherSettings {
          * The icon is a resource identified by a package name and an integer id.
          */
         static final int CONTAINER_DESKTOP = -100;
-        static final int CONTAINER_HOTSEAT = -101;
 
         static final String containerToString(int container) {
             switch (container) {
                 case CONTAINER_DESKTOP: return "desktop";
-                case CONTAINER_HOTSEAT: return "hotseat";
                 default: return String.valueOf(container);
             }
         }

@@ -798,7 +798,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 }
             }
             if (showOutOfSpaceMessage) {
-                mLauncher.showOutOfSpaceMessage(false);
+                mLauncher.showOutOfSpaceMessage();
             }
 
             d.deferDragViewCleanupPostAnimation = false;

@@ -43,12 +43,6 @@
             android:layout_gravity="center"
             launcher:defaultScreen="@integer/config_workspaceDefaultScreen" />
 
-        <include layout="@layout/hotseat"
-            android:id="@+id/hotseat"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="end" />
-
         <include
             android:id="@+id/search_drop_target_bar"
             layout="@layout/search_drop_target_bar" />

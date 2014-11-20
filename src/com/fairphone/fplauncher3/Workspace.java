@@ -1002,29 +1002,12 @@ public class Workspace extends SmoothPagedView
         }
 
         final CellLayout layout;
-        if (container == LauncherSettings.Favorites.CONTAINER_HOTSEAT) {
-            layout = mLauncher.getHotseat().getLayout();
-            child.setOnKeyListener(new HotseatIconKeyEventListener());
-
-            // Hide folder title in the hotseat
-            if (child instanceof FolderIcon) {
-                ((FolderIcon) child).setTextVisible(false);
-            }
-
-            if (computeXYFromRank) {
-                x = mLauncher.getHotseat().getCellXFromOrder((int) screenId);
-                y = mLauncher.getHotseat().getCellYFromOrder((int) screenId);
-            } else {
-                screenId = mLauncher.getHotseat().getOrderInHotseat(x, y);
-            }
-        } else {
-            // Show folder title if not in the hotseat
-            if (child instanceof FolderIcon) {
-                ((FolderIcon) child).setTextVisible(true);
-            }
-            layout = getScreenWithId(screenId);
-            child.setOnKeyListener(new IconKeyEventListener());
+        // Show folder title
+        if (child instanceof FolderIcon) {
+            ((FolderIcon) child).setTextVisible(true);
         }
+        layout = getScreenWithId(screenId);
+        child.setOnKeyListener(new IconKeyEventListener());
 
         ViewGroup.LayoutParams genericLp = child.getLayoutParams();
         CellLayout.LayoutParams lp;
@@ -1647,10 +1630,6 @@ public class Workspace extends SmoothPagedView
         mLastCustomContentScrollProgress = progress;
 
         mLauncher.getDragLayer().setBackgroundAlpha(progress * 0.8f);
-
-        if (mLauncher.getHotseat() != null) {
-            mLauncher.getHotseat().setTranslationX(translationX);
-        }
 
         if (getPageIndicator() != null) {
             getPageIndicator().setTranslationX(translationX);
@@ -2292,7 +2271,6 @@ public class Workspace extends SmoothPagedView
         }
 
         final View overviewPanel = mLauncher.getOverviewPanel();
-        final View hotseat = mLauncher.getHotseat();
         final View pageIndicator = getPageIndicator();
         if (animated) {
             LauncherViewPropertyAnimator scale = new LauncherViewPropertyAnimator(this);
@@ -2348,46 +2326,34 @@ public class Workspace extends SmoothPagedView
                 pageIndicatorAlpha = ValueAnimator.ofFloat(0, 0);
             }
 
-            Animator hotseatAlpha = new LauncherViewPropertyAnimator(hotseat)
-                .alpha(finalHotseatAndPageIndicatorAlpha).withLayer();
-            hotseatAlpha.addListener(new AlphaUpdateListener(hotseat));
-
             Animator overviewPanelAlpha = new LauncherViewPropertyAnimator(overviewPanel)
                 .alpha(finalOverviewPanelAlpha).withLayer();
             overviewPanelAlpha.addListener(new AlphaUpdateListener(overviewPanel));
 
             // For animation optimations, we may need to provide the Launcher transition
             // with a set of views on which to force build layers in certain scenarios.
-            hotseat.setLayerType(View.LAYER_TYPE_HARDWARE, null);
             overviewPanel.setLayerType(View.LAYER_TYPE_HARDWARE, null);
             if (layerViews != null) {
-                layerViews.add(hotseat);
                 layerViews.add(overviewPanel);
             }
 
             if (workspaceToOverview) {
                 pageIndicatorAlpha.setInterpolator(new DecelerateInterpolator(2));
-                hotseatAlpha.setInterpolator(new DecelerateInterpolator(2));
                 overviewPanelAlpha.setInterpolator(null);
             } else if (overviewToWorkspace) {
                 pageIndicatorAlpha.setInterpolator(null);
-                hotseatAlpha.setInterpolator(null);
                 overviewPanelAlpha.setInterpolator(new DecelerateInterpolator(2));
             }
 
             overviewPanelAlpha.setDuration(duration);
             pageIndicatorAlpha.setDuration(duration);
-            hotseatAlpha.setDuration(duration);
 
             anim.play(overviewPanelAlpha);
-            anim.play(hotseatAlpha);
             anim.play(pageIndicatorAlpha);
             anim.setStartDelay(delay);
         } else {
             overviewPanel.setAlpha(finalOverviewPanelAlpha);
             AlphaUpdateListener.updateVisibility(overviewPanel);
-            hotseat.setAlpha(finalHotseatAndPageIndicatorAlpha);
-            AlphaUpdateListener.updateVisibility(hotseat);
             if (pageIndicator != null) {
                 pageIndicator.setAlpha(finalHotseatAndPageIndicatorAlpha);
                 AlphaUpdateListener.updateVisibility(pageIndicator);
@@ -2787,11 +2753,7 @@ public class Workspace extends SmoothPagedView
                     d.dragView, mDragViewVisualCenter);
 
             // We want the point to be mapped to the dragTarget.
-            if (mLauncher.isHotseatLayout(dropTargetLayout)) {
-                mapPointFromSelfToHotseatLayout(mLauncher.getHotseat(), mDragViewVisualCenter);
-            } else {
-                mapPointFromSelfToChild(dropTargetLayout, mDragViewVisualCenter, null);
-            }
+            mapPointFromSelfToChild(dropTargetLayout, mDragViewVisualCenter, null);
 
             int spanX = 1;
             int spanY = 1;
@@ -2835,18 +2797,7 @@ public class Workspace extends SmoothPagedView
 
             // Don't accept the drop if there's no room for the item
             if (!foundCell) {
-                // Don't show the message if we are dropping on the AllApps button and the hotseat
-                // is full
-                boolean isHotseat = mLauncher.isHotseatLayout(dropTargetLayout);
-                if (mTargetCell != null && isHotseat) {
-                    Hotseat hotseat = mLauncher.getHotseat();
-                    if (hotseat.isAllAppsButtonRank(
-                            hotseat.getOrderInHotseat(mTargetCell[0], mTargetCell[1]))) {
-                        return false;
-                    }
-                }
-
-                mLauncher.showOutOfSpaceMessage(isHotseat);
+                mLauncher.showOutOfSpaceMessage();
                 return false;
             }
         }
@@ -2993,11 +2944,7 @@ public class Workspace extends SmoothPagedView
 
         // We want the point to be mapped to the dragTarget.
         if (dropTargetLayout != null) {
-            if (mLauncher.isHotseatLayout(dropTargetLayout)) {
-                mapPointFromSelfToHotseatLayout(mLauncher.getHotseat(), mDragViewVisualCenter);
-            } else {
-                mapPointFromSelfToChild(dropTargetLayout, mDragViewVisualCenter, null);
-            }
+            mapPointFromSelfToChild(dropTargetLayout, mDragViewVisualCenter, null);
         }
 
         int snapScreen = -1;
@@ -3013,10 +2960,7 @@ public class Workspace extends SmoothPagedView
             if (dropTargetLayout != null && !d.cancelled) {
                 // Move internally
                 boolean hasMovedLayouts = (getParentCellLayoutForView(cell) != dropTargetLayout);
-                boolean hasMovedIntoHotseat = mLauncher.isHotseatLayout(dropTargetLayout);
-                long container = hasMovedIntoHotseat ?
-                        LauncherSettings.Favorites.CONTAINER_HOTSEAT :
-                        LauncherSettings.Favorites.CONTAINER_DESKTOP;
+                long container = LauncherSettings.Favorites.CONTAINER_DESKTOP;
                 long screenId = (mTargetCell[0] < 0) ?
                         mDragInfo.screenId : getIdForScreen(dropTargetLayout);
                 int spanX = mDragInfo != null ? mDragInfo.spanX : 1;
@@ -3069,7 +3013,7 @@ public class Workspace extends SmoothPagedView
                             resultSpan[1]);
                 }
 
-                if (getScreenIdForPageIndex(mCurrentPage) != screenId && !hasMovedIntoHotseat) {
+                if (getScreenIdForPageIndex(mCurrentPage) != screenId) {
                     snapScreen = getPageIndexForScreenId(screenId);
                     snapToPage(snapScreen);
                 }
@@ -3096,8 +3040,7 @@ public class Workspace extends SmoothPagedView
                     lp.cellVSpan = item.spanY;
                     lp.isLockedToGrid = true;
 
-                    if (container != LauncherSettings.Favorites.CONTAINER_HOTSEAT &&
-                            cell instanceof LauncherAppWidgetHostView) {
+                    if (cell instanceof LauncherAppWidgetHostView) {
                         final CellLayout cellLayout = dropTargetLayout;
                         // We post this call so that the widget has a chance to be placed
                         // in its final location
@@ -3407,16 +3350,6 @@ public class Workspace extends SmoothPagedView
        return false;
    }
 
-   void mapPointFromSelfToHotseatLayout(Hotseat hotseat, float[] xy) {
-       mTempPt[0] = (int) xy[0];
-       mTempPt[1] = (int) xy[1];
-       mLauncher.getDragLayer().getDescendantCoordRelativeToSelf(this, mTempPt, true);
-       mLauncher.getDragLayer().mapCoordInSelfToDescendent(hotseat.getLayout(), mTempPt);
-
-       xy[0] = mTempPt[0];
-       xy[1] = mTempPt[1];
-   }
-
    /*
     *
     * Convert the 2D coordinate xy from this CellLayout's coordinate space to
@@ -3555,11 +3488,6 @@ public class Workspace extends SmoothPagedView
         final View child = (mDragInfo == null) ? null : mDragInfo.cell;
         // Identify whether we have dragged over a side page
         if (workspaceInModalState()) {
-            if (mLauncher.getHotseat() != null && !isExternalDragWidget(d)) {
-                if (isPointInSelfOverHotseat(d.x, d.y, r)) {
-                    layout = mLauncher.getHotseat().getLayout();
-                }
-            }
             if (layout == null) {
                 layout = findMatchingPageForDragOver(d.dragView, d.x, d.y, false);
             }
@@ -3569,20 +3497,10 @@ public class Workspace extends SmoothPagedView
 
                 boolean isInSpringLoadedMode = (mState == State.SPRING_LOADED);
                 if (isInSpringLoadedMode) {
-                    if (mLauncher.isHotseatLayout(layout)) {
-                        mSpringLoadedDragController.cancel();
-                    } else {
-                        mSpringLoadedDragController.setAlarm(mDragTargetLayout);
-                    }
+                     mSpringLoadedDragController.setAlarm(mDragTargetLayout);
                 }
             }
         } else {
-            // Test to see if we are over the hotseat otherwise just use the current page
-            if (mLauncher.getHotseat() != null && !isDragWidget(d)) {
-                if (isPointInSelfOverHotseat(d.x, d.y, r)) {
-                    layout = mLauncher.getHotseat().getLayout();
-                }
-            }
             if (layout == null) {
                 layout = getCurrentDropLayout();
             }
@@ -3595,11 +3513,7 @@ public class Workspace extends SmoothPagedView
         // Handle the drag over
         if (mDragTargetLayout != null) {
             // We want the point to be mapped to the dragTarget.
-            if (mLauncher.isHotseatLayout(mDragTargetLayout)) {
-                mapPointFromSelfToHotseatLayout(mLauncher.getHotseat(), mDragViewVisualCenter);
-            } else {
-                mapPointFromSelfToChild(mDragTargetLayout, mDragViewVisualCenter, null);
-            }
+            mapPointFromSelfToChild(mDragTargetLayout, mDragViewVisualCenter, null);
 
             ItemInfo info = (ItemInfo) d.dragInfo;
 
@@ -3783,7 +3697,7 @@ public class Workspace extends SmoothPagedView
             onDropExternal(dragInfo.dropPos, (ItemInfo) dragInfo, (CellLayout) layout, false);
             return true;
         }
-        mLauncher.showOutOfSpaceMessage(mLauncher.isHotseatLayout(layout));
+        mLauncher.showOutOfSpaceMessage();
         return false;
     }
 
@@ -3818,12 +3732,9 @@ public class Workspace extends SmoothPagedView
             spanY = mDragInfo.spanY;
         }
 
-        final long container = mLauncher.isHotseatLayout(cellLayout) ?
-                LauncherSettings.Favorites.CONTAINER_HOTSEAT :
-                    LauncherSettings.Favorites.CONTAINER_DESKTOP;
+        final long container = LauncherSettings.Favorites.CONTAINER_DESKTOP;
         final long screenId = getIdForScreen(cellLayout);
-        if (!mLauncher.isHotseatLayout(cellLayout)
-                && screenId != getScreenIdForPageIndex(mCurrentPage)
+        if (screenId != getScreenIdForPageIndex(mCurrentPage)
                 && mState != State.SPRING_LOADED) {
             snapToScreenId(screenId, null);
         }
@@ -4179,11 +4090,7 @@ public class Workspace extends SmoothPagedView
             }
         } else if (mDragInfo != null) {
             CellLayout cellLayout;
-            if (mLauncher.isHotseatLayout(target)) {
-                cellLayout = mLauncher.getHotseat().getLayout();
-            } else {
-                cellLayout = getScreenWithId(mDragInfo.screenId);
-            }
+            cellLayout = getScreenWithId(mDragInfo.screenId);
             if (cellLayout == null && LauncherAppState.isDogfoodBuild()) {
                 throw new RuntimeException("Invalid state: cellLayout == null in "
                         + "Workspace#onDropCompleted. Please file a bug. ");
@@ -4219,11 +4126,6 @@ public class Workspace extends SmoothPagedView
         long screenId = getIdForScreen(cl);
         int container = Favorites.CONTAINER_DESKTOP;
 
-        if (mLauncher.isHotseatLayout(cl)) {
-            screenId = -1;
-            container = Favorites.CONTAINER_HOTSEAT;
-        }
-
         for (int i = 0; i < count; i++) {
             View v = cl.getShortcutsAndWidgets().getChildAt(i);
             ItemInfo info = (ItemInfo) v.getTag();
@@ -4238,7 +4140,6 @@ public class Workspace extends SmoothPagedView
 
     ArrayList<ComponentName> getUniqueComponents(boolean stripDuplicates, ArrayList<ComponentName> duplicates) {
         ArrayList<ComponentName> uniqueIntents = new ArrayList<ComponentName>();
-        getUniqueIntents((CellLayout) mLauncher.getHotseat().getLayout(), uniqueIntents, duplicates, false);
         int count = getChildCount();
         for (int i = 0; i < count; i++) {
             CellLayout cl = (CellLayout) getChildAt(i);
@@ -4319,7 +4220,6 @@ public class Workspace extends SmoothPagedView
     }
 
     void saveWorkspaceToDb() {
-        saveWorkspaceScreenToDb((CellLayout) mLauncher.getHotseat().getLayout());
         int count = getChildCount();
         for (int i = 0; i < count; i++) {
             CellLayout cl = (CellLayout) getChildAt(i);
@@ -4333,12 +4233,6 @@ public class Workspace extends SmoothPagedView
         long screenId = getIdForScreen(cl);
         int container = Favorites.CONTAINER_DESKTOP;
 
-        Hotseat hotseat = mLauncher.getHotseat();
-        if (mLauncher.isHotseatLayout(cl)) {
-            screenId = -1;
-            container = Favorites.CONTAINER_HOTSEAT;
-        }
-
         for (int i = 0; i < count; i++) {
             View v = cl.getShortcutsAndWidgets().getChildAt(i);
             ItemInfo info = (ItemInfo) v.getTag();
@@ -4346,10 +4240,6 @@ public class Workspace extends SmoothPagedView
             if (info != null) {
                 int cellX = info.cellX;
                 int cellY = info.cellY;
-                if (container == Favorites.CONTAINER_HOTSEAT) {
-                    cellX = hotseat.getCellXFromOrder((int) info.screenId);
-                    cellY = hotseat.getCellYFromOrder((int) info.screenId);
-                }
                 LauncherModel.addItemToDatabase(mLauncher, info, container, screenId, cellX,
                         cellY, false);
             }
@@ -4453,15 +4343,6 @@ public class Workspace extends SmoothPagedView
 
     @Override
     public boolean onEnterScrollArea(int x, int y, int direction) {
-        // Ignore the scroll area if we are dragging over the hot seat
-        boolean isPortrait = !LauncherAppState.isScreenLandscape(getContext());
-        if (mLauncher.getHotseat() != null && isPortrait) {
-            Rect r = new Rect();
-            mLauncher.getHotseat().getHitRect(r);
-            if (r.contains(x, y)) {
-                return false;
-            }
-        }
 
         boolean result = false;
         if (!workspaceInModalState() && !mIsSwitchingState && getOpenFolder() == null) {
@@ -4532,9 +4413,7 @@ public class Workspace extends SmoothPagedView
         for (int screen = 0; screen < screenCount; screen++) {
             layouts.add(((CellLayout) getChildAt(screen)));
         }
-        if (mLauncher.getHotseat() != null) {
-            layouts.add(mLauncher.getHotseat().getLayout());
-        }
+
         return layouts;
     }
 
@@ -4550,9 +4429,7 @@ public class Workspace extends SmoothPagedView
         for (int screen = 0; screen < screenCount; screen++) {
             childrenLayouts.add(((CellLayout) getChildAt(screen)).getShortcutsAndWidgets());
         }
-        if (mLauncher.getHotseat() != null) {
-            childrenLayouts.add(mLauncher.getHotseat().getLayout().getShortcutsAndWidgets());
-        }
+
         return childrenLayouts;
     }
 
