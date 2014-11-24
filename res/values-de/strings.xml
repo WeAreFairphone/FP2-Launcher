@@ -120,4 +120,13 @@
     <string name="abandoned_search" msgid="891119232568284442">"Suchen"</string>
     <string name="abandoned_promises_title" msgid="7096178467971716750">"Diese App ist nicht installiert"</string>
     <string name="abandoned_promise_explanation" msgid="3990027586878167529">"Die App für dieses Symbol ist nicht installiert. Sie können das Symbol entfernen oder nach der App suchen und sie manuell installieren."</string>
+    
+    <!-- Fairphone -->
+    <!-- Your Apps -->    
+    <string name="your_apps">Ihre Apps</string>   
+    <string name="last_used_apps">Zuletzt benutzte Apps</string>
+    <string name="last_used">Zuletzt benutzte</string>
+    <string name="most_used_apps">Meistbenutzte\nApps</string>
+    <string name="most_used">Meistbenutzte</string>
+    <string name="no_apps_have_been_opened_yet">Noch keine Apps geöffnet? Fangen Sie einfach an, Ihr Handy zu benutzen und kommen Sie zu diesem Bildschirm zurück</string>
 </resources>

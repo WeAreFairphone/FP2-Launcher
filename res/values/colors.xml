@@ -37,5 +37,10 @@
     <color name="quantum_panel_text_shadow_color">#FFC4C4C4</color>
     <color name="outline_color">#FFFFFFFF</color>
     <color name="widget_text_panel">#FF374248</color>
+    
+    <!-- Fairphone -->
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 
 </resources>

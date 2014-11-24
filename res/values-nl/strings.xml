@@ -120,4 +120,14 @@
     <string name="abandoned_search" msgid="891119232568284442">"Zoeken"</string>
     <string name="abandoned_promises_title" msgid="7096178467971716750">"Deze app is niet geïnstalleerd"</string>
     <string name="abandoned_promise_explanation" msgid="3990027586878167529">"De app voor dit pictogram is niet geïnstalleerd. U kunt het pictogram verwijderen of de app zoeken en handmatig installeren."</string>
+    
+    <!-- Fairphone -->
+    <!-- Your Apps -->
+    <string name="your_apps">Your Apps</string>
+    <string name="last_used_apps">Laatst gebruikte applicaties</string>
+    <string name="last_used">Laatst gebruikt</string>
+    <string name="most_used_apps">Meeste gebruikte applicaties</string>
+    <string name="most_used">Meest gebruikt</string>
+    <string name="no_apps_have_been_opened_yet">Nog geen applicaties geopend? Begin met het gebruiken van je telefoon en kom terug naar dit scherm</string>
+ 
 </resources>

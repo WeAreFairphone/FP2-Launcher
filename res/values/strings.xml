@@ -304,4 +304,14 @@ s -->
     <string name="abandoned_promise_explanation">The app for this icon isn\'t installed.
         You can remove it, or search for the app and install it manually.
     </string>
+    
+    <!-- Fairphone -->
+    <!-- Your Apps -->
+    <string name="app_switcher_name">Your apps</string>
+    <string name="last_used_apps">Last\nused\napps</string>
+    <string name="last_used">Last used</string>
+    <string name="most_used_apps">Most\nused\napps</string>
+    <string name="most_used">Most used</string>
+    <string name="no_apps_have_been_opened_yet">No apps opened yet? Just start using your phone and come back to this screen</string>
+    
 </resources>

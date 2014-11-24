@@ -229,5 +229,18 @@
                        android:value="true" />
         
         <meta-data android:name="com.crashlytics.ApiKey" android:value="743d6f60e29372e7b75de8137a5585979710dd7a"/>
+        
+        <!-- Widget -->
+        <receiver
+            android:name="com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherWidget"
+            android:label="@string/app_switcher_name" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appswitcher_widget" />
+        </receiver>
     </application>
 </manifest>

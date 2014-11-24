@@ -120,4 +120,14 @@
     <string name="abandoned_search" msgid="891119232568284442">"Pesquisar"</string>
     <string name="abandoned_promises_title" msgid="7096178467971716750">"Este app não está instalado"</string>
     <string name="abandoned_promise_explanation" msgid="3990027586878167529">"O app deste ícone não está instalado. Você pode remover o ícone, ou procurar o app e instalá-lo manualmente."</string>
+    
+    <!-- Fairphone -->
+    <!-- Your Apps -->
+    <string name="your_apps">Your Apps</string>
+    <string name="last_used_apps">Últimas aplicações usadas</string>
+    <string name="last_used">Últimas usadas</string>
+    <string name="most_used_apps">Aplicações\nmais usadas</string>
+    <string name="most_used">Mais usadas</string>
+    <string name="no_apps_have_been_opened_yet">Ainda não abriu aplicações? Basta começar a utilizar o seu telefone e voltar a este ecrã</string>
+    
 </resources>

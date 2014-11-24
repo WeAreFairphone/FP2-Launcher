@@ -112,6 +112,7 @@ import com.fairphone.fplauncher3.compat.PackageInstallerCompat;
 import com.fairphone.fplauncher3.compat.UserHandleCompat;
 import com.fairphone.fplauncher3.compat.UserManagerCompat;
 import com.fairphone.fplauncher3.compat.PackageInstallerCompat.PackageInstallInfo;
+import com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherManager;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -380,6 +381,8 @@ public class Launcher extends Activity
     private Stats mStats;
 
     FocusIndicatorView mFocusHandler;
+    
+	private AppSwitcherManager mAppSwitcherManager;
 
     static boolean isPropertyEnabled(String propertyName) {
         return Log.isLoggable(propertyName, Log.VERBOSE);
@@ -496,6 +499,8 @@ public class Launcher extends Activity
             showFirstRunActivity();
             showFirstRunClings();
         }
+        
+        mAppSwitcherManager = new AppSwitcherManager(this, this);
     }
 
     @Override
@@ -1024,6 +1029,9 @@ public class Launcher extends Activity
         mWorkspace.onResume();
 
         PackageInstallerCompat.getInstance(this).onResume();
+        
+        mAppSwitcherManager.loadAppSwitcherData();
+        mAppSwitcherManager.registerAppSwitcherBroadcastReceivers();
     }
 
     @Override
@@ -1042,6 +1050,9 @@ public class Launcher extends Activity
         if (mWorkspace.getCustomContentCallbacks() != null) {
             mWorkspace.getCustomContentCallbacks().onHide();
         }
+        
+        mAppSwitcherManager.saveAppSwitcherData();
+        mAppSwitcherManager.unregisterAppSwitcherBroadcastReceivers();
     }
 
     public interface CustomContentCallbacks {
@@ -2476,6 +2487,10 @@ public class Launcher extends Activity
             showAllApps(true, AppsCustomizePagedView.ContentType.Applications, false);
         }
     }
+    
+    public void showAllAppsDrawer(){
+    	onClickAllAppsButton(null);
+    }
 
     private void showBrokenAppInstallDialog(final String packageName,
             DialogInterface.OnClickListener onSearchClickListener) {
@@ -2720,12 +2735,19 @@ public class Launcher extends Activity
             if (user != null) {
                 user.addToIntent(intent, Intent.EXTRA_USER);
             }
+            
+            mAppSwitcherManager.applicationRemoved(componentName);
+            
             startActivity(intent);
             return true;
         }
     }
 
     boolean startActivity(View v, Intent intent, Object tag) {
+    	ComponentName component = intent != null ? intent.getComponent() : null;
+        Log.d(TAG, "Start Activity >>> " + (component != null ? component.toString() : "implicit Intent."));
+
+        boolean explicitIntent = component != null;
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
             // Only launch using the new animation if the shortcut has not opted out (this is a
@@ -2754,9 +2776,15 @@ public class Launcher extends Activity
                 startActivity(intent, optsBundle);
             } else {
                 // TODO Component can be null when shortcuts are supported for secondary user
-                launcherApps.startActivityForProfile(intent.getComponent(), user,
-                        intent.getSourceBounds(), optsBundle);
+            	launcherApps.startActivityForProfile(intent.getComponent(), user,
+	                        intent.getSourceBounds(), optsBundle);
             }
+            
+            if (explicitIntent)
+            {
+                updateActivityInfoViaExplicitIntent(component);
+            }
+            
             return true;
         } catch (SecurityException e) {
             Toast.makeText(this, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
@@ -2767,7 +2795,11 @@ public class Launcher extends Activity
         }
         return false;
     }
-
+    
+    public boolean launchActivity(View v, Intent intent, Object tag){
+    	return startActivity(v, intent, tag);
+    }
+    
     boolean startActivitySafely(View v, Intent intent, Object tag) {
         boolean success = false;
         if (mIsSafeModeEnabled && !Utilities.isSystemApp(this, intent)) {
@@ -4910,6 +4942,11 @@ public class Launcher extends Activity
                 }
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void) null);
         }
+    }
+    
+    private void updateActivityInfoViaExplicitIntent(ComponentName component)
+    {
+        mAppSwitcherManager.applicationStarted(component, false);
     }
 }
 

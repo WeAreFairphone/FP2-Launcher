@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/appSwitcher"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:orientation="horizontal"
+    android:paddingTop="15dp" >
+
+    <LinearLayout
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/lastUsedAppsTitle"
+            style="@style/SubTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:text="@string/last_used" />
+
+        <LinearLayout
+            android:id="@+id/lastUsedApps"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="7dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/line_shadow" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/mostUsedAppsTitle"
+            style="@style/SubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/most_used" />
+
+        <TextView
+            android:id="@+id/mostUsedAppsOOBEDescription"
+            style="@style/SecondarySubTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/no_apps_have_been_opened_yet"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/mostUsedApps"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical" />
+    </LinearLayout>
+
+</LinearLayout>
