@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/most_contacted_label"
+        style="@style/SubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="@string/most_contacted_text_label" />
+
+    <TextView
+        android:id="@+id/mostUsedContactsOOBEDescription"
+        style="@style/SecondarySubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/not_contacted_anyone_yet"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/most_contacted_row_1"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/most_contacted_row_2"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/last_contacted_label"
+        style="@style/SubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="@string/last_contacted_text_label" />
+
+    <LinearLayout
+        android:id="@+id/last_contacted_row_1"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/last_contacted_row_2"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:visibility="gone" />
+
+</LinearLayout>

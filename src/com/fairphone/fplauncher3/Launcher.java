@@ -113,6 +113,8 @@ import com.fairphone.fplauncher3.compat.UserHandleCompat;
 import com.fairphone.fplauncher3.compat.UserManagerCompat;
 import com.fairphone.fplauncher3.compat.PackageInstallerCompat.PackageInstallInfo;
 import com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherManager;
+import com.fairphone.widgets.peoplewidget.data.PeopleManager;
+import com.fairphone.widgets.peoplewidget.receivers.CallListener;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -383,6 +385,7 @@ public class Launcher extends Activity
     FocusIndicatorView mFocusHandler;
     
 	private AppSwitcherManager mAppSwitcherManager;
+	private PeopleManager mPeopleManager;
 
     static boolean isPropertyEnabled(String propertyName) {
         return Log.isLoggable(propertyName, Log.VERBOSE);
@@ -501,6 +504,7 @@ public class Launcher extends Activity
         }
         
         mAppSwitcherManager = new AppSwitcherManager(this, this);
+        mPeopleManager = new PeopleManager(this, this);
     }
 
     @Override
@@ -1032,6 +1036,9 @@ public class Launcher extends Activity
         
         mAppSwitcherManager.loadAppSwitcherData();
         mAppSwitcherManager.registerAppSwitcherBroadcastReceivers();
+        
+        mPeopleManager.loadContactsInfo();
+        mPeopleManager.registerBroadcastReceivers();
     }
 
     @Override
@@ -1053,6 +1060,9 @@ public class Launcher extends Activity
         
         mAppSwitcherManager.saveAppSwitcherData();
         mAppSwitcherManager.unregisterAppSwitcherBroadcastReceivers();
+        
+        mPeopleManager.savePeopleWidgetData();
+        mPeopleManager.unregisterBroadcastReceivers();
     }
 
     public interface CustomContentCallbacks {

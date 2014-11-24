@@ -290,8 +290,8 @@ public class AppSwitcherWidget extends AppWidgetProvider
         // iterate through every instance of this widget
         // remember that it can have more than one widget of the same type.
         for (int i = 0; i < appWidgetIds.length; i++)
-        { // See the dimensions
-            System.out.println("Updating widget #" + i);
+        { 
+            Log.d(TAG, "Updating AppSwitcher widget #" + i);
             updateUI(context, appWidgetManager, appWidgetIds[i]);
         }
 

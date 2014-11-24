@@ -313,5 +313,13 @@ s -->
     <string name="most_used_apps">Most\nused\napps</string>
     <string name="most_used">Most used</string>
     <string name="no_apps_have_been_opened_yet">No apps opened yet? Just start using your phone and come back to this screen</string>
+        
+    <!-- People widget -->
+    <string name="people_widget_name">People Widget</string>
+    <string name="last_contacted_text_label">Recently Contacted</string>
+    <string name="most_contacted_text_label">Most Contacted</string>
+    <string name="contacts_app_not_found">Contacts app not found</string>
+    <string name="contacts_title">CONTACTS</string>
+    <string name="not_contacted_anyone_yet">You have not contacted anyone yet.\nJust make some calls or send some messages\nand come back to this screen.</string>
     
 </resources>
