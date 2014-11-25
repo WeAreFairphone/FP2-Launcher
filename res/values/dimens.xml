@@ -100,4 +100,7 @@
     <!-- Edit Favorites -->
     <dimen name="edit_favorites_icon_size">60dp</dimen>
     
+    <!-- People widget -->
+    <dimen name="contact_picture_size">60dp</dimen>
+    
 </resources>

@@ -7,20 +7,28 @@ import android.graphics.Paint;
 
 public class CircleTransform
 {
-    public Bitmap transform(Bitmap source)
+    public Bitmap transform(Bitmap source, float fixedSize)
     {
-        int size = Math.min(source.getWidth(), source.getHeight());
-
-        int x = (source.getWidth() - size) / 2;
-        int y = (source.getHeight() - size) / 2;
-
-        Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
-        if (squaredBitmap != source)
+    	int floorFixedSize = (int) Math.floor(fixedSize);
+        Bitmap reduced = Bitmap.createScaledBitmap(source, floorFixedSize, floorFixedSize, true);
+        if (reduced != source)
         {
-            source.recycle();
+        	source.recycle();
+        }
+        
+        int size = Math.min(reduced.getWidth(), reduced.getHeight());
+
+        int x = (reduced.getWidth() - size) / 2;
+        int y = (reduced.getHeight() - size) / 2;
+
+        Bitmap squaredBitmap = Bitmap.createBitmap(reduced, x, y, size, size);
+        if (squaredBitmap != reduced)
+        {
+        	reduced.recycle();
         }
 
-        Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
+
+        Bitmap bitmap = Bitmap.createBitmap(size, size, reduced.getConfig());
 
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();

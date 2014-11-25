@@ -75,7 +75,7 @@ public class PeopleWidget extends AppWidgetProvider
         Bitmap bitmap = loadContactPhoto(photoUrl, mContext);
         if (bitmap != null)
         {
-            Bitmap circle = new CircleTransform().transform(bitmap);
+            Bitmap circle = new CircleTransform().transform(bitmap, mContext.getResources().getDimension(R.dimen.contact_picture_size));
             view.setImageViewBitmap(viewId, circle);
         }
         else
