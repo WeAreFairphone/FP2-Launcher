@@ -248,7 +248,7 @@
         </receiver>
         
         <receiver
-            android:name="com.fairphone.widgets.peoplewidget.PeopleWidget"
+            android:name="com.fairphone.fplauncher3.widgets.peoplewidget.PeopleWidget"
             android:label="@string/people_widget_name" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -258,7 +258,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/people_widget" />
         </receiver>
-        <receiver android:name="com.fairphone.widgets.peoplewidget.receivers.OutgoingCallInterceptor" >
+        <receiver android:name="com.fairphone.fplauncher3.widgets.peoplewidget.receivers.OutgoingCallInterceptor" >
             <intent-filter android:priority="0" >
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" >
                 </action>

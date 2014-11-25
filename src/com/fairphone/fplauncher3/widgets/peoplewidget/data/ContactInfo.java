@@ -1,4 +1,4 @@
-package com.fairphone.widgets.peoplewidget.data;
+package com.fairphone.fplauncher3.widgets.peoplewidget.data;
 
 import java.util.ArrayList;
 import java.util.Calendar;

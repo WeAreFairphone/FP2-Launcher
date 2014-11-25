@@ -1,4 +1,4 @@
-package com.fairphone.widgets.peoplewidget.receivers;
+package com.fairphone.fplauncher3.widgets.peoplewidget.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

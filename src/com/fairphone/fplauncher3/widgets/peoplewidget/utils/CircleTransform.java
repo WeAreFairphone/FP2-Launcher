@@ -1,4 +1,4 @@
-package com.fairphone.widgets.peoplewidget.utils;
+package com.fairphone.fplauncher3.widgets.peoplewidget.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

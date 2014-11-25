@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fairphone.widgets.peoplewidget.data;
+package com.fairphone.fplauncher3.widgets.peoplewidget.data;
 
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
@@ -27,12 +27,12 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.fairphone.fplauncher3.Launcher;
-import com.fairphone.widgets.peoplewidget.PeopleWidget;
-import com.fairphone.widgets.peoplewidget.data.ContactInfo.LAST_ACTION;
-import com.fairphone.widgets.peoplewidget.receivers.CallInterceptorReceiver;
-import com.fairphone.widgets.peoplewidget.receivers.CallListener;
-import com.fairphone.widgets.peoplewidget.receivers.OutgoingCallInterceptor;
-import com.fairphone.widgets.peoplewidget.receivers.SmsObserver;
+import com.fairphone.fplauncher3.widgets.peoplewidget.PeopleWidget;
+import com.fairphone.fplauncher3.widgets.peoplewidget.data.ContactInfo.LAST_ACTION;
+import com.fairphone.fplauncher3.widgets.peoplewidget.receivers.CallInterceptorReceiver;
+import com.fairphone.fplauncher3.widgets.peoplewidget.receivers.CallListener;
+import com.fairphone.fplauncher3.widgets.peoplewidget.receivers.OutgoingCallInterceptor;
+import com.fairphone.fplauncher3.widgets.peoplewidget.receivers.SmsObserver;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 

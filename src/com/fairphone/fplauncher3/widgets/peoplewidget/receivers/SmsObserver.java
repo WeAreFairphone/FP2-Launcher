@@ -1,4 +1,4 @@
-package com.fairphone.widgets.peoplewidget.receivers;
+package com.fairphone.fplauncher3.widgets.peoplewidget.receivers;
 
 import java.util.Date;
 
@@ -10,7 +10,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.fairphone.widgets.peoplewidget.data.PeopleManager;
+import com.fairphone.fplauncher3.widgets.peoplewidget.data.PeopleManager;
 
 public class SmsObserver extends ContentObserver
 {

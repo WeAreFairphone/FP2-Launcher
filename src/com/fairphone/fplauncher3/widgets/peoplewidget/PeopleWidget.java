@@ -1,4 +1,4 @@
-package com.fairphone.widgets.peoplewidget;
+package com.fairphone.fplauncher3.widgets.peoplewidget;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -23,10 +23,10 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.fairphone.fplauncher3.R;
-import com.fairphone.widgets.peoplewidget.data.ContactInfo;
-import com.fairphone.widgets.peoplewidget.data.ContactInfoManager;
-import com.fairphone.widgets.peoplewidget.data.PeopleManager;
-import com.fairphone.widgets.peoplewidget.utils.CircleTransform;
+import com.fairphone.fplauncher3.widgets.peoplewidget.data.ContactInfo;
+import com.fairphone.fplauncher3.widgets.peoplewidget.data.ContactInfoManager;
+import com.fairphone.fplauncher3.widgets.peoplewidget.data.PeopleManager;
+import com.fairphone.fplauncher3.widgets.peoplewidget.utils.CircleTransform;
 
 public class PeopleWidget extends AppWidgetProvider
 {
