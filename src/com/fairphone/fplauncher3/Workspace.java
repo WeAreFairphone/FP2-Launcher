@@ -4912,6 +4912,10 @@ public class Workspace extends SmoothPagedView
     }
 
     void moveToDefaultScreen(boolean animate) {
+        int count = mWorkspaceScreens.size();
+        int targetPage = count / 2;
+        
+        mDefaultPage = targetPage;
         moveToScreen(mDefaultPage, animate);
     }
 
