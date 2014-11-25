@@ -103,4 +103,14 @@
     <!-- Name of a subclass of com.android.launcher3.BuildInfo used to
          get build information. Can be empty. -->
     <string name="build_info_class" translatable="false"></string>
+    
+    <!-- Fairphone -->
+    <!-- Edge menu -->
+	<string name="edge_swipe_default_apps">com.android.contacts,com.android.contacts.activities.DialtactsActivity;com.android.mms,com.android.mms.ui.BootActivity;com.android.gallery3d,com.android.camera.CameraLauncher;com.android.browser,com.android.browser.BrowserActivity</string>
+	
+    <!-- Edit favorites -->
+    <integer name="edit_favorites_remove_text_size">23</integer>
+    <integer name="edit_favorites_drag_here_to_remove_text_size">16</integer>
+    <integer name="edit_favorites_drag_here_to_add_highlight_text_size">14</integer>
+    <integer name="edit_favorites_drag_here_to_add_normal_text_size">10</integer>
 </resources>

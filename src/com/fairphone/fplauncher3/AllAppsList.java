@@ -26,6 +26,8 @@ import android.content.pm.ResolveInfo;
 import com.fairphone.fplauncher3.compat.LauncherActivityInfoCompat;
 import com.fairphone.fplauncher3.compat.LauncherAppsCompat;
 import com.fairphone.fplauncher3.compat.UserHandleCompat;
+import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
+import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInfoManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +105,9 @@ class AllAppsList {
 
         if (matches.size() > 0) {
             for (LauncherActivityInfoCompat info : matches) {
-                add(new AppInfo(context, info, user, mIconCache, null));
+            	AppInfo newApp = new AppInfo(context, info, user, mIconCache, null);
+                add(newApp);
+                AppDiscoverer.getInstance().applicationInstalled(ApplicationRunInfoManager.generateApplicationRunInfo(newApp.getComponentName(), true));
             }
         }
     }

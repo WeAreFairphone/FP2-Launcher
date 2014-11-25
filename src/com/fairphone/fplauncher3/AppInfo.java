@@ -19,9 +19,6 @@ package com.fairphone.fplauncher3;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -60,6 +57,10 @@ public class AppInfo extends ItemInfo {
     static final int UPDATED_SYSTEM_APP_FLAG = 2;
 
     int flags = 0;
+
+    private APP_AGE mAppAge;
+
+	private boolean mIsPinned;
 
     AppInfo() {
         itemType = LauncherSettings.BaseLauncherColumns.ITEM_TYPE_SHORTCUT;
@@ -114,6 +115,7 @@ public class AppInfo extends ItemInfo {
         flags = info.flags;
         firstInstallTime = info.firstInstallTime;
         iconBitmap = info.iconBitmap;
+        mAppAge = info.mAppAge;
     }
 
     @Override
@@ -136,5 +138,62 @@ public class AppInfo extends ItemInfo {
 
     public ShortcutInfo makeShortcut() {
         return new ShortcutInfo(this);
+    }
+    
+    /**
+     * Returns the application title
+     * @return application title
+     */
+    public String getApplicationTitle(){
+    	return title.toString();
+    }
+
+    public ComponentName getComponentName() {
+        return componentName;
+    }
+
+    public Bitmap getIconBitmap() {
+        return iconBitmap;
+    }
+    
+    public static enum APP_AGE{
+        NEW_APP, FREQUENT_USE, RARE_USE 
+    }
+    
+    public static long getAgeLevelInMiliseconds(APP_AGE age){
+        long result = toMilliSeconds(365000);
+        switch (age) {
+            case NEW_APP:
+                result = toMilliSeconds(1);
+                break;
+            case FREQUENT_USE:
+                result = toMilliSeconds(15);
+                break;
+            case RARE_USE:
+                result = toMilliSeconds(365000);
+                break;
+        }
+        return result;
+    }
+    
+    public static long toMilliSeconds(long days)
+    {
+        return days * 24l * 60l * 60l * 1000l;
+    }
+    
+    public void setAge(APP_AGE age){
+        mAppAge = age;
+    }
+    
+    public APP_AGE getAge(){
+        return mAppAge;
+    }
+    
+    public void setIsPinned(boolean isPinned){
+        mIsPinned = isPinned;
+    }
+    
+    public boolean isPinned(){
+        return mIsPinned;
     }
 }

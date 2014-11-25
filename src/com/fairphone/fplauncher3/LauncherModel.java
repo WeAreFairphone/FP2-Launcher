@@ -59,6 +59,7 @@ import com.fairphone.fplauncher3.compat.PackageInstallerCompat;
 import com.fairphone.fplauncher3.compat.UserHandleCompat;
 import com.fairphone.fplauncher3.compat.UserManagerCompat;
 import com.fairphone.fplauncher3.compat.PackageInstallerCompat.PackageInstallInfo;
+import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
 
 import java.lang.ref.WeakReference;
 import java.net.URISyntaxException;
@@ -2826,6 +2827,8 @@ public class LauncherModel extends BroadcastReceiver
                 Log.d(TAG, "Icons processed in "
                         + (SystemClock.uptimeMillis() - loadTime) + "ms");
             }
+            
+            AppDiscoverer.getInstance().loadAllApps(mBgAllAppsList.data);
         }
 
         public void dumpState() {
@@ -3099,6 +3102,9 @@ public class LauncherModel extends BroadcastReceiver
                     }
                 }
             });
+
+            // update the new data
+            AppDiscoverer.getInstance().loadAllApps(mBgAllAppsList.data);
         }
     }
 

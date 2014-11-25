@@ -322,4 +322,10 @@ s -->
     <string name="contacts_title">CONTACTS</string>
     <string name="not_contacted_anyone_yet">You have not contacted anyone yet.\nJust make some calls or send some messages\nand come back to this screen.</string>
     
+    <!-- Edid favorites -->
+    <string name="edit_favourites">Edit Favourites</string>
+    <string name="drag_here_to_add">Drag here\nto add</string>
+    <string name="drag_here_to_remove">Drag here\nto remove</string>
+    <string name="edit_favourites_remove">Remove</string>
+    
 </resources>

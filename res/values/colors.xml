@@ -42,5 +42,13 @@
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    
+    <!-- Edit favourites -->
+    <color name="edit_favourites_background_white">#F7F7F7</color>
+    <color name="edit_favourites_background_grey_dark">#333333</color>
+    <color name="edit_favourites_text_blue_light">#2AA9E0</color>
+    <color name="edit_favourites_text_grey_dark">#333333</color>
+    <color name="edit_favourites_text_red_dark">#80394A</color>
+    <color name="edit_favourites_text_white">#F7F7F7</color>
 
 </resources>

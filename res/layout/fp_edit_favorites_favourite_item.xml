@@ -1,0 +1,28 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp" >
+
+    <TextView
+        android:id="@+id/favourite_empty"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/background_edit_favourites_stripe_grey_light"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="@string/drag_here_to_add"
+        android:textAllCaps="true"
+        android:textColor="@color/edit_favourites_text_grey_dark"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/favourite_icon"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:paddingTop="10dp" />
+
+</FrameLayout>

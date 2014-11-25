@@ -169,4 +169,12 @@
         <item name="android:shadowRadius">4</item>
     </style>
     
+    <style name="SecondaryMainTitle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    
 </resources>

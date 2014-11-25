@@ -112,9 +112,9 @@ import com.fairphone.fplauncher3.compat.PackageInstallerCompat;
 import com.fairphone.fplauncher3.compat.UserHandleCompat;
 import com.fairphone.fplauncher3.compat.UserManagerCompat;
 import com.fairphone.fplauncher3.compat.PackageInstallerCompat.PackageInstallInfo;
+import com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity;
 import com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherManager;
 import com.fairphone.fplauncher3.widgets.peoplewidget.data.PeopleManager;
-import com.fairphone.fplauncher3.widgets.peoplewidget.receivers.CallListener;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -162,6 +162,7 @@ public class Launcher extends Activity
     private static final int REQUEST_RECONFIGURE_APPWIDGET = 12;
     
     private static final int REQUEST_PICK_SETTINGS = 98;
+    private static final int REQUEST_EDIT_FAVORITES = 99;
 
     /**
      * IntentStarter uses request codes starting with this. This must be greater than all activity
@@ -723,6 +724,8 @@ public class Launcher extends Activity
             case REQUEST_RECONFIGURE_APPWIDGET:
                 completeRestoreAppWidget(args.appWidgetId);
                 break;
+            case REQUEST_EDIT_FAVORITES:
+                break;
         }
         // Before adding this resetAddInfo(), after a shortcut was added to a workspace screen,
         // if you turned the screen off and then back while in All Apps, Launcher would not
@@ -768,6 +771,9 @@ public class Launcher extends Activity
             if (mWorkspace.isInOverviewMode()) {
                 mWorkspace.exitOverviewMode(false);
             }
+            return;
+        } else if (requestCode == REQUEST_EDIT_FAVORITES) {
+            mWaitingForResult = false;
             return;
         }
 
@@ -5010,6 +5016,11 @@ public class Launcher extends Activity
     private void updateActivityInfoViaExplicitIntent(ComponentName component)
     {
         mAppSwitcherManager.applicationStarted(component, false);
+    }
+    
+    public void startEditFavorites()
+    {
+        startActivityForResult(new Intent(this, EditFavoritesActivity.class), REQUEST_EDIT_FAVORITES);
     }
 }
 

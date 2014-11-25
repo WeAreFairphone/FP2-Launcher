@@ -1,0 +1,100 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edit_favourites_menu_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/favourites_group"
+        android:layout_width="122dp"
+        android:layout_height="match_parent"
+        android:background="@color/edit_favourites_background_white"
+        android:orientation="vertical"
+        android:paddingTop="78dp" >
+
+        <include
+            android:id="@+id/favourite_group_1"
+            layout="@layout/fp_edit_favorites_favourite_item" />
+
+        <include
+            android:id="@+id/favourite_group_2"
+            layout="@layout/fp_edit_favorites_favourite_item" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/all_apps_button_icon" />
+
+        <include
+            android:id="@+id/favourite_group_3"
+            layout="@layout/fp_edit_favorites_favourite_item" />
+
+        <include
+            android:id="@+id/favourite_group_4"
+            layout="@layout/fp_edit_favorites_favourite_item" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/all_apps_group"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/edit_favourites_background_grey_dark"
+            android:orientation="vertical"
+            android:paddingBottom="50dp"
+            android:paddingTop="40dp" >
+
+            <TextView
+                style="@style/SecondaryMainTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13.3dp"
+                android:layout_marginLeft="13.3dp"
+                android:layout_marginRight="13.3dp"
+                android:text="@string/edit_favourites" />
+
+            <com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView
+                android:id="@+id/all_apps_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:horizontalSpacing="10dp"
+                android:listSelector="@color/transparent"
+                android:numColumns="2"
+                android:overScrollMode="never"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:scrollbars="none"
+                android:verticalSpacing="10dp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/remove_favourite_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/remove_favourite_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:lines="2"
+            android:text="@string/drag_here_to_remove"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>
