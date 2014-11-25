@@ -32,6 +32,18 @@
         android:fontFamily="sans-serif-condensed"
         android:textAllCaps="true"
         android:textSize="12sp" />
+	<TextView
+        android:id="@+id/settings_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|top"
+        android:text="@string/settings_button_text"
+        android:drawablePadding="4dp"
+        android:gravity="center_horizontal"
+        android:drawableTop="@drawable/setting_button"
+        android:fontFamily="sans-serif-condensed"
+        android:textAllCaps="true"
+        android:textSize="12sp" />
     <TextView
         android:id="@+id/widget_button"
         android:layout_width="wrap_content"
@@ -45,14 +57,14 @@
         android:textAllCaps="true"
         android:textSize="12sp"/>
     <TextView
-        android:id="@+id/settings_button"
+        android:id="@+id/applications_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|top"
-        android:text="@string/settings_button_text"
+        android:text="@string/all_apps_button_label"
         android:drawablePadding="4dp"
         android:gravity="center_horizontal"
-        android:drawableTop="@drawable/setting_button"
+        android:drawableTop="@drawable/all_apps_button_icon"
         android:fontFamily="sans-serif-condensed"
         android:textAllCaps="true"
         android:textSize="12sp" />

@@ -160,6 +160,8 @@ public class Launcher extends Activity
 
     private static final int REQUEST_BIND_APPWIDGET = 11;
     private static final int REQUEST_RECONFIGURE_APPWIDGET = 12;
+    
+    private static final int REQUEST_PICK_SETTINGS = 98;
 
     /**
      * IntentStarter uses request codes starting with this. This must be greater than all activity
@@ -762,7 +764,13 @@ public class Launcher extends Activity
                 mWorkspace.exitOverviewMode(false);
             }
             return;
+        }else if (requestCode == REQUEST_PICK_SETTINGS) {
+            if (mWorkspace.isInOverviewMode()) {
+                mWorkspace.exitOverviewMode(false);
+            }
+            return;
         }
+
 
         boolean isWidgetDrop = (requestCode == REQUEST_PICK_APPWIDGET ||
                 requestCode == REQUEST_CREATE_APPWIDGET);
@@ -1083,6 +1091,12 @@ public class Launcher extends Activity
     protected boolean hasSettings() {
         return false;
     }
+    
+    protected boolean hasAllApps()
+    {
+        // Change to false to hide all apps on the overview pane
+        return true;
+    }
 
     // The custom content needs to offset its content to account for the QSB
     public int getTopOffsetForCustomContent() {
@@ -1262,18 +1276,11 @@ public class Launcher extends Activity
         widgetButton.setOnTouchListener(getHapticFeedbackTouchListener());
 
         View wallpaperButton = findViewById(R.id.wallpaper_button);
-        wallpaperButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                if (!mWorkspace.isSwitchingState()) {
-                    onClickWallpaperPicker(arg0);
-                }
-            }
-        });
-        wallpaperButton.setOnTouchListener(getHapticFeedbackTouchListener());
 
         View settingsButton = findViewById(R.id.settings_button);
         if (hasSettings()) {
+        	wallpaperButton.setVisibility(View.GONE);
+            
             settingsButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
@@ -1285,6 +1292,47 @@ public class Launcher extends Activity
             settingsButton.setOnTouchListener(getHapticFeedbackTouchListener());
         } else {
             settingsButton.setVisibility(View.GONE);
+            
+            wallpaperButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    if (!mWorkspace.isSwitchingState()) {
+                        onClickWallpaperPicker(arg0);
+                    }
+                }
+            });
+            wallpaperButton.setOnTouchListener(getHapticFeedbackTouchListener());
+        }
+        
+        View appsButton = findViewById(R.id.applications_button);
+        if (hasAllApps())
+        {
+            appsButton.setOnClickListener(new OnClickListener()
+            {
+                @Override
+                public void onClick(View arg0)
+                {
+                    if (!mWorkspace.isSwitchingState())
+                    {
+                        onClickAllAppsButton(arg0);
+                    }
+                }
+            });
+            appsButton.setOnLongClickListener(new OnLongClickListener()
+            {
+
+                @Override
+                public boolean onLongClick(View v)
+                {
+                    Toast.makeText(getApplicationContext(), "Don't push me so hard :(", Toast.LENGTH_LONG).show();
+                    return true;
+                }
+            });
+            appsButton.setOnTouchListener(getHapticFeedbackTouchListener());
+        }
+        else
+        {
+            appsButton.setVisibility(View.GONE);
             FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) widgetButton.getLayoutParams();
             lp.gravity = Gravity.END | Gravity.TOP;
             widgetButton.requestLayout();
@@ -2665,6 +2713,7 @@ public class Launcher extends Activity
      */
     protected void onClickSettingsButton(View v) {
         if (LOGD) Log.d(TAG, "onClickSettingsButton");
+        startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), REQUEST_PICK_SETTINGS);
     }
 
     public void onTouchDownAllAppsButton(View v) {
