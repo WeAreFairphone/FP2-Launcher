@@ -2642,10 +2642,6 @@ public class Launcher extends Activity
         boolean success = startActivitySafely(v, intent, tag);
         mStats.recordLaunch(intent, shortcut);
         
-        if (isAllAppsVisible()) {
-            showWorkspace(true);
-        }
-        
         if (success && v instanceof BubbleTextView) {
             mWaitingForResume = (BubbleTextView) v;
             mWaitingForResume.setStayPressed(true);
