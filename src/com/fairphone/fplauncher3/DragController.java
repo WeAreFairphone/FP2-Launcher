@@ -28,7 +28,10 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
+
 import com.fairphone.fplauncher3.R;
+import com.fairphone.fplauncher3.edgeswipe.editor.ui.EdgeSwipeInterceptorViewListener;
+
 import java.util.ArrayList;
 
 /**
@@ -36,6 +39,13 @@ import java.util.ArrayList;
  */
 public class DragController {
     private static final String TAG = "Launcher.DragController";
+
+	// Two states, the normal where the drag controller works as intended by
+	// google,
+	// the menu show where it shows the menu and does not scrolling
+	private static enum MovementState {
+		NORMAL, MENU_SHOW
+	};
 
     /** Indicates the drag is a move.  */
     public static int DRAG_ACTION_MOVE = 0;
@@ -111,6 +121,14 @@ public class DragController {
     protected int mFlingToDeleteThresholdVelocity;
     private VelocityTracker mVelocityTracker;
 
+	// the state regarding the menu
+	protected MovementState mCurrentState;
+
+	// edge swipe limits
+	protected int mEdgeSwipePixelEdgeLimit;
+
+	//
+
     /**
      * Interface to receive notifications when a drag starts or stops
      */
@@ -143,9 +161,42 @@ public class DragController {
         mScrollZone = r.getDimensionPixelSize(R.dimen.scroll_zone);
         mVelocityTracker = VelocityTracker.obtain();
 
+		mEdgeSwipePixelEdgeLimit = r.getDimensionPixelSize(R.dimen.edge_swipe_show_limit);
+
         float density = r.getDisplayMetrics().density;
         mFlingToDeleteThresholdVelocity =
                 (int) (r.getInteger(R.integer.config_flingToDeleteMinVelocity) * density);
+    }
+
+	private ArrayList<EdgeSwipeInterceptorViewListener> mEdgeSwipeListeners = new ArrayList<EdgeSwipeInterceptorViewListener>();
+
+	public void addOnSelectionListener(EdgeSwipeInterceptorViewListener listener) {
+		mEdgeSwipeListeners.add(listener);
+	}
+
+	public void removeOnSelectionListener(
+			EdgeSwipeInterceptorViewListener listener) {
+		mEdgeSwipeListeners.remove(listener);
+	}
+
+	private void startMenuSelection(MotionEvent ev) {
+		for (EdgeSwipeInterceptorViewListener listener : mEdgeSwipeListeners) {
+			listener.onSelectionStarted(ev.getX(), ev.getY());
+		}
+	}
+
+	private void updateMenuSelection(MotionEvent ev) {
+		for (EdgeSwipeInterceptorViewListener listener : mEdgeSwipeListeners) {
+			listener.onSelectionUpdate(ev.getX(), ev.getY());
+		}
+	}
+
+	private void stopMenuSelection(MotionEvent ev) {
+		for (EdgeSwipeInterceptorViewListener listener : mEdgeSwipeListeners) {
+			listener.onSelectionFinished(ev.getX(), ev.getY());
+		}
+
+		mCurrentState = MovementState.NORMAL;
     }
 
     public boolean dragging() {
@@ -405,6 +456,13 @@ public class DragController {
         mLastTouchUpTime = -1;
     }
 
+	int count = 0;
+	int limit = 20;
+	int pointerId;
+
+	boolean canShowMenuInThisMovement = true;
+	boolean startMenu = false;
+
     /**
      * Call this from a drag source view.
      */
@@ -418,22 +476,44 @@ public class DragController {
 
         // Update the velocity tracker
         acquireVelocityTrackerAndAddMovement(ev);
+		// verify the edgeswipe menu
+		calculateShowMenuInThisMovement(ev);
 
         final int action = ev.getAction();
         final int[] dragLayerPos = getClampedDragLayerPos(ev.getX(), ev.getY());
         final int dragLayerX = dragLayerPos[0];
         final int dragLayerY = dragLayerPos[1];
 
+		boolean returnDragging = false;
+
         switch (action) {
             case MotionEvent.ACTION_MOVE:
+			if (mCurrentState == MovementState.MENU_SHOW) {
+				returnDragging = true;
+				updateMenuSelection(ev);
+
+				pointerId = ev.getPointerId(ev.getActionIndex());
+			}
                 break;
             case MotionEvent.ACTION_DOWN:
+			if (mCurrentState == MovementState.NORMAL) {
                 // Remember location of down touch
                 mMotionDownX = dragLayerX;
                 mMotionDownY = dragLayerY;
                 mLastDropTarget = null;
+			} else if (mCurrentState == MovementState.MENU_SHOW) {
+				returnDragging = true;
+				if (startMenu) {
+					startMenuSelection(ev);
+					startMenu = false;
+				}
+				pointerId = ev.getPointerId(ev.getActionIndex());
+			}
                 break;
             case MotionEvent.ACTION_UP:
+			if (mCurrentState == MovementState.NORMAL) {
+				count = 0;
+
                 mLastTouchUpTime = System.currentTimeMillis();
                 if (mDragging) {
                     PointF vec = isFlingingToDelete(mDragObject.dragSource);
@@ -447,13 +527,62 @@ public class DragController {
                     }
                 }
                 endDrag();
+			} else if (mCurrentState == MovementState.MENU_SHOW) {
+				stopMenuSelection(ev);
+
+				// mDragging = false;
+				returnDragging = false;
+				pointerId = ev.getPointerId(ev.getActionIndex());
+			}
+
+			mCurrentState = MovementState.NORMAL;
+			canShowMenuInThisMovement = true;
+
                 break;
             case MotionEvent.ACTION_CANCEL:
+			if (mCurrentState == MovementState.NORMAL) {
                 cancelDrag();
+			} else {
+				stopMenuSelection(ev);
+				returnDragging = false;
+				pointerId = ev.getPointerId(ev.getActionIndex());
+			}
+
+			mCurrentState = MovementState.NORMAL;
+			canShowMenuInThisMovement = true;
+
                 break;
         }
 
-        return mDragging;
+		if (mCurrentState == MovementState.NORMAL) {
+			returnDragging = mDragging;
+		}
+
+		return returnDragging;
+	}
+
+	private void calculateShowMenuInThisMovement(MotionEvent ev) {
+		// ignore menu if dragging
+		if (isDragging()) {
+			canShowMenuInThisMovement = false;
+		}
+
+		// if from the edges and in limits
+		if (fromTheEdges(ev) && mLauncher.isWorkspaceVisible()) {
+			mCurrentState = MovementState.MENU_SHOW;
+
+			startMenu = true;
+			boolean fromLeft = ev.getX() > (mLauncher.getResources().getDisplayMetrics().widthPixels / 2); 
+			mLauncher.launchEdgeSwipe(fromLeft);
+		}
+	}
+
+	private boolean fromTheEdges(MotionEvent ev) {
+		
+	    boolean isFromEdges = (ev.getX() < mEdgeSwipePixelEdgeLimit) || 
+		                      (ev.getX() > (mLauncher.getResources().getDisplayMetrics().widthPixels - mEdgeSwipePixelEdgeLimit));
+		
+		return isFromEdges;
     }
 
     /**
@@ -555,7 +684,8 @@ public class DragController {
      * Call this from a drag source view.
      */
     public boolean onTouchEvent(MotionEvent ev) {
-        if (!mDragging) {
+
+		if (!mDragging && mCurrentState == MovementState.NORMAL) {
             return false;
         }
 
@@ -569,6 +699,7 @@ public class DragController {
 
         switch (action) {
         case MotionEvent.ACTION_DOWN:
+			if (mCurrentState == MovementState.NORMAL) {
             // Remember where the motion event started
             mMotionDownX = dragLayerX;
             mMotionDownY = dragLayerY;
@@ -580,12 +711,20 @@ public class DragController {
                 mScrollState = SCROLL_OUTSIDE_ZONE;
             }
             handleMoveEvent(dragLayerX, dragLayerY);
+}
             break;
         case MotionEvent.ACTION_MOVE:
+			if (mCurrentState == MovementState.NORMAL) {
             handleMoveEvent(dragLayerX, dragLayerY);
+			} else {
+				updateMenuSelection(ev);
+			}
             break;
         case MotionEvent.ACTION_UP:
-            // Ensure that we've processed a move event at the current pointer location.
+			// Ensure that we've processed a move event at the current pointer
+			// location.
+
+			if (mCurrentState == MovementState.NORMAL) {
             handleMoveEvent(dragLayerX, dragLayerY);
             mHandler.removeCallbacks(mScrollRunnable);
 
@@ -601,10 +740,25 @@ public class DragController {
                 }
             }
             endDrag();
+			} else {
+				stopMenuSelection(ev);
+			}
+
+			mCurrentState = MovementState.NORMAL;
+			canShowMenuInThisMovement = true;
+
             break;
         case MotionEvent.ACTION_CANCEL:
+			if (mCurrentState == MovementState.NORMAL) {
             mHandler.removeCallbacks(mScrollRunnable);
             cancelDrag();
+			} else {
+				stopMenuSelection(ev);
+			}
+
+			mCurrentState = MovementState.NORMAL;
+			canShowMenuInThisMovement = true;
+
             break;
         }
 

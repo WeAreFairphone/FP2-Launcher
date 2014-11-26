@@ -112,6 +112,7 @@ import com.fairphone.fplauncher3.compat.PackageInstallerCompat;
 import com.fairphone.fplauncher3.compat.UserHandleCompat;
 import com.fairphone.fplauncher3.compat.UserManagerCompat;
 import com.fairphone.fplauncher3.compat.PackageInstallerCompat.PackageInstallInfo;
+import com.fairphone.fplauncher3.edgeswipe.EdgeSwipeMenu;
 import com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity;
 import com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherManager;
 import com.fairphone.fplauncher3.widgets.peoplewidget.data.PeopleManager;
@@ -389,6 +390,8 @@ public class Launcher extends Activity
     
 	private AppSwitcherManager mAppSwitcherManager;
 	private PeopleManager mPeopleManager;
+	private FrameLayout mEdgeMenuContainerView;
+	private EdgeSwipeMenu mEdgeSwipeMenu;
 
     static boolean isPropertyEnabled(String propertyName) {
         return Log.isLoggable(propertyName, Log.VERBOSE);
@@ -508,6 +511,7 @@ public class Launcher extends Activity
         
         mAppSwitcherManager = new AppSwitcherManager(this, this);
         mPeopleManager = new PeopleManager(this, this);
+        setupEdgeSwipeMenu();
     }
 
     @Override
@@ -2808,7 +2812,7 @@ public class Launcher extends Activity
         }
     }
 
-    boolean startActivity(View v, Intent intent, Object tag) {
+    public boolean startActivity(View v, Intent intent, Object tag) {
     	ComponentName component = intent != null ? intent.getComponent() : null;
         Log.d(TAG, "Start Activity >>> " + (component != null ? component.toString() : "implicit Intent."));
 
@@ -5018,6 +5022,18 @@ public class Launcher extends Activity
     {
         startActivityForResult(new Intent(this, EditFavoritesActivity.class), REQUEST_EDIT_FAVORITES);
     }
+	public boolean isWorkspaceVisible() {
+		return !mWorkspace.isInOverviewMode() && !isAllAppsVisible() && (mState == State.WORKSPACE) || (mOnResumeState == State.WORKSPACE);
+	}
+	
+	private void setupEdgeSwipeMenu() {
+		mEdgeMenuContainerView = (FrameLayout)findViewById(R.id.edge_menu_container);
+        mEdgeSwipeMenu = new EdgeSwipeMenu(this, mEdgeMenuContainerView);
+	}
+
+	public void launchEdgeSwipe(boolean fromLeft) {
+		mEdgeSwipeMenu.showEdgeSwipe(fromLeft);
+	}
 }
 
 interface LauncherTransitionable {

@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <View
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="@drawable/edge_swipe_item_left_selected" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginLeft="100dp"/>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="180dp"
+        android:gravity="left|center_vertical"
+        android:text="App name"
+        android:textColor="#123C59"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</FrameLayout>

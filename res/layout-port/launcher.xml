@@ -71,4 +71,8 @@
             android:layout_height="match_parent"
             android:visibility="invisible" />
     </com.fairphone.fplauncher3.DragLayer>
+    <FrameLayout
+        android:id="@+id/edge_menu_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>
