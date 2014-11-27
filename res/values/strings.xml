@@ -328,5 +328,6 @@ s -->
     <string name="drag_here_to_add">Drag here\nto add</string>
     <string name="drag_here_to_remove">Drag here\nto remove</string>
     <string name="edit_favourites_remove">Remove</string>
+    <string name="add_app">Add app</string>
     
 </resources>

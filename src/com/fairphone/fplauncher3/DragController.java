@@ -168,32 +168,27 @@ public class DragController {
                 (int) (r.getInteger(R.integer.config_flingToDeleteMinVelocity) * density);
     }
 
-	private ArrayList<EdgeSwipeInterceptorViewListener> mEdgeSwipeListeners = new ArrayList<EdgeSwipeInterceptorViewListener>();
+	private EdgeSwipeInterceptorViewListener mEdgeSwipeInterceptorViewListener;
 
-	public void addOnSelectionListener(EdgeSwipeInterceptorViewListener listener) {
-		mEdgeSwipeListeners.add(listener);
-	}
-
-	public void removeOnSelectionListener(
-			EdgeSwipeInterceptorViewListener listener) {
-		mEdgeSwipeListeners.remove(listener);
+	public void setEdgeSwipeInterceptorViewListener(EdgeSwipeInterceptorViewListener listener) {
+		mEdgeSwipeInterceptorViewListener = listener;
 	}
 
 	private void startMenuSelection(MotionEvent ev) {
-		for (EdgeSwipeInterceptorViewListener listener : mEdgeSwipeListeners) {
-			listener.onSelectionStarted(ev.getX(), ev.getY());
+		if (mEdgeSwipeInterceptorViewListener != null) {
+			mEdgeSwipeInterceptorViewListener.onSelectionStarted(ev.getX(), ev.getY());
 		}
 	}
 
 	private void updateMenuSelection(MotionEvent ev) {
-		for (EdgeSwipeInterceptorViewListener listener : mEdgeSwipeListeners) {
-			listener.onSelectionUpdate(ev.getX(), ev.getY());
+		if (mEdgeSwipeInterceptorViewListener != null) {
+			mEdgeSwipeInterceptorViewListener.onSelectionUpdate(ev.getX(), ev.getY());
 		}
 	}
 
 	private void stopMenuSelection(MotionEvent ev) {
-		for (EdgeSwipeInterceptorViewListener listener : mEdgeSwipeListeners) {
-			listener.onSelectionFinished(ev.getX(), ev.getY());
+		if (mEdgeSwipeInterceptorViewListener != null) {
+			mEdgeSwipeInterceptorViewListener.onSelectionFinished(ev.getX(), ev.getY());
 		}
 
 		mCurrentState = MovementState.NORMAL;
@@ -572,8 +567,6 @@ public class DragController {
 			mCurrentState = MovementState.MENU_SHOW;
 
 			startMenu = true;
-			boolean fromLeft = ev.getX() > (mLauncher.getResources().getDisplayMetrics().widthPixels / 2); 
-			mLauncher.launchEdgeSwipe(fromLeft);
 		}
 	}
 

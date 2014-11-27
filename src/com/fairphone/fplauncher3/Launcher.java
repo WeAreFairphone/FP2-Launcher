@@ -5028,11 +5028,7 @@ public class Launcher extends Activity
 	
 	private void setupEdgeSwipeMenu() {
 		mEdgeMenuContainerView = (FrameLayout)findViewById(R.id.edge_menu_container);
-        mEdgeSwipeMenu = new EdgeSwipeMenu(this, mEdgeMenuContainerView);
-	}
-
-	public void launchEdgeSwipe(boolean fromLeft) {
-		mEdgeSwipeMenu.showEdgeSwipe(fromLeft);
+        mEdgeSwipeMenu = new EdgeSwipeMenu(this, this, mDragController, mEdgeMenuContainerView);
 	}
 }
 
