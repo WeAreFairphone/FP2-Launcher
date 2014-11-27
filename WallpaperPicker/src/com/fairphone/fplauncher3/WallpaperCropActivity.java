@@ -29,6 +29,9 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -42,11 +45,12 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
+
 import com.android.gallery3d.common.Utils;
 import com.android.gallery3d.exif.ExifInterface;
 import com.android.photos.BitmapRegionTileSource;
 import com.android.photos.BitmapRegionTileSource.BitmapSource;
-import com.fairphone.fplauncher3.R;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -69,6 +73,8 @@ public class WallpaperCropActivity extends Activity {
      */
     public static final int MAX_BMAP_IN_INTENT = 750000;
     private static final float WALLPAPER_SCREENS_SPAN = 2f;
+    
+    private static final float MAX_BRIGHTNESS = 180f;
 
     protected static Point sDefaultWallpaperSize;
 
@@ -591,6 +597,28 @@ public class WallpaperCropActivity extends Activity {
                 try {
                     InputStream is = regenerateInputStream();
                     if (is != null) {
+                        Bitmap bmp = BitmapFactory.decodeStream(is);
+                        float bdiff = (MAX_BRIGHTNESS - getLuma(bmp));
+                        bmp = changeBitmapContrastBrightness(bmp, 1f, bdiff > 0 ? 0 : bdiff);
+
+                        // Get output compression format
+                        CompressFormat cf =
+                                convertExtensionToCompressFormat(getFileExtension(mOutputFormat));
+                        // Compress to byte array
+                        ByteArrayOutputStream tmpOut = new ByteArrayOutputStream(2048);
+                        if (bmp.compress(cf, DEFAULT_COMPRESS_QUALITY, tmpOut)) {
+                           try {
+                                byte[] outByteArray = tmpOut.toByteArray();
+                                wallpaperManager.setStream(new ByteArrayInputStream(outByteArray));
+                            } catch (IOException e) {
+                                Log.w(LOGTAG, "cannot write stream to wallpaper", e);
+                                failure = true;
+                            }
+                        } else {
+                            Log.w(LOGTAG, "cannot compress bitmap");
+                            failure = true;
+                        }
+                        
                         wallpaperManager.setStream(is);
                         Utils.closeSilently(is);
                     }
@@ -772,6 +800,8 @@ public class WallpaperCropActivity extends Activity {
                     }
                 }
 
+                float bdiff = (MAX_BRIGHTNESS - getLuma(crop));
+                crop = changeBitmapContrastBrightness(crop, 1f, bdiff > 0 ? 0 : bdiff);
                 if (mSaveCroppedBitmap) {
                     mCroppedBitmap = crop;
                 }
@@ -802,6 +832,64 @@ public class WallpaperCropActivity extends Activity {
                 }
             }
             return !failure; // True if any of the operations failed
+        }
+        
+        protected static float getLuma(Bitmap bmp)
+        {
+            // LUMA MATRIX MxN
+            final int M = 5;
+            final int N = 10;
+            int lumaMatrix[][] = new int[M][N];
+            int lumaMatrixN[][] = new int[M][N];
+            for(int x = 0; x < bmp.getWidth(); x += 3){
+                for(int y = 0; y < bmp.getHeight(); y += 3) {
+                    int c = bmp.getPixel(x, y);
+                    int mX = (int) (x*M/bmp.getWidth());
+                    int mY = (int) (y*N/bmp.getHeight());
+
+                    lumaMatrix[mX][mY] += 0.299f*Color.red(c) + 0.587f*Color.green(c) + 0.114f*Color.blue(c);
+                    lumaMatrixN[mX][mY] += 1;
+                }
+            }
+            float lumamax = 0f;
+            for(int x = 0; x < M; ++x){
+                for(int y = 0; y < N; ++y) {
+                    lumaMatrix[x][y] /= lumaMatrixN[x][y];
+                    final float luma = lumaMatrix[x][y];
+                    if (luma > lumamax) {
+                        lumamax = luma;
+                    }
+                }
+            }
+            return lumamax;
+        }
+        
+        /**
+         * 
+         * @param bmp input bitmap
+         * @param contrast 0..10 1 is default
+         * @param brightness -255..255 0 is default
+         * @return new bitmap
+         */
+        protected static Bitmap changeBitmapContrastBrightness(Bitmap bmp, float contrast, float brightness)
+        {
+            ColorMatrix cm = new ColorMatrix(new float[]
+                    {
+                        contrast, 0, 0, 0, brightness,
+                        0, contrast, 0, 0, brightness,
+                        0, 0, contrast, 0, brightness,
+                        0, 0, 0, 1, 0
+                    });
+
+            Bitmap ret = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
+
+            Canvas canvas = new Canvas(ret);
+
+            Paint paint = new Paint();
+            paint.setColorFilter(new ColorMatrixColorFilter(cm));
+            canvas.drawBitmap(bmp, 0, 0, paint);
+
+            return ret;
         }
 
         @Override
