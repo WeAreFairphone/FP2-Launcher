@@ -104,7 +104,6 @@
     <dimen name="contact_picture_size">60dp</dimen>
     
     <!-- Edge swipe menu -->
-    <!-- EdgeSwipe -->
 	<dimen name="edge_swipe_show_limit">8dp</dimen>
     <dimen name="edge_swipe_translate_offset">100dp</dimen>
     <dimen name="edge_swipe_item_icon_translate">30dp</dimen>
@@ -115,5 +114,6 @@
     <item name="edge_swipe_translate_delay_duration" format="integer" type="dimen">100</item>
     <item name="edge_swipe_animate_out_duration" format="integer" type="dimen">200</item>
     <item name="edge_swipe_items_ammount" format="integer" type="dimen">5</item>
+    <dimen name="edge_swipe_dead_zone">90dp</dimen>
     
 </resources>

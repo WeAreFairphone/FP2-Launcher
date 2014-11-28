@@ -165,8 +165,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 
 		ObjectAnimator showBackground = ObjectAnimator.ofFloat(
 				mMenuBackgroundView, View.ALPHA, 0, 1);
-		showBackground.setDuration(resources
-				.getInteger(R.integer.edge_swipe_background_fade_duration));
+		showBackground.setDuration(resources.getInteger(R.integer.edge_swipe_background_fade_duration));
 
 		showEdgeSwipeAnimatorSet.play(showBackground);
 		mEdgeSwipeHolder.setAlpha(1);
@@ -399,7 +398,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 		if (mEdgeSwipeHolder != null) {
 			View firstChild = mEdgeSwipeHolder.getChildAt(0);
 			float menuHolderY = mEdgeSwipeHolder.getY();
-			if (firstChild != null && pointerY > menuHolderY) {
+			if (isInActiveZone(pointerX) && firstChild != null && pointerY > menuHolderY) {
 				float startingPoint = pointerY - menuHolderY;
 				int currentItem = (int) (startingPoint / firstChild.getHeight());
 				View item;
@@ -436,7 +435,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 	public void onSelectionFinished(float pointerX, float pointerY) {
 		if (isInEditZone(pointerX, pointerY)) {
 			mLauncher.startEditFavorites();
-		} else {
+		} else if (isInActiveZone(pointerX)) {
 			View item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
 			if (item != null) {
 				animateItemOut(item);
@@ -529,5 +528,24 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
         //set Y coords
 		mEditButton.setY(displayMetrics.heightPixels / 2
 				- (mEditButton.getHeight() / 2));
+	}
+	
+	private boolean isInActiveZone(float pointerX) {
+        boolean isActive = false;
+        float deadZoneSize = mLauncher.getResources().getDimension(R.dimen.edge_swipe_dead_zone);
+        DisplayMetrics displayMetrics = mLauncher.getResources().getDisplayMetrics();
+        
+		// set the X coords
+		switch (mSide)
+        {
+            case LEFT_SIDE:
+            	isActive = pointerX > deadZoneSize;
+                break;
+            case RIGHT_SIDE:
+            	isActive = pointerX < (displayMetrics.widthPixels - deadZoneSize);
+                break;
+        }
+        
+        return isActive;
 	}
 }
