@@ -75,7 +75,7 @@ public class DynamicGrid {
                 296, 491.33f,  4, 4,  48, 13, R.xml.default_workspace_4x4,
                 R.xml.default_workspace_4x4_no_all_apps));
         deviceProfiles.add(new DeviceProfile("Nexus 4",
-                335, 567,  4, 4,  DEFAULT_ICON_SIZE_DP, 13, R.xml.default_workspace_4x4,
+                335, 567,  5, 4,  DEFAULT_ICON_SIZE_DP, 13, R.xml.default_workspace_4x4,
                 R.xml.default_workspace_4x4_no_all_apps));
         deviceProfiles.add(new DeviceProfile("Nexus 5",
                 359, 567,  5, 4,  DEFAULT_ICON_SIZE_DP, 13, R.xml.default_workspace_4x4,
