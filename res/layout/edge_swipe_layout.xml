@@ -20,17 +20,4 @@
         android:orientation="vertical"
         android:weightSum="5" />
 
-    <TextView
-        android:id="@+id/edit_button"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:text="@string/edit"
-        android:textAllCaps="true"
-        android:textColor="#123C59"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
 </FrameLayout>

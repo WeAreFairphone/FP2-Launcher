@@ -14,7 +14,8 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="right|center_vertical"
-        android:layout_marginRight="100dp" />
+        android:layout_marginRight="100dp"
+        android:scaleType="centerInside" />
 
     <TextView
         android:id="@+id/text"
@@ -22,7 +23,19 @@
         android:layout_height="match_parent"
         android:layout_marginRight="180dp"
         android:gravity="right|center_vertical"
-        android:textColor="#123C59"
+        android:textColor="@color/edge_swipe_text_blue"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/edit_button"
+        android:layout_width="140dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|center_vertical"
+        android:gravity="center"
+        android:text="@string/edit"
+        android:textAllCaps="true"
+        android:textColor="@color/edge_swipe_text_blue"
         android:textSize="20sp"
         android:textStyle="bold" />
 

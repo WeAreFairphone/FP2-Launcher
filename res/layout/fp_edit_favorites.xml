@@ -23,10 +23,10 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/all_apps_button_icon" />
+            android:layout_height="60dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/icon_allapps_grey" />
 
         <include
             android:id="@+id/favourite_group_3"

@@ -46,7 +46,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
     private View mMenuBackgroundView;
     private FrameLayout mEdgeSwipeGroup;
     private LinearLayout mEdgeSwipeHolder;
-    private View mEditButton;
+    private TextView mEditButton;
 
     private int mPreviousItem;
     private boolean isAnimatingItem;
@@ -85,7 +85,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
         mEdgeSwipeGroup = (FrameLayout) mParentView.findViewById(R.id.edge_swipe_group);
         mEdgeSwipeHolder = (LinearLayout) mParentView.findViewById(R.id.edge_swipe_holder);
         mMenuBackgroundView = mEdgeSwipeGroup.findViewById(R.id.background);
-        mEditButton = mEdgeSwipeGroup.findViewById(R.id.edit_button);
+        mEditButton = null;
     }
         
     private void launchMenuItem(Intent launchIntent, int itemPosition)
@@ -235,12 +235,18 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
     {
         ImageView icon = (ImageView) item.findViewById(R.id.icon);
         TextView text = (TextView) item.findViewById(R.id.text);
+        TextView editButton = (TextView) item.findViewById(R.id.edit_button);
 
+        if(editButton != null){
+        	editButton.setAlpha(0);
+        }
+        
         //IF ALL APPS ICON
         if (position == 2)
         {
-            icon.setImageResource(R.drawable.ic_allapps);
+            icon.setImageResource(R.drawable.icon_allapps_blue);
             text.setText("");
+            mEditButton = editButton;
             return;
         }
         
@@ -252,7 +258,17 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
         
         if (applicationInfo == null)
         {
+        	icon.setImageResource(R.drawable.icon_edge_swipe_add);
             label = resources.getString(R.string.add_app).toUpperCase();
+            switch (mSide) {
+			case RIGHT_SIDE:
+				item.setBackgroundResource(R.drawable.edge_swipe_item_right_edged_lines);
+				break;
+
+			case LEFT_SIDE:
+				item.setBackgroundResource(R.drawable.edge_swipe_item_left_edged_lines);
+				break;
+			}  
         }
         else
         {
@@ -276,13 +292,21 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
         item.setTag(launchIntent);
     }
 
-    private void animateItemIn(View item)
+    private void animateItemIn(View item, int currentItem)
     {
     	Resources resources = mContext.getResources();
     	
         View background = (View) item.findViewById(R.id.background);
         ImageView icon = (ImageView) item.findViewById(R.id.icon);
         TextView text = (TextView) item.findViewById(R.id.text);
+        
+        text.setTextColor(resources.getColor(R.color.edge_swipe_text_blue_selected));
+        
+        //IF ALL APPS ICON
+        if (currentItem == 2)
+        {
+            icon.setImageResource(R.drawable.icon_allapps_black);
+        }
         
         float iconTranslateValue = resources.getDimension(R.dimen.edge_swipe_item_icon_translate);
         float textTranslateValue = resources.getDimension(R.dimen.edge_swipe_item_text_translate);
@@ -338,7 +362,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 		translateView.start();
 	}
 
-    private void animateItemOut(View item)
+    private void animateItemOut(View item, int currentItem)
     {
     	Resources resources = mContext.getResources();
    
@@ -347,6 +371,12 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
         TextView text = (TextView) item.findViewById(R.id.text);
         long translateDuration = resources.getInteger(R.integer.edge_swipe_translate_duration);
 
+        text.setTextColor(resources.getColor(R.color.edge_swipe_text_blue));
+		// IF ALL APPS ICON
+		if (currentItem == 2) {
+			icon.setImageResource(R.drawable.icon_allapps_blue);
+		}
+        
         ObjectAnimator fadeBackground = ObjectAnimator.ofFloat(background, View.ALPHA, 1, 0);
         fadeBackground.setDuration(translateDuration);
         fadeBackground.addListener(new AnimatorListener()
@@ -402,17 +432,17 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 				float startingPoint = pointerY - menuHolderY;
 				int currentItem = (int) (startingPoint / firstChild.getHeight());
 				View item;
-				if (mPreviousItem != currentItem && mPreviousItem != -1) {
+				if (isInEditZone(pointerX, pointerY) || (mPreviousItem != currentItem && mPreviousItem != -1)) {
 					item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
 					if (item != null) {
-						animateItemOut(item);
+						animateItemOut(item, mPreviousItem);
 					}
 				}
 
 				if (!isAnimatingItem) {
 					item = mEdgeSwipeHolder.getChildAt(currentItem);
 					if (item != null) {
-						animateItemIn(item);
+						animateItemIn(item, currentItem);
 					}
 				}
 				mPreviousItem = currentItem;
@@ -420,10 +450,10 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 			else
 			{
 				View item;
-				if (mPreviousItem != -1) {
+				if (isInEditZone(pointerX, pointerY) || mPreviousItem != -1) {
 					item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
 					if (item != null) {
-						animateItemOut(item);
+						animateItemOut(item, mPreviousItem);
 					}
 					mPreviousItem = -1;
 				}
@@ -438,7 +468,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 		} else if (isInActiveZone(pointerX)) {
 			View item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
 			if (item != null) {
-				animateItemOut(item);
+				animateItemOut(item, mPreviousItem);
 				Intent launchIntent = (Intent) item.getTag();
 				launchMenuItem(launchIntent, mPreviousItem);
 			}
@@ -455,20 +485,32 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
         	return false;
         }
         
+    	int[] coord = new int[2];
+    	mEditButton.getLocationInWindow(coord);
+    	int editBackgroundResourceId = 0;
     	switch (mSide)
         {
             case LEFT_SIDE:
-                validX = pointerX >= mEditButton.getX();
+                validX = pointerX >= coord[0];
+                editBackgroundResourceId = R.drawable.edge_swipe_item_left_selected;
                 break;
             case RIGHT_SIDE:
-            	validX = pointerX <= (mEditButton.getX() + mEditButton.getWidth());
+            	validX = pointerX <= (coord[0] + mEditButton.getWidth());
+            	editBackgroundResourceId = R.drawable.edge_swipe_item_right_selected;
                 break;
             default:
                 break;
         }
-    	validY = pointerY >= mEditButton.getY();
-    	validY &= pointerY <= mEditButton.getY() + mEditButton.getHeight();
-        
+    	validY = pointerY >= coord[1];
+    	validY &= pointerY <= coord[1] + mEditButton.getHeight();
+
+        if(validX && validY){
+        	mEditButton.setTextColor(mContext.getResources().getColor(R.color.edge_swipe_text_blue_selected));
+        	mEditButton.setBackgroundResource(editBackgroundResourceId);
+        }else {
+        	mEditButton.setTextColor(mContext.getResources().getColor(R.color.edge_swipe_text_blue));
+        	mEditButton.setBackground(null);
+        }
         return validX && validY;
     }
 	
@@ -509,25 +551,8 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 	}
 
 	private void setupEditButtonPositionAndTimer() {
-		
-		mEditButton.setAlpha(0);
 		//set edit menu button timer
         mEditMenuButtonStartTime = System.currentTimeMillis() + mLauncher.getResources().getInteger(R.integer.edge_swipe_show_edit_button_time);
-        DisplayMetrics displayMetrics = mLauncher.getResources().getDisplayMetrics();
-		// set the X coords
-		switch (mSide)
-        {
-            case LEFT_SIDE:
-                mEditButton.setX((int) (displayMetrics.widthPixels - mEditButton.getWidth()));
-                break;
-            case RIGHT_SIDE:
-            	mEditButton.setX(0);
-                break;
-        }
-        
-        //set Y coords
-		mEditButton.setY(displayMetrics.heightPixels / 2
-				- (mEditButton.getHeight() / 2));
 	}
 	
 	private boolean isInActiveZone(float pointerX) {
