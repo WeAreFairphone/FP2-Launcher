@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/edit_favorites_icon_size"
+    android:layout_height="@dimen/edit_favorites_icon_size" >
+
+    <ImageView
+        android:id="@+id/all_apps_launcher_widget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/all_apps_button_icon" />
+
+</FrameLayout>

@@ -1,0 +1,9 @@
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:autoAdvanceViewId="@+id/appDrawerWidget"
+    android:initialLayout="@layout/fp_all_apps_widget"
+    android:label="@string/fp_all_apps_widget_name"
+    android:minHeight="@dimen/edit_favorites_icon_size"
+    android:minWidth="@dimen/edit_favorites_icon_size"
+    android:previewImage="@drawable/ic_allapps"
+    android:resizeMode="none"
+    android:updatePeriodMillis="0" />
