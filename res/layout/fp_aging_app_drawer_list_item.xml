@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/all_apps_button_background"
+        android:drawablePadding="3dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center_horizontal"
+        android:lines="1"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textColor="@color/all_apps_text_color"
+        android:textSize="12.6sp" />
+
+    <TextView
+        android:id="@+id/new_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="16.6dp"
+        android:layout_marginTop="48dp"
+        android:background="#EE00C752"
+        android:clickable="false"
+        android:focusable="false"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/label_new_app"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="12.6sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/updated_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="16.6dp"
+        android:layout_marginTop="48dp"
+        android:background="#EE3FC3FF"
+        android:clickable="false"
+        android:focusable="false"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/label_updated_app"
+        android:textAllCaps="true"
+        android:textColor="#123C59"
+        android:textSize="12.6sp"
+        android:visibility="gone" />
+
+</FrameLayout>
