@@ -44,6 +44,7 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
     private boolean mIsSearchBarHidden;
     private View mDropTargetBar;
     private ButtonDropTarget mInfoDropTarget;
+    private ButtonDropTarget mPinDropTarget;
     private ButtonDropTarget mDeleteDropTarget;
     private int mBarHeight;
     private boolean mDeferOnDragEnd = false;
@@ -62,11 +63,14 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
     public void setup(Launcher launcher, DragController dragController) {
         dragController.addDragListener(this);
         dragController.addDragListener(mInfoDropTarget);
+        dragController.addDragListener(mPinDropTarget);
         dragController.addDragListener(mDeleteDropTarget);
         dragController.addDropTarget(mInfoDropTarget);
+        dragController.addDropTarget(mPinDropTarget);
         dragController.addDropTarget(mDeleteDropTarget);
         dragController.setFlingToDeleteDropTarget(mDeleteDropTarget);
         mInfoDropTarget.setLauncher(launcher);
+        mPinDropTarget.setLauncher(launcher);
         mDeleteDropTarget.setLauncher(launcher);
     }
 
@@ -94,9 +98,11 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
         // Get the individual components
         mDropTargetBar = findViewById(R.id.drag_target_bar);
         mInfoDropTarget = (ButtonDropTarget) mDropTargetBar.findViewById(R.id.info_target_text);
+        mPinDropTarget = (ButtonDropTarget) mDropTargetBar.findViewById(R.id.pin_target_text);
         mDeleteDropTarget = (ButtonDropTarget) mDropTargetBar.findViewById(R.id.delete_target_text);
 
         mInfoDropTarget.setSearchDropTargetBar(this);
+        mPinDropTarget.setSearchDropTargetBar(this);
         mDeleteDropTarget.setSearchDropTargetBar(this);
 
         mEnableDropDownDropTargets =

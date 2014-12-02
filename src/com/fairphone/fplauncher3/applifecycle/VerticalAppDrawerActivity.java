@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -74,8 +75,9 @@ public class VerticalAppDrawerActivity extends Activity
 
         setContentView(R.layout.fp_aging_app_drawer);
 
-        mUsedApps = AppDiscoverer.getInstance().getUsedApps();
-        mUnusedApps = AppDiscoverer.getInstance().getUnusedApps();
+        Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> appLists = AppDiscoverer.getInstance().getUsedAndUnusedApps();
+        mUsedApps = appLists.first;
+        mUnusedApps = appLists.second;
 
         setupAllAppsList();
     }

@@ -107,7 +107,7 @@ class AllAppsList {
             for (LauncherActivityInfoCompat info : matches) {
             	AppInfo newApp = new AppInfo(context, info, user, mIconCache, null);
                 add(newApp);
-                AppDiscoverer.getInstance().applicationInstalled(ApplicationRunInfoManager.generateApplicationRunInfo(newApp.getComponentName(), true));
+                AppDiscoverer.getInstance().applicationInstalled(context, newApp.getComponentName());
             }
         }
     }

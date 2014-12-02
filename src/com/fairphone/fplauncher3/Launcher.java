@@ -105,6 +105,7 @@ import android.widget.Toast;
 import com.fairphone.fplauncher3.R;
 import com.fairphone.fplauncher3.DropTarget.DragObject;
 import com.fairphone.fplauncher3.PagedView.PageSwitchListener;
+import com.fairphone.fplauncher3.applifecycle.VerticalAppDrawerActivity;
 import com.fairphone.fplauncher3.compat.AppWidgetManagerCompat;
 import com.fairphone.fplauncher3.compat.LauncherActivityInfoCompat;
 import com.fairphone.fplauncher3.compat.LauncherAppsCompat;
@@ -113,6 +114,7 @@ import com.fairphone.fplauncher3.compat.UserHandleCompat;
 import com.fairphone.fplauncher3.compat.UserManagerCompat;
 import com.fairphone.fplauncher3.compat.PackageInstallerCompat.PackageInstallInfo;
 import com.fairphone.fplauncher3.edgeswipe.EdgeSwipeMenu;
+import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
 import com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity;
 import com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherManager;
 import com.fairphone.fplauncher3.widgets.peoplewidget.data.PeopleManager;
@@ -1057,6 +1059,8 @@ public class Launcher extends Activity
         
         mPeopleManager.loadContactsInfo();
         mPeopleManager.registerBroadcastReceivers();
+        
+        AppDiscoverer.getInstance().loadAppAgingData(this);
     }
 
     @Override
@@ -1081,6 +1085,8 @@ public class Launcher extends Activity
         
         mPeopleManager.savePeopleWidgetData();
         mPeopleManager.unregisterBroadcastReceivers();
+
+        AppDiscoverer.getInstance().saveAppAgingData(this);
     }
 
     public interface CustomContentCallbacks {
@@ -2806,7 +2812,7 @@ public class Launcher extends Activity
             }
             
             mAppSwitcherManager.applicationRemoved(componentName);
-            
+            AppDiscoverer.getInstance().applicationRemoved(this, componentName);
             startActivity(intent);
             return true;
         }
@@ -5015,7 +5021,8 @@ public class Launcher extends Activity
     
     private void updateActivityInfoViaExplicitIntent(ComponentName component)
     {
-        mAppSwitcherManager.applicationStarted(component, false);
+        mAppSwitcherManager.applicationStarted(component);
+        AppDiscoverer.getInstance().applicationStarted(this, component);
     }
     
     public void startEditFavorites()
@@ -5030,6 +5037,16 @@ public class Launcher extends Activity
 		mEdgeMenuContainerView = (FrameLayout)findViewById(R.id.edge_menu_container);
         mEdgeSwipeMenu = new EdgeSwipeMenu(this, this, mDragController, mEdgeMenuContainerView);
 	}
+	
+	public void startAgingAppDrawer()
+    {
+        startActivityForResult(new Intent(this, VerticalAppDrawerActivity.class), REQUEST_PICK_SETTINGS);
+
+        if (mWorkspace.isInOverviewMode())
+        {
+            mWorkspace.exitOverviewMode(false);
+        }
+    }
 }
 
 interface LauncherTransitionable {

@@ -341,5 +341,7 @@ s -->
     <string name="active_apps">Active Apps</string>
     <string name="idle_apps">Idle Apps</string>
     <string name="empty_unused_apps_warning">You have no unused apps at the moment</string>
+    <string name="pin_target_label">Pin</string>
+    <string name="unpin_target_label">Unpin</string>
     
 </resources>

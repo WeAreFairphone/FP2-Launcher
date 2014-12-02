@@ -149,8 +149,7 @@ public class AppSwitcherManager {
 		}
 	}
 
-	public void applicationStarted(ComponentName componentName,
-			boolean isFreshInstall) {
+	public void applicationStarted(ComponentName componentName) {
 		ApplicationRunInformation appRunInfo = ApplicationRunInfoManager
 				.generateApplicationRunInfo(componentName, false);
 		AppSwitcherManager.getInstance().applicationStarted(appRunInfo);

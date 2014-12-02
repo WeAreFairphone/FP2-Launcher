@@ -17,7 +17,9 @@
 package com.fairphone.fplauncher3.edgeswipe.editor;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +27,20 @@ import java.util.Map;
 import com.fairphone.fplauncher3.AppInfo;
 import com.fairphone.fplauncher3.AppInfo.APP_AGE;
 import com.fairphone.fplauncher3.LauncherModel;
+import com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherManager;
 import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInfoManager;
 import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation;
 
 import android.content.ComponentName;
+import android.content.Context;
+import android.util.Log;
+import android.util.Pair;
 
 public class AppDiscoverer {
     private static AppDiscoverer _instance = new AppDiscoverer();
 
+    public static final String PREFS_APPS_AGING_DATA = "com.fairphone.fplauncher3.applifecycle.FAIRPHONE_APP_AGING_DATA";
+    
     private Map<ComponentName, AppInfo> _allApps;
 
     private ApplicationRunInfoManager agingManager;
@@ -53,15 +61,42 @@ public class AppDiscoverer {
             if (appRunInfo == null) {
                 agingManager.applicationStarted(ApplicationRunInfoManager
                         .generateApplicationRunInfo(appInfo.getComponentName(), false));
-            }
+                 
+                appInfo.setAge(APP_AGE.FREQUENT_USE);
+                appInfo.setIsPinned(false);
+			} else {
+				updateAgeInfo(appInfo);
+				appInfo.setIsPinned(appRunInfo.isPinnedApp());
+			}
 
             _allApps.put(appInfo.getComponentName(), appInfo);
         }
     }
 
-    public void loadAllAppsAgingInfo(List<ApplicationRunInformation> allApps) {
-        agingManager.setAllRunInfo(allApps);
-    }
+	private void updateAgeInfo(AppInfo appInfo) {
+		Date now = Calendar.getInstance().getTime();
+		ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(appInfo.getComponentName());
+		long timePastSinceLastExec = now.getTime()
+				- appRunInfo.getLastExecution().getTime();
+		
+		boolean isPinned = appRunInfo.isPinnedApp();
+
+		if (((timePastSinceLastExec < AppInfo.getAgeLevelInMiliseconds(APP_AGE.NEW_APP)) || (timePastSinceLastExec < AppInfo
+				.getAgeLevelInMiliseconds(APP_AGE.FREQUENT_USE)))
+				|| isPinned) {
+
+			boolean isFreshInstall = appRunInfo.isNewApp();
+
+			if (isFreshInstall) {
+				appInfo.setAge(APP_AGE.NEW_APP);
+			} else {
+				appInfo.setAge(APP_AGE.FREQUENT_USE);
+			}
+
+		} else {
+			appInfo.setAge(APP_AGE.RARE_USE);
+		}
+	}
 
     public ArrayList<AppInfo> getPackages() {
         ArrayList<AppInfo> appList = new ArrayList<AppInfo>();
@@ -74,52 +109,47 @@ public class AppDiscoverer {
         return appList;
     }
 
-    public ArrayList<AppInfo> getUnusedApps() {
-        ArrayList<AppInfo> appList = new ArrayList<AppInfo>();
+    public Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> getUsedAndUnusedApps() {
+    	Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> appLists = new Pair<ArrayList<AppInfo>, ArrayList<AppInfo>>(new ArrayList<AppInfo>(), new ArrayList<AppInfo>());
 
         for (AppInfo appInfo : _allApps.values()) {
-            if (appInfo.getAge() == APP_AGE.RARE_USE) {
-                appList.add(appInfo);
-            }
-        }
-        Collections.sort(appList, LauncherModel.getAppNameComparator());
-
-        return appList;
-    }
-
-    public ArrayList<AppInfo> getUsedApps() {
-        ArrayList<AppInfo> appList = new ArrayList<AppInfo>();
-
-        for (AppInfo appInfo : _allApps.values()) {
+        	updateAgeInfo(appInfo);
             if (appInfo.getAge() != APP_AGE.RARE_USE) {
-                appList.add(appInfo);
+                appLists.first.add(appInfo);
+            }else if (appInfo.getAge() == APP_AGE.RARE_USE) {
+            	appLists.second.add(appInfo);
             }
         }
-        Collections.sort(appList, LauncherModel.getAppNameComparator());
+        Collections.sort(appLists.first, LauncherModel.getAppNameComparator());
+        Collections.sort(appLists.second, LauncherModel.getAppNameComparator());
 
-        return appList;
+        return appLists;
     }
 
-    public List<ApplicationRunInformation> getApplicationAgingInfoList() {
-        return agingManager.getAllAppRunInfo();
-    }
-
-
-    public void applicationInstalled(ApplicationRunInformation appRunInfo) {
+    public void applicationInstalled(Context context, ComponentName componentName) {
+    	ApplicationRunInformation appRunInfo = ApplicationRunInfoManager
+				.generateApplicationRunInfo(componentName, true);
         agingManager.applicationInstalled(appRunInfo); 
+        saveAppAgingData(context);
     }
     
-    public void applicationStarted(ApplicationRunInformation appRunInfo) {
+    public void applicationStarted(Context context, ComponentName componentName) {
+		ApplicationRunInformation appRunInfo = ApplicationRunInfoManager
+				.generateApplicationRunInfo(componentName, false);
         agingManager.applicationStarted(appRunInfo);
+        saveAppAgingData(context);
     }
     
-    public void applicationPinned(ApplicationRunInformation appRunInfo) {
+    public void applicationPinned(Context context, ComponentName componentName) {
+    	ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(componentName);
         agingManager.applicationPinned(appRunInfo);
+        saveAppAgingData(context);
     }
 
-    public void applicationRemoved(ComponentName component) {
+    public void applicationRemoved(Context context, ComponentName component) {
         _allApps.remove(component);
         agingManager.applicationRemoved(component);
+        saveAppAgingData(context);
     }
 
     public AppInfo getApplicationFromComponentName(ComponentName componentName) {
@@ -134,4 +164,14 @@ public class AppDiscoverer {
     public ApplicationRunInformation getApplicationRunInformation(ComponentName key) {
         return agingManager.getApplicationRunInformation(key);
     }
+    
+    public void saveAppAgingData(Context context) {
+		ApplicationRunInformation.persistAppRunInfo(context,
+				PREFS_APPS_AGING_DATA, agingManager.getAllAppRunInfo());
+	}
+    
+	public void loadAppAgingData(Context context) {
+		agingManager.setAllRunInfo(ApplicationRunInformation.loadAppRunInfo(
+				context, PREFS_APPS_AGING_DATA));
+	}
 }

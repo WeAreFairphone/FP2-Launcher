@@ -59,5 +59,8 @@
     <!-- Edge swipe Menu -->
     <color name="edge_swipe_text_blue_selected">#123C59</color>
     <color name="edge_swipe_text_blue">#2AA8E0</color>
+    
+    <!-- App lifecycle -->
+    <color name="pin_target_hover_tint">#DA009900</color>
 
 </resources>
