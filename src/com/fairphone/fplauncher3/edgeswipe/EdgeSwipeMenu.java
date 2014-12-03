@@ -516,7 +516,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 	
 	private boolean startEditButtonAnimation() {
 		boolean isTimeToShow = mEditMenuButtonStartTime < System.currentTimeMillis();
-		if(isTimeToShow && (mEditButton.getAlpha() == 0) && mEdgeSwipeHolder.getVisibility() == View.VISIBLE){
+		if(isTimeToShow && mEditButton != null && (mEditButton.getAlpha() == 0) && mEdgeSwipeHolder.getVisibility() == View.VISIBLE){
 			ObjectAnimator fadeIn = ObjectAnimator.ofFloat(mEditButton, View.ALPHA, 0, 1);
 			fadeIn.setDuration(mContext.getResources().getInteger(R.integer.edge_swipe_translate_delay_duration));
 			fadeIn.addListener(new AnimatorListener()

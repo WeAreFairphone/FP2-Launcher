@@ -19,6 +19,7 @@ package com.fairphone.fplauncher3.applifecycle;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -35,13 +36,13 @@ import com.fairphone.fplauncher3.R;
 
 public class AgingAppsListAdapter extends BaseAdapter
 {
-    private VerticalAppDrawerActivity context;
+    private Context context;
 
     private ArrayList<AppInfo> allApps;
 
-    public AgingAppsListAdapter(VerticalAppDrawerActivity appLifeCycleView)
+    public AgingAppsListAdapter(Context context)
     {
-        this.context = appLifeCycleView;
+        this.context = context;
     }
 
     public void setAllApps(ArrayList<AppInfo> allApps)
@@ -55,7 +56,7 @@ public class AgingAppsListAdapter extends BaseAdapter
     {
         View rowView = (View) convertView;
 
-        LayoutInflater inflater = context.getLayoutInflater();
+        LayoutInflater inflater = LayoutInflater.from(context);
 
         AppInfo info = allApps.get(position);
         rowView = (View) inflater.inflate(R.layout.fp_aging_app_drawer_list_item, parent, false);

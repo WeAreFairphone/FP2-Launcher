@@ -50,12 +50,19 @@
         <include layout="@layout/overview_panel"
             android:id="@+id/overview_panel"
             android:visibility="gone" />
-
+        
         <include layout="@layout/apps_customize_pane"
             android:id="@+id/apps_customize_pane"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible" />
+               
+        <com.fairphone.fplauncher3.applifecycle.AppDrawerView
+	        android:id="@+id/aging_app_drawer"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:visibility="gone" />
+        
     </com.fairphone.fplauncher3.DragLayer>
     <FrameLayout
         android:id="@+id/edge_menu_container"

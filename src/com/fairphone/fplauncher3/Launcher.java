@@ -105,7 +105,7 @@ import android.widget.Toast;
 import com.fairphone.fplauncher3.R;
 import com.fairphone.fplauncher3.DropTarget.DragObject;
 import com.fairphone.fplauncher3.PagedView.PageSwitchListener;
-import com.fairphone.fplauncher3.applifecycle.VerticalAppDrawerActivity;
+import com.fairphone.fplauncher3.applifecycle.AppDrawerView;
 import com.fairphone.fplauncher3.compat.AppWidgetManagerCompat;
 import com.fairphone.fplauncher3.compat.LauncherActivityInfoCompat;
 import com.fairphone.fplauncher3.compat.LauncherAppsCompat;
@@ -394,6 +394,7 @@ public class Launcher extends Activity
 	private PeopleManager mPeopleManager;
 	private FrameLayout mEdgeMenuContainerView;
 	private EdgeSwipeMenu mEdgeSwipeMenu;
+	private AppDrawerView mAgingAppDrawer;
 
     static boolean isPropertyEnabled(String propertyName) {
         return Log.isLoggable(propertyName, Log.VERBOSE);
@@ -1043,7 +1044,7 @@ public class Launcher extends Activity
 
         if (mWorkspace.getCustomContentCallbacks() != null) {
             // If we are resuming and the custom content is the current page, we call onShow().
-            // It is also poassible that onShow will instead be called slightly after first layout
+            // It is also possible that onShow will instead be called slightly after first layout
             // if PagedView#setRestorePage was set to the custom content page in onCreate().
             if (mWorkspace.isOnOrMovingToCustomContent()) {
                 mWorkspace.getCustomContentCallbacks().onShow(true);
@@ -1061,6 +1062,10 @@ public class Launcher extends Activity
         mPeopleManager.registerBroadcastReceivers();
         
         AppDiscoverer.getInstance().loadAppAgingData(this);
+        
+        if(isAgingAppDrawerVisible()){
+    		hideAgingAppDrawer();
+    	}
     }
 
     @Override
@@ -1395,6 +1400,8 @@ public class Launcher extends Activity
             boolean show = shouldShowWeightWatcher();
             mWeightWatcher.setVisibility(show ? View.VISIBLE : View.GONE);
         }
+        
+		mAgingAppDrawer = (AppDrawerView) findViewById(R.id.aging_app_drawer);
     }
 
     public View getPageIndicator() {
@@ -1938,7 +1945,9 @@ public class Launcher extends Activity
      * Override point for subclasses to provide custom behaviour for when a home intent is fired.
      */
     protected void onHomeIntent() {
-        // Do nothing
+    	if(isAgingAppDrawerVisible()){
+    		hideAgingAppDrawer();
+    	}
     }
 
     @Override
@@ -2388,12 +2397,15 @@ public class Launcher extends Activity
     @Override
     public void onBackPressed() {
         if (isAllAppsVisible()) {
+            hideAgingAppDrawer();
             if (mAppsCustomizeContent.getContentType() ==
                     AppsCustomizePagedView.ContentType.Applications) {
                 showWorkspace(true);
             } else {
                 showOverviewMode(true);
             }
+        } else if(isAgingAppDrawerVisible()){
+        	hideAgingAppDrawer();
         } else if (mWorkspace.isInOverviewMode()) {
             mWorkspace.exitOverviewMode(true);
         } else if (mWorkspace.getOpenFolder() != null) {
@@ -2404,6 +2416,7 @@ public class Launcher extends Activity
                 closeFolder();
             }
         } else {
+        	hideAgingAppDrawer();
             mWorkspace.exitWidgetResizeMode();
 
             // Back button is a no-op here, but give at least some feedback for the button press
@@ -2557,8 +2570,10 @@ public class Launcher extends Activity
         if (LOGD) Log.d(TAG, "onClickAllAppsButton");
         if (isAllAppsVisible()) {
             showWorkspace(true);
-        } else {
-            showAllApps(true, AppsCustomizePagedView.ContentType.Applications, false);
+        } else if(!isAllAppsVisible()){
+            showAgingAppDrawer();
+        }else {
+        	hideAgingAppDrawer();
         }
     }
     
@@ -3728,6 +3743,9 @@ public class Launcher extends Activity
     }
 
     void showOverviewMode(boolean animated) {
+    	if(isAgingAppDrawerVisible()){
+    		hideAgingAppDrawer();
+    	}
         mWorkspace.setVisibility(View.VISIBLE);
         hideAppsCustomizeHelper(Workspace.State.OVERVIEW, animated, false, null);
         mState = State.WORKSPACE;
@@ -4615,6 +4633,7 @@ public class Launcher extends Activity
                 mWidgetsAndShortcuts = null;
             }
         };
+
     public void bindPackagesUpdated(final ArrayList<Object> widgetsAndShortcuts) {
         if (waitUntilResume(mBindPackagesUpdatedRunnable, true)) {
             mWidgetsAndShortcuts = widgetsAndShortcuts;
@@ -5030,7 +5049,7 @@ public class Launcher extends Activity
         startActivityForResult(new Intent(this, EditFavoritesActivity.class), REQUEST_EDIT_FAVORITES);
     }
 	public boolean isWorkspaceVisible() {
-		return !mWorkspace.isInOverviewMode() && !isAllAppsVisible() && (mState == State.WORKSPACE) || (mOnResumeState == State.WORKSPACE);
+		return !isAgingAppDrawerVisible() && !mWorkspace.isInOverviewMode() && !isAllAppsVisible() && (mState == State.WORKSPACE) || (mOnResumeState == State.WORKSPACE);
 	}
 	
 	private void setupEdgeSwipeMenu() {
@@ -5038,15 +5057,18 @@ public class Launcher extends Activity
         mEdgeSwipeMenu = new EdgeSwipeMenu(this, this, mDragController, mEdgeMenuContainerView);
 	}
 	
-	public void startAgingAppDrawer()
-    {
-        startActivityForResult(new Intent(this, VerticalAppDrawerActivity.class), REQUEST_PICK_SETTINGS);
-
-        if (mWorkspace.isInOverviewMode())
-        {
-            mWorkspace.exitOverviewMode(false);
-        }
-    }
+	public void showAgingAppDrawer() {
+		mAgingAppDrawer.refreshView(this, this);
+		mAgingAppDrawer.setVisibility(View.VISIBLE);
+	}
+	
+	public void hideAgingAppDrawer() {
+		mAgingAppDrawer.setVisibility(View.GONE);
+	}
+	
+	public boolean isAgingAppDrawerVisible(){
+		return mAgingAppDrawer.getVisibility() == View.VISIBLE;
+	}
 }
 
 interface LauncherTransitionable {
