@@ -25,24 +25,36 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.fairphone.fplauncher3.AppInfo;
 import com.fairphone.fplauncher3.AppInfo.APP_AGE;
+import com.fairphone.fplauncher3.BubbleTextView;
+import com.fairphone.fplauncher3.Launcher;
 import com.fairphone.fplauncher3.LauncherModel;
 import com.fairphone.fplauncher3.R;
 
 public class AgingAppsListAdapter extends BaseAdapter
 {
-    private Context context;
+    private Context mContext;
 
     private ArrayList<AppInfo> allApps;
 
-    public AgingAppsListAdapter(Context context)
+	private LayoutInflater mInflater;
+
+	private Launcher mLauncher;
+
+	private OnLongClickListener mLongClickListener;
+
+    public AgingAppsListAdapter(Context context, Launcher launcher, OnLongClickListener longClickListener)
     {
-        this.context = context;
+        mContext = context;
+        mInflater = LayoutInflater.from(context);
+        mLauncher = launcher;
+        mLongClickListener = longClickListener;
     }
 
     public void setAllApps(ArrayList<AppInfo> allApps)
@@ -54,31 +66,18 @@ public class AgingAppsListAdapter extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        View rowView = (View) convertView;
-
-        LayoutInflater inflater = LayoutInflater.from(context);
-
         AppInfo info = allApps.get(position);
-        rowView = (View) inflater.inflate(R.layout.fp_aging_app_drawer_list_item, parent, false);
-        //        rowView.applyFromApplicationInfo(info, true, (VerticalAppDrawerActivity) context);
-
-        TextView textView = (TextView) rowView.findViewById(R.id.text_view);
-        TextView newTextView = (TextView) rowView.findViewById(R.id.new_text_view);
-        TextView updatedTextView = (TextView) rowView.findViewById(R.id.updated_text_view);
-
-        Bitmap mBitmap = info.getIconBitmap();
-        Drawable icon = new BitmapDrawable(context.getResources(), mBitmap);
-        icon.setBounds(0, 0, (int) context.getResources().getDimension(R.dimen.edit_favorites_icon_size),
-                (int) context.getResources().getDimension(R.dimen.edit_favorites_icon_size));
-        textView.setCompoundDrawables(null, icon, null, null);
-
-        setAppAge(info.getAge(), newTextView, updatedTextView);
-
-        textView.setText(info.getApplicationTitle());
-
-        rowView.setTag(info);
         
-        return rowView;
+        BubbleTextView icon = (BubbleTextView) mInflater.inflate(
+                R.layout.apps_customize_application, parent, false);
+        icon.applyFromApplicationInfo(info);
+        icon.setOnClickListener(mLauncher);
+        icon.setOnLongClickListener(mLongClickListener);
+        icon.setOnTouchListener(null);
+        icon.setOnKeyListener(null);
+        icon.setOnFocusChangeListener(null);
+        
+        return icon;
     }
 
     private void setAppAge(APP_AGE age, View newApp, View updatedApp)

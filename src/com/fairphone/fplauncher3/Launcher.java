@@ -661,7 +661,7 @@ public class Launcher extends Activity
         return mInflater;
     }
 
-    boolean isDraggingEnabled() {
+    public boolean isDraggingEnabled() {
         // We prevent dragging when we are loading the workspace as it is possible to pick up a view
         // that is subsequently removed from the workspace in startBinding().
         return !mModel.isLoadingWorkspace();
@@ -1062,10 +1062,6 @@ public class Launcher extends Activity
         mPeopleManager.registerBroadcastReceivers();
         
         AppDiscoverer.getInstance().loadAppAgingData(this);
-        
-        if(isAgingAppDrawerVisible()){
-    		hideAgingAppDrawer();
-    	}
     }
 
     @Override
@@ -1092,6 +1088,10 @@ public class Launcher extends Activity
         mPeopleManager.unregisterBroadcastReceivers();
 
         AppDiscoverer.getInstance().saveAppAgingData(this);
+        
+        if(isAgingAppDrawerVisible()){
+    		hideAgingAppDrawer();
+    	}
     }
 
     public interface CustomContentCallbacks {
@@ -3742,7 +3742,7 @@ public class Launcher extends Activity
         onWorkspaceShown(animated);
     }
 
-    void showOverviewMode(boolean animated) {
+    public void showOverviewMode(boolean animated) {
     	if(isAgingAppDrawerVisible()){
     		hideAgingAppDrawer();
     	}
@@ -3784,7 +3784,7 @@ public class Launcher extends Activity
                 .sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
     }
 
-    void enterSpringLoadedDragMode() {
+    public void enterSpringLoadedDragMode() {
         if (isAllAppsVisible()) {
             hideAppsCustomizeHelper(Workspace.State.SPRING_LOADED, true, true, null);
             mState = State.APPS_CUSTOMIZE_SPRING_LOADED;
