@@ -19,45 +19,37 @@ package com.fairphone.fplauncher3.applifecycle;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Pair;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
-import com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherWidget;
 import com.fairphone.fplauncher3.AppInfo;
 import com.fairphone.fplauncher3.BubbleTextView;
+import com.fairphone.fplauncher3.CellLayout;
+import com.fairphone.fplauncher3.DeleteDropTarget;
+import com.fairphone.fplauncher3.DeviceProfile;
 import com.fairphone.fplauncher3.DragSource;
 import com.fairphone.fplauncher3.DropTarget.DragObject;
+import com.fairphone.fplauncher3.Folder;
 import com.fairphone.fplauncher3.ItemInfo;
 import com.fairphone.fplauncher3.Launcher;
+import com.fairphone.fplauncher3.LauncherAppState;
+import com.fairphone.fplauncher3.LauncherTransitionable;
 import com.fairphone.fplauncher3.R;
+import com.fairphone.fplauncher3.Workspace;
+import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
 
 /**
  * Edit favorites activity implements functionality to edit your favorite apps
  * that will appear with the edge swipe.
  */
-public class AppDrawerView extends FrameLayout implements View.OnLongClickListener, DragSource
+public class AppDrawerView extends FrameLayout implements DragSource, LauncherTransitionable, OnLongClickListener
 {
 	private static final String TAG = AppDrawerView.class.getSimpleName();
     
@@ -83,13 +75,7 @@ public class AppDrawerView extends FrameLayout implements View.OnLongClickListen
 
 	private Launcher mLauncher;
 
-	private boolean mIsDragging;
-
-	private boolean mIsDragEnabled;
-
-	private View mLastTouchedItem;
-
-	private float mDragSlopeThreshold;
+	private boolean mInTransition;
     
 	public AppDrawerView(Context context) {
 		super(context);
@@ -109,7 +95,7 @@ public class AppDrawerView extends FrameLayout implements View.OnLongClickListen
 	@SuppressLint("NewApi")
 	public AppDrawerView(Context context, AttributeSet attrs, int defStyleAttr,
 			int defStyleRes) {
-		super(context, attrs, defStyleAttr, defStyleRes);
+		super(context, attrs, defStyleAttr);
 		init(context);
 	}
 
@@ -179,31 +165,78 @@ public class AppDrawerView extends FrameLayout implements View.OnLongClickListen
         listView.setAdapter(appsListAdapter);
     }
 
-	public void startActivityViaLauncher(AppInfo appToLaunch) {
-		if (appToLaunch != null) {
-			ComponentName compName = appToLaunch.getComponentName();
-			if (compName != null) {
-				PackageManager pacManager = mContext.getPackageManager();
-				Intent launchIntent = pacManager
-						.getLaunchIntentForPackage(compName.getPackageName());
-				if (launchIntent != null) {
-					launchIntent.setComponent(compName);
-					mLauncher.startActivity(this, launchIntent, null);
-				}
-			}
-		}
-	}
-	protected boolean beginDragging(View v) {
-        boolean wasDragging = mIsDragging;
-        mIsDragging = true;
-        return !wasDragging;
+	private void beginDraggingApplication(View v) {
+        mLauncher.getWorkspace().beginDragShared(v, this);
+    }
+	
+	/**
+     * Clean up after dragging.
+     *
+     * @param target where the item was dragged to (can be null if the item was flung)
+     */
+    private void endDragging(View target, boolean isFlingToDelete, boolean success) {
+        if (isFlingToDelete || !success || (target != mLauncher.getWorkspace() &&
+                !(target instanceof DeleteDropTarget) && !(target instanceof Folder))) {
+            // Exit spring loaded mode if we have not successfully dropped or have not handled the
+            // drop in Workspace
+            mLauncher.exitSpringLoadedDragMode();
+            mLauncher.unlockScreenOrientation(false);
+        } else {
+            mLauncher.unlockScreenOrientation(false);
+        }
+    }
+ 
+    protected boolean beginDragging(final View v) {
+
+        if (v instanceof BubbleTextView) {
+            beginDraggingApplication(v);
+        } 
+
+        // We delay entering spring-loaded mode slightly to make sure the UI
+        // thready is free of any work.
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // We don't enter spring-loaded mode if the drag has been cancelled
+                if (mLauncher.getDragController().isDragging()) {
+                    // Go into spring loaded mode (must happen before we startDrag())
+                    mLauncher.enterSpringLoadedDragMode();
+                }
+            }
+        }, 150);
+
+        return true;
     }
 
-    protected void cancelDragging() {
-        mIsDragging = false;
-        mLastTouchedItem = null;
-        mIsDragEnabled = false;
+    @Override
+    public View getContent() {
+        if (getChildCount() > 0) {
+            return getChildAt(0);
+        }
+        return null;
     }
+    
+	@Override
+	public void onLauncherTransitionPrepare(Launcher l, boolean animated,
+			boolean toWorkspace) {
+		mInTransition = true;
+	}
+
+	@Override
+	public void onLauncherTransitionStart(Launcher l, boolean animated,
+			boolean toWorkspace) {
+	}
+
+	@Override
+	public void onLauncherTransitionStep(Launcher l, float t) {
+	}
+
+	@Override
+	public void onLauncherTransitionEnd(Launcher l, boolean animated,
+			boolean toWorkspace) {
+		mInTransition = false;
+		//mForceDrawAllChildrenNextFrame = !toWorkspace;
+	}
 
     @Override
     public boolean onLongClick(View v) {
@@ -215,59 +248,68 @@ public class AppDrawerView extends FrameLayout implements View.OnLongClickListen
 //        // Return if global dragging is not enabled
 //        if (!mLauncher.isDraggingEnabled()) return false;
        
+        mLauncher.exitOverviewMode();
         mLauncher.hideAgingAppDrawer();
-        //mLauncher.startDrag(v, (ItemInfo)v.getTag(), this);
-        mLauncher.showOverviewMode(true);
-        mLauncher.getWorkspace().beginDragShared(v, this);
-        
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // We don't enter spring-loaded mode if the drag has been cancelled
-//                if (mLauncher.getDragController().isDragging()) {
-                    // Go into spring loaded mode (must happen before we startDrag())
-                    mLauncher.enterSpringLoadedDragMode();
-//                }
-            }
-        }, 150);
         
         return beginDragging(v);
     }
 
-	@Override
-	public boolean supportsFlingToDelete() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public void onDropCompleted(View target, DragObject d, boolean isFlingToDelete,
+            boolean success) {
+        // Return early and wait for onFlingToDeleteCompleted if this was the result of a fling
+        if (isFlingToDelete) return;
 
-	@Override
-	public boolean supportsAppInfoDropTarget() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        endDragging(target, false, success);
 
-	@Override
-	public boolean supportsDeleteDropTarget() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        // Display an error message if the drag failed due to there not being enough space on the
+        // target layout we were dropping on.
+        if (!success) {
+            boolean showOutOfSpaceMessage = false;
+            if (target instanceof Workspace) {
+                int currentScreen = mLauncher.getCurrentWorkspaceScreen();
+                Workspace workspace = (Workspace) target;
+                CellLayout layout = (CellLayout) workspace.getChildAt(currentScreen);
+                ItemInfo itemInfo = (ItemInfo) d.dragInfo;
+                if (layout != null) {
+                    layout.calculateSpans(itemInfo);
+                    showOutOfSpaceMessage =
+                            !layout.findCellForSpan(null, itemInfo.spanX, itemInfo.spanY);
+                }
+            }
+            if (showOutOfSpaceMessage) {
+                mLauncher.showOutOfSpaceMessage();
+            }
 
-	@Override
-	public float getIntrinsicIconScaleFactor() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+            d.deferDragViewCleanupPostAnimation = false;
+        }
+    }
 
-	@Override
-	public void onFlingToDeleteCompleted() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onFlingToDeleteCompleted() {
+        // We just dismiss the drag when we fling, so cleanup here
+        endDragging(null, true, true);
+    }
 
-	@Override
-	public void onDropCompleted(View target, DragObject d,
-			boolean isFlingToDelete, boolean success) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public boolean supportsFlingToDelete() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsAppInfoDropTarget() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsDeleteDropTarget() {
+        return false;
+    }
+
+    @Override
+    public float getIntrinsicIconScaleFactor() {
+        LauncherAppState app = LauncherAppState.getInstance();
+        DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
+        return (float) grid.allAppsIconSizePx / grid.iconSizePx;
+    }
 }

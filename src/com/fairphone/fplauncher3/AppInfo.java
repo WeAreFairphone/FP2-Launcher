@@ -178,7 +178,7 @@ public class AppInfo extends ItemInfo {
     
     public static long toMilliSeconds(long days)
     {
-        return days * 24l * 60l * 60l * 1000l;
+        return days /* 24l * 60l * 60l*/ * 1000l;
     }
     
     public void setAge(APP_AGE age){

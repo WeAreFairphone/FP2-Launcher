@@ -36,7 +36,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+
 import com.fairphone.fplauncher3.R;
+import com.fairphone.fplauncher3.applifecycle.AppDrawerView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -98,12 +101,12 @@ public class DeviceProfile {
     float overviewModeIconZoneRatio;
     float overviewModeScaleFactor;
 
-    int iconSizePx;
+    public int iconSizePx;
     int iconTextSizePx;
     int iconDrawablePaddingPx;
     int cellWidthPx;
     int cellHeightPx;
-    int allAppsIconSizePx;
+    public int allAppsIconSizePx;
     int allAppsIconTextSizePx;
     int allAppsCellWidthPx;
     int allAppsCellHeightPx;

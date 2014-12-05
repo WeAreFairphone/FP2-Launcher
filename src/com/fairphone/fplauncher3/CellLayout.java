@@ -2705,7 +2705,7 @@ public class CellLayout extends ViewGroup {
      *
      * @return True if a vacant cell of the specified dimension was found, false otherwise.
      */
-    boolean findCellForSpan(int[] cellXY, int spanX, int spanY) {
+    public boolean findCellForSpan(int[] cellXY, int spanX, int spanY) {
         return findCellForSpanThatIntersectsIgnoring(cellXY, spanX, spanY, -1, -1, null, mOccupied);
     }
 

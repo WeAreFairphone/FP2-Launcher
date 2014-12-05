@@ -560,15 +560,17 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
         float deadZoneSize = mLauncher.getResources().getDimension(R.dimen.edge_swipe_dead_zone);
         DisplayMetrics displayMetrics = mLauncher.getResources().getDisplayMetrics();
         
-		// set the X coords
-		switch (mSide)
-        {
-            case LEFT_SIDE:
-            	isActive = pointerX > deadZoneSize;
-                break;
-            case RIGHT_SIDE:
-            	isActive = pointerX < (displayMetrics.widthPixels - deadZoneSize);
-                break;
+        if(mSide != null){
+			// set the X coords
+			switch (mSide)
+	        {
+	            case LEFT_SIDE:
+	            	isActive = pointerX > deadZoneSize;
+	                break;
+	            case RIGHT_SIDE:
+	            	isActive = pointerX < (displayMetrics.widthPixels - deadZoneSize);
+	                break;
+	        }
         }
         
         return isActive;

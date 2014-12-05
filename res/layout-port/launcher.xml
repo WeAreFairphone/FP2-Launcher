@@ -70,7 +70,7 @@
 	        android:id="@+id/aging_app_drawer"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
-	        android:visibility="gone" />
+	        android:visibility="invisible" />
         
     </com.fairphone.fplauncher3.DragLayer>
     <FrameLayout

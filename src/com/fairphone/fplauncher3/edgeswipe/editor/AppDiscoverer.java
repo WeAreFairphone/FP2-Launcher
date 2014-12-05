@@ -129,7 +129,7 @@ public class AppDiscoverer {
     public void applicationInstalled(Context context, ComponentName componentName) {
     	ApplicationRunInformation appRunInfo = ApplicationRunInfoManager
 				.generateApplicationRunInfo(componentName, true);
-        agingManager.applicationInstalled(appRunInfo); 
+        agingManager.applicationInstalled(appRunInfo);
         saveAppAgingData(context);
     }
     
@@ -143,6 +143,10 @@ public class AppDiscoverer {
     public void applicationPinned(Context context, ComponentName componentName) {
     	ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(componentName);
         agingManager.applicationPinned(appRunInfo);
+        AppInfo appInfo = _allApps.get(componentName);
+        if(appInfo != null){
+        	appInfo.setIsPinned(!appInfo.isPinned());
+        }
         saveAppAgingData(context);
     }
 

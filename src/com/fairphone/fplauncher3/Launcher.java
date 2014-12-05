@@ -1833,7 +1833,7 @@ public class Launcher extends Activity
         launcherInfo.hostView = null;
     }
 
-    void showOutOfSpaceMessage() {
+    public void showOutOfSpaceMessage() {
         int strId = R.string.out_of_space;
         Toast.makeText(this, getString(strId), Toast.LENGTH_SHORT).show();
     }
@@ -3467,13 +3467,8 @@ public class Launcher extends Activity
         Animator workspaceAnim = null;
         final ArrayList<View> layerViews = new ArrayList<View>();
 
-        if (toState == Workspace.State.NORMAL) {
-            workspaceAnim = mWorkspace.getChangeStateAnimation(
-                    toState, animated, layerViews);
-        } else if (toState == Workspace.State.SPRING_LOADED ||
-                toState == Workspace.State.OVERVIEW) {
-            workspaceAnim = mWorkspace.getChangeStateAnimation(
-                    toState, animated, layerViews);
+        if (toState == Workspace.State.NORMAL || toState == Workspace.State.SPRING_LOADED || toState == Workspace.State.OVERVIEW) {
+            workspaceAnim = mWorkspace.getChangeStateAnimation(toState, animated, layerViews);
         }
 
         // If for some reason our views aren't initialized, don't animate
@@ -3785,7 +3780,7 @@ public class Launcher extends Activity
     }
 
     public void enterSpringLoadedDragMode() {
-        if (isAllAppsVisible()) {
+        if (isAllAppsVisible() || isAgingAppDrawerVisible()) {
             hideAppsCustomizeHelper(Workspace.State.SPRING_LOADED, true, true, null);
             mState = State.APPS_CUSTOMIZE_SPRING_LOADED;
         }
@@ -3811,7 +3806,7 @@ public class Launcher extends Activity
         }, delay);
     }
 
-    void exitSpringLoadedDragMode() {
+    public void exitSpringLoadedDragMode() {
         if (mState == State.APPS_CUSTOMIZE_SPRING_LOADED) {
             final boolean animated = true;
             final boolean springLoaded = true;
@@ -5069,14 +5064,12 @@ public class Launcher extends Activity
 	public boolean isAgingAppDrawerVisible(){
 		return mAgingAppDrawer.getVisibility() == View.VISIBLE;
 	}
-}
-
-interface LauncherTransitionable {
-    View getContent();
-    void onLauncherTransitionPrepare(Launcher l, boolean animated, boolean toWorkspace);
-    void onLauncherTransitionStart(Launcher l, boolean animated, boolean toWorkspace);
-    void onLauncherTransitionStep(Launcher l, float t);
-    void onLauncherTransitionEnd(Launcher l, boolean animated, boolean toWorkspace);
+	
+	public void exitOverviewMode(){
+		if (mWorkspace.isInOverviewMode()) {
+	        mWorkspace.exitOverviewMode(true);
+	    }
+	}
 }
 
 interface DebugIntents {
