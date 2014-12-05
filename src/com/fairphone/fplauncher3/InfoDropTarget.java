@@ -56,7 +56,7 @@ public class InfoDropTarget extends ButtonDropTarget {
         if (mDrawable == null) {
             // TODO: investigate why this is ever happening. Presently only on one known device.
             mDrawable = (TransitionDrawable) r.getDrawable(R.drawable.info_target_selector);
-            setCompoundDrawablesRelativeWithIntrinsicBounds(mDrawable, null, null, null);
+            setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null);
         }
 
         if (null != mDrawable) {
@@ -111,7 +111,9 @@ public class InfoDropTarget extends ButtonDropTarget {
         }
 
         mActive = isVisible;
-        mDrawable.resetTransition();
+        if(mDrawable != null){
+        	mDrawable.resetTransition();
+        }
         setTextColor(mOriginalTextColor);
         ((ViewGroup) getParent()).setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
@@ -124,8 +126,9 @@ public class InfoDropTarget extends ButtonDropTarget {
 
     public void onDragEnter(DragObject d) {
         super.onDragEnter(d);
-
-        mDrawable.startTransition(mTransitionDuration);
+        if(mDrawable != null){
+        	mDrawable.startTransition(mTransitionDuration);
+        }
         setTextColor(mHoverColor);
     }
 
@@ -133,7 +136,9 @@ public class InfoDropTarget extends ButtonDropTarget {
         super.onDragExit(d);
 
         if (!d.dragComplete) {
-            mDrawable.resetTransition();
+        	if(mDrawable != null){
+        		mDrawable.resetTransition();
+        	}
             setTextColor(mOriginalTextColor);
         }
     }

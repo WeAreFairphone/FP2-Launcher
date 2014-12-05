@@ -22,8 +22,7 @@
         <com.fairphone.fplauncher3.DeleteDropTarget
             style="@style/DropTargetButton"
             android:id="@+id/delete_target_text"
-            android:text="@string/delete_zone_label_workspace"
-            android:drawableStart="@drawable/remove_target_selector" />
+            android:text="@string/delete_zone_label_workspace" />
     </FrameLayout>
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -33,8 +32,7 @@
         <com.fairphone.fplauncher3.InfoDropTarget
             style="@style/DropTargetButton"
             android:id="@+id/info_target_text"
-            android:text="@string/info_target_label"
-            android:drawableStart="@drawable/info_target_selector" />
+            android:text="@string/info_target_label"/>
     </FrameLayout>
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -44,7 +42,6 @@
         <com.fairphone.fplauncher3.PinAppDropTarget
             style="@style/DropTargetButton"
             android:id="@+id/pin_target_text"
-            android:text="@string/pin_target_label"
-            android:drawableStart="@drawable/info_target_selector" />
+            android:text="@string/pin_target_label" />
     </FrameLayout>
 </merge>

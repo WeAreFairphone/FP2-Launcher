@@ -96,7 +96,9 @@ public class PinAppDropTarget extends ButtonDropTarget {
         }
 
         mActive = isVisible;
-        mDrawable.resetTransition();
+        if(mDrawable != null){
+        	mDrawable.resetTransition();
+        }
         setTextColor(mOriginalTextColor);
         ((ViewGroup) getParent()).setVisibility(isVisible ? View.VISIBLE : View.GONE);
         if (info instanceof AppInfo) {
@@ -117,7 +119,9 @@ public class PinAppDropTarget extends ButtonDropTarget {
     public void onDragEnter(DragObject d) {
         super.onDragEnter(d);
 
-        mDrawable.startTransition(mTransitionDuration);
+        if(mDrawable != null){
+        	mDrawable.startTransition(mTransitionDuration);
+        }
         setTextColor(mHoverColor);
     }
 
@@ -125,7 +129,9 @@ public class PinAppDropTarget extends ButtonDropTarget {
         super.onDragExit(d);
 
         if (!d.dragComplete) {
-            mDrawable.resetTransition();
+        	if(mDrawable != null){
+        		mDrawable.resetTransition();
+        	}
             setTextColor(mOriginalTextColor);
         }
     }
