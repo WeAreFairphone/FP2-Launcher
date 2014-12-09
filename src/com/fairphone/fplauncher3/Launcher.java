@@ -2826,8 +2826,6 @@ public class Launcher extends Activity
                 user.addToIntent(intent, Intent.EXTRA_USER);
             }
             
-            mAppSwitcherManager.applicationRemoved(componentName);
-            AppDiscoverer.getInstance().applicationRemoved(this, componentName);
             startActivity(intent);
             return true;
         }
@@ -4616,6 +4614,14 @@ public class Launcher extends Activity
                 mAppsCustomizeContent != null) {
             mAppsCustomizeContent.removeApps(appInfos);
         }
+        
+        for (AppInfo appInfo : appInfos) {
+        	ComponentName componentName = appInfo.getComponentName();
+        	if(componentName != null){
+	            mAppSwitcherManager.applicationRemoved(componentName);
+	            AppDiscoverer.getInstance().applicationRemoved(this, componentName);
+	        }
+		}
     }
 
     /**
