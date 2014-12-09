@@ -110,6 +110,7 @@ public class InfoDropTarget extends ButtonDropTarget {
     public void onDragEnter(DragObject d) {
         super.onDragEnter(d);
         setTextColor(mHoverColor);
+        setBackgroundResource(R.drawable.drop_target_background_info_blue);
     }
 
     public void onDragExit(DragObject d) {
@@ -117,6 +118,7 @@ public class InfoDropTarget extends ButtonDropTarget {
 
         if (!d.dragComplete) {
             setTextColor(mOriginalTextColor);
+            setBackgroundResource(R.drawable.background_drop_target_stripe_grey_light);
         }
     }
 }

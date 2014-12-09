@@ -66,9 +66,9 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:drawablePadding">7.5dp</item>
-        <item name="android:paddingLeft">25dp</item>
-        <item name="android:paddingRight">25dp</item>
-        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:textColor">#FF000000</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:singleLine">true</item>
@@ -77,7 +77,7 @@
         <item name="android:shadowDx">0.0</item>
         <item name="android:shadowDy">1.0</item>
         <item name="android:shadowRadius">4.0</item>
-        <item name="android:background">#66000000</item>
+        <item name="android:background">@drawable/background_drop_target_stripe_grey_light</item>
     </style>
 
     <style name="TabIndicator">

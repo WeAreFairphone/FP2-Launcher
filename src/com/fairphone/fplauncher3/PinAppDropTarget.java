@@ -114,6 +114,7 @@ public class PinAppDropTarget extends ButtonDropTarget {
     public void onDragEnter(DragObject d) {
         super.onDragEnter(d);
         setTextColor(mHoverColor);
+        setBackgroundResource(R.drawable.drop_target_background_pin_green);
     }
 
     public void onDragExit(DragObject d) {
@@ -121,6 +122,7 @@ public class PinAppDropTarget extends ButtonDropTarget {
 
         if (!d.dragComplete) {
             setTextColor(mOriginalTextColor);
+            setBackgroundResource(R.drawable.background_drop_target_stripe_grey_light);
         }
     }
 }

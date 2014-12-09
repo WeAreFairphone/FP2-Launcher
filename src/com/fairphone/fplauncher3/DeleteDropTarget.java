@@ -180,8 +180,11 @@ public class DeleteDropTarget extends ButtonDropTarget {
             }
         }
 
-        if (useUninstallLabel || useDeleteLabel) {
-        	isVisible = true;
+        if (useUninstallLabel) {
+        	
+        }
+        else if(useDeleteLabel) {
+        	
         } else {
             isVisible = false;
         }
@@ -205,6 +208,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
         super.onDragEnter(d);
 
         setHoverColor();
+        setBackgroundResource(R.drawable.drop_target_background_delete_red);
     }
 
     public void onDragExit(DragObject d) {
@@ -212,6 +216,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
 
         if (!d.dragComplete) {
             resetHoverColor();
+            setBackgroundResource(R.drawable.background_drop_target_stripe_grey_light);
         } else {
             // Restore the hover color if we are deleting
             d.dragView.setColor(mHoverColor);
