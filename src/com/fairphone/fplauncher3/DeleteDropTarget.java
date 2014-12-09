@@ -21,14 +21,11 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ResolveInfo;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,12 +38,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
-import com.fairphone.fplauncher3.R;
-import com.fairphone.fplauncher3.compat.LauncherAppsCompat;
 import com.fairphone.fplauncher3.compat.UserHandleCompat;
-
-import java.util.List;
-import java.util.Set;
 
 public class DeleteDropTarget extends ButtonDropTarget {
     private static int DELETE_ANIMATION_DURATION = 285;
@@ -58,9 +50,6 @@ public class DeleteDropTarget extends ButtonDropTarget {
     private final int mFlingDeleteMode = MODE_FLING_DELETE_ALONG_VECTOR;
 
     private ColorStateList mOriginalTextColor;
-    private TransitionDrawable mUninstallDrawable;
-    private TransitionDrawable mRemoveDrawable;
-    private TransitionDrawable mCurrentDrawable;
 
     private boolean mWaitingForUninstall = false;
 
@@ -82,19 +71,9 @@ public class DeleteDropTarget extends ButtonDropTarget {
         // Get the hover color
         Resources r = getResources();
         mHoverColor = r.getColor(R.color.delete_target_hover_tint);
-        mUninstallDrawable = (TransitionDrawable) 
-                r.getDrawable(R.drawable.uninstall_target_selector);
-        mRemoveDrawable = (TransitionDrawable) r.getDrawable(R.drawable.remove_target_selector);
-
-        mRemoveDrawable.setCrossFadeEnabled(true);
-        mUninstallDrawable.setCrossFadeEnabled(true);
-
-        // The current drawable is set to either the remove drawable or the uninstall drawable 
-        // and is initially set to the remove drawable, as set in the layout xml.
-        mCurrentDrawable = (TransitionDrawable) getCurrentDrawable();
 
         // Remove the text in the Phone UI in landscape
-        int orientation = getResources().getConfiguration().orientation;
+        int orientation = r.getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             if (!LauncherAppState.getInstance().isScreenLarge()) {
                 setText("");
@@ -132,15 +111,9 @@ public class DeleteDropTarget extends ButtonDropTarget {
     }
 
     private void setHoverColor() {
-        if (mCurrentDrawable != null) {
-            mCurrentDrawable.startTransition(mTransitionDuration);
-        }
         setTextColor(mHoverColor);
     }
     private void resetHoverColor() {
-        if (mCurrentDrawable != null) {
-            mCurrentDrawable.resetTransition();
-        }
         setTextColor(mOriginalTextColor);
     }
 
@@ -207,14 +180,11 @@ public class DeleteDropTarget extends ButtonDropTarget {
             }
         }
 
-        if (useUninstallLabel) {
-            setCompoundDrawablesRelativeWithIntrinsicBounds(mUninstallDrawable, null, null, null);
-        } else if (useDeleteLabel) {
-            setCompoundDrawablesRelativeWithIntrinsicBounds(mRemoveDrawable, null, null, null);
+        if (useUninstallLabel || useDeleteLabel) {
+        	isVisible = true;
         } else {
             isVisible = false;
         }
-        mCurrentDrawable = (TransitionDrawable) getCurrentDrawable();
 
         mActive = isVisible;
         resetHoverColor();
@@ -253,8 +223,8 @@ public class DeleteDropTarget extends ButtonDropTarget {
         final Rect from = new Rect();
         dragLayer.getViewRectRelativeToSelf(d.dragView, from);
 
-        int width = mCurrentDrawable == null ? 0 : mCurrentDrawable.getIntrinsicWidth();
-        int height = mCurrentDrawable == null ? 0 : mCurrentDrawable.getIntrinsicHeight();
+        int width = 0;
+        int height = 0;
         final Rect to = getIconRect(d.dragView.getMeasuredWidth(), d.dragView.getMeasuredHeight(),
                 width, height);
         final float scale = (float) to.width() / from.width();
@@ -370,7 +340,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
 
     public void onDrop(DragObject d) {
         animateToTrashAndCompleteDrop(d);
-    }
+    }    
 
     /**
      * Creates an animation from the current drag view to the delete trash icon.
@@ -378,8 +348,8 @@ public class DeleteDropTarget extends ButtonDropTarget {
     private AnimatorUpdateListener createFlingToTrashAnimatorListener(final DragLayer dragLayer,
             DragObject d, PointF vel, ViewConfiguration config) {
 
-        int width = mCurrentDrawable == null ? 0 : mCurrentDrawable.getIntrinsicWidth();
-        int height = mCurrentDrawable == null ? 0 : mCurrentDrawable.getIntrinsicHeight();
+        int width = 0;
+        int height = 0;
         final Rect to = getIconRect(d.dragView.getMeasuredWidth(), d.dragView.getMeasuredHeight(),
                 width, height);
         final Rect from = new Rect();

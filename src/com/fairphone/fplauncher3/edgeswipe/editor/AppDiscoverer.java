@@ -140,14 +140,18 @@ public class AppDiscoverer {
         saveAppAgingData(context);
     }
     
-    public void applicationPinned(Context context, ComponentName componentName) {
+    public boolean applicationPinned(Context context, ComponentName componentName) {
+    	boolean isPinned = false;
     	ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(componentName);
         agingManager.applicationPinned(appRunInfo);
         AppInfo appInfo = _allApps.get(componentName);
         if(appInfo != null){
         	appInfo.setIsPinned(!appInfo.isPinned());
+        	isPinned = appInfo.isPinned();
         }
         saveAppAgingData(context);
+        
+        return isPinned;
     }
 
     public void applicationRemoved(Context context, ComponentName component) {

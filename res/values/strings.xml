@@ -125,7 +125,7 @@ s -->
     <!-- Label for uninstall drop target. [CHAR_LIMIT=30]-->
     <string name="delete_target_uninstall_label">Uninstall</string>
     <!-- Label for the info icon. [CHAR_LIMIT=30] -->
-    <string name="info_target_label">App info</string>
+    <string name="info_target_label">Info</string>
 
     <!-- Accessibility: Search button -->
     <string name="accessibility_search_button">Search</string>
@@ -343,5 +343,7 @@ s -->
     <string name="empty_unused_apps_warning">You have no unused apps at the moment</string>
     <string name="pin_target_label">Pin</string>
     <string name="unpin_target_label">Unpin</string>
+    <string name="app_pin_message">App pinned</string>
+    <string name="app_unpin_message">App unpinned</string>
     
 </resources>

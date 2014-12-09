@@ -16,22 +16,21 @@
 
 package com.fairphone.fplauncher3;
 
-import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.drawable.TransitionDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
 
 public class PinAppDropTarget extends ButtonDropTarget {
 
     private ColorStateList mOriginalTextColor;
-    private TransitionDrawable mDrawable;
 
     public PinAppDropTarget(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -50,10 +49,6 @@ public class PinAppDropTarget extends ButtonDropTarget {
         // Get the hover color
         Resources r = getResources();
         mHoverColor = r.getColor(R.color.pin_target_hover_tint);
-        mDrawable = (TransitionDrawable) getCurrentDrawable();
-        if (null != mDrawable) {
-            mDrawable.setCrossFadeEnabled(true);
-        }
 
         // Remove the text in the Phone UI in landscape
         int orientation = getResources().getConfiguration().orientation;
@@ -70,6 +65,7 @@ public class PinAppDropTarget extends ButtonDropTarget {
         // in onDrop, because it allows us to reject the drop (by returning false)
         // so that the object being dragged isn't removed from the drag source.
         ComponentName componentName = null;
+        boolean isPinned = false;
         if (d.dragInfo instanceof AppInfo) {
             componentName = ((AppInfo) d.dragInfo).getComponentName();
         } else if (d.dragInfo instanceof ShortcutInfo) {
@@ -78,9 +74,11 @@ public class PinAppDropTarget extends ButtonDropTarget {
             componentName = ((PendingAddItemInfo) d.dragInfo).componentName;
         }
         if (componentName != null) {
-            AppDiscoverer.getInstance().applicationPinned(mLauncher, componentName);
+        	isPinned = AppDiscoverer.getInstance().applicationPinned(mLauncher, componentName);
         }
 
+        Toast.makeText(mLauncher, isPinned ? R.string.app_pin_message:R.string.app_unpin_message, Toast.LENGTH_SHORT).show();
+        
         // There is no post-drop animation, so clean up the DragView now
         d.deferDragViewCleanupPostAnimation = false;
         return false;
@@ -96,9 +94,6 @@ public class PinAppDropTarget extends ButtonDropTarget {
         }
 
         mActive = isVisible;
-        if(mDrawable != null){
-        	mDrawable.resetTransition();
-        }
         setTextColor(mOriginalTextColor);
         ((ViewGroup) getParent()).setVisibility(isVisible ? View.VISIBLE : View.GONE);
         if (info instanceof AppInfo) {
@@ -118,10 +113,6 @@ public class PinAppDropTarget extends ButtonDropTarget {
 
     public void onDragEnter(DragObject d) {
         super.onDragEnter(d);
-
-        if(mDrawable != null){
-        	mDrawable.startTransition(mTransitionDuration);
-        }
         setTextColor(mHoverColor);
     }
 
@@ -129,9 +120,6 @@ public class PinAppDropTarget extends ButtonDropTarget {
         super.onDragExit(d);
 
         if (!d.dragComplete) {
-        	if(mDrawable != null){
-        		mDrawable.resetTransition();
-        	}
             setTextColor(mOriginalTextColor);
         }
     }
