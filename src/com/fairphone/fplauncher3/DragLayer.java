@@ -37,7 +37,10 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import com.fairphone.fplauncher3.R;
+import com.fairphone.fplauncher3.applifecycle.AppDrawerView;
+
 import java.util.ArrayList;
 
 /**
@@ -160,6 +163,11 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
         final FrameLayout.LayoutParams flp = (FrameLayout.LayoutParams) child.getLayoutParams();
         if (child instanceof Insettable) {
             ((Insettable) child).setInsets(newInsets);
+        } else if( child instanceof AppDrawerView) {
+            flp.topMargin = 0;
+            flp.leftMargin = 0;
+            flp.rightMargin = 0;
+            flp.bottomMargin = 0;
         } else {
             flp.topMargin += (newInsets.top - oldInsets.top);
             flp.leftMargin += (newInsets.left - oldInsets.left);
