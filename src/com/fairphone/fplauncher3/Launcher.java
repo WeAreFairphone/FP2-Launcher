@@ -1713,35 +1713,12 @@ public class Launcher extends Activity
     @TargetApi(19)
     private void setupGrayoutSystemBarsForLmp() {
         if (Utilities.isLmpOrAbove()) {
-//            try {
-                getWindow().getAttributes().systemUiVisibility |=
-                        (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                        | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//                Field drawsSysBackgroundsField = WindowManager.LayoutParams.class.getField(
-//                        "FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS");
-//                getWindow().addFlags(drawsSysBackgroundsField.getInt(null));
-//
-//                Method setStatusBarColorMethod =
-//                        Window.class.getDeclaredMethod("setStatusBarColor", int.class);
-//                Method setNavigationBarColorMethod =
-//                        Window.class.getDeclaredMethod("setNavigationBarColor", int.class);
-//                setStatusBarColorMethod.invoke(getWindow(), Color.TRANSPARENT);
-//                setNavigationBarColorMethod.invoke(getWindow(), Color.TRANSPARENT);
-//            } catch (NoSuchFieldException e) {
-//                Log.w(TAG, "NoSuchFieldException while setting up transparent bars");
-//            } catch (NoSuchMethodException ex) {
-//                Log.w(TAG, "NoSuchMethodException while setting up transparent bars");
-//            } catch (IllegalAccessException e) {
-//                Log.w(TAG, "IllegalAccessException while setting up transparent bars");
-//            } catch (IllegalArgumentException e) {
-//                Log.w(TAG, "IllegalArgumentException while setting up transparent bars");
-//            } catch (InvocationTargetException e) {
-//                Log.w(TAG, "InvocationTargetException while setting up transparent bars");
-//            } 
-//            finally {}
+            getWindow().getAttributes().systemUiVisibility |=
+                    (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
    
@@ -5098,8 +5075,6 @@ public class Launcher extends Activity
 	public void showAgingAppDrawer() {
 	    
 	    if (Utilities.isLmpOrAbove()) {
-//    	    getWindow().setStatusBarColor(Color.BLACK);
-//    	    getWindow().setNavigationBarColor(Color.BLACK);
 	        setupGrayoutSystemBarsForLmp();
 	    }
 	    
@@ -5111,8 +5086,6 @@ public class Launcher extends Activity
 	public void hideAgingAppDrawer() {
 	    
 	    if (Utilities.isLmpOrAbove()) {
-//            getWindow().setStatusBarColor(Color.TRANSPARENT);
-//            getWindow().setNavigationBarColor(Color.TRANSPARENT);
 	        setupTransparentSystemBarsForLmp();
         }
 	    
