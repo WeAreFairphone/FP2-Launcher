@@ -463,7 +463,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 
 	@Override
 	public void onSelectionFinished(float pointerX, float pointerY) {
-		if (isInEditZone(pointerX, pointerY)) {
+		if (isInEditZone(pointerX, pointerY) && isTimeToShowEdit()) {
 			mLauncher.startEditFavorites();
 		} else if (isInActiveZone(pointerX)) {
 			View item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
@@ -515,7 +515,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
     }
 	
 	private boolean startEditButtonAnimation() {
-		boolean isTimeToShow = mEditMenuButtonStartTime < System.currentTimeMillis();
+		boolean isTimeToShow = isTimeToShowEdit();
 		if(isTimeToShow && mEditButton != null && (mEditButton.getAlpha() == 0) && mEdgeSwipeHolder.getVisibility() == View.VISIBLE){
 			ObjectAnimator fadeIn = ObjectAnimator.ofFloat(mEditButton, View.ALPHA, 0, 1);
 			fadeIn.setDuration(mContext.getResources().getInteger(R.integer.edge_swipe_translate_delay_duration));
@@ -547,6 +547,11 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 		}else{
 			Log.d(TAG, "Edit button can't be shown");
 		}
+		return isTimeToShow;
+	}
+
+	private boolean isTimeToShowEdit() {
+		boolean isTimeToShow = mEditMenuButtonStartTime < System.currentTimeMillis();
 		return isTimeToShow;
 	}
 
