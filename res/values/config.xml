@@ -1,5 +1,6 @@
 <resources>
-<!-- Dynamic Grid -->
+
+    <!-- Dynamic Grid -->
     <integer name="config_dynamic_grid_max_long_edge_cell_count">6</integer>
     <integer name="config_dynamic_grid_max_short_edge_cell_count">5</integer>
     <integer name="config_dynamic_grid_min_edge_cell_count">3</integer>
@@ -8,7 +9,7 @@
     <!-- Out of 100, the percent to shrink the workspace during overview mode. -->
     <integer name="config_dynamic_grid_overview_scale_percentage">80</integer>
 
-<!-- Miscellaneous -->
+    <!-- Miscellaneous -->
     <bool name="config_largeHeap">false</bool>
     <bool name="is_tablet">false</bool>
     <bool name="is_large_tablet">false</bool>
@@ -17,14 +18,16 @@
     <!-- Max number of page indicators to show -->
     <integer name="config_maxNumberOfPageIndicatorsToShow">21</integer>
 
-    <!-- App data backup and restore. To enble backup, register with an android backup service.
-         http://developer.android.com/guide/topics/data/backup.html#BackupKey -->
+    <!--
+         App data backup and restore. To enble backup, register with an android backup service.
+         http://developer.android.com/guide/topics/data/backup.html#BackupKey
+    -->
     <bool name="enable_backup">false</bool>
 
-<!-- DragController -->
+    <!-- DragController -->
     <integer name="config_flingToDeleteMinVelocity">-1500</integer>
 
-<!-- AllApps/Customize/AppsCustomize -->
+    <!-- AllApps/Customize/AppsCustomize -->
     <!-- The alpha of the AppsCustomize bg in spring loaded mode -->
     <integer name="config_workspaceScrimAlpha">55</integer>
     <integer name="config_workspaceUnshrinkTime">300</integer>
@@ -33,8 +36,10 @@
     <!-- Out of 100, the percent to shrink the workspace during spring loaded mode. -->
     <integer name="config_workspaceSpringLoadShrinkPercentage">80</integer>
 
-    <!-- Fade/zoom in/out duration & scale in the AllApps transition.
-         Note: This should be less than the workspaceShrinkTime as they happen together. -->
+    <!--
+         Fade/zoom in/out duration & scale in the AllApps transition.
+         Note: This should be less than the workspaceShrinkTime as they happen together.
+    -->
     <integer name="config_appsCustomizeRevealTime">220</integer>
     <integer name="config_appsCustomizeZoomInTime">350</integer>
     <integer name="config_appsCustomizeZoomOutTime">600</integer>
@@ -42,39 +47,45 @@
     <integer name="config_appsCustomizeFadeInTime">250</integer>
     <integer name="config_appsCustomizeFadeOutTime">200</integer>
     <integer name="config_appsCustomizeWorkspaceShrinkTime">300</integer>
-
     <integer name="config_appsCustomizeConcealTime">250</integer>
     <integer name="config_appsCustomizeItemsAlphaStagger">60</integer>
 
-    <!-- This constant stores the ratio of the all apps button drawable which
-         is used for internal (baked-in) padding -->
+    <!--
+         This constant stores the ratio of the all apps button drawable which
+         is used for internal (baked-in) padding
+    -->
     <integer name="config_allAppsButtonPaddingPercent">17</integer>
-
     <integer name="config_workspaceDefaultScreen">0</integer>
 
     <!-- Tab transition animation duration -->
     <integer name="config_tabTransitionDuration">250</integer>
 
-    <!-- The slope, in percent, of the drag movement needed to drag an item out of
-         AppsCustomize (y / x * 100%)  -->
+    <!--
+         The slope, in percent, of the drag movement needed to drag an item out of
+         AppsCustomize (y / x * 100%)
+    -->
     <integer name="config_appsCustomizeDragSlopeThreshold">150</integer>
 
-<!-- Workspace -->
+    <!-- Workspace -->
     <!-- Whether or not the drop targets drop down as opposed to fade in -->
     <bool name="config_useDropTargetDownTransition">false</bool>
 
     <!-- The transition duration for the background of the drop targets -->
     <integer name="config_dropTargetBgTransitionDuration">0</integer>
 
-    <!-- The duration (in ms) of the fade animation on the object outlines, used when
-         we are dragging objects around on the home screen. -->
+    <!--
+         The duration (in ms) of the fade animation on the object outlines, used when
+         we are dragging objects around on the home screen.
+    -->
     <integer name="config_dragOutlineFadeTime">900</integer>
 
     <!-- The alpha value at which to show the most recent drop visualization outline. -->
     <integer name="config_dragOutlineMaxAlpha">128</integer>
 
-    <!-- Parameters controlling the animation for when an item is dropped on the home screen,
-         and it animates from its old position to the new one. -->
+    <!--
+         Parameters controlling the animation for when an item is dropped on the home screen,
+         and it animates from its old position to the new one.
+    -->
     <integer name="config_dropAnimMinDuration">100</integer>
     <integer name="config_dropAnimMaxDuration">500</integer>
 
@@ -96,22 +107,28 @@
     <!-- Memory debugging, including a memory dump icon -->
     <bool name="debug_memory_enabled">false</bool>
 
-    <!-- Name of a subclass of com.android.launcher3.AppFilter used to
-         filter the activities shown in the launcher. Can be empty. -->
+    <!--
+         Name of a subclass of com.android.launcher3.AppFilter used to
+         filter the activities shown in the launcher. Can be empty.
+    -->
     <string name="app_filter_class" translatable="false"></string>
 
-    <!-- Name of a subclass of com.android.launcher3.BuildInfo used to
-         get build information. Can be empty. -->
+    <!--
+         Name of a subclass of com.android.launcher3.BuildInfo used to
+         get build information. Can be empty.
+    -->
     <string name="build_info_class" translatable="false"></string>
-    
+
     <!-- Fairphone -->
     <!-- Edge menu -->
-    <integer name="edge_swipe_show_edit_button_time">2000</integer>
-	<string name="edge_swipe_default_apps">com.android.contacts,com.android.contacts.activities.DialtactsActivity;com.android.mms,com.android.mms.ui.BootActivity;com.android.gallery3d,com.android.camera.CameraLauncher;com.android.browser,com.android.browser.BrowserActivity</string>
-	
+    <integer name="edge_swipe_show_edit_button_time">1000</integer>
+
+    <string name="edge_swipe_default_apps">com.android.contacts,com.android.contacts.activities.DialtactsActivity;com.android.mms,com.android.mms.ui.BootActivity;com.android.gallery3d,com.android.camera.CameraLauncher;com.android.browser,com.android.browser.BrowserActivity</string>
+
     <!-- Edit favorites -->
     <integer name="edit_favorites_remove_text_size">23</integer>
     <integer name="edit_favorites_drag_here_to_remove_text_size">16</integer>
     <integer name="edit_favorites_drag_here_to_add_highlight_text_size">14</integer>
     <integer name="edit_favorites_drag_here_to_add_normal_text_size">10</integer>
+
 </resources>

@@ -8,8 +8,8 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="1"
-        android:background="#DDFFFFFF" />
+        android:alpha="0.97"
+        android:background="#FFFFFF" />
 
     <LinearLayout
         android:id="@+id/edge_swipe_holder"

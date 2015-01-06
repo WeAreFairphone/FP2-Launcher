@@ -164,7 +164,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 		AnimatorSet showEdgeSwipeAnimatorSet = new AnimatorSet();
 
 		ObjectAnimator showBackground = ObjectAnimator.ofFloat(
-				mMenuBackgroundView, View.ALPHA, 0, 1);
+				mMenuBackgroundView, View.ALPHA, 0, 0.97f);
 		showBackground.setDuration(resources.getInteger(R.integer.edge_swipe_background_fade_duration));
 
 		showEdgeSwipeAnimatorSet.play(showBackground);
