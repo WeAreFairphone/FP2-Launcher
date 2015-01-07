@@ -31,7 +31,6 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -116,17 +115,6 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
 
         mAllAppsGridView.setLongClickable(true);
 
-        mAllAppsGridView.setOnItemLongClickListener(new OnItemLongClickListener()
-        {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id)
-            {
-                startDraggingIcon(v, position);
-
-                return true;
-            }
-        });
-
         mAllAppsGridView.setOnEditFavouritesIconDraggedListener(new OnEditFavouritesIconDraggedListener()
         {
 
@@ -207,7 +195,6 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
                 iconView.setVisibility(View.INVISIBLE);
             }
 
-            rla.setOnLongClickListener(null);
             iconView.setOnFavouriteItemDraggedListener(null);
             mSelectedApps[idx] = null;
             showFavoriteGreyHighlight(rla);
@@ -253,7 +240,6 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
             // pass the main view and the instance setup the drag and visibility
             // of some views
             final View mainView = this.getWindow().getDecorView();
-            rla.setOnLongClickListener(new IdLongClickListener(idx, mainView, this));
         	iconView.setOnFavouriteItemDraggedListener(new OnFavouriteItemDraggedListener() {
 				
 				@Override
@@ -389,30 +375,6 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     {
         String[] selectedItem = toDeserialize.split(";");
         return selectedItem;
-    }
-
-    class IdLongClickListener implements View.OnLongClickListener
-    {
-        private int mId;
-        private View mMainView;
-        private DragDropItemLayoutListener mListener;
-
-        public IdLongClickListener(int id, View mainView, DragDropItemLayoutListener listener)
-        {
-            super();
-
-            mId = id;
-            mMainView = mainView;
-            mListener = listener;
-        }
-
-        @Override
-        public boolean onLongClick(View v)
-        {
-            startFavoriteDrag(v, mId, mMainView, mListener);
-
-            return true;
-        }
     }
     
     private void startFavoriteDrag(View v, int id, View mainView, DragDropItemLayoutListener listener) {
