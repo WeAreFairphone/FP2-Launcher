@@ -118,7 +118,7 @@ public class InfoDropTarget extends ButtonDropTarget {
 
         if (!d.dragComplete) {
             setTextColor(mOriginalTextColor);
-            setBackgroundResource(R.drawable.background_drop_target_stripe_grey_light);
+            setBackgroundResource(0);
         }
     }
 }

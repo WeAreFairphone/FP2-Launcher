@@ -216,11 +216,11 @@ public class DeleteDropTarget extends ButtonDropTarget {
 
         if (!d.dragComplete) {
             resetHoverColor();
-            setBackgroundResource(R.drawable.background_drop_target_stripe_grey_light);
+            setBackgroundResource(0);
         } else {
             // Restore the hover color if we are deleting
             d.dragView.setColor(mHoverColor);
-            setBackgroundResource(R.drawable.background_drop_target_stripe_grey_light);
+            setBackgroundResource(0);
         }
     }
 

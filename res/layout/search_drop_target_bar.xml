@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2011 The Android Open Source Project
+<!--
+     Copyright (C) 2011 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,21 +14,23 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<com.fairphone.fplauncher3.SearchDropTargetBar
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:focusable="false"
+<com.fairphone.fplauncher3.SearchDropTargetBar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="false"
+    android:orientation="horizontal" >
 
     <!-- Drag specific targets container -->
+
     <LinearLayout
         android:id="@+id/drag_target_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:background="@drawable/background_drop_target_stripe_grey_light"
+        android:orientation="horizontal" >
 
-        <include
-            layout="@layout/drop_target_bar" />
+        <include layout="@layout/drop_target_bar" />
     </LinearLayout>
+
 </com.fairphone.fplauncher3.SearchDropTargetBar>

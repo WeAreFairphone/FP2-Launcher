@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2011 The Android Open Source Project
+<!--
+     Copyright (C) 2011 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,35 +14,48 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
     <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/DropTargetButtonContainer"
-        android:layout_weight="1">
-        <!-- Delete target -->
-        <com.fairphone.fplauncher3.DeleteDropTarget
-            style="@style/DropTargetButton"
-            android:id="@+id/delete_target_text"
-            android:text="@string/delete_zone_label_workspace" />
-    </FrameLayout>
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/DropTargetButtonContainer"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
         <!-- Info target -->
+
         <com.fairphone.fplauncher3.InfoDropTarget
-            style="@style/DropTargetButton"
             android:id="@+id/info_target_text"
-            android:text="@string/info_target_label"/>
+            style="@style/InfoDropTargetButton"
+            android:layout_height="match_parent"
+            android:text="@string/info_target_label" />
     </FrameLayout>
+
     <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/DropTargetButtonContainer"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
         <!-- Pin/Unpin target -->
+
         <com.fairphone.fplauncher3.PinAppDropTarget
-            style="@style/DropTargetButton"
             android:id="@+id/pin_target_text"
+            style="@style/PinDropTargetButton"
+            android:layout_height="match_parent"
             android:text="@string/pin_target_label" />
     </FrameLayout>
+
+    <FrameLayout
+        style="@style/DropTargetButtonContainer"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
+        <!-- Delete target -->
+
+        <com.fairphone.fplauncher3.DeleteDropTarget
+            android:id="@+id/delete_target_text"
+            style="@style/DeleteDropTargetButton"
+            android:layout_height="match_parent"
+            android:text="@string/delete_zone_label_workspace" />
+    </FrameLayout>
+
 </merge>

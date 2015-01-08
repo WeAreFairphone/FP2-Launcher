@@ -690,9 +690,9 @@ public class DeviceProfile {
             lp.gravity = Gravity.TOP | Gravity.LEFT;
             lp.width = searchBarSpaceHeightPx;
             lp.height = LayoutParams.WRAP_CONTENT;
-            searchBar.setPadding(
-                    0, 2 * edgeMarginPx, 0,
-                    2 * edgeMarginPx);
+//            searchBar.setPadding(
+//                    0, 2 * edgeMarginPx, 0,
+//                    2 * edgeMarginPx);
 
             LinearLayout targets = (LinearLayout) searchBar.findViewById(R.id.drag_target_bar);
             targets.setOrientation(LinearLayout.VERTICAL);
@@ -701,10 +701,10 @@ public class DeviceProfile {
             lp.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
             lp.width = searchBarSpaceWidthPx;
             lp.height = searchBarSpaceHeightPx;
-            searchBar.setPadding(
-                    2 * edgeMarginPx,
-                    getSearchBarTopOffset(),
-                    2 * edgeMarginPx, 0);
+            //            searchBar.setPadding(
+            //                    2 * edgeMarginPx,
+            //                    getSearchBarTopOffset(),
+            //                    2 * edgeMarginPx, 0);
         }
         searchBar.setLayoutParams(lp);
 

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/drop_target_background_stripe_grey_light" 
+    android:src="@drawable/drop_target_background_stripe_grey_light"
     android:tileMode="repeat" />

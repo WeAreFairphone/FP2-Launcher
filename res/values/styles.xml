@@ -17,7 +17,7 @@
 */
 -->
 
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="WorkspaceIcon">
         <item name="android:layout_width">match_parent</item>
@@ -32,10 +32,9 @@
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
-    <style name="WorkspaceIcon.Portrait">
-    </style>
-    <style name="WorkspaceIcon.Landscape">
-    </style>
+    <style name="WorkspaceIcon.Portrait"></style>
+
+    <style name="WorkspaceIcon.Landscape"></style>
 
     <style name="WorkspaceIcon.AppsCustomize">
         <item name="android:background">@null</item>
@@ -52,32 +51,43 @@
         <item name="customShadows">false</item>
     </style>
 
-    <style name="SearchDropTargetBar">
-    </style>
-    <style name="SearchButton">
-    </style>
+    <style name="SearchDropTargetBar"></style>
+
+    <style name="SearchButton"></style>
+
     <style name="DropTargetButtonContainer">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
     </style>
+
     <style name="DropTargetButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
         <item name="android:drawablePadding">7.5dp</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
-        <item name="android:textColor">#FF000000</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">#333333</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lines">1</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:shadowColor">#FF000000</item>
-        <item name="android:shadowDx">0.0</item>
-        <item name="android:shadowDy">1.0</item>
-        <item name="android:shadowRadius">4.0</item>
         <item name="android:background">@drawable/background_drop_target_stripe_grey_light</item>
+    </style>
+
+    <style name="InfoDropTargetButton" parent="@style/DropTargetButton">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="DeleteDropTargetButton" parent="@style/DropTargetButton">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="PinDropTargetButton" parent="@style/DropTargetButton">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="TabIndicator">
@@ -94,6 +104,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
     </style>
+
     <style name="TabIndicator.AppsCustomize">
         <!-- Overridden in values-land -->
     </style>
@@ -125,10 +136,11 @@
     <style name="PagedViewWidgetImageView">
         <item name="android:paddingLeft">@dimen/app_widget_preview_padding_left</item>
     </style>
+
     <style name="SearchButton.WithPaddingStart">
         <item name="android:paddingLeft">8dp</item>
     </style>
-    
+
     <!-- Fairphone -->
     <style name="IconText">
         <item name="android:textColor">@color/white</item>
@@ -144,7 +156,7 @@
         <item name="android:shadowDy">0</item>
         <item name="android:shadowRadius">4</item>
     </style>
-    
+
     <style name="SubTitle">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
@@ -168,7 +180,7 @@
         <item name="android:shadowDy">0</item>
         <item name="android:shadowRadius">4</item>
     </style>
-    
+
     <style name="SecondaryMainTitle">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">20sp</item>
@@ -176,6 +188,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:includeFontPadding">false</item>
     </style>
+
     <style name="AllAppsTitle">
         <item name="android:textColor">@color/blue_dark</item>
         <item name="android:textSize">34sp</item>
@@ -205,5 +218,5 @@
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
     </style>
-    
+
 </resources>
