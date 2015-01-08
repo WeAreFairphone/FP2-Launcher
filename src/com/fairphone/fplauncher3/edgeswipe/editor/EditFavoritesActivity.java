@@ -31,7 +31,6 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -39,6 +38,8 @@ import com.fairphone.fplauncher3.AppInfo;
 import com.fairphone.fplauncher3.R;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.DropDragEventListener;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView;
+import com.fairphone.fplauncher3.edgeswipe.editor.ui.FavoriteItemView;
+import com.fairphone.fplauncher3.edgeswipe.editor.ui.FavoriteItemView.OnFavouriteItemDraggedListener;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.IconDragShadowBuilder;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView.OnEditFavouritesIconDraggedListener;
 
@@ -114,17 +115,6 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
 
         mAllAppsGridView.setLongClickable(true);
 
-        mAllAppsGridView.setOnItemLongClickListener(new OnItemLongClickListener()
-        {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id)
-            {
-                startDraggingIcon(v, position);
-
-                return true;
-            }
-        });
-
         mAllAppsGridView.setOnEditFavouritesIconDraggedListener(new OnEditFavouritesIconDraggedListener()
         {
 
@@ -133,6 +123,11 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
             {
                 startDraggingIcon(view, position);
             }
+
+			@Override
+			public void OnEditFavouritesIconDragEnded() {
+				hideAllAppsRemoveZone();
+			}
         });
 
         mAllAppsGridView.setAdapter(mAllAppsListAdapter);
@@ -182,13 +177,13 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     }
 
     @Override
-    public void setupFavoriteIcon(FrameLayout rla, AppInfo applicationInfo, int idx, boolean performAnimation)
+    public void setupFavoriteIcon(FrameLayout rla, AppInfo applicationInfo, final int idx, boolean performAnimation)
     {
 
         if (applicationInfo == null)
         {
             final View dragPlaceholderView = rla.getChildAt(0);
-            final View iconView = rla.getChildAt(1);
+            final FavoriteItemView iconView = (FavoriteItemView)rla.getChildAt(1);
 
             if (performAnimation)
             {
@@ -200,14 +195,15 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
                 iconView.setVisibility(View.INVISIBLE);
             }
 
-            rla.setOnLongClickListener(null);
+            iconView.setOnFavouriteItemDraggedListener(null);
             mSelectedApps[idx] = null;
+            showFavoriteGreyHighlight(rla);
         }
         else
         {
             final View dragPlaceholderView = rla.getChildAt(0);
 
-            final TextView iconView = (TextView) rla.getChildAt(1);
+            final FavoriteItemView iconView = (FavoriteItemView) rla.getChildAt(1);
 
             // Log.d(TAG, "Adding app : " +
             // applicationInfo.getApplicationTitle());
@@ -244,7 +240,18 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
             // pass the main view and the instance setup the drag and visibility
             // of some views
             final View mainView = this.getWindow().getDecorView();
-            rla.setOnLongClickListener(new IdLongClickListener(idx, mainView, this));
+        	iconView.setOnFavouriteItemDraggedListener(new OnFavouriteItemDraggedListener() {
+				
+				@Override
+				public void OnFavouriteItemDragged(View view) {
+					startFavoriteDrag(view, idx, mainView, EditFavoritesActivity.this);
+				}
+				
+				@Override
+				public void OnFavouriteItemDragEnded() {
+					hideAllAppsRemoveZone();
+				}
+			});
         }
 
         FavoritesStorageHelper.storeSelectedApps(this, mSelectedApps);
@@ -369,50 +376,30 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         String[] selectedItem = toDeserialize.split(";");
         return selectedItem;
     }
+    
+    private void startFavoriteDrag(View v, int id, View mainView, DragDropItemLayoutListener listener) {
+		// Show the zone where favorites can be removed
+		listener.showAllAppsRemoveZone();
 
-    class IdLongClickListener implements View.OnLongClickListener
-    {
-        private int mId;
-        private View mMainView;
-        private DragDropItemLayoutListener mListener;
+		// display a circle around the possible destinations
+		toggleFavoriteBackground(-1, true);
 
-        public IdLongClickListener(int id, View mainView, DragDropItemLayoutListener listener)
-        {
-            super();
+		// set the drag info
+		AppInfo applicationInfo = mSelectedApps[id];
 
-            mId = id;
-            mMainView = mainView;
-            mListener = listener;
-        }
+		// set the item with the origin of the drag and the index of the
+		// dragged view
+		mDragOrigin = EditFavoritesActivity.SELECTED_APPS_DRAG;
+		String selectedItem = serializeItem(mDragOrigin, id);
+		ClipData.Item item = new ClipData.Item(selectedItem);
+		ClipData dragData = ClipData.newPlainText(applicationInfo.getApplicationTitle(), applicationInfo.getApplicationTitle());
+		dragData.addItem(item);
 
-        @Override
-        public boolean onLongClick(View v)
-        {
-            // Show the zone where favorites can be removed
-            mListener.showAllAppsRemoveZone();
+		mainView.startDrag(dragData,
+		        new IconDragShadowBuilder(EditFavoritesActivity.this, v, new BitmapDrawable(getResources(), applicationInfo.getIconBitmap())), v, 0);
 
-            // display a circle around the possible destinations
-            toggleFavoriteBackground(-1, true);
-
-            // set the drag info
-            AppInfo applicationInfo = mSelectedApps[mId];
-
-            // set the item with the origin of the drag and the index of the
-            // dragged view
-            mDragOrigin = EditFavoritesActivity.SELECTED_APPS_DRAG;
-            String selectedItem = serializeItem(mDragOrigin, mId);
-            ClipData.Item item = new ClipData.Item(selectedItem);
-            ClipData dragData = ClipData.newPlainText(applicationInfo.getApplicationTitle(), applicationInfo.getApplicationTitle());
-            dragData.addItem(item);
-
-            mMainView.startDrag(dragData,
-                    new IconDragShadowBuilder(EditFavoritesActivity.this, v, new BitmapDrawable(getResources(), applicationInfo.getIconBitmap())), v, 0);
-
-            mMainView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-
-            return true;
-        }
-    }
+		mainView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+	}
 
     @Override
     public boolean onDrag(View v, DragEvent event)
@@ -543,5 +530,4 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
 	        }
         }
     }
-
 }

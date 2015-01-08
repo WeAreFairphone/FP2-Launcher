@@ -417,13 +417,12 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 		else{
 			mSide = MenuSide.RIGHT_SIDE;
 		}
-		setupEditButtonPositionAndTimer();
 		showEdgeSwipe();
+		setupEditButtonPositionAndTimer();
 	}
 
 	@Override
 	public void onSelectionUpdate(float pointerX, float pointerY) {
-		startEditButtonAnimation();
 		
 		if (mEdgeSwipeHolder != null) {
 			View firstChild = mEdgeSwipeHolder.getChildAt(0);
@@ -557,7 +556,16 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener{
 
 	private void setupEditButtonPositionAndTimer() {
 		//set edit menu button timer
-        mEditMenuButtonStartTime = System.currentTimeMillis() + mLauncher.getResources().getInteger(R.integer.edge_swipe_show_edit_button_time);
+        mEditMenuButtonStartTime = (System.currentTimeMillis() - 10) + mLauncher.getResources().getInteger(R.integer.edge_swipe_show_edit_button_time);
+        if(mMenuView != null){
+        	mMenuView.postDelayed(new Runnable() {
+				
+				@Override
+				public void run() {
+					startEditButtonAnimation();
+				}
+			}, mLauncher.getResources().getInteger(R.integer.edge_swipe_show_edit_button_time));
+        }
 	}
 	
 	private boolean isInActiveZone(float pointerX) {

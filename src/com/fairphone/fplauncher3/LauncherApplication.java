@@ -18,15 +18,19 @@ package com.fairphone.fplauncher3;
 
 import android.app.Application;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
 public class LauncherApplication extends Application {
+    private static final String TAG = LauncherApplication.class.getSimpleName();
+    
     @Override
     public void onCreate() {
         super.onCreate();
         if (Settings.Global.getInt(getContentResolver(), Settings.Global.CRASHLYTICS_OPT_IN, 0) == 1)
         {
+            Log.d(TAG, "Crash reports active.");
             Crashlytics.start(this);  
         }
         LauncherAppState.setApplicationContext(this);

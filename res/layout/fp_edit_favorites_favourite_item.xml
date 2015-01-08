@@ -19,7 +19,7 @@
         android:textStyle="bold"
         android:visibility="invisible" />
 
-    <TextView
+    <com.fairphone.fplauncher3.edgeswipe.editor.ui.FavoriteItemView
         android:id="@+id/favourite_icon"
         android:layout_width="match_parent"
         android:layout_height="80dp"
