@@ -14,10 +14,9 @@
     <LinearLayout
         android:id="@+id/edge_swipe_holder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         android:layout_marginTop="60dp"
-        android:orientation="vertical"
-        android:weightSum="5" />
+        android:orientation="vertical" />
 
 </FrameLayout>
