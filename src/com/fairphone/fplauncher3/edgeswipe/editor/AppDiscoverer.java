@@ -155,6 +155,11 @@ public class AppDiscoverer
 
     public void applicationUpdated(Context context, ComponentName componentName)
     {
+		AppInfo app = getApplicationFromComponentName(componentName);
+		if(app != null){
+			app.setIsNew(false);
+			app.setIsUpdated(true);
+		}
         ApplicationRunInformation appRunInfo = ApplicationRunInfoManager.generateApplicationRunInfo(componentName, false, true);
         agingManager.applicationUpdated(appRunInfo);
         saveAppAgingData(context);
@@ -162,6 +167,11 @@ public class AppDiscoverer
 
     public void applicationStarted(Context context, ComponentName componentName)
     {
+		AppInfo app = getApplicationFromComponentName(componentName);
+		if(app != null){
+			app.setIsNew(false);
+			app.setIsUpdated(false);
+		}
         ApplicationRunInformation appRunInfo = ApplicationRunInfoManager.generateApplicationRunInfo(componentName, false);
         agingManager.applicationStarted(appRunInfo);
         saveAppAgingData(context);
@@ -170,14 +180,14 @@ public class AppDiscoverer
     public boolean applicationPinned(Context context, ComponentName componentName)
     {
         boolean isPinned = false;
-        ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(componentName);
-        agingManager.applicationPinned(appRunInfo);
         AppInfo appInfo = _allApps.get(componentName);
         if (appInfo != null)
         {
             appInfo.setIsPinned(!appInfo.isPinned());
             isPinned = appInfo.isPinned();
         }
+        ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(componentName);
+        agingManager.applicationPinned(appRunInfo);
         saveAppAgingData(context);
 
         return isPinned;
