@@ -83,7 +83,6 @@ public class AgingAppsListAdapter extends BaseAdapter
         icon.setOnKeyListener(null);
         icon.setOnFocusChangeListener(null);
         
-        System.out.println(info.getApplicationTitle() + " - " +info.isNew() + " -" + info.isUpdated());
         updatedLabel.setVisibility(info.isUpdated() ? View.VISIBLE : View.GONE);
         newLabel.setVisibility(info.isNew() ? View.VISIBLE : View.GONE);
         

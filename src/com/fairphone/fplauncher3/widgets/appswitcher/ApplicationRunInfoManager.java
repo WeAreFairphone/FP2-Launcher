@@ -145,7 +145,7 @@ public class ApplicationRunInfoManager
         cachedApp.setLastExecution(appInfo.getLastExecution());
 
         cachedApp.setIsNewApp(false);
-
+        cachedApp.setIsUpdatedApp(false);
         cachedApp.setIsPinnedApp(appInfo.isPinnedApp());
 
         // update the informations
@@ -167,9 +167,6 @@ public class ApplicationRunInfoManager
         }
 
         cachedApp.setIsPinnedApp(!cachedApp.isPinnedApp());
-
-        // update the informations
-        updateAppInformation();
     }
 
     public void applicationInstalled(ApplicationRunInformation appInfo)

@@ -220,10 +220,6 @@ public class AppInfo extends ItemInfo
     public void setIsNew(boolean isNew)
     {
         mIsNew = isNew;
-        if (mIsNew)
-        {
-            mIsUpdated = false;
-        }
     }
 
     public boolean isNew()
@@ -234,10 +230,6 @@ public class AppInfo extends ItemInfo
     public void setIsUpdated(boolean isUpdated)
     {
         mIsUpdated = isUpdated;
-        if (mIsUpdated)
-        {
-            mIsNew = false;
-        }
     }
 
     public boolean isUpdated()

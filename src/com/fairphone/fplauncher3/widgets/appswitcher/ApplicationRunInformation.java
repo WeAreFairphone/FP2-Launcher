@@ -175,9 +175,6 @@ public class ApplicationRunInformation
     
     public void setIsNewApp(boolean isNewApp) {
         this.mIsNewApp = isNewApp;
-        if(mIsNewApp){
-            setIsUpdatedApp(false);
-        }
     }
     
     public boolean isUpdatedApp() {
@@ -187,10 +184,6 @@ public class ApplicationRunInformation
     public void setIsUpdatedApp(boolean isUpdatedApp)
     {
         this.mIsUpdatedApp = isUpdatedApp;
-        
-        if(mIsUpdatedApp){
-            setIsNewApp(false);
-        }
     }
 
     public boolean isPinnedApp() {
@@ -246,7 +239,7 @@ public class ApplicationRunInformation
         StringBuffer sb = new StringBuffer();
 
         sb.append(appInfo.getCount()).append(APP_RUN_INFO_SEPARATOR).append(appInfo.getLastExecution().getTime()).append(APP_RUN_INFO_SEPARATOR)
-                .append(appInfo.isNewApp()).append(APP_RUN_INFO_SEPARATOR).append(appInfo.isPinnedApp()).append(appInfo.isUpdatedApp());
+                .append(appInfo.isNewApp()).append(APP_RUN_INFO_SEPARATOR).append(appInfo.isPinnedApp()).append(APP_RUN_INFO_SEPARATOR).append(appInfo.isUpdatedApp());
 
         return sb.toString();
     }
