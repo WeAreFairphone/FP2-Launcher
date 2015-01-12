@@ -33,7 +33,8 @@ import java.util.HashMap;
 /**
  * Represents an app in AllAppsView.
  */
-public class AppInfo extends ItemInfo {
+public class AppInfo extends ItemInfo
+{
     private static final String TAG = "Launcher3.AppInfo";
 
     /**
@@ -60,25 +61,32 @@ public class AppInfo extends ItemInfo {
 
     private APP_AGE mAppAge;
 
-	private boolean mIsPinned;
+    private boolean mIsPinned;
 
-    AppInfo() {
+    private boolean mIsUpdated;
+
+    private boolean mIsNew;
+
+    AppInfo()
+    {
         itemType = LauncherSettings.BaseLauncherColumns.ITEM_TYPE_SHORTCUT;
     }
 
-    public Intent getIntent() {
+    public Intent getIntent()
+    {
         return intent;
     }
 
-    protected Intent getRestoredIntent() {
+    protected Intent getRestoredIntent()
+    {
         return null;
     }
 
     /**
      * Must not hold the Context.
      */
-    public AppInfo(Context context, LauncherActivityInfoCompat info, UserHandleCompat user,
-            IconCache iconCache, HashMap<Object, CharSequence> labelCache) {
+    public AppInfo(Context context, LauncherActivityInfoCompat info, UserHandleCompat user, IconCache iconCache, HashMap<Object, CharSequence> labelCache)
+    {
         this.componentName = info.getComponentName();
         this.container = ItemInfo.NO_ID;
 
@@ -94,20 +102,24 @@ public class AppInfo extends ItemInfo {
         this.user = user;
     }
 
-    private static int initFlags(LauncherActivityInfoCompat info) {
+    private static int initFlags(LauncherActivityInfoCompat info)
+    {
         int appFlags = info.getApplicationInfo().flags;
         int flags = 0;
-        if ((appFlags & android.content.pm.ApplicationInfo.FLAG_SYSTEM) == 0) {
+        if ((appFlags & android.content.pm.ApplicationInfo.FLAG_SYSTEM) == 0)
+        {
             flags |= DOWNLOADED_FLAG;
 
-            if ((appFlags & android.content.pm.ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+            if ((appFlags & android.content.pm.ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0)
+            {
                 flags |= UPDATED_SYSTEM_APP_FLAG;
             }
         }
         return flags;
     }
 
-    public AppInfo(AppInfo info) {
+    public AppInfo(AppInfo info)
+    {
         super(info);
         componentName = info.componentName;
         title = info.title.toString();
@@ -119,53 +131,57 @@ public class AppInfo extends ItemInfo {
     }
 
     @Override
-    public String toString() {
-        return "ApplicationInfo(title=" + title.toString() + " id=" + this.id
-                + " type=" + this.itemType + " container=" + this.container
-                + " screen=" + screenId + " cellX=" + cellX + " cellY=" + cellY
-                + " spanX=" + spanX + " spanY=" + spanY + " dropPos=" + Arrays.toString(dropPos)
-                + " user=" + user + ")";
+    public String toString()
+    {
+        return "ApplicationInfo(title=" + title.toString() + " id=" + this.id + " type=" + this.itemType + " container=" + this.container + " screen="
+                + screenId + " cellX=" + cellX + " cellY=" + cellY + " spanX=" + spanX + " spanY=" + spanY + " dropPos=" + Arrays.toString(dropPos) + " user="
+                + user + ")";
     }
 
-    public static void dumpApplicationInfoList(String tag, String label, ArrayList<AppInfo> list) {
+    public static void dumpApplicationInfoList(String tag, String label, ArrayList<AppInfo> list)
+    {
         Log.d(tag, label + " size=" + list.size());
-        for (AppInfo info: list) {
-            Log.d(tag, "   title=\"" + info.title + "\" iconBitmap="
-                    + info.iconBitmap + " firstInstallTime="
-                    + info.firstInstallTime);
+        for (AppInfo info : list)
+        {
+            Log.d(tag, "   title=\"" + info.title + "\" iconBitmap=" + info.iconBitmap + " firstInstallTime=" + info.firstInstallTime);
         }
     }
 
-    public ShortcutInfo makeShortcut() {
+    public ShortcutInfo makeShortcut()
+    {
         return new ShortcutInfo(this);
     }
-    
+
     /**
      * Returns the application title
+     * 
      * @return application title
      */
-    public String getApplicationTitle(){
-    	return title.toString();
+    public String getApplicationTitle()
+    {
+        return title.toString();
     }
 
-    public ComponentName getComponentName() {
+    public ComponentName getComponentName()
+    {
         return componentName;
     }
 
-    public Bitmap getIconBitmap() {
+    public Bitmap getIconBitmap()
+    {
         return iconBitmap;
     }
-    
-    public static enum APP_AGE{
-        NEW_APP, FREQUENT_USE, RARE_USE 
+
+    public static enum APP_AGE
+    {
+        FREQUENT_USE, RARE_USE
     }
-    
-    public static long getAgeLevelInMiliseconds(APP_AGE age){
+
+    public static long getAgeLevelInMiliseconds(APP_AGE age)
+    {
         long result = toMilliSeconds(365000);
-        switch (age) {
-            case NEW_APP:
-                result = toMilliSeconds(1);
-                break;
+        switch (age)
+        {
             case FREQUENT_USE:
                 result = toMilliSeconds(15);
                 break;
@@ -175,25 +191,57 @@ public class AppInfo extends ItemInfo {
         }
         return result;
     }
-    
+
     public static long toMilliSeconds(long days)
     {
         return days * 24l * 60l * 60l * 1000l;
     }
-    
-    public void setAge(APP_AGE age){
+
+    public void setAge(APP_AGE age)
+    {
         mAppAge = age;
     }
-    
-    public APP_AGE getAge(){
+
+    public APP_AGE getAge()
+    {
         return mAppAge;
     }
-    
-    public void setIsPinned(boolean isPinned){
+
+    public void setIsPinned(boolean isPinned)
+    {
         mIsPinned = isPinned;
     }
-    
-    public boolean isPinned(){
+
+    public boolean isPinned()
+    {
         return mIsPinned;
+    }
+
+    public void setIsNew(boolean isNew)
+    {
+        mIsNew = isNew;
+        if (mIsNew)
+        {
+            mIsUpdated = false;
+        }
+    }
+
+    public boolean isNew()
+    {
+        return mIsNew;
+    }
+
+    public void setIsUpdated(boolean isUpdated)
+    {
+        mIsUpdated = isUpdated;
+        if (mIsUpdated)
+        {
+            mIsNew = false;
+        }
+    }
+
+    public boolean isUpdated()
+    {
+        return mIsUpdated;
     }
 }

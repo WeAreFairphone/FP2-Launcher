@@ -43,6 +43,7 @@ public class ApplicationRunInformation
     private Date			mLastExecution;
     private boolean mIsNewApp;
 	private boolean mIsPinnedApp;
+    private boolean mIsUpdatedApp;
     
     /**
      * Create a base count zero Application Run information.
@@ -174,6 +175,22 @@ public class ApplicationRunInformation
     
     public void setIsNewApp(boolean isNewApp) {
         this.mIsNewApp = isNewApp;
+        if(mIsNewApp){
+            setIsUpdatedApp(false);
+        }
+    }
+    
+    public boolean isUpdatedApp() {
+        return mIsUpdatedApp;
+    }
+    
+    public void setIsUpdatedApp(boolean isUpdatedApp)
+    {
+        this.mIsUpdatedApp = isUpdatedApp;
+        
+        if(mIsUpdatedApp){
+            setIsNewApp(false);
+        }
     }
 
     public boolean isPinnedApp() {
@@ -229,7 +246,7 @@ public class ApplicationRunInformation
         StringBuffer sb = new StringBuffer();
 
         sb.append(appInfo.getCount()).append(APP_RUN_INFO_SEPARATOR).append(appInfo.getLastExecution().getTime()).append(APP_RUN_INFO_SEPARATOR)
-                .append(appInfo.isNewApp()).append(APP_RUN_INFO_SEPARATOR).append(appInfo.isPinnedApp());
+                .append(appInfo.isNewApp()).append(APP_RUN_INFO_SEPARATOR).append(appInfo.isPinnedApp()).append(appInfo.isUpdatedApp());
 
         return sb.toString();
     }
@@ -242,6 +259,7 @@ public class ApplicationRunInformation
         int count = 0;
         Date lastExecution = Calendar.getInstance().getTime();
         boolean isNewApp = false;
+        boolean isUpdatedApp = false;
         boolean isPinnedApp = false;
 
         try
@@ -250,12 +268,14 @@ public class ApplicationRunInformation
             lastExecution.setTime(Long.valueOf(splits[1]));
             isNewApp = Boolean.getBoolean(splits[2]);
             isPinnedApp = Boolean.getBoolean(splits[3]);
+            isUpdatedApp = Boolean.getBoolean(splits[4]);
         } catch (NumberFormatException e)
         {
             e.printStackTrace();
             count = 0;
             lastExecution = Calendar.getInstance().getTime();
             isNewApp = false;
+            isUpdatedApp = false;
             isPinnedApp = false;
         } catch (ArrayIndexOutOfBoundsException e)
         {
@@ -263,14 +283,18 @@ public class ApplicationRunInformation
             count = 0;
             lastExecution = Calendar.getInstance().getTime();
             isNewApp = false;
+            isUpdatedApp = false;
             isPinnedApp = false;
         }
 
         ApplicationRunInformation appRunInfo = new ApplicationRunInformation(ApplicationRunInformation.deserializeComponentName(component), count);
         appRunInfo.setLastExecution(lastExecution);
         appRunInfo.setIsNewApp(isNewApp);
+        appRunInfo.setIsUpdatedApp(isUpdatedApp);
         appRunInfo.setIsPinnedApp(isPinnedApp);
 
         return appRunInfo;
     }
+
+ 
 }

@@ -36,72 +36,78 @@ import android.content.Context;
 import android.util.Log;
 import android.util.Pair;
 
-public class AppDiscoverer {
+public class AppDiscoverer
+{
     private static AppDiscoverer _instance = new AppDiscoverer();
 
     public static final String PREFS_APPS_AGING_DATA = "com.fairphone.fplauncher3.applifecycle.FAIRPHONE_APP_AGING_DATA";
-    
+
     private Map<ComponentName, AppInfo> _allApps;
 
     private ApplicationRunInfoManager agingManager;
 
-    public static AppDiscoverer getInstance() {
+    public static AppDiscoverer getInstance()
+    {
         return _instance;
     }
 
-    private AppDiscoverer() {
+    private AppDiscoverer()
+    {
         _allApps = new HashMap<ComponentName, AppInfo>();
         agingManager = new ApplicationRunInfoManager(false);
     }
 
-    public void loadAllApps(ArrayList<AppInfo> allApps) {
-        for (AppInfo appInfo : allApps) {
-            ApplicationRunInformation appRunInfo = agingManager
-                    .getApplicationRunInformation(appInfo.getComponentName());
-            if (appRunInfo == null) {
-                agingManager.applicationStarted(ApplicationRunInfoManager
-                        .generateApplicationRunInfo(appInfo.getComponentName(), false));
-                 
+    public void loadAllApps(ArrayList<AppInfo> allApps)
+    {
+        for (AppInfo appInfo : allApps)
+        {
+            ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(appInfo.getComponentName());
+            if (appRunInfo == null)
+            {
+                agingManager.applicationStarted(ApplicationRunInfoManager.generateApplicationRunInfo(appInfo.getComponentName(), false));
+
                 appInfo.setAge(APP_AGE.FREQUENT_USE);
                 appInfo.setIsPinned(false);
-			} else {
-				updateAgeInfo(appInfo);
-				appInfo.setIsPinned(appRunInfo.isPinnedApp());
-			}
+            }
+            else
+            {
+                updateAgeInfo(appInfo);
+                appInfo.setIsPinned(appRunInfo.isPinnedApp());
+                appInfo.setIsNew(appRunInfo.isNewApp());
+                appInfo.setIsUpdated(appRunInfo.isUpdatedApp());
+            }
 
             _allApps.put(appInfo.getComponentName(), appInfo);
         }
     }
 
-	private void updateAgeInfo(AppInfo appInfo) {
-		Date now = Calendar.getInstance().getTime();
-		ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(appInfo.getComponentName());
-		long timePastSinceLastExec = now.getTime()
-				- appRunInfo.getLastExecution().getTime();
-		
-		boolean isPinned = appRunInfo.isPinnedApp();
+    private void updateAgeInfo(AppInfo appInfo)
+    {
+        Date now = Calendar.getInstance().getTime();
+        ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(appInfo.getComponentName());
+        long timePastSinceLastExec = now.getTime() - appRunInfo.getLastExecution().getTime();
 
-		if (((timePastSinceLastExec < AppInfo.getAgeLevelInMiliseconds(APP_AGE.NEW_APP)) || (timePastSinceLastExec < AppInfo
-				.getAgeLevelInMiliseconds(APP_AGE.FREQUENT_USE)))
-				|| isPinned) {
+        boolean isPinned = appRunInfo.isPinnedApp();
 
-			boolean isFreshInstall = appRunInfo.isNewApp();
+        appInfo.setIsNew(appRunInfo.isNewApp());
+        appInfo.setIsUpdated(appRunInfo.isUpdatedApp());
 
-			if (isFreshInstall) {
-				appInfo.setAge(APP_AGE.NEW_APP);
-			} else {
-				appInfo.setAge(APP_AGE.FREQUENT_USE);
-			}
+        if (timePastSinceLastExec < AppInfo.getAgeLevelInMiliseconds(APP_AGE.FREQUENT_USE) || isPinned)
+        {
+            appInfo.setAge(APP_AGE.FREQUENT_USE);
+        }
+        else
+        {
+            appInfo.setAge(APP_AGE.RARE_USE);
+        }
+    }
 
-		} else {
-			appInfo.setAge(APP_AGE.RARE_USE);
-		}
-	}
-
-    public ArrayList<AppInfo> getPackages() {
+    public ArrayList<AppInfo> getPackages()
+    {
         ArrayList<AppInfo> appList = new ArrayList<AppInfo>();
 
-        for (AppInfo appInfo : _allApps.values()) {
+        for (AppInfo appInfo : _allApps.values())
+        {
             appList.add(appInfo);
         }
         Collections.sort(appList, LauncherModel.getAppNameComparator());
@@ -109,15 +115,21 @@ public class AppDiscoverer {
         return appList;
     }
 
-    public Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> getUsedAndUnusedApps() {
-    	Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> appLists = new Pair<ArrayList<AppInfo>, ArrayList<AppInfo>>(new ArrayList<AppInfo>(), new ArrayList<AppInfo>());
+    public Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> getUsedAndUnusedApps()
+    {
+        Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> appLists =
+                new Pair<ArrayList<AppInfo>, ArrayList<AppInfo>>(new ArrayList<AppInfo>(), new ArrayList<AppInfo>());
 
-        for (AppInfo appInfo : _allApps.values()) {
-        	updateAgeInfo(appInfo);
-            if (appInfo.getAge() != APP_AGE.RARE_USE) {
+        for (AppInfo appInfo : _allApps.values())
+        {
+            updateAgeInfo(appInfo);
+            if (appInfo.getAge() != APP_AGE.RARE_USE)
+            {
                 appLists.first.add(appInfo);
-            }else if (appInfo.getAge() == APP_AGE.RARE_USE) {
-            	appLists.second.add(appInfo);
+            }
+            else if (appInfo.getAge() == APP_AGE.RARE_USE)
+            {
+                appLists.second.add(appInfo);
             }
         }
         Collections.sort(appLists.first, LauncherModel.getAppNameComparator());
@@ -126,60 +138,73 @@ public class AppDiscoverer {
         return appLists;
     }
 
-    public void applicationInstalled(Context context, ComponentName componentName) {
-    	ApplicationRunInformation appRunInfo = ApplicationRunInfoManager
-				.generateApplicationRunInfo(componentName, true);
+    public void applicationInstalled(Context context, ComponentName componentName)
+    {
+        ApplicationRunInformation appRunInfo = ApplicationRunInfoManager.generateApplicationRunInfo(componentName, true);
         agingManager.applicationInstalled(appRunInfo);
         saveAppAgingData(context);
     }
-    
-    public void applicationStarted(Context context, ComponentName componentName) {
-		ApplicationRunInformation appRunInfo = ApplicationRunInfoManager
-				.generateApplicationRunInfo(componentName, false);
+
+    public void applicationUpdated(Context context, ComponentName componentName)
+    {
+        ApplicationRunInformation appRunInfo = ApplicationRunInfoManager.generateApplicationRunInfo(componentName, false, true);
+        agingManager.applicationUpdated(appRunInfo);
+        saveAppAgingData(context);
+    }
+
+    public void applicationStarted(Context context, ComponentName componentName)
+    {
+        ApplicationRunInformation appRunInfo = ApplicationRunInfoManager.generateApplicationRunInfo(componentName, false);
         agingManager.applicationStarted(appRunInfo);
         saveAppAgingData(context);
     }
-    
-    public boolean applicationPinned(Context context, ComponentName componentName) {
-    	boolean isPinned = false;
-    	ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(componentName);
+
+    public boolean applicationPinned(Context context, ComponentName componentName)
+    {
+        boolean isPinned = false;
+        ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(componentName);
         agingManager.applicationPinned(appRunInfo);
         AppInfo appInfo = _allApps.get(componentName);
-        if(appInfo != null){
-        	appInfo.setIsPinned(!appInfo.isPinned());
-        	isPinned = appInfo.isPinned();
+        if (appInfo != null)
+        {
+            appInfo.setIsPinned(!appInfo.isPinned());
+            isPinned = appInfo.isPinned();
         }
         saveAppAgingData(context);
-        
+
         return isPinned;
     }
 
-    public void applicationRemoved(Context context, ComponentName component) {
+    public void applicationRemoved(Context context, ComponentName component)
+    {
         _allApps.remove(component);
         agingManager.applicationRemoved(component);
         saveAppAgingData(context);
     }
 
-    public AppInfo getApplicationFromComponentName(ComponentName componentName) {
+    public AppInfo getApplicationFromComponentName(ComponentName componentName)
+    {
 
-        if (_allApps.containsKey(componentName)) {
+        if (_allApps.containsKey(componentName))
+        {
             return _allApps.get(componentName);
         }
 
         return null;
     }
 
-    public ApplicationRunInformation getApplicationRunInformation(ComponentName key) {
+    public ApplicationRunInformation getApplicationRunInformation(ComponentName key)
+    {
         return agingManager.getApplicationRunInformation(key);
     }
-    
-    public void saveAppAgingData(Context context) {
-		ApplicationRunInformation.persistAppRunInfo(context,
-				PREFS_APPS_AGING_DATA, agingManager.getAllAppRunInfo());
-	}
-    
-	public void loadAppAgingData(Context context) {
-		agingManager.setAllRunInfo(ApplicationRunInformation.loadAppRunInfo(
-				context, PREFS_APPS_AGING_DATA));
-	}
+
+    public void saveAppAgingData(Context context)
+    {
+        ApplicationRunInformation.persistAppRunInfo(context, PREFS_APPS_AGING_DATA, agingManager.getAllAppRunInfo());
+    }
+
+    public void loadAppAgingData(Context context)
+    {
+        agingManager.setAllRunInfo(ApplicationRunInformation.loadAppRunInfo(context, PREFS_APPS_AGING_DATA));
+    }
 }

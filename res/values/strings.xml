@@ -345,5 +345,8 @@ s -->
     <string name="unpin_target_label">Unpin</string>
     <string name="app_pin_message">App pinned</string>
     <string name="app_unpin_message">App unpinned</string>
+    <string name="fp_aging_apps_icon_label_new">NEW</string>
+    <string name="fp_aging_apps_icon_label_updated">UPDATED</string>
+    
     
 </resources>

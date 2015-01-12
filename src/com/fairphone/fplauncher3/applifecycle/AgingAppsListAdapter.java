@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fairphone.fplauncher3.AppInfo;
@@ -68,8 +69,13 @@ public class AgingAppsListAdapter extends BaseAdapter
     {
         AppInfo info = allApps.get(position);
         
-        BubbleTextView icon = (BubbleTextView) mInflater.inflate(
-                R.layout.apps_customize_application, parent, false);
+        RelativeLayout fullIcon = (RelativeLayout) mInflater.inflate(
+                R.layout.fp_aging_apps_item, parent, false);
+        
+        BubbleTextView icon = (BubbleTextView) fullIcon.findViewById(R.id.application_icon);
+        TextView newLabel = (TextView) fullIcon.findViewById(R.id.label_icon_new);
+        TextView updatedLabel = (TextView) fullIcon.findViewById(R.id.label_icon_updated);
+        
         icon.applyFromApplicationInfo(info);
         icon.setOnClickListener(mLauncher);
         icon.setOnLongClickListener(mLongClickListener);
@@ -77,22 +83,11 @@ public class AgingAppsListAdapter extends BaseAdapter
         icon.setOnKeyListener(null);
         icon.setOnFocusChangeListener(null);
         
-        return icon;
-    }
-
-    private void setAppAge(APP_AGE age, View newApp, View updatedApp)
-    {
-
-        switch (age)
-        {
-            case NEW_APP:
-                newApp.setVisibility(View.VISIBLE);
-
-                break;
-            case FREQUENT_USE:
-            case RARE_USE:
-                break;
-        }
+        System.out.println(info.getApplicationTitle() + " - " +info.isNew() + " -" + info.isUpdated());
+        updatedLabel.setVisibility(info.isUpdated() ? View.VISIBLE : View.GONE);
+        newLabel.setVisibility(info.isNew() ? View.VISIBLE : View.GONE);
+        
+        return fullIcon;
     }
 
     @Override
