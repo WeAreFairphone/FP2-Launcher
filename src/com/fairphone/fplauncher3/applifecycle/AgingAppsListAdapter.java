@@ -32,11 +32,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fairphone.fplauncher3.AppInfo;
-import com.fairphone.fplauncher3.AppInfo.APP_AGE;
 import com.fairphone.fplauncher3.BubbleTextView;
 import com.fairphone.fplauncher3.Launcher;
 import com.fairphone.fplauncher3.LauncherModel;
 import com.fairphone.fplauncher3.R;
+import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
+import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation;
 
 public class AgingAppsListAdapter extends BaseAdapter
 {
@@ -83,8 +84,11 @@ public class AgingAppsListAdapter extends BaseAdapter
         icon.setOnKeyListener(null);
         icon.setOnFocusChangeListener(null);
         
-        updatedLabel.setVisibility(info.isUpdated() ? View.VISIBLE : View.GONE);
-        newLabel.setVisibility(info.isNew() ? View.VISIBLE : View.GONE);
+        ApplicationRunInformation appRunInfo = AppDiscoverer.getInstance().getApplicationRunInformation(info.getComponentName());
+        if(appRunInfo != null) {
+	        updatedLabel.setVisibility(appRunInfo.isUpdatedApp() ? View.VISIBLE : View.GONE);
+	        newLabel.setVisibility(appRunInfo.isNewApp() ? View.VISIBLE : View.GONE);
+        }
         
         return fullIcon;
     }

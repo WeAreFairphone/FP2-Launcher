@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
+import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation;
 
 public class PinAppDropTarget extends ButtonDropTarget {
 
@@ -96,8 +97,9 @@ public class PinAppDropTarget extends ButtonDropTarget {
         mActive = isVisible;
         setTextColor(mOriginalTextColor);
         ((ViewGroup) getParent()).setVisibility(isVisible ? View.VISIBLE : View.GONE);
-        if (info instanceof AppInfo) {
-			if (((AppInfo) info).isPinned()) {
+        if (info != null && info instanceof AppInfo) {
+        	ApplicationRunInformation appRunInfo = AppDiscoverer.getInstance().getApplicationRunInformation(((AppInfo) info).getComponentName());
+			if (appRunInfo != null && appRunInfo.isPinnedApp()) {
 				setText(R.string.unpin_target_label);
 			} else {
 				setText(R.string.pin_target_label);

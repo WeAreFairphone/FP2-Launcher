@@ -44,6 +44,8 @@ public class ApplicationRunInformation
     private boolean mIsNewApp;
 	private boolean mIsPinnedApp;
     private boolean mIsUpdatedApp;
+
+	private APP_AGE mAppAge;
     
     /**
      * Create a base count zero Application Run information.
@@ -259,9 +261,9 @@ public class ApplicationRunInformation
         {
             count = Integer.parseInt(splits[0]);
             lastExecution.setTime(Long.valueOf(splits[1]));
-            isNewApp = Boolean.getBoolean(splits[2]);
-            isPinnedApp = Boolean.getBoolean(splits[3]);
-            isUpdatedApp = Boolean.getBoolean(splits[4]);
+            isNewApp = Boolean.parseBoolean(splits[2]);
+            isPinnedApp = Boolean.parseBoolean(splits[3]);
+            isUpdatedApp = Boolean.parseBoolean(splits[4]);            
         } catch (NumberFormatException e)
         {
             e.printStackTrace();
@@ -289,5 +291,38 @@ public class ApplicationRunInformation
         return appRunInfo;
     }
 
- 
+	public static enum APP_AGE
+    {
+        FREQUENT_USE, RARE_USE
+    }
+
+    public static long getAgeLevelInMiliseconds(APP_AGE age)
+    {
+        long result = toMilliSeconds(365000);
+        switch (age)
+        {
+            case FREQUENT_USE:
+                result = toMilliSeconds(15);
+                break;
+            case RARE_USE:
+                result = toMilliSeconds(365000);
+                break;
+        }
+        return result;
+    }
+
+    public static long toMilliSeconds(long days)
+    {
+        return days * 24l * 60l * 60l * 1000l;
+    }
+
+    public void setAge(APP_AGE age)
+    {
+        mAppAge = age;
+    }
+
+    public APP_AGE getAge()
+    {
+        return mAppAge;
+    }
 }

@@ -17,6 +17,7 @@ package com.fairphone.fplauncher3.widgets.appswitcher;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +25,8 @@ import java.util.Map;
 
 import android.content.ComponentName;
 import android.util.Log;
+
+import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation.APP_AGE;
 
 /**
  * This class processes the count for the most used apps and the most recent.
@@ -152,7 +155,7 @@ public class ApplicationRunInfoManager
         updateAppInformation();
     }
 
-    public void applicationPinned(ApplicationRunInformation appInfo)
+    public boolean applicationPinned(ApplicationRunInformation appInfo)
     {
         // obtain the cached app information
         ApplicationRunInformation cachedApp = _appRunInfos.get(ApplicationRunInformation.serializeComponentName(appInfo.getComponentName()));
@@ -163,10 +166,12 @@ public class ApplicationRunInfoManager
 
             cachedApp = appInfo;
             cachedApp.setIsPinnedApp(false);
+            cachedApp.setIsNewApp(false);
+            cachedApp.setIsUpdatedApp(false);
             cachedApp.resetCount();
         }
-
         cachedApp.setIsPinnedApp(!cachedApp.isPinnedApp());
+        return cachedApp.isPinnedApp();
     }
 
     public void applicationInstalled(ApplicationRunInformation appInfo)
@@ -182,9 +187,6 @@ public class ApplicationRunInfoManager
 
             cachedApp.resetCount();
         }
-
-        // increment count
-        cachedApp.incrementCount();
 
         Log.d(TAG, "Logging application : " + cachedApp.getComponentName() + " : " + cachedApp.getCount());
 
@@ -210,22 +212,41 @@ public class ApplicationRunInfoManager
             cachedApp.resetCount();
         }
 
-        // increment count
-        cachedApp.incrementCount();
-
         Log.d(TAG, "Logging application : " + cachedApp.getComponentName() + " : " + cachedApp.getCount());
-
-        // set the current time for the last execution
-        cachedApp.setLastExecution(appInfo.getLastExecution());
-
         cachedApp.setIsNewApp(false);
         cachedApp.setIsUpdatedApp(true);
     }
 
     public ApplicationRunInformation getApplicationRunInformation(ComponentName componentName)
     {
-        // obtain the cached app information
-        return _appRunInfos.get(ApplicationRunInformation.serializeComponentName(componentName));
+    	// obtain the cached app information
+        ApplicationRunInformation cachedApp = _appRunInfos.get(ApplicationRunInformation.serializeComponentName(componentName));
+        //update age
+        if (cachedApp != null)
+        {
+            updateAgeInfo(cachedApp);
+        }
+        
+        return cachedApp;
+    }
+    
+    private void updateAgeInfo(ApplicationRunInformation appRunInfo)
+    {
+        if(appRunInfo != null) 
+        { 
+            Date now = Calendar.getInstance().getTime();
+	        long timePastSinceLastExec = now.getTime() - appRunInfo.getLastExecution().getTime();
+	        boolean isPinned = appRunInfo.isPinnedApp();
+	
+			if (timePastSinceLastExec < ApplicationRunInformation.getAgeLevelInMiliseconds(APP_AGE.FREQUENT_USE) || isPinned)
+	        {
+				appRunInfo.setAge(APP_AGE.FREQUENT_USE);
+	        }
+	        else
+	        {
+	        	appRunInfo.setAge(APP_AGE.RARE_USE);
+	        }
+        }
     }
 
     public void applicationRemoved(ComponentName component)

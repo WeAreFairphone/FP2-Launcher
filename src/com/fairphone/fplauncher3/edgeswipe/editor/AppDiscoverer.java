@@ -17,24 +17,19 @@
 package com.fairphone.fplauncher3.edgeswipe.editor;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import com.fairphone.fplauncher3.AppInfo;
-import com.fairphone.fplauncher3.AppInfo.APP_AGE;
-import com.fairphone.fplauncher3.LauncherModel;
-import com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherManager;
-import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInfoManager;
-import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.util.Log;
 import android.util.Pair;
+
+import com.fairphone.fplauncher3.AppInfo;
+import com.fairphone.fplauncher3.LauncherModel;
+import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInfoManager;
+import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation;
+import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation.APP_AGE;
 
 public class AppDiscoverer
 {
@@ -65,37 +60,9 @@ public class AppDiscoverer
             if (appRunInfo == null)
             {
                 agingManager.applicationStarted(ApplicationRunInfoManager.generateApplicationRunInfo(appInfo.getComponentName(), false));
-
-                appInfo.setAge(APP_AGE.FREQUENT_USE);
-                appInfo.setIsPinned(false);
             }
-            else
-            {
-                updateAgeInfo(appInfo);
-                appInfo.setIsPinned(appRunInfo.isPinnedApp());
-                appInfo.setIsNew(appRunInfo.isNewApp());
-                appInfo.setIsUpdated(appRunInfo.isUpdatedApp());
-            }
-
+            
             _allApps.put(appInfo.getComponentName(), appInfo);
-        }
-    }
-
-    private void updateAgeInfo(AppInfo appInfo)
-    {
-        Date now = Calendar.getInstance().getTime();
-        ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(appInfo.getComponentName());
-        long timePastSinceLastExec = now.getTime() - appRunInfo.getLastExecution().getTime();
-
-        boolean isPinned = appRunInfo.isPinnedApp();
-
-        if (timePastSinceLastExec < AppInfo.getAgeLevelInMiliseconds(APP_AGE.FREQUENT_USE) || isPinned)
-        {
-            appInfo.setAge(APP_AGE.FREQUENT_USE);
-        }
-        else
-        {
-            appInfo.setAge(APP_AGE.RARE_USE);
         }
     }
 
@@ -119,8 +86,9 @@ public class AppDiscoverer
 
         for (AppInfo appInfo : _allApps.values())
         {
-            updateAgeInfo(appInfo);
-            if (appInfo.getAge() == APP_AGE.FREQUENT_USE)
+        	ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(appInfo.getComponentName());
+
+            if (appRunInfo.getAge() == APP_AGE.FREQUENT_USE)
             {
                 appLists.first.add(appInfo);
             }
@@ -139,13 +107,7 @@ public class AppDiscoverer
     {
     	if(installedApp != null){
     		ComponentName componentName = installedApp.getComponentName();
-    		
-	        AppInfo newApp = new AppInfo(installedApp);
-	        newApp.setAge(APP_AGE.FREQUENT_USE);
-	        newApp.setIsNew(true);
-	        newApp.setIsUpdated(false);
-	        newApp.setIsPinned(false);
-	        _allApps.put(componentName, newApp);
+	        _allApps.put(componentName, installedApp);
 	        
 	        ApplicationRunInformation appRunInfo = ApplicationRunInfoManager.generateApplicationRunInfo(componentName, true);
 	        agingManager.applicationInstalled(appRunInfo);
@@ -155,11 +117,6 @@ public class AppDiscoverer
 
     public void applicationUpdated(Context context, ComponentName componentName)
     {
-		AppInfo app = getApplicationFromComponentName(componentName);
-		if(app != null){
-			app.setIsNew(false);
-			app.setIsUpdated(true);
-		}
         ApplicationRunInformation appRunInfo = ApplicationRunInfoManager.generateApplicationRunInfo(componentName, false, true);
         agingManager.applicationUpdated(appRunInfo);
         saveAppAgingData(context);
@@ -167,11 +124,6 @@ public class AppDiscoverer
 
     public void applicationStarted(Context context, ComponentName componentName)
     {
-		AppInfo app = getApplicationFromComponentName(componentName);
-		if(app != null){
-			app.setIsNew(false);
-			app.setIsUpdated(false);
-		}
         ApplicationRunInformation appRunInfo = ApplicationRunInfoManager.generateApplicationRunInfo(componentName, false);
         agingManager.applicationStarted(appRunInfo);
         saveAppAgingData(context);
@@ -179,15 +131,8 @@ public class AppDiscoverer
 
     public boolean applicationPinned(Context context, ComponentName componentName)
     {
-        boolean isPinned = false;
-        AppInfo appInfo = _allApps.get(componentName);
-        if (appInfo != null)
-        {
-            appInfo.setIsPinned(!appInfo.isPinned());
-            isPinned = appInfo.isPinned();
-        }
         ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(componentName);
-        agingManager.applicationPinned(appRunInfo);
+        boolean isPinned = agingManager.applicationPinned(appRunInfo);
         saveAppAgingData(context);
 
         return isPinned;
