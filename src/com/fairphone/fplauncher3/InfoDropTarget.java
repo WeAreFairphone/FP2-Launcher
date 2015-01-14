@@ -105,6 +105,8 @@ public class InfoDropTarget extends ButtonDropTarget {
     public void onDragEnd() {
         super.onDragEnd();
         mActive = false;
+        setTextColor(mOriginalTextColor);
+        setBackgroundResource(0);
     }
 
     public void onDragEnter(DragObject d) {
