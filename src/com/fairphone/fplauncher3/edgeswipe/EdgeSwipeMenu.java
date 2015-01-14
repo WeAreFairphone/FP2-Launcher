@@ -14,6 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +103,8 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                 }
                 else
                 {
-                    //to avoid the addition of Fairphone home launcher to appSwitcher
+                    // to avoid the addition of Fairphone home launcher to
+                    // appSwitcher
                     mLauncher.startEditFavorites();
                 }
             }
@@ -169,7 +171,10 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
         showEdgeSwipeAnimatorSet.play(showBackground);
         mEdgeSwipeHolder.setAlpha(1);
+
         mEdgeSwipeHolder.setY(pointerY - (mEdgeSwipeHolder.getHeight() / 2));
+
+        System.out.println("PointerY : " + pointerY + " PoE: " + (pointerY - (mEdgeSwipeHolder.getHeight() / 2)));
 
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, (int) resources.getDimension(R.dimen.edge_swipe_height));
         params.setMargins(0, 0, 0, (int) resources.getDimension(R.dimen.edge_swipe_item_margin_bottom));
@@ -223,7 +228,10 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             ObjectAnimator fade = ObjectAnimator.ofFloat(item, View.ALPHA, 0, 1);
             fade.setDuration(translateDelayDuration);
 
-            showEdgeSwipeAnimatorSet.playTogether(translate, fade);
+            if (showEdgeSwipeAnimatorSet != null)
+            {
+                showEdgeSwipeAnimatorSet.playTogether(translate, fade);
+            }
         }
     }
 
@@ -238,7 +246,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             editButton.setAlpha(0);
         }
 
-        //IF ALL APPS ICON
+        // IF ALL APPS ICON
         if (position == 2)
         {
             icon.setImageResource(R.drawable.icon_allapps_blue);
@@ -303,7 +311,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
         text.setTextColor(resources.getColor(R.color.edge_swipe_text_blue_selected));
 
-        //IF ALL APPS ICON
+        // IF ALL APPS ICON
         if (currentItem == 2)
         {
             icon.setImageResource(R.drawable.icon_allapps_black);
@@ -340,7 +348,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         });
         fadeBackground.start();
 
-        //CHECKS IF THE ANIMATION IS STARTING FROM THE LEFT OR RIGHT
+        // CHECKS IF THE ANIMATION IS STARTING FROM THE LEFT OR RIGHT
         switch (mSide)
         {
             case LEFT_SIDE:
@@ -433,12 +441,17 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         if (mEdgeSwipeHolder != null)
         {
             View firstChild = mEdgeSwipeHolder.getChildAt(0);
+
             float menuHolderY = mEdgeSwipeHolder.getY();
+
+            float itemSize = mEdgeSwipeHolder.getHeight() / 5.0f;
+
             if (isInActiveZone(pointerX) && firstChild != null && pointerY > menuHolderY)
             {
                 float startingPoint = pointerY - menuHolderY;
-                int currentItem = (int) (startingPoint / firstChild.getHeight());
+                int currentItem = (int) (startingPoint / itemSize);
                 View item;
+
                 if (isInEditZone(pointerX, pointerY) || (mPreviousItem != currentItem && mPreviousItem != -1))
                 {
                     item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
@@ -520,6 +533,10 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             default:
                 break;
         }
+
+        // System.out.println("Y : " + pointerY + " in box : " + coord[1] +
+        // " - " + (coord[1] + mEditButton.getHeight()));
+
         validY = pointerY >= coord[1];
         validY &= pointerY <= coord[1] + mEditButton.getHeight();
 
@@ -584,7 +601,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
     private void setupEditButtonPositionAndTimer()
     {
-        //set edit menu button timer
+        // set edit menu button timer
         mEditMenuButtonStartTime = (System.currentTimeMillis() - 10) + mLauncher.getResources().getInteger(R.integer.edge_swipe_show_edit_button_time);
         if (mMenuView != null)
         {
