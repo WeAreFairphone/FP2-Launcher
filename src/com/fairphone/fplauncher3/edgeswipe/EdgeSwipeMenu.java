@@ -172,9 +172,9 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         showEdgeSwipeAnimatorSet.play(showBackground);
         mEdgeSwipeHolder.setAlpha(1);
 
-        mEdgeSwipeHolder.setY(pointerY - (mEdgeSwipeHolder.getHeight() / 2));
+        mEdgeSwipeHolder.setY(pointerY - (getHolderSize() / 2));
 
-        System.out.println("PointerY : " + pointerY + " PoE: " + (pointerY - (mEdgeSwipeHolder.getHeight() / 2)));
+        System.out.println("PointerY : " + pointerY + " PoE: " + (pointerY - (getHolderSize() / 2)));
 
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, (int) resources.getDimension(R.dimen.edge_swipe_height));
         params.setMargins(0, 0, 0, (int) resources.getDimension(R.dimen.edge_swipe_item_margin_bottom));
@@ -184,12 +184,32 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                 setupMenuItems(resources, selectedApps, showEdgeSwipeAnimatorSet, params, R.layout.edge_swipe_item_left);
                 break;
             case RIGHT_SIDE:
-
                 setupMenuItems(resources, selectedApps, showEdgeSwipeAnimatorSet, params, R.layout.edge_swipe_item_right);
                 break;
         }
 
         showEdgeSwipeAnimatorSet.start();
+    }
+
+    private float getHolderSize()
+    {
+        float result = mEdgeSwipeHolder.getHeight();
+
+        if (result == 0)
+        {
+            // TODO: CAtch the onMeasure and setup the correct sizes after that,
+            // for now just calculate the initial size
+            Resources r = mContext.getResources();
+            
+            float dimenHeight = r.getDimensionPixelSize(R.dimen.edge_swipe_height);
+            float dimenBottom = r.getDimensionPixelSize(R.dimen.edge_swipe_item_margin_bottom);
+            
+            float size = dimenBottom + dimenHeight;
+            
+            result = 5 * size; 
+        }
+
+        return result;
     }
 
     private void setupMenuItems(Resources resources, AppInfo[] selectedApps, AnimatorSet showEdgeSwipeAnimatorSet, LayoutParams params, int itemLayoutId)
