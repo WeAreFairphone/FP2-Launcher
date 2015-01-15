@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.util.Log;
 
 import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation.APP_AGE;
@@ -217,20 +218,20 @@ public class ApplicationRunInfoManager
         cachedApp.setIsUpdatedApp(true);
     }
 
-    public ApplicationRunInformation getApplicationRunInformation(ComponentName componentName)
+    public ApplicationRunInformation getApplicationRunInformation(Context context, ComponentName componentName)
     {
     	// obtain the cached app information
         ApplicationRunInformation cachedApp = _appRunInfos.get(ApplicationRunInformation.serializeComponentName(componentName));
         //update age
         if (cachedApp != null)
         {
-            updateAgeInfo(cachedApp);
+            updateAgeInfo(context, cachedApp);
         }
         
         return cachedApp;
     }
     
-    private void updateAgeInfo(ApplicationRunInformation appRunInfo)
+    private void updateAgeInfo(Context context, ApplicationRunInformation appRunInfo)
     {
         if(appRunInfo != null) 
         { 
@@ -238,7 +239,7 @@ public class ApplicationRunInfoManager
 	        long timePastSinceLastExec = now.getTime() - appRunInfo.getLastExecution().getTime();
 	        boolean isPinned = appRunInfo.isPinnedApp();
 	
-			if (timePastSinceLastExec < ApplicationRunInformation.getAgeLevelInMiliseconds(APP_AGE.FREQUENT_USE) || isPinned)
+			if (timePastSinceLastExec < ApplicationRunInformation.getAgeLevelInMiliseconds(context, APP_AGE.FREQUENT_USE) || isPinned)
 	        {
 				appRunInfo.setAge(APP_AGE.FREQUENT_USE);
 	        }

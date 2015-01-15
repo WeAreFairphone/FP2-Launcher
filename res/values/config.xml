@@ -122,8 +122,10 @@
     <!-- Fairphone -->
     <!-- Edge menu -->
     <integer name="edge_swipe_show_edit_button_time">1000</integer>
-
     <string name="edge_swipe_default_apps">com.android.contacts,com.android.contacts.activities.DialtactsActivity;com.android.mms,com.android.mms.ui.BootActivity;com.android.gallery3d,com.android.camera.CameraLauncher;com.android.browser,com.android.browser.BrowserActivity</string>
+    
+    <!-- App lifecycle -->
+    <integer name="app_frequent_use_days">2</integer>
 
     <!-- Edit favorites -->
     <integer name="edit_favorites_remove_text_size">23</integer>

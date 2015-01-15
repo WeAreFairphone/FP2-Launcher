@@ -52,11 +52,11 @@ public class AppDiscoverer
         agingManager = new ApplicationRunInfoManager(false);
     }
 
-    public void loadAllApps(ArrayList<AppInfo> allApps)
+    public void loadAllApps(Context context, ArrayList<AppInfo> allApps)
     {
         for (AppInfo appInfo : allApps)
         {
-            ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(appInfo.getComponentName());
+            ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(context, appInfo.getComponentName());
             if (appRunInfo == null)
             {
                 agingManager.applicationStarted(ApplicationRunInfoManager.generateApplicationRunInfo(appInfo.getComponentName(), false));
@@ -79,14 +79,14 @@ public class AppDiscoverer
         return appList;
     }
 
-    public Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> getUsedAndUnusedApps()
+    public Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> getUsedAndUnusedApps(Context context)
     {
         Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> appLists =
                 new Pair<ArrayList<AppInfo>, ArrayList<AppInfo>>(new ArrayList<AppInfo>(), new ArrayList<AppInfo>());
 
         for (AppInfo appInfo : _allApps.values())
         {
-        	ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(appInfo.getComponentName());
+        	ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(context, appInfo.getComponentName());
 
             if (appRunInfo.getAge() == APP_AGE.FREQUENT_USE)
             {
@@ -131,7 +131,7 @@ public class AppDiscoverer
 
     public boolean applicationPinned(Context context, ComponentName componentName)
     {
-        ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(componentName);
+        ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(context, componentName);
         boolean isPinned = agingManager.applicationPinned(appRunInfo);
         saveAppAgingData(context);
 
@@ -156,9 +156,9 @@ public class AppDiscoverer
         return null;
     }
 
-    public ApplicationRunInformation getApplicationRunInformation(ComponentName key)
+    public ApplicationRunInformation getApplicationRunInformation(Context context, ComponentName key)
     {
-        return agingManager.getApplicationRunInformation(key);
+        return agingManager.getApplicationRunInformation(context, key);
     }
 
     public void saveAppAgingData(Context context)

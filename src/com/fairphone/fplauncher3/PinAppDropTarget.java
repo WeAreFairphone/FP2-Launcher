@@ -32,13 +32,16 @@ import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation;
 public class PinAppDropTarget extends ButtonDropTarget {
 
     private ColorStateList mOriginalTextColor;
-
+    private Context mContext;
+    
     public PinAppDropTarget(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+        mContext = context;
     }
 
     public PinAppDropTarget(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mContext = context;
     }
 
     @Override
@@ -98,7 +101,7 @@ public class PinAppDropTarget extends ButtonDropTarget {
         setTextColor(mOriginalTextColor);
         ((ViewGroup) getParent()).setVisibility(isVisible ? View.VISIBLE : View.GONE);
         if (info != null && info instanceof AppInfo) {
-        	ApplicationRunInformation appRunInfo = AppDiscoverer.getInstance().getApplicationRunInformation(((AppInfo) info).getComponentName());
+        	ApplicationRunInformation appRunInfo = AppDiscoverer.getInstance().getApplicationRunInformation(mContext, ((AppInfo) info).getComponentName());
 			if (appRunInfo != null && appRunInfo.isPinnedApp()) {
 				setText(R.string.unpin_target_label);
 			} else {

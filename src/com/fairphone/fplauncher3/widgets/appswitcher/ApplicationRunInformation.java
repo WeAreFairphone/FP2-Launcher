@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.fairphone.fplauncher3.R;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -34,6 +36,8 @@ import android.util.Log;
  */
 public class ApplicationRunInformation
 {
+	private static final int APP_RARE_USE_DAYS = 365;
+
 	private static final String TAG = ApplicationRunInformation.class.getSimpleName();
 	
 	private static final String APP_RUN_INFO_SEPARATOR = ";";
@@ -296,16 +300,17 @@ public class ApplicationRunInformation
         FREQUENT_USE, RARE_USE
     }
 
-    public static long getAgeLevelInMiliseconds(APP_AGE age)
+    public static long getAgeLevelInMiliseconds(Context context, APP_AGE age)
     {
-        long result = toMilliSeconds(365000);
+        long result = toMilliSeconds(APP_RARE_USE_DAYS);
+        int frequentUseDays = context.getResources().getInteger(R.integer.app_frequent_use_days);
         switch (age)
         {
             case FREQUENT_USE:
-                result = toMilliSeconds(15);
+                result = toMilliSeconds(frequentUseDays);
                 break;
             case RARE_USE:
-                result = toMilliSeconds(365000);
+                result = toMilliSeconds(APP_RARE_USE_DAYS);
                 break;
         }
         return result;

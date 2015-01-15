@@ -20,9 +20,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnLongClickListener;
@@ -84,7 +81,7 @@ public class AgingAppsListAdapter extends BaseAdapter
         icon.setOnKeyListener(null);
         icon.setOnFocusChangeListener(null);
         
-        ApplicationRunInformation appRunInfo = AppDiscoverer.getInstance().getApplicationRunInformation(info.getComponentName());
+        ApplicationRunInformation appRunInfo = AppDiscoverer.getInstance().getApplicationRunInformation(mContext, info.getComponentName());
         if(appRunInfo != null) {
 	        updatedLabel.setVisibility(appRunInfo.isUpdatedApp() ? View.VISIBLE : View.GONE);
 	        newLabel.setVisibility(appRunInfo.isNewApp() ? View.VISIBLE : View.GONE);

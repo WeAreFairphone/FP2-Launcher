@@ -206,7 +206,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             
             float size = dimenBottom + dimenHeight;
             
-            result = 5 * size; 
+            result = mEdgeSwipeMenuMaxItems * size; 
         }
 
         return result;
@@ -464,7 +464,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
             float menuHolderY = mEdgeSwipeHolder.getY();
 
-            float itemSize = mEdgeSwipeHolder.getHeight() / 5.0f;
+            float itemSize = mEdgeSwipeHolder.getHeight() / mEdgeSwipeMenuMaxItems;
 
             if (isInActiveZone(pointerX) && firstChild != null && pointerY > menuHolderY)
             {

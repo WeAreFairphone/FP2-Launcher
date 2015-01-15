@@ -2828,7 +2828,7 @@ public class LauncherModel extends BroadcastReceiver
                         + (SystemClock.uptimeMillis() - loadTime) + "ms");
             }
             
-            AppDiscoverer.getInstance().loadAllApps(mBgAllAppsList.data);
+            AppDiscoverer.getInstance().loadAllApps(mContext, mBgAllAppsList.data);
         }
 
         public void dumpState() {
@@ -3104,7 +3104,7 @@ public class LauncherModel extends BroadcastReceiver
             });
 
             // update the new data
-            AppDiscoverer.getInstance().loadAllApps(mBgAllAppsList.data);
+            AppDiscoverer.getInstance().loadAllApps(context, mBgAllAppsList.data);
         }
     }
 

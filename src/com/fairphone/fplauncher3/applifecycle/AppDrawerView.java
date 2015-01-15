@@ -26,7 +26,6 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.FrameLayout;
 import android.widget.GridView;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -109,7 +108,7 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         this.removeAllViews();
         View view = inflate(mContext, R.layout.fp_aging_app_drawer, null);
 
-        Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> appLists = AppDiscoverer.getInstance().getUsedAndUnusedApps();
+        Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> appLists = AppDiscoverer.getInstance().getUsedAndUnusedApps(mContext);
         mUsedApps = appLists.first;
         mUnusedApps = appLists.second;
 
