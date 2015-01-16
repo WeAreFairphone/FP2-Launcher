@@ -1,20 +1,26 @@
 package com.fairphone.fplauncher3.edgeswipe.editor.ui;
 
 import com.fairphone.fplauncher3.R;
+import com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.RadialGradient;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
 
 public class IconDragShadowBuilder extends View.DragShadowBuilder {
 
 	private Drawable mIcon;
 	private Context mContext;
+	private int mOrigin;
 
-	public IconDragShadowBuilder(Context context, View v, Drawable icon) {
+	public IconDragShadowBuilder(Context context, View v, Drawable icon, int origin) {
 		super(v);
 
 		// Creates a draggable image that will fill the Canvas provided by
@@ -22,6 +28,7 @@ public class IconDragShadowBuilder extends View.DragShadowBuilder {
 		// shadow = new ColorDrawable(Color.LTGRAY);
 		mIcon = icon;
 		mContext = context;
+		mOrigin = origin;
 	}
 
 	@Override
@@ -30,24 +37,28 @@ public class IconDragShadowBuilder extends View.DragShadowBuilder {
 		Resources r = mContext.getResources();
 		float px = r.getDimension(R.dimen.edit_favorites_icon_size);
 
-		int width = Math.round(px * 1.15f);
-		int height = Math.round(px * 1.15f);
+		int iconWidth = Math.round(px * 1.25f);
+		int iconHeight = Math.round(px * 1.25f);
 
+		//Calculate the canvas size 
+		int canvasSize = (int) Math.ceil(Math.hypot(iconWidth, iconHeight));
+		int centerIconDiff = ((canvasSize - iconWidth) / 2) + 5; 
+		
 		// The drag shadow is a ColorDrawable. This sets its dimensions to
 		// be the same as the
 		// Canvas that the system will provide. As a result, the drag shadow
 		// will fill the
 		// Canvas.
-		mIcon.setBounds(0, 0, width, height);
+		mIcon.setBounds(centerIconDiff, centerIconDiff, canvasSize-centerIconDiff, canvasSize-centerIconDiff);
 
 		// Sets the size parameter's width and height values. These get back
 		// to the system
 		// through the size parameter.
-		size.set(width, height);
+		size.set(canvasSize, canvasSize);
 
 		// Sets the touch point's position to be in the middle of the drag
 		// shadow
-		touch.set(width / 2, height);
+		touch.set(canvasSize / 2, (int) (canvasSize / 1.5));
 	}
 
 	// Defines a callback that draws the drag shadow in a Canvas that the
@@ -58,7 +69,21 @@ public class IconDragShadowBuilder extends View.DragShadowBuilder {
 
 		// Draws the ColorDrawable in the Canvas passed in from the system.
 		// shadow.draw(canvas);
+		canvas.save();
+		Rect bounds = mIcon.getBounds();
+		canvas.rotate(mOrigin == EditFavoritesActivity.SELECTED_APPS_DRAG ? 15f
+				: -15f, bounds.centerX(), bounds.centerY());
+		int cX = canvas.getWidth() / 2;
+		int cY = canvas.getHeight() / 2;
+		RadialGradient gradient = new RadialGradient(cX, cY, cX, new int[] {
+				0xFF2AA9E0, 0xAA2AA9E0, 0x002AA9E0 }, new float[] { 0.0f, 0.5f,
+				1.0f }, android.graphics.Shader.TileMode.CLAMP);
+		Paint paint = new Paint();
+		paint.setShader(gradient);
+
+		canvas.drawCircle(cX, cY, cX, paint);
 		mIcon.draw(canvas);
+		canvas.restore();
 	}
 
 }

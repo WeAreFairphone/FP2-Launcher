@@ -154,7 +154,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         dragData.addItem(item);
 
         mainView.startDrag(dragData,
-                new IconDragShadowBuilder(EditFavoritesActivity.this, view, new BitmapDrawable(getResources(), applicationInfo.getIconBitmap())), view, 0);
+                new IconDragShadowBuilder(EditFavoritesActivity.this, view, new BitmapDrawable(getResources(), applicationInfo.getIconBitmap()), mDragOrigin), view, 0);
 
         mainView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
     }
@@ -396,7 +396,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
 		dragData.addItem(item);
 
 		mainView.startDrag(dragData,
-		        new IconDragShadowBuilder(EditFavoritesActivity.this, v, new BitmapDrawable(getResources(), applicationInfo.getIconBitmap())), v, 0);
+		        new IconDragShadowBuilder(EditFavoritesActivity.this, v, new BitmapDrawable(getResources(), applicationInfo.getIconBitmap()), mDragOrigin), v, 0);
 
 		mainView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
 	}
