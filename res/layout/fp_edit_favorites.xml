@@ -7,11 +7,40 @@
 
     <LinearLayout
         android:id="@+id/favourites_group"
-        android:layout_width="122dp"
+        android:layout_width="125dp"
         android:layout_height="match_parent"
         android:background="@color/edit_favourites_background_white"
         android:orientation="vertical"
-        android:paddingTop="78dp" >
+        android:paddingTop="38dp" >
+
+        <RadioGroup
+            android:id="@+id/theme_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_marginBottom="43dp"
+            android:background="@drawable/stripe_light_up_tile"
+            android:orientation="horizontal"
+            android:padding="3.6dp" >
+
+            <RadioButton
+                android:id="@+id/theme_radio_button_dark"
+                style="@style/ThemeRadioButtonLight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:text="Dark" />
+
+            <RadioButton
+                android:id="@+id/theme_radio_button_light"
+                style="@style/ThemeRadioButtonDark"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="true"
+                android:text="Light" />
+        </RadioGroup>
 
         <include
             android:id="@+id/favourite_group_1"
@@ -23,9 +52,9 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_height="46.6dp"
+            android:layout_marginBottom="18.6dp"
+            android:layout_marginTop="18.6dp"
             android:src="@drawable/icon_allapps_grey" />
 
         <include
@@ -47,7 +76,7 @@
             android:layout_height="match_parent"
             android:background="@color/edit_favourites_background_grey_dark"
             android:orientation="vertical"
-            android:paddingBottom="50dp"
+            android:paddingBottom="48dp"
             android:paddingTop="40dp" >
 
             <TextView
@@ -55,8 +84,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="13.3dp"
-                android:layout_marginLeft="13.3dp"
-                android:layout_marginRight="13.3dp"
+                android:layout_marginLeft="18.3dp"
+                android:layout_marginRight="18.3dp"
                 android:text="@string/edit_favourites" />
 
             <com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView
@@ -65,16 +94,20 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:clipToPadding="false"
-                android:horizontalSpacing="10dp"
                 android:listSelector="@color/transparent"
                 android:numColumns="2"
                 android:overScrollMode="never"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
+                android:paddingLeft="13.3dp"
+                android:paddingRight="13.3dp"
+                android:paddingTop="13.3dp"
                 android:scrollbars="none"
-                android:verticalSpacing="10dp" />
+                android:verticalSpacing="13.3dp" />
         </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/edit_favourites_separator_shadow" />
 
         <FrameLayout
             android:id="@+id/remove_favourite_overlay"

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.97"
-        android:background="#FFFFFF" />
+        android:background="@color/background_grey_light" />
 
     <LinearLayout
         android:id="@+id/edge_swipe_holder"

@@ -27,21 +27,25 @@ import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.fairphone.fplauncher3.AppInfo;
 import com.fairphone.fplauncher3.R;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.DropDragEventListener;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView;
+import com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView.OnEditFavouritesIconDraggedListener;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.FavoriteItemView;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.FavoriteItemView.OnFavouriteItemDraggedListener;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.IconDragShadowBuilder;
-import com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView.OnEditFavouritesIconDraggedListener;
 
 /**
  * Edit favorites activity implements functionality to edit your favorite apps
@@ -55,6 +59,11 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     // from a drag between two favorites to perform a swap
     public static final int SELECTED_APPS_DRAG = 0;
     public static final int ALL_APPS_DRAG = 1;
+
+    private enum Themes
+    {
+        LIGHT, DARK
+    };
 
     private AllAppsListAdapter mAllAppsListAdapter;
     private ArrayList<AppInfo> mAllApps;
@@ -70,6 +79,11 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     private View mRemoveFavouriteOverlay;
 
     private TextView mRemoveFavouriteText;
+
+    private RadioGroup mThemeRadioGroup;
+    private RadioButton mThemeRadioButtonLight;
+    private RadioButton mThemeRadioButtonDark;
+    private LinearLayout mFavouritesGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -92,6 +106,29 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         mRemoveFavouriteOverlay = findViewById(R.id.remove_favourite_overlay);
         mRemoveFavouriteText = (TextView) findViewById(R.id.remove_favourite_text);
 
+        mThemeRadioGroup = (RadioGroup) findViewById(R.id.theme_radio_group);
+        mThemeRadioButtonLight = (RadioButton) findViewById(R.id.theme_radio_button_light);
+        mThemeRadioButtonDark = (RadioButton) findViewById(R.id.theme_radio_button_dark);
+
+        mFavouritesGroup = (LinearLayout) findViewById(R.id.favourites_group);
+
+        mThemeRadioButtonDark.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                changeTheme(Themes.DARK);
+            }
+        });
+        mThemeRadioButtonLight.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                changeTheme(Themes.LIGHT);
+            }
+        });
+
         setupAllAppsList();
         setupSelectedAppsList();
     }
@@ -100,6 +137,24 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     public void onPause()
     {
         super.onPause();
+    }
+
+    private void changeTheme(Themes theme)
+    {
+        switch (theme)
+        {
+            case DARK:
+                mThemeRadioGroup.setBackgroundResource(R.drawable.stripe_dark_up_tile);
+                mFavouritesGroup.setBackgroundResource(R.color.background_blue_dark);
+                break;
+            case LIGHT:
+                mThemeRadioGroup.setBackgroundResource(R.drawable.stripe_light_up_tile);
+                mFavouritesGroup.setBackgroundResource(R.color.edit_favourites_background_white);
+                break;
+
+            default:
+                break;
+        }
     }
 
     /**
@@ -124,10 +179,11 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
                 startDraggingIcon(view, position);
             }
 
-			@Override
-			public void OnEditFavouritesIconDragEnded() {
-				hideAllAppsRemoveZone();
-			}
+            @Override
+            public void OnEditFavouritesIconDragEnded()
+            {
+                hideAllAppsRemoveZone();
+            }
         });
 
         mAllAppsGridView.setAdapter(mAllAppsListAdapter);
@@ -154,7 +210,8 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         dragData.addItem(item);
 
         mainView.startDrag(dragData,
-                new IconDragShadowBuilder(EditFavoritesActivity.this, view, new BitmapDrawable(getResources(), applicationInfo.getIconBitmap()), mDragOrigin), view, 0);
+                new IconDragShadowBuilder(EditFavoritesActivity.this, view, new BitmapDrawable(getResources(), applicationInfo.getIconBitmap()), mDragOrigin),
+                view, 0);
 
         mainView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
     }
@@ -183,7 +240,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         if (applicationInfo == null)
         {
             final View dragPlaceholderView = rla.getChildAt(0);
-            final FavoriteItemView iconView = (FavoriteItemView)rla.getChildAt(1);
+            final FavoriteItemView iconView = (FavoriteItemView) rla.getChildAt(1);
 
             if (performAnimation)
             {
@@ -240,18 +297,21 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
             // pass the main view and the instance setup the drag and visibility
             // of some views
             final View mainView = this.getWindow().getDecorView();
-        	iconView.setOnFavouriteItemDraggedListener(new OnFavouriteItemDraggedListener() {
-				
-				@Override
-				public void OnFavouriteItemDragged(View view) {
-					startFavoriteDrag(view, idx, mainView, EditFavoritesActivity.this);
-				}
-				
-				@Override
-				public void OnFavouriteItemDragEnded() {
-					hideAllAppsRemoveZone();
-				}
-			});
+            iconView.setOnFavouriteItemDraggedListener(new OnFavouriteItemDraggedListener()
+            {
+
+                @Override
+                public void OnFavouriteItemDragged(View view)
+                {
+                    startFavoriteDrag(view, idx, mainView, EditFavoritesActivity.this);
+                }
+
+                @Override
+                public void OnFavouriteItemDragEnded()
+                {
+                    hideAllAppsRemoveZone();
+                }
+            });
         }
 
         FavoritesStorageHelper.storeSelectedApps(this, mSelectedApps);
@@ -376,30 +436,32 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         String[] selectedItem = toDeserialize.split(";");
         return selectedItem;
     }
-    
-    private void startFavoriteDrag(View v, int id, View mainView, DragDropItemLayoutListener listener) {
-		// Show the zone where favorites can be removed
-		listener.showAllAppsRemoveZone();
 
-		// display a circle around the possible destinations
-		toggleFavoriteBackground(-1, true);
+    private void startFavoriteDrag(View v, int id, View mainView, DragDropItemLayoutListener listener)
+    {
+        // Show the zone where favorites can be removed
+        listener.showAllAppsRemoveZone();
 
-		// set the drag info
-		AppInfo applicationInfo = mSelectedApps[id];
+        // display a circle around the possible destinations
+        toggleFavoriteBackground(-1, true);
 
-		// set the item with the origin of the drag and the index of the
-		// dragged view
-		mDragOrigin = EditFavoritesActivity.SELECTED_APPS_DRAG;
-		String selectedItem = serializeItem(mDragOrigin, id);
-		ClipData.Item item = new ClipData.Item(selectedItem);
-		ClipData dragData = ClipData.newPlainText(applicationInfo.getApplicationTitle(), applicationInfo.getApplicationTitle());
-		dragData.addItem(item);
+        // set the drag info
+        AppInfo applicationInfo = mSelectedApps[id];
 
-		mainView.startDrag(dragData,
-		        new IconDragShadowBuilder(EditFavoritesActivity.this, v, new BitmapDrawable(getResources(), applicationInfo.getIconBitmap()), mDragOrigin), v, 0);
+        // set the item with the origin of the drag and the index of the
+        // dragged view
+        mDragOrigin = EditFavoritesActivity.SELECTED_APPS_DRAG;
+        String selectedItem = serializeItem(mDragOrigin, id);
+        ClipData.Item item = new ClipData.Item(selectedItem);
+        ClipData dragData = ClipData.newPlainText(applicationInfo.getApplicationTitle(), applicationInfo.getApplicationTitle());
+        dragData.addItem(item);
 
-		mainView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-	}
+        mainView.startDrag(dragData,
+                new IconDragShadowBuilder(EditFavoritesActivity.this, v, new BitmapDrawable(getResources(), applicationInfo.getIconBitmap()), mDragOrigin), v,
+                0);
+
+        mainView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+    }
 
     @Override
     public boolean onDrag(View v, DragEvent event)
@@ -429,7 +491,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     @Override
     public void showAllAppsRemoveZoneRedGlow()
     {
-    	Resources resources = getResources();
+        Resources resources = getResources();
         mRemoveFavouriteOverlay.setBackgroundResource(R.drawable.edit_favourites_background_red);
         mRemoveFavouriteText.setText(R.string.edit_favourites_remove);
         mRemoveFavouriteText.setTextSize(resources.getInteger(R.integer.edit_favorites_remove_text_size));
@@ -439,8 +501,8 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     @Override
     public void hideAllAppsRemoveZoneRedGlow()
     {
-    	Resources resources = getResources();
-        mRemoveFavouriteOverlay.setBackgroundResource(R.drawable.background_edit_favourites_stripe_grey);
+        Resources resources = getResources();
+        mRemoveFavouriteOverlay.setBackgroundResource(R.drawable.stripe_light_up_tile);
         mRemoveFavouriteText.setText(R.string.drag_here_to_remove);
         mRemoveFavouriteText.setTextSize(resources.getInteger(R.integer.edit_favorites_drag_here_to_remove_text_size));
         mRemoveFavouriteText.setTextColor(resources.getColor(R.color.edit_favourites_text_white));
@@ -492,7 +554,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         {
             if (i != selectedFavorite && showBackground)
             {
-                mFavIcons.get(i).setBackgroundResource(R.drawable.background_edit_favourites_stripe_grey_light);
+                mFavIcons.get(i).setBackgroundResource(R.drawable.stripe_light_up_tile);
             }
             else
             {
@@ -504,30 +566,29 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     @Override
     public void showFavoriteBlueHighlight(FrameLayout view)
     {
-        showFavoriteHighlight(view, R.drawable.background_edit_favourites_stripe_blue, R.color.edit_favourites_text_blue_light, getResources().getInteger(R.integer.edit_favorites_drag_here_to_add_highlight_text_size));
+        showFavoriteHighlight(view, R.drawable.stripe_light_up_tile, R.color.edit_favourites_text_blue_light);
     }
 
     @Override
     public void showFavoriteGreyHighlight(FrameLayout view)
     {
-        showFavoriteHighlight(view, R.drawable.background_edit_favourites_stripe_grey_light, R.color.edit_favourites_text_grey_dark, getResources().getInteger(R.integer.edit_favorites_drag_here_to_add_normal_text_size));
+        showFavoriteHighlight(view, R.drawable.stripe_light_up_tile, R.color.edit_favourites_text_grey_dark);
     }
 
-    private void showFavoriteHighlight(FrameLayout view, int backgroundResourceId, int textColorResourceId, int textSize)
+    private void showFavoriteHighlight(FrameLayout view, int backgroundResourceId, int textColorResourceId)
     {
         if (view != null)
         {
-	        TextView emptyFavorites = (TextView) view.getChildAt(0);
-	        
-	        view.setBackgroundResource(backgroundResourceId);
-	        if (emptyFavorites != null)
-	        {
-	        	int color = getResources().getColor(textColorResourceId);
-	        	
-	        	emptyFavorites.setBackgroundResource(backgroundResourceId);
-	            emptyFavorites.setTextColor(color);
-	            emptyFavorites.setTextSize(textSize);
-	        }
+            TextView emptyFavorites = (TextView) view.getChildAt(0);
+
+            view.setBackgroundResource(backgroundResourceId);
+            if (emptyFavorites != null)
+            {
+                int color = getResources().getColor(textColorResourceId);
+
+                emptyFavorites.setBackgroundResource(backgroundResourceId);
+                emptyFavorites.setTextColor(color);
+            }
         }
     }
 }

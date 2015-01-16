@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/edit_favourites_background_stripe_grey" 
+    android:src="@drawable/stripe_dark_press"
     android:tileMode="repeat" />

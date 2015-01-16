@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:background="@drawable/background_drop_target_stripe_grey_light"
+        android:background="@drawable/stripe_light_up_tile"
         android:orientation="horizontal" >
 
         <include layout="@layout/drop_target_bar" />

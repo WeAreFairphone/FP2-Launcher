@@ -257,9 +257,17 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
     private void setItemContent(final View item, AppInfo applicationInfo, int position)
     {
+        Resources resources = mContext.getResources();
+
         ImageView icon = (ImageView) item.findViewById(R.id.icon);
         TextView text = (TextView) item.findViewById(R.id.text);
         TextView editButton = (TextView) item.findViewById(R.id.edit_button);
+
+        // IF DARK MODE
+        //        text.setTextColor(resources.getColor(R.color.blue_light));
+
+        // IF LIGHT MODE        
+        text.setTextColor(resources.getColor(R.color.blue));
 
         if (editButton != null)
         {
@@ -269,7 +277,11 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         // IF ALL APPS ICON
         if (position == 2)
         {
+            // IF LIGHT MODE 
             icon.setImageResource(R.drawable.icon_allapps_blue);
+
+            // IF DARK MODE
+            //            icon.setImageResource(R.drawable.icon_allapps_blue_light);
             text.setText("");
             mEditButton = editButton;
             return;
@@ -279,20 +291,25 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         ComponentName componentName = null;
         Drawable iconDrawable = null;
         String label = "";
-        Resources resources = mContext.getResources();
 
         if (applicationInfo == null)
         {
-            icon.setImageResource(R.drawable.icon_edge_swipe_add);
+            icon.setImageResource(R.drawable.icon_edge_swipe_add_blue_light);
             label = resources.getString(R.string.add_app).toUpperCase();
             switch (mSide)
             {
                 case RIGHT_SIDE:
-                    item.setBackgroundResource(R.drawable.edge_swipe_item_right_edged_lines);
+                    // IF LIGHT MODE 
+                    item.setBackgroundResource(R.drawable.stripe_light_edge_press_right);
+                    // IF DARK MODE
+                    //                    item.setBackgroundResource(R.drawable.stripe_dark_edge_up_right);
                     break;
 
                 case LEFT_SIDE:
-                    item.setBackgroundResource(R.drawable.edge_swipe_item_left_edged_lines);
+                    // IF LIGHT MODE 
+                    item.setBackgroundResource(R.drawable.stripe_light_edge_press_left);
+                    // IF DARK MODE
+                    //                    item.setBackgroundResource(R.drawable.stripe_dark_edge_up_left);
                     break;
             }
         }
@@ -321,6 +338,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         item.setTag(launchIntent);
     }
 
+    // WHEN THE USER SETS THE FINGER ON AN ITEM
     private void animateItemIn(View item, int currentItem)
     {
         Resources resources = mContext.getResources();
@@ -329,12 +347,20 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         ImageView icon = (ImageView) item.findViewById(R.id.icon);
         TextView text = (TextView) item.findViewById(R.id.text);
 
-        text.setTextColor(resources.getColor(R.color.edge_swipe_text_blue_selected));
+        // IF DARK MODE
+        //        text.setTextColor(resources.getColor(R.color.white));
+
+        // IF LIGHT MODE        
+        text.setTextColor(resources.getColor(R.color.blue_dark));
 
         // IF ALL APPS ICON
         if (currentItem == 2)
         {
-            icon.setImageResource(R.drawable.icon_allapps_black);
+            // IF LIGHT MODE 
+            icon.setImageResource(R.drawable.icon_allapps_blue_dark);
+
+            // IF DARK MODE
+            //            icon.setImageResource(R.drawable.icon_allapps_white);
         }
 
         float iconTranslateValue = resources.getDimension(R.dimen.edge_swipe_item_icon_translate);
@@ -400,11 +426,20 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         TextView text = (TextView) item.findViewById(R.id.text);
         long translateDuration = resources.getInteger(R.integer.edge_swipe_translate_duration);
 
-        text.setTextColor(resources.getColor(R.color.edge_swipe_text_blue));
+        // IF DARK MODE
+        //        text.setTextColor(resources.getColor(R.color.blue_light));
+
+        // IF LIGHT MODE        
+        text.setTextColor(resources.getColor(R.color.blue));
+
         // IF ALL APPS ICON
         if (currentItem == 2)
         {
+            // IF LIGHT MODE 
             icon.setImageResource(R.drawable.icon_allapps_blue);
+
+            // IF DARK MODE
+            //            icon.setImageResource(R.drawable.icon_allapps_blue_light);
         }
 
         ObjectAnimator fadeBackground = ObjectAnimator.ofFloat(background, View.ALPHA, 1, 0);
@@ -544,11 +579,11 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         {
             case LEFT_SIDE:
                 validX = pointerX >= coord[0];
-                editBackgroundResourceId = R.drawable.edge_swipe_item_left_selected;
+                editBackgroundResourceId = R.drawable.stripe_light_edge_press_left;
                 break;
             case RIGHT_SIDE:
                 validX = pointerX <= (coord[0] + mEditButton.getWidth());
-                editBackgroundResourceId = R.drawable.edge_swipe_item_right_selected;
+                editBackgroundResourceId = R.drawable.stripe_light_edge_press_right;
                 break;
             default:
                 break;

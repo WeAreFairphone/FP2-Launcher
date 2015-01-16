@@ -18,26 +18,25 @@
 */
 -->
 <resources>
-    <!-- The color tints to apply to the text and drag view when hovering
-         over the delete target or the info target -->
+
+    <!--
+         The color tints to apply to the text and drag view when hovering
+         over the delete target or the info target
+    -->
     <color name="delete_target_hover_tint">#DAFF0000</color>
     <color name="info_target_hover_tint">#DA0099CC</color>
     <color name="cling_scrim_background">#80000000</color>
-
     <color name="bubble_dark_background">#20000000</color>
     <color name="focused_background">#80c6c5c5</color>
-
     <color name="appwidget_error_color">#FCCC</color>
-
     <color name="workspace_all_apps_and_delete_zone_text_color">#CCFFFFFF</color>
     <color name="workspace_all_apps_and_delete_zone_text_shadow_color">#A0000000</color>
     <color name="workspace_icon_text_color">#FFF</color>
-
     <color name="quantum_panel_text_color">#FF666666</color>
     <color name="quantum_panel_text_shadow_color">#FFC4C4C4</color>
     <color name="outline_color">#FFFFFFFF</color>
     <color name="widget_text_panel">#FF374248</color>
-    
+
     <!-- Fairphone -->
     <color name="transparent">#00000000</color>
     <color name="black_transparent">#11000000</color>
@@ -47,7 +46,10 @@
     <color name="grey_dark">#333333</color>
     <color name="blue">#2AA8E0</color>
     <color name="blue_dark">#123C59</color>
-    
+    <color name="blue_light">#AADCF2</color>
+    <color name="background_blue_dark">#123C59</color>
+    <color name="background_grey_light">#F7F7F7</color>
+
     <!-- Edit favourites -->
     <color name="edit_favourites_background_white">#F7F7F7</color>
     <color name="edit_favourites_background_grey_dark">#333333</color>
@@ -55,11 +57,11 @@
     <color name="edit_favourites_text_grey_dark">#333333</color>
     <color name="edit_favourites_text_red_dark">#80394A</color>
     <color name="edit_favourites_text_white">#F7F7F7</color>
-    
+
     <!-- Edge swipe Menu -->
     <color name="edge_swipe_text_blue_selected">#123C59</color>
     <color name="edge_swipe_text_blue">#2AA8E0</color>
-    
+
     <!-- App lifecycle -->
     <color name="pin_target_hover_tint">#DA009900</color>
 

@@ -2,14 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
-    android:layout_marginTop="5dp" >
+    android:layout_marginBottom="6dp"
+    android:layout_marginTop="6dp" >
 
     <TextView
         android:id="@+id/favourite_empty"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/background_edit_favourites_stripe_grey_light"
+        android:layout_height="60dp"
+        android:background="@drawable/stripe_light_up_tile"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="@string/drag_here_to_add"
@@ -22,7 +22,6 @@
     <com.fairphone.fplauncher3.edgeswipe.editor.ui.FavoriteItemView
         android:id="@+id/favourite_icon"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:paddingTop="10dp" />
+        android:layout_height="60dp" />
 
 </FrameLayout>
