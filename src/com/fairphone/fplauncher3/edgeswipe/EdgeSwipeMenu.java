@@ -280,8 +280,6 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         TextView text = (TextView) item.findViewById(R.id.text);
         TextView editButton = (TextView) item.findViewById(R.id.edit_button);
 
-        item.setTag(applicationInfo);
-
         switch (mCurrentTheme)
         {
             case LIGHT:

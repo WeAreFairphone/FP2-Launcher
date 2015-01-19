@@ -252,8 +252,6 @@ public class ApplicationRunInformation
 	
 	public static ApplicationRunInformation deserializeApplicationRunInformation(String component, String data)
     {
-
-        Log.d(TAG, "fairphone debug > " + data);
         String[] splits = data.split(APP_RUN_INFO_SEPARATOR);
         int count = 0;
         Date lastExecution = Calendar.getInstance().getTime();
