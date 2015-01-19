@@ -57,6 +57,7 @@
     <color name="edit_favourites_text_grey_dark">#333333</color>
     <color name="edit_favourites_text_red_dark">#80394A</color>
     <color name="edit_favourites_text_white">#F7F7F7</color>
+    <color name="edit_favourites_glow_blue_light">#2AA9E0</color>
 
     <!-- Edge swipe Menu -->
     <color name="edge_swipe_text_blue_selected">#123C59</color>

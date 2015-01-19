@@ -1,8 +1,5 @@
 package com.fairphone.fplauncher3.edgeswipe.editor.ui;
 
-import com.fairphone.fplauncher3.R;
-import com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -12,7 +9,9 @@ import android.graphics.RadialGradient;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.view.animation.BounceInterpolator;
+
+import com.fairphone.fplauncher3.R;
+import com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity;
 
 public class IconDragShadowBuilder extends View.DragShadowBuilder {
 
@@ -75,8 +74,10 @@ public class IconDragShadowBuilder extends View.DragShadowBuilder {
 				: -15f, bounds.centerX(), bounds.centerY());
 		int cX = canvas.getWidth() / 2;
 		int cY = canvas.getHeight() / 2;
+		int glowColor = mContext.getResources().getColor(R.color.edit_favourites_glow_blue_light) - 0xFF000000;
+
 		RadialGradient gradient = new RadialGradient(cX, cY, cX, new int[] {
-				0xFF2AA9E0, 0xAA2AA9E0, 0x002AA9E0 }, new float[] { 0.0f, 0.5f,
+				(glowColor +0xFF000000) , (glowColor + 0xAA000000), glowColor }, new float[] { 0.0f, 0.5f,
 				1.0f }, android.graphics.Shader.TileMode.CLAMP);
 		Paint paint = new Paint();
 		paint.setShader(gradient);
