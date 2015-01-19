@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.content.res.Resources.Theme;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -37,13 +36,13 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.fairphone.fplauncher3.AppInfo;
-import com.fairphone.fplauncher3.LauncherAppState;
 import com.fairphone.fplauncher3.R;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.DropDragEventListener;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView;
@@ -58,10 +57,10 @@ import com.fairphone.fplauncher3.edgeswipe.editor.ui.IconDragShadowBuilder;
  */
 public class EditFavoritesActivity extends Activity implements View.OnDragListener, DragDropItemLayoutListener
 {
-	public static final String PREFS_EDGE_SWIPE_MENU = "com.fairphone.fplauncher.PREFS_EDGE_SWIPE_MENU";
+    public static final String PREFS_EDGE_SWIPE_MENU = "com.fairphone.fplauncher.PREFS_EDGE_SWIPE_MENU";
     public static final String EDGE_SWIPE_THEME = "com.fairphone.fplauncher.EDGE_SWIPE_THEME";
 
-	private static final String TAG = EditFavoritesActivity.class.getSimpleName();
+    private static final String TAG = EditFavoritesActivity.class.getSimpleName();
 
     // This is used to differentiate a drag from the all apps to favorites
     // from a drag between two favorites to perform a swap
@@ -75,25 +74,19 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
 
     private AllAppsListAdapter mAllAppsListAdapter;
     private ArrayList<AppInfo> mAllApps;
-
     private ArrayList<FrameLayout> mFavIcons;
-
     private AppInfo[] mSelectedApps;
-
     private EditFavoritesGridView mAllAppsGridView;
-
     private int mDragOrigin;
-
     private View mRemoveFavouriteOverlay;
-
     private TextView mRemoveFavouriteText;
-
+    private ImageView mAllAppsImageView;
     private RadioGroup mThemeRadioGroup;
     private RadioButton mThemeRadioButtonLight;
     private RadioButton mThemeRadioButtonDark;
     private LinearLayout mFavouritesGroup;
-
-	private SharedPreferences mSharedPrefs;
+    private SharedPreferences mSharedPrefs;
+    private Themes mCurrentTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -113,6 +106,8 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         mFavIcons.add((FrameLayout) findViewById(R.id.favourite_group_3));
         mFavIcons.add((FrameLayout) findViewById(R.id.favourite_group_4));
 
+        mAllAppsImageView = (ImageView) findViewById(R.id.all_apps_image_view);
+
         mRemoveFavouriteOverlay = findViewById(R.id.remove_favourite_overlay);
         mRemoveFavouriteText = (TextView) findViewById(R.id.remove_favourite_text);
 
@@ -123,10 +118,10 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         mFavouritesGroup = (LinearLayout) findViewById(R.id.favourites_group);
 
         mSharedPrefs = getSharedPreferences(PREFS_EDGE_SWIPE_MENU, Context.MODE_PRIVATE);
-        
-        Themes currentTheme = getCurrentTheme(this);
-        changeTheme(currentTheme);
-                
+
+        mCurrentTheme = getCurrentTheme(this);
+        changeTheme(mCurrentTheme);
+
         mThemeRadioButtonDark.setOnClickListener(new OnClickListener()
         {
             @Override
@@ -148,26 +143,30 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         setupSelectedAppsList();
     }
 
-	public static Themes getCurrentTheme(Context context) {
-		Themes currentTheme = Themes.DARK;
+    public static Themes getCurrentTheme(Context context)
+    {
+        Themes currentTheme = Themes.DARK;
 
-		SharedPreferences sharedPrefs = context.getSharedPreferences(PREFS_EDGE_SWIPE_MENU, Context.MODE_PRIVATE);
-		String currentThemePref = sharedPrefs.getString(EDGE_SWIPE_THEME,
-				Themes.DARK.name());
-		try {
-			currentTheme = Themes.valueOf(currentThemePref);
-		} catch (Exception e) {
-			currentTheme = Themes.DARK;
-		}
+        SharedPreferences sharedPrefs = context.getSharedPreferences(PREFS_EDGE_SWIPE_MENU, Context.MODE_PRIVATE);
+        String currentThemePref = sharedPrefs.getString(EDGE_SWIPE_THEME, Themes.DARK.name());
+        try
+        {
+            currentTheme = Themes.valueOf(currentThemePref);
+        } catch (Exception e)
+        {
+            currentTheme = Themes.DARK;
+        }
 
-		return currentTheme;
-	}
-	
-	private void saveTheme(Themes theme) {
-		SharedPreferences.Editor editor = mSharedPrefs.edit();
-		editor.putString(EDGE_SWIPE_THEME, theme.name());
-		editor.commit();
-	}
+        return currentTheme;
+    }
+
+    private void saveTheme(Themes theme)
+    {
+        mCurrentTheme = theme;
+        SharedPreferences.Editor editor = mSharedPrefs.edit();
+        editor.putString(EDGE_SWIPE_THEME, theme.name());
+        editor.commit();
+    }
 
     @Override
     public void onPause()
@@ -182,18 +181,23 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
             case DARK:
                 mThemeRadioGroup.setBackgroundResource(R.drawable.stripe_dark_up_tile);
                 mFavouritesGroup.setBackgroundResource(R.color.background_blue_dark);
+                mAllAppsImageView.setImageResource(R.drawable.icon_allapps_blue_light);
+                mThemeRadioButtonDark.setChecked(true);
                 break;
             case LIGHT:
                 mThemeRadioGroup.setBackgroundResource(R.drawable.stripe_light_up_tile);
                 mFavouritesGroup.setBackgroundResource(R.color.edit_favourites_background_white);
+                mAllAppsImageView.setImageResource(R.drawable.icon_allapps_grey);
+                mThemeRadioButtonLight.setChecked(true);
                 break;
 
             default:
-            	Log.w(TAG, "Unknown theme: " + theme);
-            	theme = Themes.DARK;
+                Log.w(TAG, "Unknown theme: " + theme);
+                theme = Themes.DARK;
                 break;
         }
         saveTheme(theme);
+        setupSelectedAppsList();
     }
 
     /**
@@ -293,7 +297,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
 
             iconView.setOnFavouriteItemDraggedListener(null);
             mSelectedApps[idx] = null;
-            showFavoriteGreyHighlight(rla);
+            applyFavoriteUpState(rla);
         }
         else
         {
@@ -532,18 +536,14 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     {
         Resources resources = getResources();
         mRemoveFavouriteOverlay.setBackgroundResource(R.drawable.stripe_red_up_tile);
-        //        mRemoveFavouriteText.setText(R.string.edit_favourites_remove);
-        //        mRemoveFavouriteText.setTextSize(resources.getInteger(R.integer.edit_favorites_remove_text_size));
         mRemoveFavouriteText.setTextColor(resources.getColor(R.color.edit_favourites_text_red_dark));
     }
 
     @Override
     public void hideAllAppsRemoveZoneRedGlow()
-    { 
+    {
         Resources resources = getResources();
         mRemoveFavouriteOverlay.setBackgroundResource(R.drawable.stripe_grey_up_tile);
-//        mRemoveFavouriteText.setText(R.string.drag_here_to_remove);
-//        mRemoveFavouriteText.setTextSize(resources.getInteger(R.integer.edit_favorites_drag_here_to_remove_text_size));
         mRemoveFavouriteText.setTextColor(resources.getColor(R.color.edit_favourites_text_white));
     }
 
@@ -593,7 +593,17 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         {
             if (i != selectedFavorite && showBackground)
             {
-                mFavIcons.get(i).setBackgroundResource(R.drawable.stripe_light_up_tile);
+                switch (mCurrentTheme)
+                {
+                    case LIGHT:
+                        mFavIcons.get(i).setBackgroundResource(R.drawable.stripe_light_up_tile);
+                        break;
+
+                    case DARK:
+                    default:
+                        mFavIcons.get(i).setBackgroundResource(R.drawable.stripe_dark_up_tile);
+                        break;
+                }
             }
             else
             {
@@ -603,18 +613,38 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     }
 
     @Override
-    public void showFavoriteBlueHighlight(FrameLayout view)
+    public void applyFavoritePressState(FrameLayout view)
     {
-        showFavoriteHighlight(view, R.drawable.stripe_light_up_tile, R.color.edit_favourites_text_blue_light);
+        switch (mCurrentTheme)
+        {
+            case LIGHT:
+                applyFavouriteState(view, R.drawable.stripe_light_press_tile, R.color.edit_favourites_text_blue_light);
+                break;
+
+            case DARK:
+            default:
+                applyFavouriteState(view, R.drawable.stripe_dark_press_tile, R.color.white);
+                break;
+        }
     }
 
     @Override
-    public void showFavoriteGreyHighlight(FrameLayout view)
+    public void applyFavoriteUpState(FrameLayout view)
     {
-        showFavoriteHighlight(view, R.drawable.stripe_light_up_tile, R.color.edit_favourites_text_grey_dark);
+        switch (mCurrentTheme)
+        {
+            case LIGHT:
+                applyFavouriteState(view, R.drawable.stripe_light_up_tile, R.color.edit_favourites_text_grey_dark);
+                break;
+
+            case DARK:
+            default:
+                applyFavouriteState(view, R.drawable.stripe_dark_up_tile, R.color.blue);
+                break;
+        }
     }
 
-    private void showFavoriteHighlight(FrameLayout view, int backgroundResourceId, int textColorResourceId)
+    private void applyFavouriteState(FrameLayout view, int backgroundResourceId, int textColorResourceId)
     {
         if (view != null)
         {

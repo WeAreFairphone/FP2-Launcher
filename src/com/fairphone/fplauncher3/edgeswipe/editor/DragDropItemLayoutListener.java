@@ -26,6 +26,6 @@ public interface DragDropItemLayoutListener {
 	void toggleAllAppRemoveZoneRedGlow(float pointerX, float pointerY);
 	void showAllAppsRemoveZoneRedGlow();
 	void hideAllAppsRemoveZoneRedGlow();
-	void showFavoriteBlueHighlight(FrameLayout view);
-	void showFavoriteGreyHighlight(FrameLayout view);
+	void applyFavoritePressState(FrameLayout view);
+	void applyFavoriteUpState(FrameLayout view);
 }

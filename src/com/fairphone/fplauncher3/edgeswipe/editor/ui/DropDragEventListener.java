@@ -57,14 +57,14 @@ public class DropDragEventListener implements View.OnDragListener {
 						event.getY());
 			} else {
 				mListener.hideAllAppsRemoveZoneRedGlow();
-				mListener.showFavoriteBlueHighlight((FrameLayout)rla);
+				mListener.applyFavoritePressState((FrameLayout)rla);
 			}
 			break;
 		case DragEvent.ACTION_DRAG_EXITED:
 			mListener.hideAllAppsRemoveZoneRedGlow();
 			idx = mFavIcons.indexOf(rla);
 			if (idx != -1) {
-				mListener.showFavoriteGreyHighlight((FrameLayout)rla);
+				mListener.applyFavoriteUpState((FrameLayout)rla);
 			}
 			break;
 		case DragEvent.ACTION_DROP:
