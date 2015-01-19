@@ -347,6 +347,8 @@ s -->
     <string name="app_unpin_message">App unpinned</string>
     <string name="fp_aging_apps_icon_label_new">NEW</string>
     <string name="fp_aging_apps_icon_label_updated">UPDATED</string>
+    <string name="fp_theme_dark">Dark</string>
+    <string name="fp_theme_light">Light</string>
     
     
 </resources>

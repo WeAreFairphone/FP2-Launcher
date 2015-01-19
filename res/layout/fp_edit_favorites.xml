@@ -29,7 +29,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
-                android:text="Dark" />
+                android:text="@string/fp_theme_dark" />
 
             <RadioButton
                 android:id="@+id/theme_radio_button_light"
@@ -39,7 +39,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:checked="true"
-                android:text="Light" />
+                android:text="@string/fp_theme_light" />
         </RadioGroup>
 
         <include
