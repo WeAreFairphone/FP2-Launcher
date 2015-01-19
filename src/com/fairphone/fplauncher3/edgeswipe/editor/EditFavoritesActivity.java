@@ -19,11 +19,15 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.content.res.Resources.Theme;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
@@ -39,6 +43,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.fairphone.fplauncher3.AppInfo;
+import com.fairphone.fplauncher3.LauncherAppState;
 import com.fairphone.fplauncher3.R;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.DropDragEventListener;
 import com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView;
@@ -53,14 +58,17 @@ import com.fairphone.fplauncher3.edgeswipe.editor.ui.IconDragShadowBuilder;
  */
 public class EditFavoritesActivity extends Activity implements View.OnDragListener, DragDropItemLayoutListener
 {
-    private static final String TAG = EditFavoritesActivity.class.getSimpleName();
+	public static final String PREFS_EDGE_SWIPE_MENU = "com.fairphone.fplauncher.PREFS_EDGE_SWIPE_MENU";
+    public static final String EDGE_SWIPE_THEME = "com.fairphone.fplauncher.EDGE_SWIPE_THEME";
+
+	private static final String TAG = EditFavoritesActivity.class.getSimpleName();
 
     // This is used to differentiate a drag from the all apps to favorites
     // from a drag between two favorites to perform a swap
     public static final int SELECTED_APPS_DRAG = 0;
     public static final int ALL_APPS_DRAG = 1;
 
-    private enum Themes
+    public enum Themes
     {
         LIGHT, DARK
     };
@@ -84,6 +92,8 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     private RadioButton mThemeRadioButtonLight;
     private RadioButton mThemeRadioButtonDark;
     private LinearLayout mFavouritesGroup;
+
+	private SharedPreferences mSharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -112,6 +122,11 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
 
         mFavouritesGroup = (LinearLayout) findViewById(R.id.favourites_group);
 
+        mSharedPrefs = getSharedPreferences(PREFS_EDGE_SWIPE_MENU, Context.MODE_PRIVATE);
+        
+        Themes currentTheme = getCurrentTheme(this);
+        changeTheme(currentTheme);
+                
         mThemeRadioButtonDark.setOnClickListener(new OnClickListener()
         {
             @Override
@@ -133,6 +148,27 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         setupSelectedAppsList();
     }
 
+	public static Themes getCurrentTheme(Context context) {
+		Themes currentTheme = Themes.DARK;
+
+		SharedPreferences sharedPrefs = context.getSharedPreferences(PREFS_EDGE_SWIPE_MENU, Context.MODE_PRIVATE);
+		String currentThemePref = sharedPrefs.getString(EDGE_SWIPE_THEME,
+				Themes.DARK.name());
+		try {
+			currentTheme = Themes.valueOf(currentThemePref);
+		} catch (Exception e) {
+			currentTheme = Themes.DARK;
+		}
+
+		return currentTheme;
+	}
+	
+	private void saveTheme(Themes theme) {
+		SharedPreferences.Editor editor = mSharedPrefs.edit();
+		editor.putString(EDGE_SWIPE_THEME, theme.name());
+		editor.commit();
+	}
+
     @Override
     public void onPause()
     {
@@ -153,8 +189,11 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
                 break;
 
             default:
+            	Log.w(TAG, "Unknown theme: " + theme);
+            	theme = Themes.DARK;
                 break;
         }
+        saveTheme(theme);
     }
 
     /**
