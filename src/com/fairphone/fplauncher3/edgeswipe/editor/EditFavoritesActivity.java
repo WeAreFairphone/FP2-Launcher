@@ -181,7 +181,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
             case DARK:
                 mThemeRadioGroup.setBackgroundResource(R.drawable.stripe_dark_up_tile);
                 mFavouritesGroup.setBackgroundResource(R.color.background_blue_dark);
-                mAllAppsImageView.setImageResource(R.drawable.icon_allapps_blue_light);
+                mAllAppsImageView.setImageResource(R.drawable.icon_allapps_blue_light_transparent);
                 mThemeRadioButtonDark.setChecked(true);
                 break;
             case LIGHT:

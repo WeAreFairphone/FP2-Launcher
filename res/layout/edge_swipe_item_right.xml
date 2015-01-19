@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/edge_swipe_height"
         android:alpha="0"
-        android:background="@drawable/stripe_light_edge_up_right" />
+        android:background="@drawable/edge_swipe_right_light_press" />
 
     <ImageView
         android:id="@+id/icon"
