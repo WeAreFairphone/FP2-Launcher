@@ -492,19 +492,19 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     public void showAllAppsRemoveZoneRedGlow()
     {
         Resources resources = getResources();
-        mRemoveFavouriteOverlay.setBackgroundResource(R.drawable.edit_favourites_background_red);
-        mRemoveFavouriteText.setText(R.string.edit_favourites_remove);
-        mRemoveFavouriteText.setTextSize(resources.getInteger(R.integer.edit_favorites_remove_text_size));
+        mRemoveFavouriteOverlay.setBackgroundResource(R.drawable.stripe_red_up_tile);
+        //        mRemoveFavouriteText.setText(R.string.edit_favourites_remove);
+        //        mRemoveFavouriteText.setTextSize(resources.getInteger(R.integer.edit_favorites_remove_text_size));
         mRemoveFavouriteText.setTextColor(resources.getColor(R.color.edit_favourites_text_red_dark));
     }
 
     @Override
     public void hideAllAppsRemoveZoneRedGlow()
-    {
+    { 
         Resources resources = getResources();
-        mRemoveFavouriteOverlay.setBackgroundResource(R.drawable.stripe_light_up_tile);
-        mRemoveFavouriteText.setText(R.string.drag_here_to_remove);
-        mRemoveFavouriteText.setTextSize(resources.getInteger(R.integer.edit_favorites_drag_here_to_remove_text_size));
+        mRemoveFavouriteOverlay.setBackgroundResource(R.drawable.stripe_grey_up_tile);
+//        mRemoveFavouriteText.setText(R.string.drag_here_to_remove);
+//        mRemoveFavouriteText.setTextSize(resources.getInteger(R.integer.edit_favorites_drag_here_to_remove_text_size));
         mRemoveFavouriteText.setTextColor(resources.getColor(R.color.edit_favourites_text_white));
     }
 
