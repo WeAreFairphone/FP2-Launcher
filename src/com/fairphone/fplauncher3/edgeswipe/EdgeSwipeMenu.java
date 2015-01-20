@@ -36,7 +36,9 @@ import com.fairphone.fplauncher3.edgeswipe.editor.ui.EdgeSwipeInterceptorViewLis
 public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 {
 
-    private static final String TAG = EdgeSwipeMenu.class.getSimpleName();
+    private static final int EDIT_BUTTON_ITEM = -2;
+
+	private static final String TAG = EdgeSwipeMenu.class.getSimpleName();
 
     protected final ViewGroup mParentView;
     protected final ViewGroup mMenuView;
@@ -594,10 +596,9 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             if (isInActiveZone(pointerX) && firstChild != null && pointerY > menuHolderY)
             {
                 float startingPoint = pointerY - menuHolderY;
-                int currentItem = (int) (startingPoint / itemSize);
-                View item;
-
-                if (isInEditZone(pointerX, pointerY) || (mPreviousItem != currentItem && mPreviousItem != -1))
+                int currentItem = isInEditZone(pointerX, pointerY)? EDIT_BUTTON_ITEM :(int) (startingPoint / itemSize);
+                View item = null;
+                if (mPreviousItem != currentItem && mPreviousItem != -1)
                 {
                     item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
                     if (item != null)
@@ -618,8 +619,8 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             }
             else
             {
-                View item;
-                if (isInEditZone(pointerX, pointerY) || mPreviousItem != -1)
+                View item = null;
+                if (mPreviousItem != -1)
                 {
                     item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
                     if (item != null)
