@@ -4,7 +4,7 @@
 
     <View
         android:id="@+id/background"
-        android:layout_width="298.3dp"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/edge_swipe_height"
         android:layout_gravity="right"
         android:alpha="0"
