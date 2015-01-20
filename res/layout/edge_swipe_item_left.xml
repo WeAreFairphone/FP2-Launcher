@@ -4,15 +4,16 @@
 
     <View
         android:id="@+id/background"
-        android:layout_width="match_parent"
+        android:layout_width="298.3dp"
         android:layout_height="@dimen/edge_swipe_height"
+        android:layout_gravity="right"
         android:alpha="0"
         android:background="@drawable/edge_swipe_left_light_press" />
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="@dimen/edge_swipe_height"
-        android:layout_height="@dimen/edge_swipe_height"
+        android:layout_width="@dimen/edit_favorites_icon_size"
+        android:layout_height="@dimen/edit_favorites_icon_size"
         android:layout_gravity="left|center_vertical"
         android:layout_marginLeft="88dp"
         android:scaleType="centerInside" />
@@ -33,7 +34,8 @@
         android:layout_height="@dimen/edge_swipe_height"
         android:layout_gravity="right|center_vertical"
         android:fontFamily="sans-serif-medium"
-        android:gravity="center"
+        android:gravity="right|center_vertical"
+        android:paddingRight="37.3dp"
         android:text="@string/edit"
         android:textAllCaps="true"
         android:textColor="@color/edge_swipe_text_blue"

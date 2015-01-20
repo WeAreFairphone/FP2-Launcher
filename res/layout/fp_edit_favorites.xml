@@ -17,7 +17,7 @@
             android:id="@+id/theme_radio_group"
             android:layout_width="match_parent"
             android:layout_height="34dp"
-            android:layout_marginBottom="43dp"
+            android:layout_marginBottom="46dp"
             android:background="@drawable/stripe_light_up_tile"
             android:orientation="horizontal"
             android:padding="3.6dp" >
@@ -53,9 +53,8 @@
         <ImageView
             android:id="@+id/all_apps_image_view"
             android:layout_width="match_parent"
-            android:layout_height="46.6dp"
-            android:layout_marginBottom="18.6dp"
-            android:layout_marginTop="18.6dp"
+            android:layout_height="76.6dp"
+            android:padding="14dp"
             android:src="@drawable/icon_allapps_grey" />
 
         <include
@@ -85,8 +84,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="13.3dp"
-                android:layout_marginLeft="18.3dp"
-                android:layout_marginRight="18.3dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
                 android:text="@string/edit_favourites" />
 
             <com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView
@@ -102,7 +101,7 @@
                 android:paddingRight="13.3dp"
                 android:paddingTop="13.3dp"
                 android:scrollbars="none"
-                android:verticalSpacing="13.3dp" />
+                android:verticalSpacing="19dp" />
         </LinearLayout>
 
         <FrameLayout

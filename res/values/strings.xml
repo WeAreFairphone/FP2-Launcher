@@ -18,6 +18,7 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
     <!-- General -->
     <skip />
 
@@ -38,22 +39,22 @@
     <string name="uid_name">Android Core Apps</string>
     <!-- Default folder name -->
     <string name="folder_name"></string>
-    <!-- Displayed when user selects a shortcut for an app that was uninstalled [CHAR_LIMIT=none]-->
+    <!-- Displayed when user selects a shortcut for an app that was uninstalled [CHAR_LIMIT=none] -->
     <string name="activity_not_found">App isn\'t installed.</string>
     <!-- SafeMode shortcut error string -->
     <string name="safemode_shortcut_error">Downloaded app disabled in Safe mode</string>
-    <!--  Labels for the tabs in the customize drawer -->
+    <!-- Labels for the tabs in the customize drawer -->
     <string name="widgets_tab_label">Widgets</string>
-
     <string name="widget_adder">Widgets</string>
-
     <string name="toggle_weight_watcher">Show Mem</string>
 
     <!-- AppsCustomize pane -->
     <!-- Message to tell the user to press and hold on a widget to add it [CHAR_LIMIT=50] -->
     <string name="long_press_widget_to_add">Touch &amp; hold to pick up a widget.</string>
-    <!-- Market button text.  The market button text is removed in Launcher.java 
-         in the Phone UI. [CHAR LIMIT=32] -->
+    <!--
+         Market button text.  The market button text is removed in Launcher.java 
+         in the Phone UI. [CHAR LIMIT=32]
+    -->
     <string name="market">Shop</string>
     <!-- The format string for the dimensions of a widget in the drawer -->
     <!-- There is a special version of this format string for Farsi -->
@@ -61,13 +62,17 @@
 
     <!-- External-drop widget pick label format string [CHAR_LIMIT=25] -->
     <string name="external_drop_widget_pick_format" translatable="false">%1$s (%2$d \u00d7 %3$d)</string>
-    <!-- External-drop widget error string.  This is the error that is shown
+    <!--
+         External-drop widget error string.  This is the error that is shown
          when you drag and item into the homescreen and it is unable to fit,
-         or an error is encountered. [CHAR_LIMIT=50] -->
+         or an error is encountered. [CHAR_LIMIT=50]
+    -->
     <string name="external_drop_widget_error">Couldn\'t drop item on this Home screen.</string>
-    <!-- External-drop widget pick title.  This is shown as the title of the
+    <!--
+         External-drop widget pick title.  This is shown as the title of the
          dialog which allows you to pick which widgets to handle a particular
-         drop if there are multiple choices. [CHAR_LIMIT=35] -->
+         drop if there are multiple choices. [CHAR_LIMIT=35]
+    -->
     <string name="external_drop_widget_pick_title">Choose widget to create</string>
 
     <!-- Folders -->
@@ -87,8 +92,10 @@
     <string name="menu_item_add_item">Add to Home screen</string>
     <!-- Options in "Add to Home" dialog box; Title of the group containing the list of all apps -->
     <string name="group_applications">Apps</string>
-    <!-- Options in "Add to Home" dialog box; Title of the group containing the list of all shortcut
-s -->
+    <!--
+Options in "Add to Home" dialog box; Title of the group containing the list of all shortcut
+s
+    -->
     <string name="group_shortcuts">Shortcuts</string>
     <!-- Options in "Add to Home" dialog box; Title of the group containing the list of all widgets/gadgets -->
     <string name="group_widgets">Widgets</string>
@@ -110,19 +117,25 @@ s -->
 
     <!-- All applications label -->
     <string name="all_apps_button_label">Apps</string>
-    <!-- Label for button in all applications label to go back home (to the workspace / desktop)
-         for accessibilty (spoken when the button gets focus). -->
+    <!--
+         Label for button in all applications label to go back home (to the workspace / desktop)
+         for accessibilty (spoken when the button gets focus).
+    -->
     <string name="all_apps_home_button_label">Home</string>
-    <!-- Label for trash icon on workspace. Meant to communicate the idea of removing the
-         icon/widget from the home screen, but not permanently. [CHAR_LIMIT=30] -->
+    <!--
+         Label for trash icon on workspace. Meant to communicate the idea of removing the
+         icon/widget from the home screen, but not permanently. [CHAR_LIMIT=30]
+    -->
     <string name="delete_zone_label_workspace">Remove</string>
-    <!-- Label for trash icon in All Apps. The icon/widget will become completely unavailable on the
-         device. [CHAR_LIMIT=30]-->
+    <!--
+         Label for trash icon in All Apps. The icon/widget will become completely unavailable on the
+         device. [CHAR_LIMIT=30]
+    -->
     <string name="delete_zone_label_all_apps">Uninstall</string>
 
     <!-- Label for delete drop target. [CHAR_LIMIT=30] -->
     <string name="delete_target_label">Remove</string>
-    <!-- Label for uninstall drop target. [CHAR_LIMIT=30]-->
+    <!-- Label for uninstall drop target. [CHAR_LIMIT=30] -->
     <string name="delete_target_uninstall_label">Uninstall</string>
     <!-- Label for the info icon. [CHAR_LIMIT=30] -->
     <string name="info_target_label">App Info</string>
@@ -136,20 +149,26 @@ s -->
     <!-- Accessibility: Delete button -->
     <string name="accessibility_delete_button">Remove</string>
 
-    <!-- Label for trash icon in All Apps, when an updated system app is selected. The update will
-         be uninstalled. [CHAR_LIMIT=30] -->
+    <!--
+         Label for trash icon in All Apps, when an updated system app is selected. The update will
+         be uninstalled. [CHAR_LIMIT=30]
+    -->
     <string name="delete_zone_label_all_apps_system_app">Uninstall update</string>
 
     <!-- URL pointing to help text. If empty, no link to help will be created [DO NOT TRANSLATE] -->
     <string name="help_url" translatable="false"></string>
 
-    <!--  Strings for the contextual action bar (CAB) in All Apps -->
+    <!-- Strings for the contextual action bar (CAB) in All Apps -->
     <skip />
-    <!-- Describes the button for uninstalling the currently selected application.
-         Text is not displayed, but provided for accessibility. [CHAR_LIMIT=none] -->
+    <!--
+         Describes the button for uninstalling the currently selected application.
+         Text is not displayed, but provided for accessibility. [CHAR_LIMIT=none]
+    -->
     <string name="cab_menu_delete_app">Uninstall app</string>
-    <!-- Describes the button for getting details/info about currently selected application.
-         Text is not displayed, but provided for accessibility. [CHAR_LIMIT=none] -->
+    <!--
+         Describes the button for getting details/info about currently selected application.
+         Text is not displayed, but provided for accessibility. [CHAR_LIMIT=none]
+    -->
     <string name="cab_menu_app_info">App details</string>
     <!-- Appears in the CAB when an app is selected in All Apps or Customize mode. [CHAR_LIMIT=50] -->
     <string name="cab_app_selection_text">1 app selected</string>
@@ -184,7 +203,7 @@ s -->
         shortcuts in Home.</string>
 
     <!-- Widgets: -->
-    <skip />    
+    <skip />
 
     <!-- Text to show user in place of a gadget when we can't display it properly -->
     <string name="gadget_error_text">Problem loading widget</string>
@@ -253,7 +272,8 @@ s -->
     <string name="cling_dismiss">OK</string>
     <!-- Error message on dummy custom cling layout [DO NOT TRANSLATE] -->
     <string name="dummy_custom_cling_error_message">Error: custom workspace layout passed in but custom cling was not overwritten</string>
-    <add-resource type="string" name="default_folder_name" />
+
+    <add-resource name="default_folder_name" type="string" />
 
     <!-- Folder accessibility -->
     <!-- The format string for when a folder is opened, speaks the dimensions -->
@@ -299,12 +319,13 @@ s -->
     <string name="abandoned_search">Search</string>
     <!-- Title for abandoned promise dialog. -->
     <string name="abandoned_promises_title">This app is not installed</string>
-    <!-- Explanation for abandoned promise dialog. "The first 'it' refers to the shortcut icon.
-    The second "it" refers to the app. -->
+    <!--
+    Explanation for abandoned promise dialog. "The first 'it' refers to the shortcut icon.
+    The second "it" refers to the app.
+    -->
     <string name="abandoned_promise_explanation">The app for this icon isn\'t installed.
-        You can remove it, or search for the app and install it manually.
-    </string>
-    
+        You can remove it, or search for the app and install it manually.</string>
+
     <!-- Fairphone -->
     <!-- Your Apps -->
     <string name="app_switcher_name">Your apps</string>
@@ -313,7 +334,7 @@ s -->
     <string name="most_used_apps">Most\nused\napps</string>
     <string name="most_used">Most used</string>
     <string name="no_apps_have_been_opened_yet">No apps opened yet? Just start using your phone and come back to this screen</string>
-        
+
     <!-- People widget -->
     <string name="people_widget_name">People Widget</string>
     <string name="last_contacted_text_label">Recently Contacted</string>
@@ -321,7 +342,7 @@ s -->
     <string name="contacts_app_not_found">Contacts app not found</string>
     <string name="contacts_title">CONTACTS</string>
     <string name="not_contacted_anyone_yet">You have not contacted anyone yet.\nJust make some calls or send some messages\nand come back to this screen.</string>
-    
+
     <!-- Edit favorites -->
     <string name="edit">Edit</string>
     <string name="edit_favourites">Edit Favourites</string>
@@ -329,7 +350,8 @@ s -->
     <string name="drag_here_to_remove">Drag here\nto remove</string>
     <string name="edit_favourites_remove">Remove</string>
     <string name="add_app">Add app</string>
-    
+    <string name="edge_swipe_all_apps">All Apps</string>
+
     <!-- All apps widget -->
     <string name="fp_all_apps_widget_name">All apps</string>
 
@@ -349,6 +371,5 @@ s -->
     <string name="fp_aging_apps_icon_label_updated">UPDATED</string>
     <string name="fp_theme_dark">Dark</string>
     <string name="fp_theme_light">Light</string>
-    
-    
+
 </resources>

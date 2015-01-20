@@ -2,26 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="6dp"
-    android:layout_marginTop="6dp" >
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp" >
 
     <TextView
         android:id="@+id/favourite_empty"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/edge_swipe_height"
         android:background="@drawable/stripe_light_up_tile"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="@string/drag_here_to_add"
         android:textAllCaps="true"
         android:textColor="@color/edit_favourites_text_grey_dark"
-        android:textSize="10sp"
+        android:textSize="11sp"
         android:textStyle="bold"
         android:visibility="invisible" />
 
     <com.fairphone.fplauncher3.edgeswipe.editor.ui.FavoriteItemView
         android:id="@+id/favourite_icon"
         android:layout_width="match_parent"
-        android:layout_height="60dp" />
+        android:layout_height="@dimen/edit_favorites_icon_size"
+        android:layout_gravity="center_vertical" />
 
 </FrameLayout>

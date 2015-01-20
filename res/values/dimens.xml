@@ -116,8 +116,8 @@
     <!-- Edge swipe menu -->
     <dimen name="edge_swipe_show_limit">8dp</dimen>
     <dimen name="edge_swipe_translate_offset">100dp</dimen>
-    <dimen name="edge_swipe_item_icon_translate">30dp</dimen>
-    <dimen name="edge_swipe_item_text_translate">20dp</dimen>
+    <dimen name="edge_swipe_item_icon_translate">26dp</dimen>
+    <dimen name="edge_swipe_item_text_translate">26dp</dimen>
 
     <item name="edge_swipe_zoom_out" format="float" type="dimen">0.95</item>
     <item name="edge_swipe_background_fade_duration" format="integer" type="dimen">250</item>
@@ -127,7 +127,9 @@
     <item name="edge_swipe_items_ammount" format="integer" type="dimen">5</item>
 
     <dimen name="edge_swipe_dead_zone">90dp</dimen>
-    <dimen name="edge_swipe_height">60dp</dimen>
-    <dimen name="edge_swipe_item_margin_bottom">16dp</dimen>
+    <dimen name="edge_swipe_height">68dp</dimen>
+    <dimen name="edge_swipe_text_size">20sp</dimen>
+    <dimen name="edge_swipe_text_size_small">16sp</dimen>
+    <dimen name="edge_swipe_item_margin_bottom">8dp</dimen>
 
 </resources>

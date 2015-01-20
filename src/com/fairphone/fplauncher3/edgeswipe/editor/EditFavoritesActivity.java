@@ -550,7 +550,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     {
         Resources resources = getResources();
         mRemoveFavouriteOverlay.setBackgroundResource(R.drawable.stripe_red_up_tile);
-        mRemoveFavouriteText.setTextColor(resources.getColor(R.color.edit_favourites_text_red_dark));
+        mRemoveFavouriteText.setTextColor(resources.getColor(R.color.edit_favourites_text_white));
     }
 
     @Override

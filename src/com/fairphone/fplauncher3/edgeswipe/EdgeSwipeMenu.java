@@ -314,7 +314,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                     break;
             }
 
-            text.setText("");
+            text.setText(resources.getString(R.string.edge_swipe_all_apps));
             mEditButton = editButton;
             return;
         }
@@ -329,6 +329,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             icon.setImageResource(R.drawable.icon_edge_swipe_add_blue_light);
 
             label = resources.getString(R.string.add_app).toUpperCase();
+            text.setTextSize(16);
             switch (mSide)
             {
                 case RIGHT_SIDE:
@@ -365,6 +366,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             componentName = applicationInfo.getComponentName();
             iconDrawable = new BitmapDrawable(mContext.getResources(), applicationInfo.getIconBitmap());
             label = applicationInfo.getApplicationTitle();
+            text.setTextSize(20);
 
             // Set the right ComponentName in order to launch Dialer
             // or Contacts correctly
@@ -398,11 +400,32 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         {
             case LIGHT:
                 text.setTextColor(resources.getColor(R.color.blue_dark));
+
+                switch (mSide)
+                {
+                    case RIGHT_SIDE:
+                        background.setBackgroundResource(R.drawable.edge_swipe_right_light_press);
+                        break;
+                    case LEFT_SIDE:
+                        background.setBackgroundResource(R.drawable.edge_swipe_left_light_press);
+                        break;
+                }
+
                 break;
 
             case DARK:
             default:
                 text.setTextColor(resources.getColor(R.color.white));
+
+                switch (mSide)
+                {
+                    case RIGHT_SIDE:
+                        background.setBackgroundResource(R.drawable.edge_swipe_right_dark_press);
+                        break;
+                    case LEFT_SIDE:
+                        background.setBackgroundResource(R.drawable.edge_swipe_left_dark_press);
+                        break;
+                }
                 break;
         }
 
