@@ -38,7 +38,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
     private static final int EDIT_BUTTON_ITEM = -2;
 
-	private static final String TAG = EdgeSwipeMenu.class.getSimpleName();
+    private static final String TAG = EdgeSwipeMenu.class.getSimpleName();
 
     protected final ViewGroup mParentView;
     protected final ViewGroup mMenuView;
@@ -58,13 +58,13 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
     private Themes mCurrentTheme;
 
-	private Runnable mShowEditRunnable;
+    private Runnable mShowEditRunnable;
 
-	private boolean mIsMenuVisible;
+    private boolean mIsMenuVisible;
 
-	private AnimatorSet mShowEdgeSwipeAnimatorSet;
-	
-	private AnimatorSet mHideEdgeSwipeAnimatorSet;
+    private AnimatorSet mShowEdgeSwipeAnimatorSet;
+
+    private AnimatorSet mHideEdgeSwipeAnimatorSet;
 
     private static final int MAX_FAVORITE_APPS = 4;
 
@@ -83,8 +83,8 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         mPreviousItem = -1;
         isAnimatingItem = false;
         mIsMenuVisible = false;
-    	mHideEdgeSwipeAnimatorSet = null;
-    	mShowEdgeSwipeAnimatorSet = null;
+        mHideEdgeSwipeAnimatorSet = null;
+        mShowEdgeSwipeAnimatorSet = null;
 
         mMenuView = (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.edge_swipe_layout, null);
         mParentView.addView(mMenuView);
@@ -171,25 +171,30 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             }
         });
 
-        mHideEdgeSwipeAnimatorSet.addListener(new AnimatorListener() {
-			
-			@Override
-			public void onAnimationStart(Animator animation) {
-			}
-			
-			@Override
-			public void onAnimationRepeat(Animator animation) {
-			}
-			
-			@Override
-			public void onAnimationEnd(Animator animation) {
-		        mIsMenuVisible = false;
-			}
-			
-			@Override
-			public void onAnimationCancel(Animator animation) {
-			}
-		});
+        mHideEdgeSwipeAnimatorSet.addListener(new AnimatorListener()
+        {
+
+            @Override
+            public void onAnimationStart(Animator animation)
+            {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation)
+            {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation)
+            {
+                mIsMenuVisible = false;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation)
+            {
+            }
+        });
         mHideEdgeSwipeAnimatorSet.start();
     }
 
@@ -237,26 +242,31 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                 break;
         }
 
-        mShowEdgeSwipeAnimatorSet.addListener(new AnimatorListener() {
-			
-			@Override
-			public void onAnimationStart(Animator animation) {
-			}
-			
-			@Override
-			public void onAnimationRepeat(Animator animation) {
-			}
-			
-			@Override
-			public void onAnimationEnd(Animator animation) {
-				setupEditButtonPositionAndTimer();
-			}
-			
-			@Override
-			public void onAnimationCancel(Animator animation) {
-			}
-		});
-		mShowEdgeSwipeAnimatorSet.start();
+        mShowEdgeSwipeAnimatorSet.addListener(new AnimatorListener()
+        {
+
+            @Override
+            public void onAnimationStart(Animator animation)
+            {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation)
+            {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation)
+            {
+                setupEditButtonPositionAndTimer();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation)
+            {
+            }
+        });
+        mShowEdgeSwipeAnimatorSet.start();
     }
 
     private float getHolderSize()
@@ -292,11 +302,11 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         switch (mSide)
         {
             case RIGHT_SIDE:
-                translateValue = edgeSwipeHolderWidth + translateOffset;
+                translateValue = edgeSwipeHolderWidth / 2;
                 break;
 
             case LEFT_SIDE:
-                translateValue = -(edgeSwipeHolderWidth - translateOffset);
+                translateValue = -(edgeSwipeHolderWidth / 2);
                 break;
         }
 
@@ -641,22 +651,23 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
     @Override
     public void onSelectionStarted(float pointerX, float pointerY)
     {
-        if(!mIsMenuVisible)
+        if (!mIsMenuVisible)
         {
-        	if(mHideEdgeSwipeAnimatorSet != null){
-        		mHideEdgeSwipeAnimatorSet.cancel();
-        	}
-        	
-			mIsMenuVisible = true;
-	        if (pointerX < (mLauncher.getResources().getDisplayMetrics().widthPixels / 2))
-	        {
-	            mSide = MenuSide.LEFT_SIDE;
-	        }
-	        else
-	        {
-	            mSide = MenuSide.RIGHT_SIDE;
-	        }
-        	showEdgeSwipe(pointerY);
+            if (mHideEdgeSwipeAnimatorSet != null)
+            {
+                mHideEdgeSwipeAnimatorSet.cancel();
+            }
+
+            mIsMenuVisible = true;
+            if (pointerX < (mLauncher.getResources().getDisplayMetrics().widthPixels / 2))
+            {
+                mSide = MenuSide.LEFT_SIDE;
+            }
+            else
+            {
+                mSide = MenuSide.RIGHT_SIDE;
+            }
+            showEdgeSwipe(pointerY);
         }
     }
 
@@ -674,7 +685,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             if (isInActiveZone(pointerX) && firstChild != null && pointerY > menuHolderY)
             {
                 float startingPoint = pointerY - menuHolderY;
-                int currentItem = isInEditZone(pointerX, pointerY)? EDIT_BUTTON_ITEM :(int) (startingPoint / itemSize);
+                int currentItem = isInEditZone(pointerX, pointerY) ? EDIT_BUTTON_ITEM : (int) (startingPoint / itemSize);
                 View item = null;
                 if (mPreviousItem != currentItem && mPreviousItem != -1)
                 {
@@ -714,39 +725,40 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
     @Override
     public void onSelectionFinished(float pointerX, float pointerY)
     {
-    	if(mIsMenuVisible)
-    	{
-    		if(mShowEdgeSwipeAnimatorSet != null){
-    			mShowEdgeSwipeAnimatorSet.cancel();
-        	}
-    		
-	        if (isInActiveZone(pointerX))
-	        {
-	        	if (isInEditZone(pointerX, pointerY) && isTimeToShowEdit())
-	            {
-	                mLauncher.startEditFavorites();
-	            }
-	            else 
-	            {
-		            View item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
-		            if (item != null)
-		            {
-		                animateItemOut(item, mPreviousItem);
-		                Intent launchIntent = (Intent) item.getTag();
-		                launchMenuItem(launchIntent, mPreviousItem);
-		            }
-	            }
-	        }
-	        if (mMenuView != null)
-	        {
-	        	if(mShowEditRunnable != null)
-	        	{
-	        		mMenuView.removeCallbacks(mShowEditRunnable);
-	        	}
-	            mShowEditRunnable = null;
-	        }
-	        hideEdgeSwipe();
-    	}
+        if (mIsMenuVisible)
+        {
+            if (mShowEdgeSwipeAnimatorSet != null)
+            {
+                mShowEdgeSwipeAnimatorSet.cancel();
+            }
+
+            if (isInActiveZone(pointerX))
+            {
+                if (isInEditZone(pointerX, pointerY) && isTimeToShowEdit())
+                {
+                    mLauncher.startEditFavorites();
+                }
+                else
+                {
+                    View item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
+                    if (item != null)
+                    {
+                        animateItemOut(item, mPreviousItem);
+                        Intent launchIntent = (Intent) item.getTag();
+                        launchMenuItem(launchIntent, mPreviousItem);
+                    }
+                }
+            }
+            if (mMenuView != null)
+            {
+                if (mShowEditRunnable != null)
+                {
+                    mMenuView.removeCallbacks(mShowEditRunnable);
+                }
+                mShowEditRunnable = null;
+            }
+            hideEdgeSwipe();
+        }
     }
 
     private boolean isInEditZone(float pointerX, float pointerY)
@@ -888,22 +900,23 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         mEditMenuButtonStartTime = (System.currentTimeMillis() - 10) + mLauncher.getResources().getInteger(R.integer.edge_swipe_show_edit_button_time);
         if (mMenuView != null)
         {
-        	if(mShowEditRunnable == null){
-	        	mShowEditRunnable = new Runnable()
-	            {
-	
-	                @Override
-	                public void run()
-	                {
-	                    startEditButtonAnimation();
-	                }
-	            };
-	            mMenuView.postDelayed(mShowEditRunnable, mLauncher.getResources().getInteger(R.integer.edge_swipe_show_edit_button_time));
-        	}
+            if (mShowEditRunnable == null)
+            {
+                mShowEditRunnable = new Runnable()
+                {
+
+                    @Override
+                    public void run()
+                    {
+                        startEditButtonAnimation();
+                    }
+                };
+                mMenuView.postDelayed(mShowEditRunnable, mLauncher.getResources().getInteger(R.integer.edge_swipe_show_edit_button_time));
+            }
         }
         else
         {
-        	mShowEditRunnable = null;
+            mShowEditRunnable = null;
         }
     }
 

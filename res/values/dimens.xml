@@ -126,7 +126,7 @@
     <item name="edge_swipe_animate_out_duration" format="integer" type="dimen">200</item>
     <item name="edge_swipe_items_ammount" format="integer" type="dimen">5</item>
 
-    <dimen name="edge_swipe_dead_zone">90dp</dimen>
+    <dimen name="edge_swipe_dead_zone">45dp</dimen>
     <dimen name="edge_swipe_height">68dp</dimen>
     <dimen name="edge_swipe_text_size">20sp</dimen>
     <dimen name="edge_swipe_text_size_small">16sp</dimen>
