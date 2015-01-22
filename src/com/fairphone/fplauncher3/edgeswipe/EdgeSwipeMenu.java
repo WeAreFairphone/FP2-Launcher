@@ -49,6 +49,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
     private TextView mEditButton;
 
     private int mPreviousItem;
+    boolean isAnimatingToEditMode;
     private boolean isAnimatingItem;
     private Launcher mLauncher;
     private DragController mDragController;
@@ -329,6 +330,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             if (showEdgeSwipeAnimatorSet != null)
             {
                 showEdgeSwipeAnimatorSet.playTogether(translate, fade);
+                showEdgeSwipeAnimatorSet.start();
             }
         }
     }
@@ -447,7 +449,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
     }
 
     // WHEN THE USER SETS THE FINGER ON AN ITEM
-    private void animateItemIn(View item, int currentItem)
+    private void animateItemIn(View item, int currentItem, boolean skipFade)
     {
         Resources resources = mContext.getResources();
 
@@ -504,7 +506,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             }
         }
 
-        if (item.getTag() == null && currentItem != 2)
+        if (item.getTag() == null && currentItem != 2 && currentItem != EDIT_BUTTON_ITEM)
         {
 
             switch (mCurrentTheme)
@@ -524,32 +526,35 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         float textTranslateValue = resources.getDimension(R.dimen.edge_swipe_item_text_translate);
         long translateDuration = resources.getInteger(R.integer.edge_swipe_translate_duration);
 
-        ObjectAnimator fadeBackground = ObjectAnimator.ofFloat(background, View.ALPHA, 0, 1);
-        fadeBackground.setDuration(translateDuration);
-        fadeBackground.addListener(new AnimatorListener()
+        if(!skipFade)
         {
-            @Override
-            public void onAnimationStart(Animator animation)
-            {
-                isAnimatingItem = true;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation)
-            {
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation)
-            {
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation)
-            {
-            }
-        });
-        fadeBackground.start();
+	        ObjectAnimator fadeBackground = ObjectAnimator.ofFloat(background, View.ALPHA, 0, 1);
+	        fadeBackground.setDuration(translateDuration);
+	        fadeBackground.addListener(new AnimatorListener()
+	        {
+	            @Override
+	            public void onAnimationStart(Animator animation)
+	            {
+	                isAnimatingItem = true;
+	            }
+	
+	            @Override
+	            public void onAnimationRepeat(Animator animation)
+	            {
+	            }
+	
+	            @Override
+	            public void onAnimationEnd(Animator animation)
+	            {
+	            }
+	
+	            @Override
+	            public void onAnimationCancel(Animator animation)
+	            {
+	            }
+	        });
+	        fadeBackground.start();
+        }
 
         // CHECKS IF THE ANIMATION IS STARTING FROM THE LEFT OR RIGHT
         switch (mSide)
@@ -574,7 +579,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         translateView.start();
     }
 
-    private void animateItemOut(View item, int currentItem)
+    private void animateItemOut(View item, int currentItem, boolean skipFade)
     {
         Resources resources = mContext.getResources();
 
@@ -598,6 +603,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         // IF ALL APPS ICON
         if (currentItem == 2)
         {
+
             switch (mCurrentTheme)
             {
                 case LIGHT:
@@ -611,38 +617,41 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             }
         }
 
-        if (item.getTag() == null && currentItem != 2)
+        if (item.getTag() == null && currentItem != 2 && currentItem != EDIT_BUTTON_ITEM)
         {
             icon.setImageResource(R.drawable.icon_edge_swipe_add_blue_light);
         }
 
-        ObjectAnimator fadeBackground = ObjectAnimator.ofFloat(background, View.ALPHA, 1, 0);
-        fadeBackground.setDuration(translateDuration);
-        fadeBackground.addListener(new AnimatorListener()
-        {
-
-            @Override
-            public void onAnimationStart(Animator animation)
-            {
-                isAnimatingItem = false;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation)
-            {
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation)
-            {
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation)
-            {
-            }
-        });
-        fadeBackground.start();
+		if (!skipFade)
+		{
+	        ObjectAnimator fadeBackground = ObjectAnimator.ofFloat(background, View.ALPHA, 1, 0);
+	        fadeBackground.setDuration(translateDuration);
+	        fadeBackground.addListener(new AnimatorListener()
+	        {
+	
+	            @Override
+	            public void onAnimationStart(Animator animation)
+	            {
+	                isAnimatingItem = false;
+	            }
+	
+	            @Override
+	            public void onAnimationRepeat(Animator animation)
+	            {
+	            }
+	
+	            @Override
+	            public void onAnimationEnd(Animator animation)
+	            {
+	            }
+	
+	            @Override
+	            public void onAnimationCancel(Animator animation)
+	            {
+	            }
+	        });
+	        fadeBackground.start();
+        }
 
         translateViewAnimation(icon, 0, translateDuration);
         translateViewAnimation(text, 0, translateDuration);
@@ -685,23 +694,87 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             if (isInActiveZone(pointerX) && firstChild != null && pointerY > menuHolderY)
             {
                 float startingPoint = pointerY - menuHolderY;
-                int currentItem = isInEditZone(pointerX, pointerY) ? EDIT_BUTTON_ITEM : (int) (startingPoint / itemSize);
-                View item = null;
+                int currentItem = (isInEditZone(pointerX, pointerY)&& isTimeToShowEdit()) ? EDIT_BUTTON_ITEM : (int) (startingPoint / itemSize);
+                ViewGroup item = null;
                 if (mPreviousItem != currentItem && mPreviousItem != -1)
                 {
-                    item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
+                    item = (ViewGroup) mEdgeSwipeHolder.getChildAt(mPreviousItem);
                     if (item != null)
                     {
-                        animateItemOut(item, mPreviousItem);
+                        if (mPreviousItem != 2)
+                        {
+                        	animateItemOut(item, mPreviousItem, false);
+                        }
+                        else
+                        {
+                            if (mPreviousItem == 2)
+                            {
+                                if (currentItem != EDIT_BUTTON_ITEM)
+                                {
+                                    animateItemOut(item, mPreviousItem, false);
+                                }
+                                else
+                                {
+                                	animateItemOut(item, mPreviousItem, true);
+                                	
+                                    if (item != null && !isAnimatingToEditMode)
+                                    {
+                                        switch (mSide)
+                                        {
+                                            case LEFT_SIDE:
+                                                translateViewAnimation(mEditButton, 60, 100);
+                                                item.getChildAt(0).animate().translationX(500).setDuration(220);
+                                                isAnimatingToEditMode = true;
+                                                break;
+                                            case RIGHT_SIDE:
+
+                                            	translateViewAnimation(mEditButton, -60, 100);
+                                                item.getChildAt(0).animate().translationX(-500).setDuration(220);
+                                                isAnimatingToEditMode = true;
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+                            }  
+                        }
+                    }
+                    else if(mPreviousItem == EDIT_BUTTON_ITEM)
+                    {
+                    	if (currentItem == 2)
+                        {
+                    		item = (ViewGroup) mEdgeSwipeHolder.getChildAt(currentItem);
+                            if (item != null && isAnimatingToEditMode)
+                            {
+                            	animateItemIn(item, currentItem, true);
+                            	translateViewAnimation(mEditButton, 0, 100);
+                                item.getChildAt(0).animate().translationX(0).setDuration(220);
+                                isAnimatingToEditMode = false;
+                            }
+                        }
+                        else
+                        {
+                        	item = (ViewGroup) mEdgeSwipeHolder.getChildAt(2);
+                            
+                        	if (item != null)
+                        	{
+                        		translateViewAnimation(mEditButton, 0, 100);
+                        		item.getChildAt(0).setAlpha(0);
+                        		item.getChildAt(0).animate().translationX(0).setDuration(220);
+                                isAnimatingToEditMode = false;
+                        		animateItemOut(item, mPreviousItem, false);	
+                        	}
+                        }
                     }
                 }
 
                 if (!isAnimatingItem)
                 {
-                    item = mEdgeSwipeHolder.getChildAt(currentItem);
+                    item = (ViewGroup) mEdgeSwipeHolder.getChildAt(currentItem);
                     if (item != null)
                     {
-                        animateItemIn(item, currentItem);
+                        animateItemIn(item, currentItem, false);
                     }
                 }
                 mPreviousItem = currentItem;
@@ -714,7 +787,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                     item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
                     if (item != null)
                     {
-                        animateItemOut(item, mPreviousItem);
+                        animateItemOut(item, mPreviousItem, false);
                     }
                     mPreviousItem = -1;
                 }
@@ -743,7 +816,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                     View item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
                     if (item != null)
                     {
-                        animateItemOut(item, mPreviousItem);
+                        animateItemOut(item, mPreviousItem, false);
                         Intent launchIntent = (Intent) item.getTag();
                         launchMenuItem(launchIntent, mPreviousItem);
                     }
@@ -765,6 +838,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
     {
         boolean validX = false;
         boolean validY = false;
+        ViewGroup item = (ViewGroup) mEdgeSwipeHolder.getChildAt(2);
 
         if (mSide == null)
         {
@@ -773,37 +847,14 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
         int[] coord = new int[2];
         mEditButton.getLocationInWindow(coord);
-        int editBackgroundResourceId = 0;
         switch (mSide)
         {
             case LEFT_SIDE:
                 validX = pointerX >= coord[0];
-                switch (mCurrentTheme)
-                {
-                    case LIGHT:
-                        editBackgroundResourceId = R.drawable.edge_swipe_left_light_press;
-                        break;
-
-                    case DARK:
-                    default:
-                        editBackgroundResourceId = R.drawable.edge_swipe_left_dark_press;
-                        break;
-                }
                 break;
             case RIGHT_SIDE:
                 validX = pointerX <= (coord[0] + mEditButton.getWidth());
 
-                switch (mCurrentTheme)
-                {
-                    case LIGHT:
-                        editBackgroundResourceId = R.drawable.edge_swipe_right_light_press;
-                        break;
-
-                    case DARK:
-                    default:
-                        editBackgroundResourceId = R.drawable.edge_swipe_right_dark_press;
-                        break;
-                }
                 break;
             default:
                 break;
@@ -814,7 +865,6 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
         if (validX && validY)
         {
-
             switch (mCurrentTheme)
             {
                 case LIGHT:
@@ -826,8 +876,6 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                     mEditButton.setTextColor(mContext.getResources().getColor(R.color.white));
                     break;
             }
-
-            mEditButton.setBackgroundResource(editBackgroundResourceId);
         }
         else
         {
@@ -842,8 +890,6 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                     mEditButton.setTextColor(mContext.getResources().getColor(R.color.blue_light));
                     break;
             }
-
-            mEditButton.setBackground(null);
         }
         return validX && validY;
     }

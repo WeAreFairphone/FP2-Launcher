@@ -95,6 +95,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
+import android.view.animation.OvershootInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Advanceable;
 import android.widget.FrameLayout;
@@ -5080,6 +5081,32 @@ public class Launcher extends Activity
 	    
 		mAgingAppDrawer.refreshView(this, this);
 		mAgingAppDrawer.setVisibility(View.VISIBLE);
+
+		mAgingAppDrawer.setPivotX(mAgingAppDrawer.getWidth() / 2);
+		mAgingAppDrawer.setPivotY((float) (mAgingAppDrawer.getHeight() / 5));
+
+		ObjectAnimator alpha = ObjectAnimator.ofFloat(mAgingAppDrawer,
+				View.ALPHA, 0, 1);
+		alpha.setDuration(180);
+		alpha.start();
+
+		ObjectAnimator scaleX = ObjectAnimator.ofFloat(mAgingAppDrawer,
+				View.SCALE_X, 0.3f, 1);
+		scaleX.setDuration(360);
+		scaleX.setInterpolator(new DecelerateInterpolator());
+		scaleX.start();
+
+		ObjectAnimator scaleY = ObjectAnimator.ofFloat(mAgingAppDrawer,
+				View.SCALE_Y, 0.3f, 1);
+		scaleY.setDuration(360);
+		scaleY.setInterpolator(new DecelerateInterpolator());
+		scaleY.start();
+
+		ObjectAnimator translationY = ObjectAnimator.ofFloat(mAgingAppDrawer,
+				View.TRANSLATION_Y, (mAgingAppDrawer.getHeight() / 2), 0);
+		translationY.setDuration(480);
+		translationY.setInterpolator(new OvershootInterpolator(0.5f));
+		translationY.start();
 	}
 	
 	@TargetApi(21)
