@@ -526,34 +526,34 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         float textTranslateValue = resources.getDimension(R.dimen.edge_swipe_item_text_translate);
         long translateDuration = resources.getInteger(R.integer.edge_swipe_translate_duration);
 
-        if(!skipFade)
+        if (!skipFade)
         {
-	        ObjectAnimator fadeBackground = ObjectAnimator.ofFloat(background, View.ALPHA, 0, 1);
-	        fadeBackground.setDuration(translateDuration);
-	        fadeBackground.addListener(new AnimatorListener()
-	        {
-	            @Override
-	            public void onAnimationStart(Animator animation)
-	            {
-	                isAnimatingItem = true;
-	            }
-	
-	            @Override
-	            public void onAnimationRepeat(Animator animation)
-	            {
-	            }
-	
-	            @Override
-	            public void onAnimationEnd(Animator animation)
-	            {
-	            }
-	
-	            @Override
-	            public void onAnimationCancel(Animator animation)
-	            {
-	            }
-	        });
-	        fadeBackground.start();
+            ObjectAnimator fadeBackground = ObjectAnimator.ofFloat(background, View.ALPHA, 0, 1);
+            fadeBackground.setDuration(translateDuration);
+            fadeBackground.addListener(new AnimatorListener()
+            {
+                @Override
+                public void onAnimationStart(Animator animation)
+                {
+                    isAnimatingItem = true;
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation)
+                {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation)
+                {
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation)
+                {
+                }
+            });
+            fadeBackground.start();
         }
 
         // CHECKS IF THE ANIMATION IS STARTING FROM THE LEFT OR RIGHT
@@ -622,35 +622,35 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             icon.setImageResource(R.drawable.icon_edge_swipe_add_blue_light);
         }
 
-		if (!skipFade)
-		{
-	        ObjectAnimator fadeBackground = ObjectAnimator.ofFloat(background, View.ALPHA, 1, 0);
-	        fadeBackground.setDuration(translateDuration);
-	        fadeBackground.addListener(new AnimatorListener()
-	        {
-	
-	            @Override
-	            public void onAnimationStart(Animator animation)
-	            {
-	                isAnimatingItem = false;
-	            }
-	
-	            @Override
-	            public void onAnimationRepeat(Animator animation)
-	            {
-	            }
-	
-	            @Override
-	            public void onAnimationEnd(Animator animation)
-	            {
-	            }
-	
-	            @Override
-	            public void onAnimationCancel(Animator animation)
-	            {
-	            }
-	        });
-	        fadeBackground.start();
+        if (!skipFade)
+        {
+            ObjectAnimator fadeBackground = ObjectAnimator.ofFloat(background, View.ALPHA, 1, 0);
+            fadeBackground.setDuration(translateDuration);
+            fadeBackground.addListener(new AnimatorListener()
+            {
+
+                @Override
+                public void onAnimationStart(Animator animation)
+                {
+                    isAnimatingItem = false;
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation)
+                {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation)
+                {
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation)
+                {
+                }
+            });
+            fadeBackground.start();
         }
 
         translateViewAnimation(icon, 0, translateDuration);
@@ -694,7 +694,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             if (isInActiveZone(pointerX) && firstChild != null && pointerY > menuHolderY)
             {
                 float startingPoint = pointerY - menuHolderY;
-                int currentItem = (isInEditZone(pointerX, pointerY)&& isTimeToShowEdit()) ? EDIT_BUTTON_ITEM : (int) (startingPoint / itemSize);
+                int currentItem = (isInEditZone(pointerX, pointerY) && isTimeToShowEdit()) ? EDIT_BUTTON_ITEM : (int) (startingPoint / itemSize);
                 ViewGroup item = null;
                 if (mPreviousItem != currentItem && mPreviousItem != -1)
                 {
@@ -703,7 +703,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                     {
                         if (mPreviousItem != 2)
                         {
-                        	animateItemOut(item, mPreviousItem, false);
+                            animateItemOut(item, mPreviousItem, false);
                         }
                         else
                         {
@@ -715,21 +715,27 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                                 }
                                 else
                                 {
-                                	animateItemOut(item, mPreviousItem, true);
-                                	
+                                    animateItemOut(item, mPreviousItem, true);
+
                                     if (item != null && !isAnimatingToEditMode)
                                     {
                                         switch (mSide)
                                         {
                                             case LEFT_SIDE:
-                                                translateViewAnimation(mEditButton, 60, 100);
-                                                item.getChildAt(0).animate().translationX(500).setDuration(220);
+                                                translateViewAnimation(mEditButton,
+                                                        mContext.getResources().getDimension(R.dimen.edge_swipe_item_translate_edit_button_left), 100);
+                                                item.getChildAt(0).animate()
+                                                        .translationX(mContext.getResources().getDimension(R.dimen.edge_swipe_item_translate_edit_background_left))
+                                                        .setDuration(180);
                                                 isAnimatingToEditMode = true;
                                                 break;
                                             case RIGHT_SIDE:
 
-                                            	translateViewAnimation(mEditButton, -60, 100);
-                                                item.getChildAt(0).animate().translationX(-500).setDuration(220);
+                                                translateViewAnimation(mEditButton,
+                                                        mContext.getResources().getDimension(R.dimen.edge_swipe_item_translate_edit_button_right), 100);
+                                                item.getChildAt(0).animate()
+                                                        .translationX(mContext.getResources().getDimension(R.dimen.edge_swipe_item_translate_edit_background_right))
+                                                        .setDuration(180);
                                                 isAnimatingToEditMode = true;
                                                 break;
                                             default:
@@ -737,34 +743,34 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                                         }
                                     }
                                 }
-                            }  
+                            }
                         }
                     }
-                    else if(mPreviousItem == EDIT_BUTTON_ITEM)
+                    else if (mPreviousItem == EDIT_BUTTON_ITEM)
                     {
-                    	if (currentItem == 2)
+                        if (currentItem == 2)
                         {
-                    		item = (ViewGroup) mEdgeSwipeHolder.getChildAt(currentItem);
+                            item = (ViewGroup) mEdgeSwipeHolder.getChildAt(currentItem);
                             if (item != null && isAnimatingToEditMode)
                             {
-                            	animateItemIn(item, currentItem, true);
-                            	translateViewAnimation(mEditButton, 0, 100);
+                                animateItemIn(item, currentItem, true);
+                                translateViewAnimation(mEditButton, 0, 100);
                                 item.getChildAt(0).animate().translationX(0).setDuration(220);
                                 isAnimatingToEditMode = false;
                             }
                         }
                         else
                         {
-                        	item = (ViewGroup) mEdgeSwipeHolder.getChildAt(2);
-                            
-                        	if (item != null)
-                        	{
-                        		translateViewAnimation(mEditButton, 0, 100);
-                        		item.getChildAt(0).setAlpha(0);
-                        		item.getChildAt(0).animate().translationX(0).setDuration(220);
+                            item = (ViewGroup) mEdgeSwipeHolder.getChildAt(2);
+
+                            if (item != null)
+                            {
+                                translateViewAnimation(mEditButton, 0, 100);
+                                item.getChildAt(0).setAlpha(0);
+                                item.getChildAt(0).animate().translationX(0).setDuration(220);
                                 isAnimatingToEditMode = false;
-                        		animateItemOut(item, mPreviousItem, false);	
-                        	}
+                                animateItemOut(item, mPreviousItem, false);
+                            }
                         }
                     }
                 }
