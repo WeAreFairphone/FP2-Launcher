@@ -71,38 +71,20 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent" >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView
+            android:id="@+id/all_apps_gridview"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/edit_favourites_background_grey_dark"
-            android:orientation="vertical"
-            android:paddingTop="40dp" >
-
-            <TextView
-                style="@style/SecondaryMainTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="13.3dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginRight="17dp"
-                android:text="@string/edit_favourites" />
-
-            <com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView
-                android:id="@+id/all_apps_gridview"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipToPadding="false"
-                android:listSelector="@color/transparent"
-                android:numColumns="2"
-                android:overScrollMode="never"
-                android:paddingBottom="68dp"
-                android:paddingLeft="13.3dp"
-                android:paddingRight="13.3dp"
-                android:paddingTop="13.3dp"
-                android:scrollbars="none"
-                android:verticalSpacing="19dp" />
-        </LinearLayout>
+            android:clipToPadding="false"
+            android:listSelector="@color/transparent"
+            android:numColumns="2"
+            android:overScrollMode="never"
+            android:paddingBottom="40dp"
+            android:paddingLeft="13.3dp"
+            android:paddingRight="13.3dp"
+            android:scrollbars="none"
+            android:verticalSpacing="11dp" />
 
         <FrameLayout
             android:id="@+id/remove_favourite_overlay"

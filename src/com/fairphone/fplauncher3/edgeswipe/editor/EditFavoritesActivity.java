@@ -31,6 +31,8 @@ import android.view.DragEvent;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -127,14 +129,14 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
             @Override
             public void onClick(View v)
             {
-            	if(mCurrentTheme.equals(Themes.DARK))
-            	{
-            		changeTheme(Themes.LIGHT);
-            	}
-            	else
-            	{
-            		changeTheme(Themes.DARK);
-            	}
+                if (mCurrentTheme.equals(Themes.DARK))
+                {
+                    changeTheme(Themes.LIGHT);
+                }
+                else
+                {
+                    changeTheme(Themes.DARK);
+                }
             }
         });
         mThemeRadioButtonLight.setOnClickListener(new OnClickListener()
@@ -142,14 +144,14 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
             @Override
             public void onClick(View v)
             {
-            	if(mCurrentTheme.equals(Themes.LIGHT))
-            	{
-            		changeTheme(Themes.DARK);
-            	}
-            	else
-            	{
-            		changeTheme(Themes.LIGHT);
-            	}
+                if (mCurrentTheme.equals(Themes.LIGHT))
+                {
+                    changeTheme(Themes.DARK);
+                }
+                else
+                {
+                    changeTheme(Themes.LIGHT);
+                }
             }
         });
 
@@ -221,6 +223,9 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     {
         mAllAppsGridView = (EditFavoritesGridView) findViewById(R.id.all_apps_gridview);
 
+        View header = View.inflate( this, R.layout.fp_edit_favorites_list_header, null);
+        mAllAppsGridView.addHeaderView(header);
+        
         mAllAppsListAdapter = new AllAppsListAdapter(this);
 
         mAllAppsListAdapter.setAllApps(mAllApps);

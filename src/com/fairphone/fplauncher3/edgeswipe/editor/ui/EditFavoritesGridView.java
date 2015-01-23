@@ -22,7 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-public class EditFavoritesGridView extends GridView
+public class EditFavoritesGridView extends com.fairphone.fplauncher3.edgeswipe.editor.GridView
 {
     public interface OnEditFavouritesIconDraggedListener
     {
