@@ -27,7 +27,6 @@ public class EditFavoritesGridView extends GridView
     public interface OnEditFavouritesIconDraggedListener
     {
         public void OnEditFavouritesIconDragged(AdapterView<?> parent, View view, int position, long id);
-        public void OnEditFavouritesIconDragEnded();
     }
     
     
@@ -37,8 +36,8 @@ public class EditFavoritesGridView extends GridView
     private boolean hasStartedDraggingOut = false;
     private boolean ignoreDragging = false;
     private OnEditFavouritesIconDraggedListener listener=null;
-    private float xBias = 1.5f;
-    private float minMoveDistance = 30;
+    private float xBias = 2.0f;
+    private float minMoveDistance = 40;
     
     
     public EditFavoritesGridView(Context context)
@@ -83,14 +82,14 @@ public class EditFavoritesGridView extends GridView
             {
                 if(!ignoreDragging && !hasStartedDraggingOut)
                 {
-                    float xDif = ev.getX()-touchStartX;
+                    float xDif = touchStartX - ev.getX();
                     float yDif = ev.getY()-touchStartY;
                     
                     float absYDif = Math.abs(yDif);
                     float absXDif = Math.abs(xDif)*xBias;
                     
                     
-                    if(absXDif>absYDif && xDif<minMoveDistance)
+                    if(absXDif>absYDif && xDif>minMoveDistance)//are we dragging mostly to the right?
                     {
                         hasStartedDraggingOut = true;
                         MotionEvent cancelEvent = MotionEvent.obtain(ev.getDownTime(), ev.getEventTime(), MotionEvent.ACTION_CANCEL, ev.getX(), ev.getY(), ev.getMetaState());
@@ -109,16 +108,6 @@ public class EditFavoritesGridView extends GridView
                         ignoreDragging = true;
                     }
                 }
-            }
-            break;
-            
-            case MotionEvent.ACTION_UP:
-            {
-            	hasStartedDraggingOut = true;
-	            if(listener!=null)
-	            {
-	                listener.OnEditFavouritesIconDragEnded();
-	            }
             }
             break;
         }
