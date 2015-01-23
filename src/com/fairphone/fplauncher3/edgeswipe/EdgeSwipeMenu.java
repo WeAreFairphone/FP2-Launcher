@@ -390,7 +390,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             icon.setImageResource(R.drawable.icon_edge_swipe_add_blue_light);
 
             label = resources.getString(R.string.add_app).toUpperCase();
-            text.setTextSize(16);
+            text.setTextSize(resources.getInteger(R.integer.edge_swipe_text_integer_size_small));
             switch (mSide)
             {
                 case RIGHT_SIDE:
@@ -427,7 +427,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             componentName = applicationInfo.getComponentName();
             iconDrawable = new BitmapDrawable(mContext.getResources(), applicationInfo.getIconBitmap());
             label = applicationInfo.getApplicationTitle();
-            text.setTextSize(20);
+            text.setTextSize(resources.getInteger(R.integer.edge_swipe_text_integer_size));
 
             // Set the right ComponentName in order to launch Dialer
             // or Contacts correctly

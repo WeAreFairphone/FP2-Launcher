@@ -132,5 +132,7 @@
     <integer name="edit_favorites_drag_here_to_remove_text_size">16</integer>
     <integer name="edit_favorites_drag_here_to_add_highlight_text_size">14</integer>
     <integer name="edit_favorites_drag_here_to_add_normal_text_size">10</integer>
+    <integer name="edge_swipe_text_integer_size">20</integer>
+    <integer name="edge_swipe_text_integer_size_small">16</integer>
 
 </resources>

@@ -26,7 +26,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="left|center_vertical"
         android:textColor="@color/edge_swipe_text_blue"
-        android:textSize="20sp" />
+        android:textSize="@dimen/edge_swipe_text_size" />
 
     <TextView
         android:id="@+id/edit_button"
@@ -39,6 +39,6 @@
         android:text="@string/edit"
         android:textAllCaps="true"
         android:textColor="@color/edge_swipe_text_blue"
-        android:textSize="16sp" />
+        android:textSize="@dimen/edge_swipe_text_size_small" />
 
 </FrameLayout>
