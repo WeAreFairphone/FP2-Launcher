@@ -10,7 +10,7 @@
         android:layout_height="65dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/button_last_used_app"
-        android:fontFamily="sans-serif"
+        android:fontFamily="sans-serif-medium"
         android:gravity="center_vertical|left"
         android:includeFontPadding="false"
         android:lines="2"
@@ -21,8 +21,7 @@
         android:shadowRadius="4"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@android:id/content"
