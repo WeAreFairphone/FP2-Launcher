@@ -5,5 +5,7 @@
     <integer name="edge_swipe_translate_delay_duration">100</integer>
     <integer name="edge_swipe_animate_out_duration">200</integer>
     <integer name="edge_swipe_items_ammount">5</integer>
+    <integer name="edge_swipe_item_translate_duration">180</integer>
+    <integer name="edge_swipe_edit_translate_duration">100</integer>
 
 </resources>

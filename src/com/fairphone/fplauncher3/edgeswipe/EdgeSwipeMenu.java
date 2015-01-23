@@ -35,10 +35,10 @@ import com.fairphone.fplauncher3.edgeswipe.editor.ui.EdgeSwipeInterceptorViewLis
 
 public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 {
-
-    private static final int EDIT_BUTTON_ITEM = -2;
-
     private static final String TAG = EdgeSwipeMenu.class.getSimpleName();
+    
+    private static final int EDIT_BUTTON_ITEM = -2;
+    private static final int ALL_APPS_BUTTON_ITEM = 2;
 
     protected final ViewGroup mParentView;
     protected final ViewGroup mMenuView;
@@ -110,7 +110,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
     {
         try
         {
-            if (itemPosition == 2)
+            if (itemPosition == ALL_APPS_BUTTON_ITEM)
             {
                 mLauncher.showAllAppsDrawer();
             }
@@ -317,7 +317,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             item.setLayoutParams(params);
             mEdgeSwipeHolder.addView(item);
             item.setAlpha(0);
-            setItemContent(item, selectedApps[i < 2 ? i : i - 1], i);
+            setItemContent(item, selectedApps[i < ALL_APPS_BUTTON_ITEM ? i : i - 1], i);
 
             ObjectAnimator translate = ObjectAnimator.ofFloat(item, View.TRANSLATION_X, translateValue, 0);
             translate.setInterpolator(new DecelerateInterpolator());
@@ -361,7 +361,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         }
 
         // IF ALL APPS ICON
-        if (position == 2)
+        if (position == ALL_APPS_BUTTON_ITEM)
         {
             switch (mCurrentTheme)
             {
@@ -491,7 +491,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         }
 
         // IF ALL APPS ICON
-        if (currentItem == 2)
+        if (currentItem == ALL_APPS_BUTTON_ITEM)
         {
             switch (mCurrentTheme)
             {
@@ -506,7 +506,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             }
         }
 
-        if (item.getTag() == null && currentItem != 2 && currentItem != EDIT_BUTTON_ITEM)
+        if (item.getTag() == null && currentItem != ALL_APPS_BUTTON_ITEM && currentItem != EDIT_BUTTON_ITEM)
         {
 
             switch (mCurrentTheme)
@@ -601,7 +601,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         }
 
         // IF ALL APPS ICON
-        if (currentItem == 2)
+        if (currentItem == ALL_APPS_BUTTON_ITEM)
         {
 
             switch (mCurrentTheme)
@@ -617,7 +617,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             }
         }
 
-        if (item.getTag() == null && currentItem != 2 && currentItem != EDIT_BUTTON_ITEM)
+        if (item.getTag() == null && currentItem != ALL_APPS_BUTTON_ITEM && currentItem != EDIT_BUTTON_ITEM)
         {
             icon.setImageResource(R.drawable.icon_edge_swipe_add_blue_light);
         }
@@ -696,18 +696,19 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                 float startingPoint = pointerY - menuHolderY;
                 int currentItem = (isInEditZone(pointerX, pointerY) && isTimeToShowEdit()) ? EDIT_BUTTON_ITEM : (int) (startingPoint / itemSize);
                 ViewGroup item = null;
+                
                 if (mPreviousItem != currentItem && mPreviousItem != -1)
                 {
                     item = (ViewGroup) mEdgeSwipeHolder.getChildAt(mPreviousItem);
                     if (item != null)
                     {
-                        if (mPreviousItem != 2)
+                        if (mPreviousItem != ALL_APPS_BUTTON_ITEM)
                         {
                             animateItemOut(item, mPreviousItem, false);
                         }
                         else
                         {
-                            if (mPreviousItem == 2)
+                            if (mPreviousItem == ALL_APPS_BUTTON_ITEM)
                             {
                                 if (currentItem != EDIT_BUTTON_ITEM)
                                 {
@@ -719,28 +720,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
                                     if (item != null && !isAnimatingToEditMode)
                                     {
-                                        switch (mSide)
-                                        {
-                                            case LEFT_SIDE:
-                                                translateViewAnimation(mEditButton,
-                                                        mContext.getResources().getDimension(R.dimen.edge_swipe_item_translate_edit_button_left), 100);
-                                                item.getChildAt(0).animate()
-                                                        .translationX(mContext.getResources().getDimension(R.dimen.edge_swipe_item_translate_edit_background_left))
-                                                        .setDuration(180);
-                                                isAnimatingToEditMode = true;
-                                                break;
-                                            case RIGHT_SIDE:
-
-                                                translateViewAnimation(mEditButton,
-                                                        mContext.getResources().getDimension(R.dimen.edge_swipe_item_translate_edit_button_right), 100);
-                                                item.getChildAt(0).animate()
-                                                        .translationX(mContext.getResources().getDimension(R.dimen.edge_swipe_item_translate_edit_background_right))
-                                                        .setDuration(180);
-                                                isAnimatingToEditMode = true;
-                                                break;
-                                            default:
-                                                break;
-                                        }
+                                    	animateEditButton(item);
                                     }
                                 }
                             }
@@ -748,26 +728,29 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                     }
                     else if (mPreviousItem == EDIT_BUTTON_ITEM)
                     {
-                        if (currentItem == 2)
+                    	Resources resources = mContext.getResources();
+                    	int translateEditButtonDuration = resources.getInteger(R.integer.edge_swipe_edit_translate_duration);
+                    	int translateEditButtonBackgroundDuration = resources.getInteger(R.integer.edge_swipe_item_translate_duration);
+                        if (currentItem == ALL_APPS_BUTTON_ITEM)
                         {
                             item = (ViewGroup) mEdgeSwipeHolder.getChildAt(currentItem);
                             if (item != null && isAnimatingToEditMode)
                             {
                                 animateItemIn(item, currentItem, true);
-                                translateViewAnimation(mEditButton, 0, 100);
-                                item.getChildAt(0).animate().translationX(0).setDuration(220);
+                                translateViewAnimation(mEditButton, 0, translateEditButtonDuration);
+                                item.getChildAt(0).animate().translationX(0).setDuration(translateEditButtonBackgroundDuration);
                                 isAnimatingToEditMode = false;
                             }
                         }
                         else
                         {
-                            item = (ViewGroup) mEdgeSwipeHolder.getChildAt(2);
+                            item = (ViewGroup) mEdgeSwipeHolder.getChildAt(ALL_APPS_BUTTON_ITEM);
 
                             if (item != null)
                             {
-                                translateViewAnimation(mEditButton, 0, 100);
+                                translateViewAnimation(mEditButton, 0, translateEditButtonDuration);
                                 item.getChildAt(0).setAlpha(0);
-                                item.getChildAt(0).animate().translationX(0).setDuration(220);
+                                item.getChildAt(0).animate().translationX(0).setDuration(translateEditButtonBackgroundDuration);
                                 isAnimatingToEditMode = false;
                                 animateItemOut(item, mPreviousItem, false);
                             }
@@ -800,6 +783,44 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             }
         }
     }
+
+	public void animateEditButton(ViewGroup item) {
+		Resources resources = mContext.getResources();
+		float translateEditButtonValue = resources.getDimension(R.dimen.edge_swipe_item_translate_edit_button);
+		int translateEditButtonDuration = resources.getInteger(R.integer.edge_swipe_edit_translate_duration);
+		float translateEditButtonBackgroundValue = resources.getDimension(R.dimen.edge_swipe_item_translate_edit_background);
+		int translateEditButtonBackgroundDuration = resources.getInteger(R.integer.edge_swipe_item_translate_duration);
+		switch (mSide)
+		{
+		    case LEFT_SIDE:
+				animateInEditButton(
+						item,
+						translateEditButtonValue,
+						translateEditButtonDuration,
+						translateEditButtonBackgroundValue,
+						translateEditButtonBackgroundDuration);
+		        break;
+		    case RIGHT_SIDE:
+		    	animateInEditButton(
+						item,
+						-translateEditButtonValue,
+						translateEditButtonDuration,
+						-translateEditButtonBackgroundValue,
+						translateEditButtonBackgroundDuration);
+		        break;
+		    default:
+		        break;
+		}
+	}
+
+	public void animateInEditButton(ViewGroup item,
+			float translateEditButtonValue, int translateEditButtonDuration,
+			float translateEditButtonBackgroundValue,
+			int translateEditButtonBackgroundDuration) {
+		translateViewAnimation(mEditButton, translateEditButtonValue, translateEditButtonDuration);
+		item.getChildAt(0).animate().translationX(translateEditButtonBackgroundValue).setDuration(translateEditButtonBackgroundDuration);
+		isAnimatingToEditMode = true;
+	}
 
     @Override
     public void onSelectionFinished(float pointerX, float pointerY)
@@ -844,7 +865,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
     {
         boolean validX = false;
         boolean validY = false;
-        ViewGroup item = (ViewGroup) mEdgeSwipeHolder.getChildAt(2);
+        float dimenBottom = mContext.getResources().getDimensionPixelSize(R.dimen.edge_swipe_item_margin_bottom);
 
         if (mSide == null)
         {
@@ -860,13 +881,13 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
                 break;
             case RIGHT_SIDE:
                 validX = pointerX <= (coord[0] + mEditButton.getWidth());
-
                 break;
             default:
                 break;
         }
 
-        validY = pointerY >= coord[1];
+        float topMargin = coord[1] + dimenBottom;
+        validY = pointerY >= topMargin;
         validY &= pointerY <= coord[1] + mEditButton.getHeight();
 
         if (validX && validY)
