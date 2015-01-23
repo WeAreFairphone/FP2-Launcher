@@ -76,7 +76,6 @@
             android:layout_height="match_parent"
             android:background="@color/edit_favourites_background_grey_dark"
             android:orientation="vertical"
-            android:paddingBottom="48dp"
             android:paddingTop="40dp" >
 
             <TextView
@@ -97,6 +96,7 @@
                 android:listSelector="@color/transparent"
                 android:numColumns="2"
                 android:overScrollMode="never"
+                android:paddingBottom="68dp"
                 android:paddingLeft="13.3dp"
                 android:paddingRight="13.3dp"
                 android:paddingTop="13.3dp"

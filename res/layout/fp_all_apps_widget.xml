@@ -7,6 +7,6 @@
         android:id="@+id/all_apps_launcher_widget"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/all_apps_button_icon" />
+        android:background="@drawable/icon_allapps_white_small" />
 
 </FrameLayout>

@@ -39,7 +39,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
 {
     private static final String TAG = AppSwitcherWidget.class.getSimpleName();
     private static final boolean APP_SWITCHER_DEBUG_MODE = false;
-    
+
     // AppSwitcher settings
     public static final String ACTION_APP_SWITCHER_LAUNCH_APP = "com.fairphone.fplauncher3.ACTION_APP_SWITCHER_LAUNCH_APP";
     public static final String ACTION_APP_SWITCHER_LAUNCH_ALL_APPS = "com.fairphone.fplauncher3.ACTION_APP_SWITCHER_LAUNCH_ALL_APPS";
@@ -209,11 +209,11 @@ public class AppSwitcherWidget extends AppWidgetProvider
         // generate the mostUsed row
         RemoteViews allAppsButton = new RemoteViews(context.getPackageName(), R.layout.fp_most_used_item);
 
-        Drawable draw = context.getResources().getDrawable(R.drawable.ic_allapps);
+        Drawable draw = context.getResources().getDrawable(R.drawable.icon_allapps_white_small);
         Bitmap icon = ((BitmapDrawable) draw).getBitmap();
         allAppsButton.setImageViewBitmap(android.R.id.content, icon);
 
-        allAppsButton.setTextViewText(R.id.mostUsedButton, "All apps");
+        allAppsButton.setTextViewText(R.id.mostUsedButton, context.getResources().getString(R.string.edge_swipe_all_apps));
 
         Intent launchIntent = new Intent();
         launchIntent.setAction(ACTION_APP_SWITCHER_LAUNCH_ALL_APPS);
@@ -290,7 +290,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         // iterate through every instance of this widget
         // remember that it can have more than one widget of the same type.
         for (int i = 0; i < appWidgetIds.length; i++)
-        { 
+        {
             Log.d(TAG, "Updating AppSwitcher widget #" + i);
             updateUI(context, appWidgetManager, appWidgetIds[i]);
         }
