@@ -105,15 +105,15 @@
         </LinearLayout>
 
         <FrameLayout
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/edit_favourites_separator_shadow" />
-
-        <FrameLayout
             android:id="@+id/remove_favourite_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
+
+        <FrameLayout
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/edit_favourites_separator_shadow" />
 
         <TextView
             android:id="@+id/remove_favourite_text"
