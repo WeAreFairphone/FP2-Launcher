@@ -682,6 +682,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 false);
 
         // Start the drag
+        mLauncher.hideAgingAppDrawer();
         mLauncher.lockScreenOrientation();
         mLauncher.getWorkspace().onDragStartedWithItem(createItemInfo, outline, clipAlpha);
         mDragController.startDrag(image, preview, this, createItemInfo,
