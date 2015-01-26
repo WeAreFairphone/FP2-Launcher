@@ -279,11 +279,11 @@ public class ContactInfoManager
         return new ArrayList<ContactInfo>(_contactsInfoCache.values());
     }
 
-    public void setAllContactInfo(List<ContactInfo> allApps)
+    public void setAllContactInfo(List<ContactInfo> allContacts)
     {
         resetState();
 
-        for (ContactInfo contact : allApps)
+        for (ContactInfo contact : allContacts)
         {
             _contactsInfoCache.put(contact.getPhoneNumberOnE164Format(), contact);
         }

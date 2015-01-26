@@ -573,10 +573,13 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
     private void translateViewAnimation(View view, float translateValue, long duration)
     {
-        ObjectAnimator translateView = ObjectAnimator.ofFloat(view, View.TRANSLATION_X, translateValue);
-        translateView.setInterpolator(new DecelerateInterpolator());
-        translateView.setDuration(duration);
-        translateView.start();
+    	if(view != null)
+    	{
+	        ObjectAnimator translateView = ObjectAnimator.ofFloat(view, View.TRANSLATION_X, translateValue);
+	        translateView.setInterpolator(new DecelerateInterpolator());
+	        translateView.setDuration(duration);
+	        translateView.start();
+    	}
     }
 
     private void animateItemOut(View item, int currentItem, boolean skipFade)
@@ -818,8 +821,12 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 			float translateEditButtonBackgroundValue,
 			int translateEditButtonBackgroundDuration) {
 		translateViewAnimation(mEditButton, translateEditButtonValue, translateEditButtonDuration);
-		item.getChildAt(0).animate().translationX(translateEditButtonBackgroundValue).setDuration(translateEditButtonBackgroundDuration);
-		isAnimatingToEditMode = true;
+		View view = item.getChildAt(0);
+		if(view != null)
+		{
+			view.animate().translationX(translateEditButtonBackgroundValue).setDuration(translateEditButtonBackgroundDuration);
+			isAnimatingToEditMode = true;
+		}
 	}
 
     @Override
