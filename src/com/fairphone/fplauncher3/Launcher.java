@@ -2420,7 +2420,7 @@ public class Launcher extends Activity
             }
         } else if(isAgingAppDrawerVisible()){
         	hideAgingAppDrawer();
-        } else if (mWorkspace.isInOverviewMode()) {
+        } else if (mWorkspace.isInOverviewMode() && !mWorkspace.isSwitchingState()) {
             mWorkspace.exitOverviewMode(true);
         } else if (mWorkspace.getOpenFolder() != null) {
             Folder openFolder = mWorkspace.getOpenFolder();
@@ -2431,10 +2431,12 @@ public class Launcher extends Activity
             }
         } else {
         	hideAgingAppDrawer();
-            mWorkspace.exitWidgetResizeMode();
-
-            // Back button is a no-op here, but give at least some feedback for the button press
-            mWorkspace.showOutlinesTemporarily();
+        	if(mWorkspace.isInWidgetResizeMode()){
+	            mWorkspace.exitWidgetResizeMode();
+	
+	            // Back button is a no-op here, but give at least some feedback for the button press
+	            mWorkspace.showOutlinesTemporarily();
+        	}
         }
     }
 

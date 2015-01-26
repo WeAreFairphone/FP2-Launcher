@@ -2015,6 +2015,15 @@ public class Workspace extends SmoothPagedView
         DragLayer dragLayer = mLauncher.getDragLayer();
         dragLayer.clearAllResizeFrames();
     }
+    
+    public boolean isInWidgetResizeMode() {
+        boolean resizeMode = false;
+        DragLayer dragLayer = mLauncher.getDragLayer();
+        if(dragLayer != null){
+        	resizeMode = dragLayer.hasResizeFrames();
+        }
+        return resizeMode;
+    }
 
     private void initAnimationArrays() {
         final int childCount = getChildCount();
@@ -2100,7 +2109,7 @@ public class Workspace extends SmoothPagedView
         }
 
         Animator workspaceAnim = getChangeStateAnimation(finalState, animated, 0, snapPage);
-        if (workspaceAnim != null) {
+        if (workspaceAnim != null && !mIsSwitchingState) {
             onTransitionPrepare();
             workspaceAnim.addListener(new AnimatorListenerAdapter() {
                 @Override
