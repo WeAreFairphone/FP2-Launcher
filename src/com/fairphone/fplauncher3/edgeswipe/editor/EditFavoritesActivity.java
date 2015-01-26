@@ -240,6 +240,12 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
             {
                 startDraggingIcon(view, position);
             }
+            
+            @Override
+            public void OnEditFavouritesIconDragEnded()
+            {
+                hideAllAppsRemoveZone();
+            }
         });
 
         mAllAppsGridView.setAdapter(mAllAppsListAdapter);

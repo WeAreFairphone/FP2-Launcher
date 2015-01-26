@@ -20,13 +20,13 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 
-public class EditFavoritesGridView extends com.fairphone.fplauncher3.edgeswipe.editor.GridView
+public class EditFavoritesGridView extends HeaderGridView
 {
     public interface OnEditFavouritesIconDraggedListener
     {
         public void OnEditFavouritesIconDragged(AdapterView<?> parent, View view, int position, long id);
+        public void OnEditFavouritesIconDragEnded();
     }
     
     
@@ -43,19 +43,25 @@ public class EditFavoritesGridView extends com.fairphone.fplauncher3.edgeswipe.e
     public EditFavoritesGridView(Context context)
     {
         super(context);
+        init();
     }
 
-    public EditFavoritesGridView(Context context, AttributeSet attrs)
+	public EditFavoritesGridView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        init();
     }
 
     public EditFavoritesGridView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
+        init();
     }
     
-    
+
+    private void init() {
+		setIsInFront(false);
+	}
     
     
     public void setOnEditFavouritesIconDraggedListener(OnEditFavouritesIconDraggedListener listener) 
@@ -96,10 +102,14 @@ public class EditFavoritesGridView extends com.fairphone.fplauncher3.edgeswipe.e
                         super.onTouchEvent(cancelEvent);
                         if(listener!=null)
                         {
-                            View childView = getChildAt(selectedChild-getFirstVisiblePosition());
+                            // Subtract the number of columns in order to get the correct item
+                            // due to the header
+                        	int numColumns = getNumColumns();
+                            View childView = getChildAt(selectedChild-(getFirstVisiblePosition() + numColumns));
                             if(childView!=null)
                             {
-                                listener.OnEditFavouritesIconDragged(this, childView, selectedChild, getAdapter().getItemId(selectedChild));
+                            	int selectedItem = selectedChild - numColumns;
+                                listener.OnEditFavouritesIconDragged(this, childView, selectedItem, getAdapter().getItemId(selectedItem));
                             }
                         }
                     }
@@ -110,6 +120,16 @@ public class EditFavoritesGridView extends com.fairphone.fplauncher3.edgeswipe.e
                 }
             }
             break;
+            
+            case MotionEvent.ACTION_UP:
+            {
+                if(listener!=null)
+                {
+                    listener.OnEditFavouritesIconDragEnded();
+                }
+            }
+            break;
+
         }
         
         if(!hasStartedDraggingOut)
