@@ -209,7 +209,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         // generate the mostUsed row
         RemoteViews allAppsButton = new RemoteViews(context.getPackageName(), R.layout.fp_most_used_item);
 
-        Drawable draw = context.getResources().getDrawable(R.drawable.icon_allapps_white_small);
+        Drawable draw = context.getResources().getDrawable(R.drawable.icon_allapps_white_widget);
         Bitmap icon = ((BitmapDrawable) draw).getBitmap();
         allAppsButton.setImageViewBitmap(android.R.id.content, icon);
 
