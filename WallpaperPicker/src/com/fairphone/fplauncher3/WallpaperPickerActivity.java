@@ -71,7 +71,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.android.photos.BitmapRegionTileSource;
 import com.android.photos.BitmapRegionTileSource.BitmapSource;
-import com.fairphone.fplauncher3.R;
+import com.fairphone.fplauncher3.wallpaperpicker.R;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

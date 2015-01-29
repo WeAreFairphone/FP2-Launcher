@@ -58,6 +58,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.fairphone.fplauncher3.wallpaperpicker.R;
+
 public class WallpaperCropActivity extends Activity {
     private static final String LOGTAG = "Launcher3.CropActivity";
 

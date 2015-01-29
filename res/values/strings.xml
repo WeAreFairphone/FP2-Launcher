@@ -273,8 +273,6 @@ s
     <!-- Error message on dummy custom cling layout [DO NOT TRANSLATE] -->
     <string name="dummy_custom_cling_error_message">Error: custom workspace layout passed in but custom cling was not overwritten</string>
 
-    <add-resource name="default_folder_name" type="string" />
-
     <!-- Folder accessibility -->
     <!-- The format string for when a folder is opened, speaks the dimensions -->
     <string name="folder_opened">Folder opened, <xliff:g id="width" example="5">%1$d</xliff:g> by <xliff:g id="height" example="3">%2$d</xliff:g></string>
