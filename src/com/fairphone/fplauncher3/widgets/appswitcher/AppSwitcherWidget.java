@@ -213,7 +213,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         Bitmap icon = ((BitmapDrawable) draw).getBitmap();
         allAppsButton.setImageViewBitmap(android.R.id.content, icon);
 
-        allAppsButton.setTextViewText(R.id.mostUsedButton, context.getResources().getString(R.string.edge_swipe_all_apps));
+        allAppsButton.setTextViewText(R.id.mostUsedButton, context.getResources().getString(R.string.edge_swipe_all_apps).toUpperCase());
 
         Intent launchIntent = new Intent();
         launchIntent.setAction(ACTION_APP_SWITCHER_LAUNCH_ALL_APPS);
