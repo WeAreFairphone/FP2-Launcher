@@ -25,10 +25,12 @@ import com.crashlytics.android.Crashlytics;
 public class LauncherApplication extends Application {
     private static final String TAG = LauncherApplication.class.getSimpleName();
     
+    public static final String CRASHLYTICS_OPT_IN = "crashlytics_opt_in"; // IMPORTANT: keep synced with Settings.Global.CRASHLYTICS_OPT_IN
+    
     @Override
     public void onCreate() {
         super.onCreate();
-        if (Settings.Global.getInt(getContentResolver(), Settings.Global.CRASHLYTICS_OPT_IN, 0) == 1)
+        if (Settings.Global.getInt(getContentResolver(), CRASHLYTICS_OPT_IN, 0) == 1)
         {
             Log.d(TAG, "Crash reports active.");
             Crashlytics.start(this);  
