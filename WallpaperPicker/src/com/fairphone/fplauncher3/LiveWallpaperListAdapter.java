@@ -34,7 +34,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import com.fairphone.fplauncher3.wallpaperpicker.R;
+import com.fairphone.fplauncher3.R;
 import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.text.Collator;

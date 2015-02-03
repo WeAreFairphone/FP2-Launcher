@@ -31,7 +31,7 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import com.fairphone.fplauncher3.wallpaperpicker.R;
+import com.fairphone.fplauncher3.R;
 import java.util.ArrayList;
 import java.util.List;
 
