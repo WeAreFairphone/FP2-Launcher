@@ -32,7 +32,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import com.fairphone.fplauncher3.R;
 import org.xmlpull.v1.XmlPullParserException;
@@ -43,7 +42,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class LiveWallpaperListAdapter extends BaseAdapter implements ListAdapter {
+public class LiveWallpaperListAdapter extends BaseAdapter {
     private static final String LOG_TAG = "LiveWallpaperListAdapter";
 
     private final LayoutInflater mInflater;

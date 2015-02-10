@@ -29,13 +29,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import com.fairphone.fplauncher3.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThirdPartyWallpaperPickerListAdapter extends BaseAdapter implements ListAdapter {
+public class ThirdPartyWallpaperPickerListAdapter extends BaseAdapter {
     private static final String LOG_TAG = "LiveWallpaperListAdapter";
 
     private final LayoutInflater mInflater;

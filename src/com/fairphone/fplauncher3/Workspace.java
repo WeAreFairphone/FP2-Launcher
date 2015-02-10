@@ -89,7 +89,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Workspace extends SmoothPagedView
         implements DropTarget, DragSource, DragScroller, View.OnTouchListener,
-        DragController.DragListener, LauncherTransitionable, ViewGroup.OnHierarchyChangeListener,
+        DragController.DragListener, LauncherTransitionable,
         Insettable {
     private static final String TAG = "Launcher.Workspace";
 

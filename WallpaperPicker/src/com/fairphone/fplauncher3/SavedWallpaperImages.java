@@ -32,7 +32,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,7 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class SavedWallpaperImages extends BaseAdapter implements ListAdapter {
+public class SavedWallpaperImages extends BaseAdapter {
     private static String TAG = "Launcher3.SavedWallpaperImages";
     private ImageDb mDb;
     ArrayList<SavedWallpaperTile> mImages;
