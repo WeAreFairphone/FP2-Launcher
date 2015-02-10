@@ -52,6 +52,7 @@ import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
 public class AppDrawerView extends FrameLayout implements DragSource, LauncherTransitionable, OnLongClickListener
 {
     private static final String TAG = AppDrawerView.class.getSimpleName();
+    public static final int DRAGGING_DELAY_MILLIS = 150;
 
     private AgingAppsListAdapter mAllAppsListAdapter;
 
@@ -222,7 +223,7 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
                     mLauncher.enterSpringLoadedDragMode();
                 }
             }
-        }, 150);
+        }, DRAGGING_DELAY_MILLIS);
 
         return true;
     }

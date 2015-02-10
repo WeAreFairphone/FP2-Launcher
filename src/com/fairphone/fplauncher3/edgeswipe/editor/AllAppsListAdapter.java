@@ -31,7 +31,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class AllAppsListAdapter extends BaseAdapter
-{    
+{
+    public static final int COMPOUND_DRAWABLE_PADDING = 20;
     private Activity context;
     private ArrayList<AppInfo> allApps;
     
@@ -71,7 +72,7 @@ public class AllAppsListAdapter extends BaseAdapter
 		float px = r.getDimension(R.dimen.edit_favorites_icon_size);
 		Drawable drawable = new BitmapDrawable(context.getResources(), applicationInfo.getIconBitmap());
 		drawable.setBounds(0, 0, Math.round(px), Math.round(px));
-		holder.app_item.setCompoundDrawablePadding(20);
+		holder.app_item.setCompoundDrawablePadding(COMPOUND_DRAWABLE_PADDING);
 		
 		holder.app_item.setCompoundDrawables(null, drawable, null, null);
         

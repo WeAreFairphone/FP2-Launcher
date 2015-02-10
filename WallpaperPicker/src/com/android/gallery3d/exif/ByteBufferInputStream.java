@@ -21,6 +21,7 @@ import java.nio.ByteBuffer;
 
 class ByteBufferInputStream extends InputStream {
 
+    public static final int MAX_BUFFER = 0xFF;
     private ByteBuffer mBuf;
 
     public ByteBufferInputStream(ByteBuffer buf) {
@@ -32,7 +33,7 @@ class ByteBufferInputStream extends InputStream {
         if (!mBuf.hasRemaining()) {
             return -1;
         }
-        return mBuf.get() & 0xFF;
+        return mBuf.get() & MAX_BUFFER;
     }
 
     @Override

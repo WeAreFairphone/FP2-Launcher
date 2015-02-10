@@ -24,7 +24,9 @@ import android.widget.Button;
  * A Button which becomes translucent when it is disabled
  */
 public class AlphaDisableableButton extends Button {
-    public static float DISABLED_ALPHA_VALUE = 0.4f;
+    private static final float DISABLED_ALPHA_VALUE = 0.4f;
+    private static final float ENABLED_ALPHA_VALUE = 1.0f;
+
     public AlphaDisableableButton(Context context) {
         this(context, null);
     }
@@ -42,7 +44,7 @@ public class AlphaDisableableButton extends Button {
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         if(enabled) {
-            setAlpha(1.0f);
+            setAlpha(ENABLED_ALPHA_VALUE);
         } else {
             setAlpha(DISABLED_ALPHA_VALUE);
         }

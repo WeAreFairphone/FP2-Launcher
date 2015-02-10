@@ -36,13 +36,17 @@ import android.util.Log;
  */
 public class ApplicationRunInformation
 {
-	private static final int APP_RARE_USE_DAYS = 365;
+    private static final int APP_RARE_USE_DAYS = 365;
 
 	private static final String TAG = ApplicationRunInformation.class.getSimpleName();
 	
 	private static final String APP_RUN_INFO_SEPARATOR = ";";
 	private static final String COMPONENT_NAME_SEPARATOR = ";";
-	private ComponentName 	mComponentName;
+    public static final long HOURS_IN_A_DAY = 24l;
+    public static final long MINUTES_IN_HOUR = 60l;
+    public static final long SECONDS_IN_MINUTE = 60l;
+    public static final long MILLIS_IN_SECOND = 1000l;
+    private ComponentName 	mComponentName;
 	private int 			mRunCount;
     private Date			mLastExecution;
     private boolean mIsNewApp;
@@ -316,7 +320,7 @@ public class ApplicationRunInformation
 
     public static long toMilliSeconds(long days)
     {
-        return days * 24l * 60l * 60l * 1000l;
+        return days * HOURS_IN_A_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLIS_IN_SECOND;
     }
 
     public void setAge(APP_AGE age)

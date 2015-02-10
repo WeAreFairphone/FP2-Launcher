@@ -57,6 +57,15 @@ import java.util.Stack;
 
 public class CellLayout extends ViewGroup {
     static final String TAG = "CellLayout";
+    public static final float INTERPOLATION_FACTOR = 2.5f;
+    public static final double INCREASE_BY_ONE_AND_HALF = 1.5;
+    public static final int RGBA_MAX_SIZE = 255;
+    public static final float DIVIDE_BY_2 = 2f;
+    public static final float POINT_FIVE = 0.5f;
+    public static final float SCALE_MINUS_FOUR = 4.0f;
+    public static final int DELAY_SECONDS = 60;
+    public static final float INTERPOLATOR_FACTOR = 1.5f;
+    public static final int MAX_DELAY_IN_SECONDS = 150;
 
     private Launcher mLauncher;
     private int mCellWidth;
@@ -90,7 +99,7 @@ public class CellLayout extends ViewGroup {
     private ArrayList<FolderRingAnimator> mFolderOuterRings = new ArrayList<FolderRingAnimator>();
     private int[] mFolderLeaveBehindCell = {-1, -1};
 
-    private float FOREGROUND_ALPHA_DAMPER = 0.65f;
+    private static final float FOREGROUND_ALPHA_DAMPER = 0.65f;
     private int mForegroundAlpha = 0;
     private float mBackgroundAlpha;
     private float mBackgroundAlphaMultiplier = 1.0f;
@@ -222,7 +231,7 @@ public class CellLayout extends ViewGroup {
         mActiveGlowBackground.setFilterBitmap(true);
 
         // Initialize the data structures used for the drag visualization.
-        mEaseOutInterpolator = new DecelerateInterpolator(2.5f); // Quint ease out
+        mEaseOutInterpolator = new DecelerateInterpolator(INTERPOLATION_FACTOR); // Quint ease out
         mDragCell[0] = mDragCell[1] = -1;
         for (int i = 0; i < mDragOutlines.length; i++) {
             mDragOutlines[i] = new Rect(-1, -1, -1, -1);
@@ -287,7 +296,7 @@ public class CellLayout extends ViewGroup {
 
         mTouchFeedbackView = new FastBitmapView(context);
         // Make the feedback view large enough to hold the blur bitmap.
-        addView(mTouchFeedbackView, (int) (grid.cellWidthPx * 1.5), (int) (grid.cellHeightPx * 1.5));
+        addView(mTouchFeedbackView, (int) (grid.cellWidthPx * INCREASE_BY_ONE_AND_HALF), (int) (grid.cellHeightPx * INCREASE_BY_ONE_AND_HALF));
         addView(mShortcutsAndWidgets);
     }
 
@@ -342,7 +351,7 @@ public class CellLayout extends ViewGroup {
         }
 
         r *= FOREGROUND_ALPHA_DAMPER;
-        mForegroundAlpha = (int) Math.round((r * 255));
+        mForegroundAlpha = (int) Math.round((r * RGBA_MAX_SIZE));
         mOverScrollForegroundDrawable.setAlpha(mForegroundAlpha);
         invalidate();
     }
@@ -354,7 +363,7 @@ public class CellLayout extends ViewGroup {
         } else {
             int offset = getMeasuredWidth() - getPaddingLeft() - getPaddingRight()
                     - (mCountX * mCellWidth);
-            mTouchFeedbackView.setTranslationX(icon.getLeft() + (int) Math.ceil(offset / 2f)
+            mTouchFeedbackView.setTranslationX(icon.getLeft() + (int) Math.ceil(offset / DIVIDE_BY_2)
                     - padding);
             mTouchFeedbackView.setTranslationY(icon.getTop() - padding);
             if (mTouchFeedbackView.setBitmap(background)) {
@@ -425,7 +434,7 @@ public class CellLayout extends ViewGroup {
                 mTempRect.set(r);
                 Utilities.scaleRectAboutCenter(mTempRect, getChildrenScale());
                 final Bitmap b = (Bitmap) mDragOutlineAnims[i].getTag();
-                paint.setAlpha((int)(alpha + .5f));
+                paint.setAlpha((int)(alpha + POINT_FIVE));
                 canvas.drawBitmap(b, null, mTempRect, paint);
             }
         }
@@ -887,7 +896,7 @@ public class CellLayout extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int offset = getMeasuredWidth() - getPaddingLeft() - getPaddingRight() -
                 (mCountX * mCellWidth);
-        int left = getPaddingLeft() + (int) Math.ceil(offset / 2f);
+        int left = getPaddingLeft() + (int) Math.ceil(offset / DIVIDE_BY_2);
         int top = getPaddingTop();
         int count = getChildCount();
         for (int i = 0; i < count; i++) {
@@ -1110,7 +1119,7 @@ public class CellLayout extends ViewGroup {
                     left += dragOffset.x + ((mCellWidth * spanX) + ((spanX - 1) * mWidthGap)
                              - dragRegion.width()) / 2;
                     int cHeight = getShortcutsAndWidgets().getCellContentHeight();
-                    int cellPaddingY = (int) Math.max(0, ((mCellHeight - cHeight) / 2f));
+                    int cellPaddingY = (int) Math.max(0, ((mCellHeight - cHeight) / DIVIDE_BY_2));
                     top += dragOffset.y + cellPaddingY;
                 } else {
                     // Center the drag outline in the cell
@@ -1240,8 +1249,8 @@ public class CellLayout extends ViewGroup {
         // For items with a spanX / spanY > 1, the passed in point (pixelX, pixelY) corresponds
         // to the center of the item, but we are searching based on the top-left cell, so
         // we translate the point over to correspond to the top-left.
-        pixelX -= (mCellWidth + mWidthGap) * (spanX - 1) / 2f;
-        pixelY -= (mCellHeight + mHeightGap) * (spanY - 1) / 2f;
+        pixelX -= (mCellWidth + mWidthGap) * (spanX - 1) / DIVIDE_BY_2;
+        pixelY -= (mCellHeight + mHeightGap) * (spanY - 1) / DIVIDE_BY_2;
 
         // Keep track of best-scoring drop area
         final int[] bestXY = result != null ? result : new int[2];
@@ -1998,10 +2007,10 @@ public class CellLayout extends ViewGroup {
 
         result[0] = 0;
         result[1] = 0;
-        if (Math.abs(Math.cos(angle)) > 0.5f) {
+        if (Math.abs(Math.cos(angle)) > POINT_FIVE) {
             result[0] = (int) Math.signum(deltaX);
         }
-        if (Math.abs(Math.sin(angle)) > 0.5f) {
+        if (Math.abs(Math.sin(angle)) > POINT_FIVE) {
             result[1] = (int) Math.signum(deltaY);
         }
     }
@@ -2193,7 +2202,7 @@ public class CellLayout extends ViewGroup {
             this.mode = mode;
             initDeltaX = child.getTranslationX();
             initDeltaY = child.getTranslationY();
-            finalScale = getChildrenScale() - 4.0f / child.getWidth();
+            finalScale = getChildrenScale() - SCALE_MINUS_FOUR / child.getWidth();
             initScale = child.getScaleX();
             this.child = child;
         }
@@ -2216,7 +2225,7 @@ public class CellLayout extends ViewGroup {
             va.setRepeatMode(ValueAnimator.REVERSE);
             va.setRepeatCount(ValueAnimator.INFINITE);
             va.setDuration(mode == MODE_HINT ? HINT_DURATION : PREVIEW_DURATION);
-            va.setStartDelay((int) (Math.random() * 60));
+            va.setStartDelay((int) (Math.random() * DELAY_SECONDS));
             va.addUpdateListener(new AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
@@ -2264,7 +2273,7 @@ public class CellLayout extends ViewGroup {
                 LauncherAnimUtils.ofFloat(child, "translationY", 0f)
             );
             s.setDuration(REORDER_ANIMATION_DURATION);
-            s.setInterpolator(new android.view.animation.DecelerateInterpolator(1.5f));
+            s.setInterpolator(new android.view.animation.DecelerateInterpolator(INTERPOLATOR_FACTOR));
             s.start();
         }
     }
@@ -3061,7 +3070,7 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
 
         @Override
         protected long getDelayForView(View view) {
-            return (int) (Math.random() * 150);
+            return (int) (Math.random() * MAX_DELAY_IN_SECONDS);
         }
     }
 

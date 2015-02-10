@@ -146,6 +146,12 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         View.OnClickListener, View.OnKeyListener, DragSource,
         PagedViewWidget.ShortPressListener, LauncherTransitionable {
     static final String TAG = "AppsCustomizePagedView";
+    public static final float PERCENT = 100f;
+    public static final int TRANSALATION_Y_U = 125;
+    public static final int TRANSALATION_Y_D = 100;
+    public static final float MINIMUM_SCALE = 1.25f;
+    public static final int SPRING_LOADED_DELAY_MILLIS = 150;
+    public static final int MAX_ALPHA = 255;
 
     private static Rect sTmpRect = new Rect();
 
@@ -246,7 +252,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
         Context context = getContext();
         Resources r = context.getResources();
-        setDragSlopeThreshold(r.getInteger(R.integer.config_appsCustomizeDragSlopeThreshold)/100f);
+        setDragSlopeThreshold(r.getInteger(R.integer.config_appsCustomizeDragSlopeThreshold)/ PERCENT);
     }
 
     public void onFinishInflate() {
@@ -459,9 +465,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         final ImageView p = (ImageView) v.findViewById(R.id.widget_preview);
         AnimatorSet bounce = LauncherAnimUtils.createAnimatorSet();
         ValueAnimator tyuAnim = LauncherAnimUtils.ofFloat(p, "translationY", offsetY);
-        tyuAnim.setDuration(125);
+        tyuAnim.setDuration(TRANSALATION_Y_U);
         ValueAnimator tydAnim = LauncherAnimUtils.ofFloat(p, "translationY", 0f);
-        tydAnim.setDuration(100);
+        tydAnim.setDuration(TRANSALATION_Y_D);
         bounce.play(tyuAnim).before(tydAnim);
         bounce.setInterpolator(new AccelerateInterpolator());
         bounce.start();
@@ -644,7 +650,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                     createWidgetInfo, true);
 
             FastBitmapDrawable previewDrawable = (FastBitmapDrawable) image.getDrawable();
-            float minScale = 1.25f;
+            float minScale = MINIMUM_SCALE;
             int maxWidth, maxHeight;
             maxWidth = Math.min((int) (previewDrawable.getIntrinsicWidth() * minScale), size[0]);
             maxHeight = Math.min((int) (previewDrawable.getIntrinsicHeight() * minScale), size[1]);
@@ -715,7 +721,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                     mLauncher.enterSpringLoadedDragMode();
                 }
             }
-        }, 150);
+        }, SPRING_LOADED_DELAY_MILLIS);
 
         return true;
     }
@@ -928,7 +934,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
         Drawable bg = getContext().getResources().getDrawable(R.drawable.quantum_panel);
         if (bg != null) {
-            bg.setAlpha(mPageBackgroundsVisible ? 255: 0);
+            bg.setAlpha(mPageBackgroundsVisible ? MAX_ALPHA : 0);
             layout.setBackground(bg);
         }
 
@@ -941,7 +947,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         for (int i = 0; i < childCount; ++i) {
             Drawable bg = getChildAt(i).getBackground();
             if (bg != null) {
-                bg.setAlpha(visible ? 255 : 0);
+                bg.setAlpha(visible ? MAX_ALPHA : 0);
             }
         }
     }
@@ -1092,7 +1098,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
         Drawable bg = getContext().getResources().getDrawable(R.drawable.quantum_panel_dark);
         if (bg != null) {
-            bg.setAlpha(mPageBackgroundsVisible ? 255 : 0);
+            bg.setAlpha(mPageBackgroundsVisible ? MAX_ALPHA : 0);
             layout.setBackground(bg);
         }
         layout.measure(widthSpec, heightSpec);

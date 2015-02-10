@@ -48,7 +48,11 @@ import java.util.Map;
  */
 public abstract class AbstractMessage extends AbstractMessageLite
                                       implements Message {
-  public boolean isInitialized() {
+
+    public static final int MAGIC_NUMBER_37 = 37;
+    public static final int MAGIC_NUMBER_53 = 53;
+
+    public boolean isInitialized() {
     return MessageReflection.isInitialized(this);
   }
 
@@ -197,14 +201,14 @@ public abstract class AbstractMessage extends AbstractMessageLite
     for (Map.Entry<FieldDescriptor, Object> entry : map.entrySet()) {
       FieldDescriptor field = entry.getKey();
       Object value = entry.getValue();
-      hash = (37 * hash) + field.getNumber();
+      hash = (MAGIC_NUMBER_37 * hash) + field.getNumber();
       if (field.getType() != FieldDescriptor.Type.ENUM){
-        hash = (53 * hash) + value.hashCode();
+        hash = (MAGIC_NUMBER_53 * hash) + value.hashCode();
       } else if (field.isRepeated()) {
         List<? extends EnumLite> list = (List<? extends EnumLite>) value;
-        hash = (53 * hash) + Internal.hashEnumList(list);
+        hash = (MAGIC_NUMBER_53 * hash) + Internal.hashEnumList(list);
       } else {
-        hash = (53 * hash) + Internal.hashEnum((EnumLite) value);
+        hash = (MAGIC_NUMBER_53 * hash) + Internal.hashEnum((EnumLite) value);
       }
     }
     return hash;

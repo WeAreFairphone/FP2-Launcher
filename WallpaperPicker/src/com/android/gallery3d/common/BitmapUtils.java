@@ -34,6 +34,8 @@ public class BitmapUtils {
     private static final String TAG = "BitmapUtils";
     private static final int DEFAULT_JPEG_QUALITY = 90;
     public static final int UNCONSTRAINED = -1;
+    public static final float HALF = 2f;
+    public static final int MAX_POSITIVE_INT_SIZE = 65536;
 
     private BitmapUtils(){}
 
@@ -159,7 +161,7 @@ public class BitmapUtils {
         int width = Math.round(scale * bitmap.getWidth());
         int height = Math.round(scale * bitmap.getHeight());
         Canvas canvas = new Canvas(target);
-        canvas.translate((size - width) / 2f, (size - height) / 2f);
+        canvas.translate((size - width) / HALF, (size - height) / HALF);
         canvas.scale(scale, scale);
         Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG | Paint.DITHER_FLAG);
         canvas.drawBitmap(bitmap, 0, 0, paint);
@@ -240,7 +242,7 @@ public class BitmapUtils {
     }
 
     public static byte[] compressToBytes(Bitmap bitmap, int quality) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream(65536);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(MAX_POSITIVE_INT_SIZE);
         bitmap.compress(CompressFormat.JPEG, quality, baos);
         return baos.toByteArray();
     }

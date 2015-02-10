@@ -4,8 +4,52 @@ package com.fairphone.fplauncher3.backup;
 
 @SuppressWarnings("hiding")
 public interface BackupProtos {
-  
-  public static final class Key extends
+
+    int PROTO_0 = 0;
+    int PROTO_8 = 8;
+    int PROTO_18 = 18;
+    int PROTO_24 = 24;
+    int PROTO_32 = 32;
+    int PROTO_10 = 10;
+    int PROTO_16 = 16;
+    int INT = 42;
+    int PROTO_42 = 42;
+    int INDEX_CODE_ID = 1;
+    int INDEX_CODE_ITEM_TYPE = 2;
+    int INDEX_CODE_TITLE = 3;
+    int INDEX_CODE_CONTAINER = 4;
+    int INDEX_CODE_SCREEN = 5;
+    int INDEX_CODE_CELL_X = 6;
+    int INDEX_CODE_CELL_Y = 7;
+    int INDEX_CODE_SPAN_X = 8;
+    int INDEX_CODE_SPAN_Y = 9;
+    int INDEX_CODE_DISPLAY_MODE = 10;
+    int INDEX_CODE_APP_WIDGET_ID = 11;
+    int INDEX_CODE_APP_WIDGET_PROVIDER = 12;
+    int INDEX_CODE_INTENT = 13;
+    int INDEX_CODE_URI = 14;
+    int INDEX_CODE_ICON_TYPE = 15;
+    int INDEX_CODE_ICON_PACKAGE = 16;
+    int INDEX_CODE_ICON_RESOURCE = 17;
+    int INDEX_CODE_ICON = 18;
+    int PROTO_26 = 26;
+    int PROTO_40 = 40;
+    int PROTO_48 = 48;
+    int PROTO_56 = 56;
+    int PROTO_64 = 64;
+    int PROTO_72 = 72;
+    int PROTO_80 = 80;
+    int PROTO_88 = 88;
+    int PROTO_98 = 98;
+    int PROTO_106 = 106;
+    int PROTO_114 = 114;
+    int PROTO_120 = 120;
+    int PROTO_130 = 130;
+    int PROTO_138 = 138;
+    int PROTO_146 = 146;
+    int PROTO_34 = 34;
+
+    public static final class Key extends
       com.google.protobuf.nano.MessageNano {
     
     // enum Type
@@ -96,7 +140,7 @@ public interface BackupProtos {
       while (true) {
         int tag = input.readTag();
         switch (tag) {
-          case 0:
+          case PROTO_0:
             return this;
           default: {
             if (!com.google.protobuf.nano.WireFormatNano.parseUnknownField(input, tag)) {
@@ -104,7 +148,7 @@ public interface BackupProtos {
             }
             break;
           }
-          case 8: {
+          case PROTO_8: {
             int value = input.readInt32();
             switch (value) {
               case com.fairphone.fplauncher3.backup.BackupProtos.Key.FAVORITE:
@@ -116,15 +160,15 @@ public interface BackupProtos {
             }
             break;
           }
-          case 18: {
+          case PROTO_18: {
             this.name = input.readString();
             break;
           }
-          case 24: {
+          case PROTO_24: {
             this.id = input.readInt64();
             break;
           }
-          case 32: {
+          case PROTO_32: {
             this.checksum = input.readInt64();
             break;
           }
@@ -203,7 +247,7 @@ public interface BackupProtos {
       while (true) {
         int tag = input.readTag();
         switch (tag) {
-          case 0:
+          case PROTO_0:
             return this;
           default: {
             if (!com.google.protobuf.nano.WireFormatNano.parseUnknownField(input, tag)) {
@@ -211,11 +255,11 @@ public interface BackupProtos {
             }
             break;
           }
-          case 10: {
+          case PROTO_10: {
             this.payload = input.readBytes();
             break;
           }
-          case 16: {
+          case PROTO_16: {
             this.checksum = input.readInt64();
             break;
           }
@@ -337,7 +381,7 @@ public interface BackupProtos {
       while (true) {
         int tag = input.readTag();
         switch (tag) {
-          case 0:
+          case PROTO_0:
             return this;
           default: {
             if (!com.google.protobuf.nano.WireFormatNano.parseUnknownField(input, tag)) {
@@ -345,25 +389,25 @@ public interface BackupProtos {
             }
             break;
           }
-          case 8: {
+          case PROTO_8: {
             this.appVersion = input.readInt32();
             break;
           }
-          case 16: {
+          case PROTO_16: {
             this.t = input.readInt64();
             break;
           }
-          case 24: {
+          case PROTO_24: {
             this.bytes = input.readInt64();
             break;
           }
-          case 32: {
+          case PROTO_32: {
             this.rows = input.readInt32();
             break;
           }
-          case 42: {
+          case PROTO_42: {
             int arrayLength = com.google.protobuf.nano.WireFormatNano
-                .getRepeatedFieldArrayLength(input, 42);
+                .getRepeatedFieldArrayLength(input, PROTO_42);
             int i = this.key == null ? 0 : this.key.length;
             com.fairphone.fplauncher3.backup.BackupProtos.Key[] newArray =
                 new com.fairphone.fplauncher3.backup.BackupProtos.Key[i + arrayLength];
@@ -494,59 +538,59 @@ public interface BackupProtos {
       cachedSize = -1;
       return this;
     }
-    
+
     @Override
     public void writeTo(com.google.protobuf.nano.CodedOutputByteBufferNano output)
         throws java.io.IOException {
-      output.writeInt64(1, this.id);
-      output.writeInt32(2, this.itemType);
+      output.writeInt64(INDEX_CODE_ID, this.id);
+      output.writeInt32(INDEX_CODE_ITEM_TYPE, this.itemType);
       if (!this.title.equals("")) {
-        output.writeString(3, this.title);
+        output.writeString(INDEX_CODE_TITLE, this.title);
       }
       if (this.container != 0) {
-        output.writeInt32(4, this.container);
+        output.writeInt32(INDEX_CODE_CONTAINER, this.container);
       }
       if (this.screen != 0) {
-        output.writeInt32(5, this.screen);
+        output.writeInt32(INDEX_CODE_SCREEN, this.screen);
       }
       if (this.cellX != 0) {
-        output.writeInt32(6, this.cellX);
+        output.writeInt32(INDEX_CODE_CELL_X, this.cellX);
       }
       if (this.cellY != 0) {
-        output.writeInt32(7, this.cellY);
+        output.writeInt32(INDEX_CODE_CELL_Y, this.cellY);
       }
       if (this.spanX != 0) {
-        output.writeInt32(8, this.spanX);
+        output.writeInt32(INDEX_CODE_SPAN_X, this.spanX);
       }
       if (this.spanY != 0) {
-        output.writeInt32(9, this.spanY);
+        output.writeInt32(INDEX_CODE_SPAN_Y, this.spanY);
       }
       if (this.displayMode != 0) {
-        output.writeInt32(10, this.displayMode);
+        output.writeInt32(INDEX_CODE_DISPLAY_MODE, this.displayMode);
       }
       if (this.appWidgetId != 0) {
-        output.writeInt32(11, this.appWidgetId);
+        output.writeInt32(INDEX_CODE_APP_WIDGET_ID, this.appWidgetId);
       }
       if (!this.appWidgetProvider.equals("")) {
-        output.writeString(12, this.appWidgetProvider);
+        output.writeString(INDEX_CODE_APP_WIDGET_PROVIDER, this.appWidgetProvider);
       }
       if (!this.intent.equals("")) {
-        output.writeString(13, this.intent);
+        output.writeString(INDEX_CODE_INTENT, this.intent);
       }
       if (!this.uri.equals("")) {
-        output.writeString(14, this.uri);
+        output.writeString(INDEX_CODE_URI, this.uri);
       }
       if (this.iconType != 0) {
-        output.writeInt32(15, this.iconType);
+        output.writeInt32(INDEX_CODE_ICON_TYPE, this.iconType);
       }
       if (!this.iconPackage.equals("")) {
-        output.writeString(16, this.iconPackage);
+        output.writeString(INDEX_CODE_ICON_PACKAGE, this.iconPackage);
       }
       if (!this.iconResource.equals("")) {
-        output.writeString(17, this.iconResource);
+        output.writeString(INDEX_CODE_ICON_RESOURCE, this.iconResource);
       }
       if (!java.util.Arrays.equals(this.icon, com.google.protobuf.nano.WireFormatNano.EMPTY_BYTES)) {
-        output.writeBytes(18, this.icon);
+        output.writeBytes(INDEX_CODE_ICON, this.icon);
       }
       super.writeTo(output);
     }
@@ -555,72 +599,72 @@ public interface BackupProtos {
     protected int computeSerializedSize() {
       int size = super.computeSerializedSize();
       size += com.google.protobuf.nano.CodedOutputByteBufferNano
-          .computeInt64Size(1, this.id);
+          .computeInt64Size(INDEX_CODE_ID, this.id);
       size += com.google.protobuf.nano.CodedOutputByteBufferNano
-          .computeInt32Size(2, this.itemType);
+          .computeInt32Size(INDEX_CODE_ITEM_TYPE, this.itemType);
       if (!this.title.equals("")) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeStringSize(3, this.title);
+            .computeStringSize(INDEX_CODE_TITLE, this.title);
       }
       if (this.container != 0) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeInt32Size(4, this.container);
+            .computeInt32Size(INDEX_CODE_CONTAINER, this.container);
       }
       if (this.screen != 0) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeInt32Size(5, this.screen);
+            .computeInt32Size(INDEX_CODE_SCREEN, this.screen);
       }
       if (this.cellX != 0) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeInt32Size(6, this.cellX);
+            .computeInt32Size(INDEX_CODE_CELL_X, this.cellX);
       }
       if (this.cellY != 0) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeInt32Size(7, this.cellY);
+            .computeInt32Size(INDEX_CODE_CELL_Y, this.cellY);
       }
       if (this.spanX != 0) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeInt32Size(8, this.spanX);
+            .computeInt32Size(INDEX_CODE_SPAN_X, this.spanX);
       }
       if (this.spanY != 0) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeInt32Size(9, this.spanY);
+            .computeInt32Size(INDEX_CODE_SPAN_Y, this.spanY);
       }
       if (this.displayMode != 0) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeInt32Size(10, this.displayMode);
+            .computeInt32Size(INDEX_CODE_DISPLAY_MODE, this.displayMode);
       }
       if (this.appWidgetId != 0) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeInt32Size(11, this.appWidgetId);
+            .computeInt32Size(INDEX_CODE_APP_WIDGET_ID, this.appWidgetId);
       }
       if (!this.appWidgetProvider.equals("")) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeStringSize(12, this.appWidgetProvider);
+            .computeStringSize(INDEX_CODE_APP_WIDGET_PROVIDER, this.appWidgetProvider);
       }
       if (!this.intent.equals("")) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeStringSize(13, this.intent);
+            .computeStringSize(INDEX_CODE_INTENT, this.intent);
       }
       if (!this.uri.equals("")) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeStringSize(14, this.uri);
+            .computeStringSize(INDEX_CODE_URI, this.uri);
       }
       if (this.iconType != 0) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeInt32Size(15, this.iconType);
+            .computeInt32Size(INDEX_CODE_ICON_TYPE, this.iconType);
       }
       if (!this.iconPackage.equals("")) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeStringSize(16, this.iconPackage);
+            .computeStringSize(INDEX_CODE_ICON_PACKAGE, this.iconPackage);
       }
       if (!this.iconResource.equals("")) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeStringSize(17, this.iconResource);
+            .computeStringSize(INDEX_CODE_ICON_RESOURCE, this.iconResource);
       }
       if (!java.util.Arrays.equals(this.icon, com.google.protobuf.nano.WireFormatNano.EMPTY_BYTES)) {
         size += com.google.protobuf.nano.CodedOutputByteBufferNano
-            .computeBytesSize(18, this.icon);
+            .computeBytesSize(INDEX_CODE_ICON, this.icon);
       }
       return size;
     }
@@ -640,75 +684,75 @@ public interface BackupProtos {
             }
             break;
           }
-          case 8: {
+          case PROTO_8: {
             this.id = input.readInt64();
             break;
           }
-          case 16: {
+          case PROTO_16: {
             this.itemType = input.readInt32();
             break;
           }
-          case 26: {
+          case PROTO_26: {
             this.title = input.readString();
             break;
           }
-          case 32: {
+          case PROTO_32: {
             this.container = input.readInt32();
             break;
           }
-          case 40: {
+          case PROTO_40: {
             this.screen = input.readInt32();
             break;
           }
-          case 48: {
+          case PROTO_48: {
             this.cellX = input.readInt32();
             break;
           }
-          case 56: {
+          case PROTO_56: {
             this.cellY = input.readInt32();
             break;
           }
-          case 64: {
+          case PROTO_64: {
             this.spanX = input.readInt32();
             break;
           }
-          case 72: {
+          case PROTO_72: {
             this.spanY = input.readInt32();
             break;
           }
-          case 80: {
+          case PROTO_80: {
             this.displayMode = input.readInt32();
             break;
           }
-          case 88: {
+          case PROTO_88: {
             this.appWidgetId = input.readInt32();
             break;
           }
-          case 98: {
+          case PROTO_98: {
             this.appWidgetProvider = input.readString();
             break;
           }
-          case 106: {
+          case PROTO_106: {
             this.intent = input.readString();
             break;
           }
-          case 114: {
+          case PROTO_114: {
             this.uri = input.readString();
             break;
           }
-          case 120: {
+          case PROTO_120: {
             this.iconType = input.readInt32();
             break;
           }
-          case 130: {
+          case PROTO_130: {
             this.iconPackage = input.readString();
             break;
           }
-          case 138: {
+          case PROTO_138: {
             this.iconResource = input.readString();
             break;
           }
-          case 146: {
+          case PROTO_146: {
             this.icon = input.readBytes();
             break;
           }
@@ -791,7 +835,7 @@ public interface BackupProtos {
       while (true) {
         int tag = input.readTag();
         switch (tag) {
-          case 0:
+          case PROTO_0:
             return this;
           default: {
             if (!com.google.protobuf.nano.WireFormatNano.parseUnknownField(input, tag)) {
@@ -799,11 +843,11 @@ public interface BackupProtos {
             }
             break;
           }
-          case 8: {
+          case PROTO_8: {
             this.id = input.readInt64();
             break;
           }
-          case 16: {
+          case PROTO_16: {
             this.rank = input.readInt32();
             break;
           }
@@ -882,7 +926,7 @@ public interface BackupProtos {
       while (true) {
         int tag = input.readTag();
         switch (tag) {
-          case 0:
+          case PROTO_0:
             return this;
           default: {
             if (!com.google.protobuf.nano.WireFormatNano.parseUnknownField(input, tag)) {
@@ -890,11 +934,11 @@ public interface BackupProtos {
             }
             break;
           }
-          case 8: {
+          case PROTO_8: {
             this.dpi = input.readInt32();
             break;
           }
-          case 18: {
+          case PROTO_18: {
             this.data = input.readBytes();
             break;
           }
@@ -1010,7 +1054,7 @@ public interface BackupProtos {
       while (true) {
         int tag = input.readTag();
         switch (tag) {
-          case 0:
+          case PROTO_0:
             return this;
           default: {
             if (!com.google.protobuf.nano.WireFormatNano.parseUnknownField(input, tag)) {
@@ -1018,26 +1062,26 @@ public interface BackupProtos {
             }
             break;
           }
-          case 10: {
+          case PROTO_10: {
             this.provider = input.readString();
             break;
           }
-          case 18: {
+          case PROTO_18: {
             this.label = input.readString();
             break;
           }
-          case 24: {
+          case PROTO_24: {
             this.configure = input.readBool();
             break;
           }
-          case 34: {
+          case PROTO_34: {
             if (this.icon == null) {
               this.icon = new com.fairphone.fplauncher3.backup.BackupProtos.Resource();
             }
             input.readMessage(this.icon);
             break;
           }
-          case 42: {
+          case PROTO_42: {
             if (this.preview == null) {
               this.preview = new com.fairphone.fplauncher3.backup.BackupProtos.Resource();
             }

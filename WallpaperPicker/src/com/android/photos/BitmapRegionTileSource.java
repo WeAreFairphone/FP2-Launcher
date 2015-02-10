@@ -154,6 +154,9 @@ public class BitmapRegionTileSource implements TiledImageRenderer.TileSource {
     // This must be no larger than half the size of the GL_SIZE_LIMIT
     // due to decodePreview being allowed to be up to 2x the size of the target
     public static final int MAX_PREVIEW_SIZE = GL_SIZE_LIMIT / 2;
+    public static final int RGBA_SIZE = 16;
+    public static final int IMAGE_STORAGE_SIZE = 1024;
+    public static final double FIFTY_PERCENT = 0.5;
 
     public static abstract class BitmapSource {
         private SimpleBitmapRegionDecoder mDecoder;
@@ -386,7 +389,7 @@ public class BitmapRegionTileSource implements TiledImageRenderer.TileSource {
             mOptions = new BitmapFactory.Options();
             mOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
             mOptions.inPreferQualityOverSpeed = true;
-            mOptions.inTempStorage = new byte[16 * 1024];
+            mOptions.inTempStorage = new byte[RGBA_SIZE * IMAGE_STORAGE_SIZE];
             int previewSize = source.getPreviewSize();
             if (previewSize != 0) {
                 previewSize = Math.min(previewSize, MAX_PREVIEW_SIZE);
@@ -508,7 +511,7 @@ public class BitmapRegionTileSource implements TiledImageRenderer.TileSource {
         // or didn't support the specified inSampleSize (some decoders only do powers of 2)
         float scale = (float) targetSize / (float) (Math.max(result.getWidth(), result.getHeight()));
 
-        if (scale <= 0.5) {
+        if (scale <= FIFTY_PERCENT) {
             result = BitmapUtils.resizeBitmapByScale(result, scale, true);
         }
         return ensureGLCompatibleBitmap(result);
