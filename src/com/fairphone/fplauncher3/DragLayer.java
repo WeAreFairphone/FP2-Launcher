@@ -501,7 +501,7 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
     }
 
     public void clearAllResizeFrames() {
-        if (mResizeFrames.size() > 0) {
+        if (!mResizeFrames.isEmpty()) {
             for (AppWidgetResizeFrame frame: mResizeFrames) {
                 frame.commitResize();
                 removeView(frame);
@@ -511,7 +511,7 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
     }
 
     public boolean hasResizeFrames() {
-        return mResizeFrames.size() > 0;
+        return !mResizeFrames.isEmpty();
     }
 
     public boolean isWidgetBeingResized() {

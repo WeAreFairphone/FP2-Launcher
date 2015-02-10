@@ -295,7 +295,7 @@ class ExifParser {
             } else {
                 int offsetSize = 4;
                 // Some camera models use invalid length of the offset
-                if (mCorrespondingEvent.size() > 0) {
+                if (!mCorrespondingEvent.isEmpty()) {
                     offsetSize = mCorrespondingEvent.firstEntry().getKey() -
                             mTiffStream.getReadByteCount();
                 }
@@ -309,7 +309,7 @@ class ExifParser {
                 }
             }
         }
-        while (mCorrespondingEvent.size() != 0) {
+        while (!mCorrespondingEvent.isEmpty()) {
             Entry<Integer, Object> entry = mCorrespondingEvent.pollFirstEntry();
             Object event = entry.getValue();
             try {
@@ -648,7 +648,7 @@ class ExifParser {
         if (type == ExifTag.TYPE_ASCII || type == ExifTag.TYPE_UNDEFINED ||
                 type == ExifTag.TYPE_UNSIGNED_BYTE) {
             int size = tag.getComponentCount();
-            if (mCorrespondingEvent.size() > 0) {
+            if (!mCorrespondingEvent.isEmpty()) {
                 if (mCorrespondingEvent.firstEntry().getKey() < mTiffStream.getReadByteCount()
                         + size) {
                     Object event = mCorrespondingEvent.firstEntry().getValue();

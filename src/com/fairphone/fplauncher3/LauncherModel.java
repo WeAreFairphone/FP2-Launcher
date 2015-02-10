@@ -2259,7 +2259,7 @@ public class LauncherModel extends BroadcastReceiver
                     return false;
                 }
 
-                if (itemsToRemove.size() > 0) {
+                if (!itemsToRemove.isEmpty()) {
                     ContentProviderClient client = contentResolver.acquireContentProviderClient(
                             contentUri);
                     // Remove dead items
@@ -2277,7 +2277,7 @@ public class LauncherModel extends BroadcastReceiver
                     }
                 }
 
-                if (restoredRows.size() > 0) {
+                if (!restoredRows.isEmpty()) {
                     ContentProviderClient updater = contentResolver.acquireContentProviderClient(
                             contentUri);
                     // Update restored items that no longer require special handling
@@ -2351,7 +2351,7 @@ public class LauncherModel extends BroadcastReceiver
                     }
 
                     // If there are any empty screens remove them, and update.
-                    if (unusedScreens.size() != 0) {
+                    if (!unusedScreens.isEmpty()) {
                         // Log to disk
                         Launcher.addDumpLog(TAG, "11683562 -   unusedScreens (to be removed): " +
                                 TextUtils.join(", ", unusedScreens), true);
@@ -2985,15 +2985,15 @@ public class LauncherModel extends BroadcastReceiver
             ArrayList<AppInfo> modified = null;
             final ArrayList<AppInfo> removedApps = new ArrayList<AppInfo>();
 
-            if (mBgAllAppsList.added.size() > 0) {
+            if (!mBgAllAppsList.added.isEmpty()) {
                 added = new ArrayList<AppInfo>(mBgAllAppsList.added);
                 mBgAllAppsList.added.clear();
             }
-            if (mBgAllAppsList.modified.size() > 0) {
+            if (!mBgAllAppsList.modified.isEmpty()) {
                 modified = new ArrayList<AppInfo>(mBgAllAppsList.modified);
                 mBgAllAppsList.modified.clear();
             }
-            if (mBgAllAppsList.removed.size() > 0) {
+            if (!mBgAllAppsList.removed.isEmpty()) {
                 removedApps.addAll(mBgAllAppsList.removed);
                 mBgAllAppsList.removed.clear();
             }

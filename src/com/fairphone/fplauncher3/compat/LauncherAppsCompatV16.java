@@ -106,7 +106,7 @@ public class LauncherAppsCompatV16 extends LauncherAppsCompat {
 
     public synchronized void removeOnAppsChangedCallback(OnAppsChangedCallbackCompat callback) {
         mCallbacks.remove(callback);
-        if (mCallbacks.size() == 0) {
+        if (mCallbacks.isEmpty()) {
             unregisterForPackageIntents();
         }
     }
@@ -160,7 +160,7 @@ public class LauncherAppsCompatV16 extends LauncherAppsCompat {
                 final String packageName = intent.getData().getSchemeSpecificPart();
                 final boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
 
-                if (packageName == null || packageName.length() == 0) {
+                if (packageName == null || packageName.isEmpty()) {
                     // they sent us a bad intent
                     return;
                 }

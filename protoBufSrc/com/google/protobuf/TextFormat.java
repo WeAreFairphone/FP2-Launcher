@@ -53,6 +53,7 @@ import java.util.regex.Pattern;
  * @author wenboz@google.com Wenbo Zhu
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public final class TextFormat {
   private TextFormat() {}
 

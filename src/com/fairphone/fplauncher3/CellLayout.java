@@ -1786,7 +1786,7 @@ public class CellLayout extends ViewGroup {
 
     private boolean addViewsToTempLocation(ArrayList<View> views, Rect rectOccupiedByPotentialDrop,
             int[] direction, View dragView, ItemConfiguration currentState) {
-        if (views.size() == 0) return true;
+        if (views.isEmpty()) return true;
 
         boolean success = false;
         Rect boundingRect = null;

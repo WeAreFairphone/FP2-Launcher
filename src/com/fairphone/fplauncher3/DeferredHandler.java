@@ -42,7 +42,7 @@ public class DeferredHandler {
             Pair<Runnable, Integer> p;
             Runnable r;
             synchronized (mQueue) {
-                if (mQueue.size() == 0) {
+                if (mQueue.isEmpty()) {
                     return;
                 }
                 p = mQueue.removeFirst();
@@ -133,7 +133,7 @@ public class DeferredHandler {
     }
 
     void scheduleNextLocked() {
-        if (mQueue.size() > 0) {
+        if (!mQueue.isEmpty()) {
             Pair<Runnable, Integer> p = mQueue.getFirst();
             Runnable peek = p.first;
             if (peek instanceof IdleRunnable) {

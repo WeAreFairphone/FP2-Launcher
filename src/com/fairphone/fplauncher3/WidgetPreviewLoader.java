@@ -215,7 +215,7 @@ public class WidgetPreviewLoader {
         Bitmap unusedBitmap = null;
         synchronized(mUnusedBitmaps) {
             // not in cache; we need to load it from the db
-            while (unusedBitmap == null && mUnusedBitmaps.size() > 0) {
+            while (unusedBitmap == null && !mUnusedBitmaps.isEmpty()) {
                 Bitmap candidate = mUnusedBitmaps.remove(0).get();
                 if (candidate != null && candidate.isMutable() &&
                         candidate.getWidth() == mPreviewBitmapWidth &&

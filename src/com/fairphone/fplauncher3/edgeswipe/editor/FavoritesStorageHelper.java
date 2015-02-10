@@ -53,7 +53,7 @@ public abstract class FavoritesStorageHelper
 
         String componentNamesString = sharedPreferences.getString(FAVORITES_APPS_KEY, null);
 
-        if (componentNamesString == null || componentNamesString.length() == 0){
+        if (componentNamesString == null || componentNamesString.isEmpty()){
         	componentNamesString = getDefaultEdgeSwipeApps(context);
         }
         

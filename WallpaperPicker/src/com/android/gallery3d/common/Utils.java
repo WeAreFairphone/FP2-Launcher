@@ -133,7 +133,7 @@ public class Utils {
      * @return a 64-bit crc value
      */
     public static final long crc64Long(String in) {
-        if (in == null || in.length() == 0) {
+        if (in == null || in.isEmpty()) {
             return 0;
         }
         return crc64Long(getBytes(in));

@@ -357,7 +357,7 @@ public class ContactInfo {
 		for (String number : phoneNumbers.keySet()) {
 			String data = prefs.getString(number, "");
 
-			if (data.length() == 0) {
+			if (data.isEmpty()) {
 				continue;
 			}
 

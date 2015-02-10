@@ -98,7 +98,7 @@ class AllAppsList {
         final List<LauncherActivityInfoCompat> matches = launcherApps.getActivityList(packageName,
                 user);
 
-        if (matches.size() > 0) {
+        if (!matches.isEmpty()) {
             for (LauncherActivityInfoCompat info : matches) {
             	AppInfo newApp = new AppInfo(context, info, user, mIconCache, null);
                 add(newApp);
@@ -130,7 +130,7 @@ class AllAppsList {
         final LauncherAppsCompat launcherApps = LauncherAppsCompat.getInstance(context);
         final List<LauncherActivityInfoCompat> matches = launcherApps.getActivityList(packageName,
                 user);
-        if (matches.size() > 0) {
+        if (!matches.isEmpty()) {
             // Find disabled/removed activities and remove them from data and add them
             // to the removed list.
             for (int i = data.size() - 1; i >= 0; i--) {
@@ -205,7 +205,7 @@ class AllAppsList {
     static boolean packageHasActivities(Context context, String packageName,
             UserHandleCompat user) {
         final LauncherAppsCompat launcherApps = LauncherAppsCompat.getInstance(context);
-        return launcherApps.getActivityList(packageName, user).size() > 0;
+        return !launcherApps.getActivityList(packageName, user).isEmpty();
     }
 
     /**

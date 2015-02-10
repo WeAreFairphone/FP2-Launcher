@@ -61,6 +61,7 @@ import java.io.UnsupportedEncodingException;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public final class Descriptors {
   private static final Logger logger =
       Logger.getLogger(Descriptors.class.getName());

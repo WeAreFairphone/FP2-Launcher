@@ -2148,7 +2148,7 @@ public class LauncherProvider extends ContentProvider {
                             }
                         }
 
-                        if (allItems.size() > 0) {
+                        if (!allItems.isEmpty()) {
                             db.beginTransaction();
                             try {
                                 for (ContentValues row: allItems) {

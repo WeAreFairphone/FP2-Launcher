@@ -182,14 +182,14 @@ public class PageIndicator extends LinearLayout {
     }
 
     void removeMarker(int index, boolean allowAnimations) {
-        if (mMarkers.size() > 0) {
+        if (!mMarkers.isEmpty()) {
             index = Math.max(0, Math.min(mMarkers.size() - 1, index));
             mMarkers.remove(index);
             offsetWindowCenterTo(mActiveMarkerIndex, allowAnimations);
         }
     }
     void removeAllMarkers(boolean allowAnimations) {
-        while (mMarkers.size() > 0) {
+        while (!mMarkers.isEmpty()) {
             removeMarker(Integer.MAX_VALUE, allowAnimations);
         }
     }

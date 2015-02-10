@@ -232,7 +232,7 @@ public class ApplicationRunInformation
 	    {
 	        String data = prefs.getString(component, "");
 	
-	        if (data.length() == 0)
+	        if (data.isEmpty())
 	        {
 	            continue;
 	        }

@@ -67,6 +67,7 @@ import java.util.Stack;
  *
  * @author carlanton@google.com (Carl Haverl)
  */
+@SuppressWarnings("ALL")
 class RopeByteString extends ByteString {
 
   /**

@@ -718,7 +718,7 @@ public class Workspace extends SmoothPagedView
             return;
         }
 
-        if (hasExtraEmptyScreen() || mScreenOrder.size() == 0) return;
+        if (hasExtraEmptyScreen() || mScreenOrder.isEmpty()) return;
         long finalScreenId = mScreenOrder.get(mScreenOrder.size() - 1);
 
         if (finalScreenId == CUSTOM_CONTENT_SCREEN_ID) return;
@@ -1590,7 +1590,7 @@ public class Workspace extends SmoothPagedView
     }
 
     public boolean hasCustomContent() {
-        return (mScreenOrder.size() > 0 && mScreenOrder.get(0) == CUSTOM_CONTENT_SCREEN_ID);
+        return (!mScreenOrder.isEmpty() && mScreenOrder.get(0) == CUSTOM_CONTENT_SCREEN_ID);
     }
 
     public int numCustomPages() {
@@ -4615,7 +4615,7 @@ public class Workspace extends SmoothPagedView
                 }
             }
 
-            if (childrenToRemove.size() > 0) {
+            if (!childrenToRemove.isEmpty()) {
                 layout.requestLayout();
                 layout.invalidate();
             }

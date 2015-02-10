@@ -992,7 +992,7 @@ public class Launcher extends Activity
             mRestoring = false;
             mOnResumeNeedsLoad = false;
         }
-        if (mBindOnResumeCallbacks.size() > 0) {
+        if (!mBindOnResumeCallbacks.isEmpty()) {
             // We might have postponed some bind calls until onResume (see waitUntilResume) --
             // execute them here
             long startTimeCallbacks = 0;
@@ -1015,7 +1015,7 @@ public class Launcher extends Activity
                     (System.currentTimeMillis() - startTimeCallbacks));
             }
         }
-        if (mOnResumeCallbacks.size() > 0) {
+        if (!mOnResumeCallbacks.isEmpty()) {
             for (int i = 0; i < mOnResumeCallbacks.size(); i++) {
                 mOnResumeCallbacks.get(i).run();
             }
@@ -4072,7 +4072,7 @@ public class Launcher extends Activity
         bindAddScreens(orderedScreenIds);
 
         // If there are no screens, we need to have an empty screen
-        if (orderedScreenIds.size() == 0) {
+        if (orderedScreenIds.isEmpty()) {
             mWorkspace.addExtraEmptyScreen();
         }
 

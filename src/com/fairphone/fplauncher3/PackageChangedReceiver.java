@@ -9,7 +9,7 @@ public class PackageChangedReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, Intent intent) {
         final String packageName = intent.getData().getSchemeSpecificPart();
 
-        if (packageName == null || packageName.length() == 0) {
+        if (packageName == null || packageName.isEmpty()) {
             // they sent us a bad intent
             return;
         }
