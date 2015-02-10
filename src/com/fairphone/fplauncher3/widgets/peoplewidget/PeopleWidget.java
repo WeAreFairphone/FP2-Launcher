@@ -166,10 +166,11 @@ public class PeopleWidget extends AppWidgetProvider
     
     private void toggleMostAndLastContactedViewsVisibility(RemoteViews widget, List<ContactInfo> mostContacted, List<ContactInfo> lastContacted)
     {
-        if (mostContacted.isEmpty() && lastContacted.isEmpty())
+        if (mostContacted.isEmpty() && lastContacted.isEmpty()) {
             widget.setViewVisibility(R.id.mostUsedContactsOOBEDescription, View.VISIBLE);
-        else
+        } else {
             widget.setViewVisibility(R.id.mostUsedContactsOOBEDescription, View.GONE);
+        }
     }
 
     private void updateLastContactedList(Context context, RemoteViews widget, List<ContactInfo> contactInfoList)

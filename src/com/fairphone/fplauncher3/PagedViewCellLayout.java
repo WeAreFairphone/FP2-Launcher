@@ -102,8 +102,12 @@ public class PagedViewCellLayout extends ViewGroup implements Page {
                 lp.cellY >= 0 && (lp.cellY <= mCellCountY - 1)) {
             // If the horizontal or vertical span is set to -1, it is taken to
             // mean that it spans the extent of the CellLayout
-            if (lp.cellHSpan < 0) lp.cellHSpan = mCellCountX;
-            if (lp.cellVSpan < 0) lp.cellVSpan = mCellCountY;
+            if (lp.cellHSpan < 0) {
+                lp.cellHSpan = mCellCountX;
+            }
+            if (lp.cellVSpan < 0) {
+                lp.cellVSpan = mCellCountY;
+            }
 
             child.setId(childId);
             mChildren.addView(child, index, lp);

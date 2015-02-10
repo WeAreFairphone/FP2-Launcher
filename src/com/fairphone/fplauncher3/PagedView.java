@@ -391,8 +391,10 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
             mDragView.setTranslationX(x);
             mDragView.setTranslationY(y);
 
-            if (DEBUG) Log.d(TAG, "PagedView.updateDragViewTranslationDuringDrag(): "
-                    + x + ", " + y);
+            if (DEBUG) {
+                Log.d(TAG, "PagedView.updateDragViewTranslationDuringDrag(): "
+                        + x + ", " + y);
+            }
         }
     }
 
@@ -852,11 +854,21 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
         int referenceChildWidth = 0;
         // The children are given the same width and height as the workspace
         // unless they were set to WRAP_CONTENT
-        if (DEBUG) Log.d(TAG, "PagedView.onMeasure(): " + widthSize + ", " + heightSize);
-        if (DEBUG) Log.d(TAG, "PagedView.scaledSize: " + scaledWidthSize + ", " + scaledHeightSize);
-        if (DEBUG) Log.d(TAG, "PagedView.parentSize: " + parentWidthSize + ", " + parentHeightSize);
-        if (DEBUG) Log.d(TAG, "PagedView.horizontalPadding: " + horizontalPadding);
-        if (DEBUG) Log.d(TAG, "PagedView.verticalPadding: " + verticalPadding);
+        if (DEBUG) {
+            Log.d(TAG, "PagedView.onMeasure(): " + widthSize + ", " + heightSize);
+        }
+        if (DEBUG) {
+            Log.d(TAG, "PagedView.scaledSize: " + scaledWidthSize + ", " + scaledHeightSize);
+        }
+        if (DEBUG) {
+            Log.d(TAG, "PagedView.parentSize: " + parentWidthSize + ", " + parentHeightSize);
+        }
+        if (DEBUG) {
+            Log.d(TAG, "PagedView.horizontalPadding: " + horizontalPadding);
+        }
+        if (DEBUG) {
+            Log.d(TAG, "PagedView.verticalPadding: " + verticalPadding);
+        }
         final int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             // disallowing padding in paged view (just pass 0)
@@ -929,7 +941,9 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
             return;
         }
 
-        if (DEBUG) Log.d(TAG, "PagedView.onLayout()");
+        if (DEBUG) {
+            Log.d(TAG, "PagedView.onLayout()");
+        }
         final int childCount = getChildCount();
 
         int offsetX = getViewportOffsetX();
@@ -971,7 +985,9 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
                 final int childWidth = child.getMeasuredWidth();
                 final int childHeight = child.getMeasuredHeight();
 
-                if (DEBUG) Log.d(TAG, "\tlayout-child" + i + ": " + childLeft + ", " + childTop);
+                if (DEBUG) {
+                    Log.d(TAG, "\tlayout-child" + i + ": " + childLeft + ", " + childTop);
+                }
                 child.layout(childLeft, childTop,
                         childLeft + child.getMeasuredWidth(), childTop + childHeight);
 
@@ -1121,7 +1137,9 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     }
 
     protected int getChildOffset(int index) {
-        if (index < 0 || index > getChildCount() - 1) return 0;
+        if (index < 0 || index > getChildCount() - 1) {
+            return 0;
+        }
 
         int offset = getPageAt(index).getLeft() - getViewportOffsetX();
 
@@ -1215,7 +1233,9 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
                 // Draw all the children, leaving the drag view for last
                 for (int i = pageCount - 1; i >= 0; i--) {
                     final View v = getPageAt(i);
-                    if (v == mDragView) continue;
+                    if (v == mDragView) {
+                        continue;
+                    }
                     if (mForceDrawAllChildrenNextFrame ||
                                (leftScreen <= i && i <= rightScreen && shouldDrawChild(v))) {
                         drawChild(canvas, v, drawingTime);
@@ -1376,7 +1396,9 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
         acquireVelocityTrackerAndAddMovement(ev);
 
         // Skip touch handling if there are no pages to swipe
-        if (getChildCount() <= 0) return super.onInterceptTouchEvent(ev);
+        if (getChildCount() <= 0) {
+            return super.onInterceptTouchEvent(ev);
+        }
 
         /*
          * Shortcut the most recurring case: the user is in the dragging
@@ -1489,12 +1511,16 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     protected void determineScrollingStart(MotionEvent ev, float touchSlopScale) {
         // Disallow scrolling if we don't have a valid pointer index
         final int pointerIndex = ev.findPointerIndex(mActivePointerId);
-        if (pointerIndex == -1) return;
+        if (pointerIndex == -1) {
+            return;
+        }
 
         // Disallow scrolling if we started the gesture from outside the viewport
         final float x = ev.getX(pointerIndex);
         final float y = ev.getY(pointerIndex);
-        if (!isTouchPointInViewportWithBuffer((int) x, (int) y)) return;
+        if (!isTouchPointInViewportWithBuffer((int) x, (int) y)) {
+            return;
+        }
 
         final int xDiff = (int) Math.abs(x - mLastMotionX);
         final int yDiff = (int) Math.abs(y - mLastMotionY);
@@ -1610,7 +1636,9 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
         // over scrolled half the size of the screen
         float f = OVERSCROLL_ACCELERATE_FACTOR * (amount / screenSize);
 
-        if (f == 0) return 0;
+        if (f == 0) {
+            return 0;
+        }
 
         // Clamp this factor, f, to -1 < f < 1
         if (Math.abs(f) >= 1) {
@@ -1624,7 +1652,9 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
 
         float f = (amount / screenSize);
 
-        if (f == 0) return;
+        if (f == 0) {
+            return;
+        }
         f = f / (Math.abs(f)) * (overScrollInfluenceCurve(Math.abs(f)));
 
         // Clamp this factor, f, to -1 < f < 1
@@ -1724,7 +1754,9 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
         super.onTouchEvent(ev);
 
         // Skip touch handling if there are no pages to swipe
-        if (getChildCount() <= 0) return super.onTouchEvent(ev);
+        if (getChildCount() <= 0) {
+            return super.onTouchEvent(ev);
+        }
 
         acquireVelocityTrackerAndAddMovement(ev);
 
@@ -1761,7 +1793,9 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
                 // Scroll to follow the motion event
                 final int pointerIndex = ev.findPointerIndex(mActivePointerId);
 
-                if (pointerIndex == -1) return true;
+                if (pointerIndex == -1) {
+                    return true;
+                }
 
                 final float x = ev.getX(pointerIndex);
                 final float deltaX = mLastMotionX + mLastMotionXRemainder - x;
@@ -1776,7 +1810,9 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
                     mSmoothingTime = System.nanoTime() / NANOTIME_DIV;
                     if (!mDeferScrollUpdate) {
                         scrollBy((int) deltaX, 0);
-                        if (DEBUG) Log.d(TAG, "onTouchEvent().Scrolling: " + deltaX);
+                        if (DEBUG) {
+                            Log.d(TAG, "onTouchEvent().Scrolling: " + deltaX);
+                        }
                     } else {
                         invalidate();
                     }
@@ -1805,10 +1841,18 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
                         (int) mParentDownMotionX, (int) mParentDownMotionY);
                 setPageHoveringOverDeleteDropTarget(dragViewIndex, isHoveringOverDelete);
 
-                if (DEBUG) Log.d(TAG, "mLastMotionX: " + mLastMotionX);
-                if (DEBUG) Log.d(TAG, "mLastMotionY: " + mLastMotionY);
-                if (DEBUG) Log.d(TAG, "mParentDownMotionX: " + mParentDownMotionX);
-                if (DEBUG) Log.d(TAG, "mParentDownMotionY: " + mParentDownMotionY);
+                if (DEBUG) {
+                    Log.d(TAG, "mLastMotionX: " + mLastMotionX);
+                }
+                if (DEBUG) {
+                    Log.d(TAG, "mLastMotionY: " + mLastMotionY);
+                }
+                if (DEBUG) {
+                    Log.d(TAG, "mParentDownMotionX: " + mParentDownMotionX);
+                }
+                if (DEBUG) {
+                    Log.d(TAG, "mParentDownMotionY: " + mParentDownMotionY);
+                }
 
                 final int pageUnderPointIndex = getNearestHoverOverPageIndex();
                 if (pageUnderPointIndex > -1 && pageUnderPointIndex != indexOfChild(mDragView) &&
@@ -2286,11 +2330,15 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     }
 
     public void scrollLeft() {
-        if (getNextPage() > 0) snapToPage(getNextPage() - 1);
+        if (getNextPage() > 0) {
+            snapToPage(getNextPage() - 1);
+        }
     }
 
     public void scrollRight() {
-        if (getNextPage() < getChildCount() -1) snapToPage(getNextPage() + 1);
+        if (getNextPage() < getChildCount() -1) {
+            snapToPage(getNextPage() + 1);
+        }
     }
 
     public int getPageForView(View v) {
@@ -2367,8 +2415,10 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
             if (page < count) {
                 int lowerPageBound = getAssociatedLowerPageBound(page);
                 int upperPageBound = getAssociatedUpperPageBound(page);
-                if (DEBUG) Log.d(TAG, "loadAssociatedPages: " + lowerPageBound + "/"
-                        + upperPageBound);
+                if (DEBUG) {
+                    Log.d(TAG, "loadAssociatedPages: " + lowerPageBound + "/"
+                            + upperPageBound);
+                }
                 // First, clear any pages that should no longer be loaded
                 for (int i = 0; i < count; ++i) {
                     Page layout = (Page) getPageAt(i);
@@ -2510,7 +2560,9 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     public boolean startReordering(View v) {
         int dragViewIndex = indexOfChild(v);
 
-        if (mTouchState != TOUCH_STATE_REST || dragViewIndex == -1) return false;
+        if (mTouchState != TOUCH_STATE_REST || dragViewIndex == -1) {
+            return false;
+        }
 
         mTempVisiblePagesRange[0] = 0;
         mTempVisiblePagesRange[1] = getPageCount() - 1;
@@ -2542,7 +2594,9 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     void endReordering() {
         // For simplicity, we call endReordering sometimes even if reordering was never started.
         // In that case, we don't want to do anything.
-        if (!mReorderingStarted) return;
+        if (!mReorderingStarted) {
+            return;
+        }
         mReorderingStarted = false;
 
         // If we haven't flung-to-delete the current child, then we just animate the drag view

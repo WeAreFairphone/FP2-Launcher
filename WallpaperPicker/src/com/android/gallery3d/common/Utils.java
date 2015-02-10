@@ -62,7 +62,9 @@ public class Utils {
 
     // Throws NullPointerException if the input is null.
     public static <T> T checkNotNull(T object) {
-        if (object == null) throw new NullPointerException();
+        if (object == null) {
+            throw new NullPointerException();
+        }
         return object;
     }
 
@@ -77,7 +79,9 @@ public class Utils {
     // Throws IllegalArgumentException if the input is <= 0 or
     // the answer overflows.
     public static int nextPowerOf2(int n) {
-        if (n <= 0 || n > (1 << 30)) throw new IllegalArgumentException("n is invalid: " + n);
+        if (n <= 0 || n > (1 << 30)) {
+            throw new IllegalArgumentException("n is invalid: " + n);
+        }
         n -= 1;
         n |= n >> 16;
         n |= n >> 8;
@@ -91,28 +95,42 @@ public class Utils {
     // Returns the input if it is already power of 2.
     // Throws IllegalArgumentException if the input is <= 0
     public static int prevPowerOf2(int n) {
-        if (n <= 0) throw new IllegalArgumentException();
+        if (n <= 0) {
+            throw new IllegalArgumentException();
+        }
         return Integer.highestOneBit(n);
     }
 
     // Returns the input value x clamped to the range [min, max].
     public static int clamp(int x, int min, int max) {
-        if (x > max) return max;
-        if (x < min) return min;
+        if (x > max) {
+            return max;
+        }
+        if (x < min) {
+            return min;
+        }
         return x;
     }
 
     // Returns the input value x clamped to the range [min, max].
     public static float clamp(float x, float min, float max) {
-        if (x > max) return max;
-        if (x < min) return min;
+        if (x > max) {
+            return max;
+        }
+        if (x < min) {
+            return min;
+        }
         return x;
     }
 
     // Returns the input value x clamped to the range [min, max].
     public static long clamp(long x, long min, long max) {
-        if (x > max) return max;
-        if (x < min) return min;
+        if (x > max) {
+            return max;
+        }
+        if (x < min) {
+            return min;
+        }
         return x;
     }
 
@@ -171,7 +189,9 @@ public class Utils {
     }
 
     public static void closeSilently(Closeable c) {
-        if (c == null) return;
+        if (c == null) {
+            return;
+        }
         try {
             c.close();
         } catch (IOException t) {
@@ -186,7 +206,9 @@ public class Utils {
     public static int ceilLog2(float value) {
         int i;
         for (i = 0; i < 31; i++) {
-            if ((1 << i) >= value) break;
+            if ((1 << i) >= value) {
+                break;
+            }
         }
         return i;
     }
@@ -194,14 +216,18 @@ public class Utils {
     public static int floorLog2(float value) {
         int i;
         for (i = 0; i < 31; i++) {
-            if ((1 << i) > value) break;
+            if ((1 << i) > value) {
+                break;
+            }
         }
         return i - 1;
     }
 
     public static void closeSilently(ParcelFileDescriptor fd) {
         try {
-            if (fd != null) fd.close();
+            if (fd != null) {
+                fd.close();
+            }
         } catch (Throwable t) {
             Log.w(TAG, "fail to close", t);
         }
@@ -209,7 +235,9 @@ public class Utils {
 
     public static void closeSilently(Cursor cursor) {
         try {
-            if (cursor != null) cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         } catch (Throwable t) {
             Log.w(TAG, "fail to close", t);
         }
@@ -221,8 +249,12 @@ public class Utils {
         // We make the difference in the range of [-179, 180], this is the
         // shortest path to change source to target.
         float diff = target - source;
-        if (diff < 0) diff += 360f;
-        if (diff > 180) diff -= 360f;
+        if (diff < 0) {
+            diff += 360f;
+        }
+        if (diff > 180) {
+            diff -= 360f;
+        }
 
         float result = source + diff * progress;
         return result < 0 ? result + 360f : result;
@@ -238,7 +270,9 @@ public class Utils {
     }
 
     public static float parseFloatSafely(String content, float defaultValue) {
-        if (content == null) return defaultValue;
+        if (content == null) {
+            return defaultValue;
+        }
         try {
             return Float.parseFloat(content);
         } catch (NumberFormatException e) {
@@ -247,7 +281,9 @@ public class Utils {
     }
 
     public static int parseIntSafely(String content, int defaultValue) {
-        if (content == null) return defaultValue;
+        if (content == null) {
+            return defaultValue;
+        }
         try {
             return Integer.parseInt(content);
         } catch (NumberFormatException e) {
@@ -327,7 +363,9 @@ public class Utils {
     // for debugging build (i.e., 'eng' and 'userdebug') and returns a mask ("****")
     // in release build to protect the information (e.g. for privacy issue).
     public static String maskDebugInfo(Object info) {
-        if (info == null) return null;
+        if (info == null) {
+            return null;
+        }
         String s = info.toString();
         int length = Math.min(s.length(), MASK_STRING.length());
         return IS_DEBUG_BUILD ? s : MASK_STRING.substring(0, length);

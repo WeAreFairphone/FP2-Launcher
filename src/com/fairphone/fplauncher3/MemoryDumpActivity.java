@@ -113,7 +113,9 @@ public class MemoryDumpActivity extends Activity {
 
         String zipfile = zipUp(paths);
 
-        if (zipfile == null) return;
+        if (zipfile == null) {
+            return;
+        }
 
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("application/zip");
@@ -160,7 +162,9 @@ public class MemoryDumpActivity extends Activity {
                 dumpHprofAndShare(context,
                         ((MemoryTracker.MemoryTrackerInterface) service).getService());
                 context.unbindService(this);
-                if (andThen != null) andThen.run();
+                if (andThen != null) {
+                    andThen.run();
+                }
             }
 
             public void onServiceDisconnected(ComponentName className) {

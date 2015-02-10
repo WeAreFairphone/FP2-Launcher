@@ -48,7 +48,9 @@ public class WeightWatcher extends LinearLayout {
 
     static int indexOf(int[] a, int x) {
         for (int i=0; i<a.length; i++) {
-            if (a[i] == x) return i;
+            if (a[i] == x) {
+                return i;
+            }
         }
         return -1;
     }
@@ -67,14 +69,17 @@ public class WeightWatcher extends LinearLayout {
                     int[] pids = mMemoryService.getTrackedProcesses();
 
                     final int N = getChildCount();
-                    if (pids.length != N) initViews();
-                    else for (int i=0; i<N; i++) {
-                        ProcessWatcher pw = ((ProcessWatcher) getChildAt(i));
-                        if (indexOf(pids, pw.getPid()) < 0) {
-                            initViews();
-                            break;
+                    if (pids.length != N) {
+                        initViews();
+                    } else {
+                        for (int i = 0; i < N; i++) {
+                            ProcessWatcher pw = ((ProcessWatcher) getChildAt(i));
+                            if (indexOf(pids, pw.getPid()) < 0) {
+                                initViews();
+                                break;
+                            }
+                            pw.update();
                         }
-                        pw.update();
                     }
                     mHandler.sendEmptyMessageDelayed(MSG_UPDATE, UPDATE_RATE);
                     break;
@@ -247,7 +252,9 @@ public class WeightWatcher extends LinearLayout {
                 int w = c.getWidth();
                 int h = c.getHeight();
 
-                if (mMemInfo == null) return;
+                if (mMemInfo == null) {
+                    return;
+                }
 
                 final int N = mMemInfo.pss.length;
                 final float barStep = (float) w / N;

@@ -509,8 +509,12 @@ public class WidgetPreviewLoader {
     public Bitmap generateWidgetPreview(AppWidgetProviderInfo info, int cellHSpan, int cellVSpan,
             int maxPreviewWidth, int maxPreviewHeight, Bitmap preview, int[] preScaledWidthOut) {
         // Load the preview image if possible
-        if (maxPreviewWidth < 0) maxPreviewWidth = Integer.MAX_VALUE;
-        if (maxPreviewHeight < 0) maxPreviewHeight = Integer.MAX_VALUE;
+        if (maxPreviewWidth < 0) {
+            maxPreviewWidth = Integer.MAX_VALUE;
+        }
+        if (maxPreviewHeight < 0) {
+            maxPreviewHeight = Integer.MAX_VALUE;
+        }
 
         Drawable drawable = null;
         if (info.previewImage != 0) {
@@ -532,8 +536,12 @@ public class WidgetPreviewLoader {
             previewHeight = drawable.getIntrinsicHeight();
         } else {
             // Generate a preview image if we couldn't load one
-            if (cellHSpan < 1) cellHSpan = 1;
-            if (cellVSpan < 1) cellVSpan = 1;
+            if (cellHSpan < 1) {
+                cellHSpan = 1;
+            }
+            if (cellVSpan < 1) {
+                cellVSpan = 1;
+            }
 
             // This Drawable is not directly drawn, so there's no need to mutate it.
             BitmapDrawable previewDrawable = (BitmapDrawable) mContext.getResources()

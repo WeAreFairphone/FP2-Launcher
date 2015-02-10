@@ -56,7 +56,9 @@ public class RawTexture extends BasicTexture {
 
     @Override
     protected boolean onBind(GLCanvas canvas) {
-        if (isLoaded()) return true;
+        if (isLoaded()) {
+            return true;
+        }
         Log.w(TAG, "lost the content due to context change");
         return false;
     }

@@ -106,7 +106,9 @@ public class PackageInstallerCompatVL extends PackageInstallerCompat {
     }
 
     private void replayUpdates(PackageInstallInfo newInfo) {
-        if (DEBUG) Log.d(TAG, "updates resumed");
+        if (DEBUG) {
+            Log.d(TAG, "updates resumed");
+        }
         if (!mResumed || !mBound) {
             // Not yet ready
             return;
@@ -119,7 +121,9 @@ public class PackageInstallerCompatVL extends PackageInstallerCompat {
         LauncherAppState app = LauncherAppState.getInstanceNoCreate();
         if (app == null) {
             // Try again later
-            if (DEBUG) Log.d(TAG, "app is null, delaying send");
+            if (DEBUG) {
+                Log.d(TAG, "app is null, delaying send");
+            }
             return;
         }
 

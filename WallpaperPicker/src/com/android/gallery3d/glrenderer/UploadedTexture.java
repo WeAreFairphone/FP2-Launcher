@@ -95,7 +95,9 @@ public abstract class UploadedTexture extends BasicTexture {
 
         @Override
         public boolean equals(Object object) {
-            if (!(object instanceof BorderKey)) return false;
+            if (!(object instanceof BorderKey)) {
+                return false;
+            }
             BorderKey o = (BorderKey) object;
             return vertical == o.vertical
                     && config == o.config && length == o.length;
@@ -151,13 +153,17 @@ public abstract class UploadedTexture extends BasicTexture {
 
     @Override
     public int getWidth() {
-        if (mWidth == UNSPECIFIED) getBitmap();
+        if (mWidth == UNSPECIFIED) {
+            getBitmap();
+        }
         return mWidth;
     }
 
     @Override
     public int getHeight() {
-        if (mWidth == UNSPECIFIED) getBitmap();
+        if (mWidth == UNSPECIFIED) {
+            getBitmap();
+        }
         return mHeight;
     }
 
@@ -166,7 +172,9 @@ public abstract class UploadedTexture extends BasicTexture {
     protected abstract void onFreeBitmap(Bitmap bitmap);
 
     protected void invalidateContent() {
-        if (mBitmap != null) freeBitmap();
+        if (mBitmap != null) {
+            freeBitmap();
+        }
         mContentValid = false;
         mWidth = UNSPECIFIED;
         mHeight = UNSPECIFIED;
@@ -293,6 +301,8 @@ public abstract class UploadedTexture extends BasicTexture {
     @Override
     public void recycle() {
         super.recycle();
-        if (mBitmap != null) freeBitmap();
+        if (mBitmap != null) {
+            freeBitmap();
+        }
     }
 }

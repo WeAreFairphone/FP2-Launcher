@@ -55,7 +55,9 @@ public class PackageInstallerCompatV16 extends PackageInstallerCompat {
     @Override
     public void onPause() {
         mUseQueue = true;
-        if (DEBUG) Log.d(TAG, "updates paused");
+        if (DEBUG) {
+            Log.d(TAG, "updates paused");
+        }
     }
 
     @Override
@@ -78,11 +80,15 @@ public class PackageInstallerCompatV16 extends PackageInstallerCompat {
     public void onStop() { }
 
     private void replayUpdates() {
-        if (DEBUG) Log.d(TAG, "updates resumed");
+        if (DEBUG) {
+            Log.d(TAG, "updates resumed");
+        }
         LauncherAppState app = LauncherAppState.getInstanceNoCreate();
         if (app == null) {
             mReplayPending = true; // try again later
-            if (DEBUG) Log.d(TAG, "app is null, delaying send");
+            if (DEBUG) {
+                Log.d(TAG, "app is null, delaying send");
+            }
             return;
         }
         mReplayPending = false;
@@ -110,12 +116,15 @@ public class PackageInstallerCompatV16 extends PackageInstallerCompat {
         if (state == STATUS_INSTALLED) {
             // no longer necessary to track this package
             editor.remove(packageName);
-            if (DEBUG) Log.d(TAG, "no longer tracking " + packageName);
+            if (DEBUG) {
+                Log.d(TAG, "no longer tracking " + packageName);
+            }
         } else {
             editor.putString(packageName, infoToJson(installInfo));
-            if (DEBUG)
+            if (DEBUG) {
                 Log.d(TAG, "saved state: " + infoToJson(installInfo)
                         + " for package: " + packageName);
+            }
 
         }
         editor.commit();
@@ -135,7 +144,9 @@ public class PackageInstallerCompatV16 extends PackageInstallerCompat {
     private void sendUpdate(LauncherAppState app, ArrayList<PackageInstallInfo> updates) {
         if (app == null) {
             mReplayPending = true; // try again later
-            if (DEBUG) Log.d(TAG, "app is null, delaying send");
+            if (DEBUG) {
+                Log.d(TAG, "app is null, delaying send");
+            }
         } else {
             app.setPackageState(updates);
         }

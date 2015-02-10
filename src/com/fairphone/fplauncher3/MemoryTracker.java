@@ -104,7 +104,9 @@ public class MemoryTracker extends Service {
         synchronized (mLock) {
             final Long lpid = new Long(pid);
 
-            if (mPids.contains(lpid)) return;
+            if (mPids.contains(lpid)) {
+                return;
+            }
 
             mPids.add(lpid);
             updatePidsArrayL();
@@ -139,8 +141,12 @@ public class MemoryTracker extends Service {
                 info.head = (info.head+1) % info.pss.length;
                 info.pss[info.head] = info.currentPss = dinfo.getTotalPss();
                 info.uss[info.head] = info.currentUss = dinfo.getTotalPrivateDirty();
-                if (info.currentPss > info.max) info.max = info.currentPss;
-                if (info.currentUss > info.max) info.max = info.currentUss;
+                if (info.currentPss > info.max) {
+                    info.max = info.currentPss;
+                }
+                if (info.currentUss > info.max) {
+                    info.max = info.currentUss;
+                }
                 // Log.v(TAG, "update: pid " + pid + " pss=" + info.currentPss + " uss=" + info.currentUss);
                 if (info.currentPss == 0) {
                     Log.v(TAG, "update: pid " + pid + " has pss=0, it probably died");

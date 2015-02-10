@@ -188,7 +188,9 @@ public final class Utilities {
             if (debug) {
                 // draw a big box for the icon for debugging
                 canvas.drawColor(sColors[sColorIndex]);
-                if (++sColorIndex >= sColors.length) sColorIndex = 0;
+                if (++sColorIndex >= sColors.length) {
+                    sColorIndex = 0;
+                }
                 Paint debugPaint = new Paint();
                 debugPaint.setColor(0xffcccc00);
                 canvas.drawRect(left, top, left+width, top+height, debugPaint);

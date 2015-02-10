@@ -519,8 +519,9 @@ public class Workspace extends SmoothPagedView
             View child = dragLayer.getChildAt(i);
             if (child instanceof Folder) {
                 Folder folder = (Folder) child;
-                if (folder.getInfo().opened)
+                if (folder.getInfo().opened) {
                     return folder;
+                }
             }
         }
         return null;
@@ -718,10 +719,14 @@ public class Workspace extends SmoothPagedView
             return;
         }
 
-        if (hasExtraEmptyScreen() || mScreenOrder.isEmpty()) return;
+        if (hasExtraEmptyScreen() || mScreenOrder.isEmpty()) {
+            return;
+        }
         long finalScreenId = mScreenOrder.get(mScreenOrder.size() - 1);
 
-        if (finalScreenId == CUSTOM_CONTENT_SCREEN_ID) return;
+        if (finalScreenId == CUSTOM_CONTENT_SCREEN_ID) {
+            return;
+        }
         CellLayout finalScreen = mWorkspaceScreens.get(finalScreenId);
 
         // If the final screen is empty, convert it to the extra empty screen
@@ -1137,13 +1142,17 @@ public class Workspace extends SmoothPagedView
 
     @Override
     protected void determineScrollingStart(MotionEvent ev) {
-        if (!isFinishedSwitchingState()) return;
+        if (!isFinishedSwitchingState()) {
+            return;
+        }
 
         float deltaX = ev.getX() - mXDown;
         float absDeltaX = Math.abs(deltaX);
         float absDeltaY = Math.abs(ev.getY() - mYDown);
 
-        if (Float.compare(absDeltaX, 0f) == 0) return;
+        if (Float.compare(absDeltaX, 0f) == 0) {
+            return;
+        }
 
         float slope = absDeltaY / absDeltaX;
         float theta = (float) Math.atan(slope);
@@ -1484,8 +1493,12 @@ public class Workspace extends SmoothPagedView
 
     void showOutlines() {
         if (!workspaceInModalState() && !mIsSwitchingState) {
-            if (mChildrenOutlineFadeOutAnimation != null) mChildrenOutlineFadeOutAnimation.cancel();
-            if (mChildrenOutlineFadeInAnimation != null) mChildrenOutlineFadeInAnimation.cancel();
+            if (mChildrenOutlineFadeOutAnimation != null) {
+                mChildrenOutlineFadeOutAnimation.cancel();
+            }
+            if (mChildrenOutlineFadeInAnimation != null) {
+                mChildrenOutlineFadeInAnimation.cancel();
+            }
             mChildrenOutlineFadeInAnimation = LauncherAnimUtils.ofFloat(this, "childrenOutlineAlpha", 1.0f);
             mChildrenOutlineFadeInAnimation.setDuration(CHILDREN_OUTLINE_FADE_IN_DURATION);
             mChildrenOutlineFadeInAnimation.start();
@@ -1494,8 +1507,12 @@ public class Workspace extends SmoothPagedView
 
     void hideOutlines() {
         if (!workspaceInModalState() && !mIsSwitchingState) {
-            if (mChildrenOutlineFadeInAnimation != null) mChildrenOutlineFadeInAnimation.cancel();
-            if (mChildrenOutlineFadeOutAnimation != null) mChildrenOutlineFadeOutAnimation.cancel();
+            if (mChildrenOutlineFadeInAnimation != null) {
+                mChildrenOutlineFadeInAnimation.cancel();
+            }
+            if (mChildrenOutlineFadeOutAnimation != null) {
+                mChildrenOutlineFadeOutAnimation.cancel();
+            }
             mChildrenOutlineFadeOutAnimation = LauncherAnimUtils.ofFloat(this, "childrenOutlineAlpha", 0.0f);
             mChildrenOutlineFadeOutAnimation.setDuration(CHILDREN_OUTLINE_FADE_OUT_DURATION);
             mChildrenOutlineFadeOutAnimation.setStartDelay(CHILDREN_OUTLINE_FADE_OUT_DELAY);
@@ -1621,7 +1638,9 @@ public class Workspace extends SmoothPagedView
             progress = Math.max(0, progress);
         }
 
-        if (Float.compare(progress, mLastCustomContentScrollProgress) == 0) return;
+        if (Float.compare(progress, mLastCustomContentScrollProgress) == 0) {
+            return;
+        }
 
         CellLayout cc = mWorkspaceScreens.get(CUSTOM_CONTENT_SCREEN_ID);
         if (progress > 0 && cc.getVisibility() != VISIBLE && !workspaceInModalState()) {
@@ -2028,7 +2047,9 @@ public class Workspace extends SmoothPagedView
 
     private void initAnimationArrays() {
         final int childCount = getChildCount();
-        if (mLastChildCount == childCount) return;
+        if (mLastChildCount == childCount) {
+            return;
+        }
 
         mOldBackgroundAlphas = new float[childCount];
         mOldAlphas = new float[childCount];
@@ -2757,7 +2778,9 @@ public class Workspace extends SmoothPagedView
             if (dropTargetLayout == null) {
                 return false;
             }
-            if (!transitionStateShouldAllowDrop()) return false;
+            if (!transitionStateShouldAllowDrop()) {
+                return false;
+            }
 
             mDragViewVisualCenter = getDragViewVisualCenter(d.x, d.y, d.xOffset, d.yOffset,
                     d.dragView, mDragViewVisualCenter);
@@ -2822,7 +2845,9 @@ public class Workspace extends SmoothPagedView
 
     boolean willCreateUserFolder(ItemInfo info, CellLayout target, int[] targetCell, float
             distance, boolean considerTimeout) {
-        if (distance > mMaxDistanceForFolderCreation) return false;
+        if (distance > mMaxDistanceForFolderCreation) {
+            return false;
+        }
         View dropOverView = target.getChildAt(targetCell[0], targetCell[1]);
 
         if (dropOverView != null) {
@@ -2851,7 +2876,9 @@ public class Workspace extends SmoothPagedView
 
     boolean willAddToExistingUserFolder(Object dragInfo, CellLayout target, int[] targetCell,
             float distance) {
-        if (distance > mMaxDistanceForFolderCreation) return false;
+        if (distance > mMaxDistanceForFolderCreation) {
+            return false;
+        }
         View dropOverView = target.getChildAt(targetCell[0], targetCell[1]);
 
         if (dropOverView != null) {
@@ -2873,7 +2900,9 @@ public class Workspace extends SmoothPagedView
     boolean createUserFolderIfNecessary(View newView, long container, CellLayout target,
             int[] targetCell, float distance, boolean external, DragView dragView,
             Runnable postAnimationRunnable) {
-        if (distance > mMaxDistanceForFolderCreation) return false;
+        if (distance > mMaxDistanceForFolderCreation) {
+            return false;
+        }
         View v = target.getChildAt(targetCell[0], targetCell[1]);
 
         boolean hasntMoved = false;
@@ -2883,7 +2912,9 @@ public class Workspace extends SmoothPagedView
                     mDragInfo.cellY == targetCell[1]) && (cellParent == target);
         }
 
-        if (v == null || hasntMoved || !mCreateUserFolderOnDrop) return false;
+        if (v == null || hasntMoved || !mCreateUserFolderOnDrop) {
+            return false;
+        }
         mCreateUserFolderOnDrop = false;
         final long screenId = (targetCell == null) ? mDragInfo.screenId : getIdForScreen(target);
 
@@ -2925,10 +2956,14 @@ public class Workspace extends SmoothPagedView
 
     boolean addToExistingFolderIfNecessary(View newView, CellLayout target, int[] targetCell,
             float distance, DragObject d, boolean external) {
-        if (distance > mMaxDistanceForFolderCreation) return false;
+        if (distance > mMaxDistanceForFolderCreation) {
+            return false;
+        }
 
         View dropOverView = target.getChildAt(targetCell[0], targetCell[1]);
-        if (!mAddToExistingFolderOnDrop) return false;
+        if (!mAddToExistingFolderOnDrop) {
+            return false;
+        }
         mAddToExistingFolderOnDrop = false;
 
         if (dropOverView instanceof FolderIcon) {
@@ -3478,7 +3513,9 @@ public class Workspace extends SmoothPagedView
 
     public void onDragOver(DragObject d) {
         // Skip drag over events while we are dragging over side pages
-        if (mInScrollArea || !transitionStateShouldAllowDrop()) return;
+        if (mInScrollArea || !transitionStateShouldAllowDrop()) {
+            return;
+        }
 
         Rect r = new Rect();
         CellLayout layout = null;
@@ -3491,7 +3528,9 @@ public class Workspace extends SmoothPagedView
         }
 
         // Ensure that we have proper spans for the item that we are dropping
-        if (item.spanX < 0 || item.spanY < 0) throw new RuntimeException("Improper spans found");
+        if (item.spanX < 0 || item.spanY < 0) {
+            throw new RuntimeException("Improper spans found");
+        }
         mDragViewVisualCenter = getDragViewVisualCenter(d.x, d.y, d.xOffset, d.yOffset,
             d.dragView, mDragViewVisualCenter);
 
