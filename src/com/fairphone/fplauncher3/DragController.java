@@ -45,7 +45,7 @@ public class DragController {
 	// the menu show where it shows the menu and does not scrolling
 	private static enum MovementState {
 		NORMAL, MENU_SHOW
-	};
+	}
 
     /** Indicates the drag is a move.  */
     public static int DRAG_ACTION_MOVE = 0;

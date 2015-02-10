@@ -2558,7 +2558,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
                 public void run() {
                     onCompleteRunnable.run();
                     enableFreeScroll();
-                };
+                }
             };
 
             mPostReorderingPreZoomInRemainingAnimationCount =
@@ -2632,7 +2632,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
             mVelocity.y *= mFriction;
             mPrevTime = curTime;
         }
-    };
+    }
 
     private static final int ANIM_TAG_KEY = 100;
 

@@ -199,7 +199,8 @@ public class Workspace extends SmoothPagedView
     // State variable that indicates whether the pages are small (ie when you're
     // in all apps or customize mode)
 
-    enum State { NORMAL, NORMAL_HIDDEN, SPRING_LOADED, OVERVIEW, OVERVIEW_HIDDEN};
+    enum State { NORMAL, NORMAL_HIDDEN, SPRING_LOADED, OVERVIEW, OVERVIEW_HIDDEN}
+
     private State mState = State.NORMAL;
     private boolean mIsSwitchingState = false;
 
@@ -3992,7 +3993,7 @@ public class Workspace extends SmoothPagedView
             if (animationType == ANIMATE_INTO_POSITION_AND_REMAIN) {
                 endStyle = DragLayer.ANIMATION_END_REMAIN_VISIBLE;
             } else {
-                endStyle = DragLayer.ANIMATION_END_DISAPPEAR;;
+                endStyle = DragLayer.ANIMATION_END_DISAPPEAR;
             }
 
             Runnable onComplete = new Runnable() {

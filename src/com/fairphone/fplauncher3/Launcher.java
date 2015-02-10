@@ -234,7 +234,8 @@ public class Launcher extends Activity
     public static final String USER_HAS_MIGRATED = "launcher.user_migrated_from_old_data";
 
     /** The different states that Launcher can be in. */
-    private enum State { NONE, WORKSPACE, APPS_CUSTOMIZE, APPS_CUSTOMIZE_SPRING_LOADED };
+    private enum State { NONE, WORKSPACE, APPS_CUSTOMIZE, APPS_CUSTOMIZE_SPRING_LOADED }
+
     private State mState = State.WORKSPACE;
     private AnimatorSet mStateAnimation;
 
@@ -3097,7 +3098,7 @@ public class Launcher extends Activity
         View itemUnderLongClick = null;
         if (v.getTag() instanceof ItemInfo) {
             ItemInfo info = (ItemInfo) v.getTag();
-            longClickCellInfo = new CellLayout.CellInfo(v, info);;
+            longClickCellInfo = new CellLayout.CellInfo(v, info);
             itemUnderLongClick = longClickCellInfo.cell;
             resetAddInfo();
         }

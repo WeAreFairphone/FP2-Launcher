@@ -72,7 +72,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
     public static enum MenuSide
     {
         LEFT_SIDE, RIGHT_SIDE
-    };
+    }
 
     public EdgeSwipeMenu(Context context, Launcher launcher, DragController dragController, ViewGroup parent)
     {

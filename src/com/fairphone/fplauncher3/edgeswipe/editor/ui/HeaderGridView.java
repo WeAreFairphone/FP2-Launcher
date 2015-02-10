@@ -196,8 +196,8 @@ public class HeaderGridView extends android.widget.GridView implements OnScrollL
             }
             return convert;
         }
-    };
-    
+    }
+
     /**
      * Adds the header view
      * 

@@ -3635,7 +3635,8 @@ public class LauncherModel extends BroadcastReceiver
             }
             return mCollator.compare(labelA, labelB);
         }
-    };
+    }
+
     public static class WidgetAndShortcutNameComparator implements Comparator<Object> {
         private final AppWidgetManagerCompat mManager;
         private final PackageManager mPackageManager;
@@ -3668,7 +3669,7 @@ public class LauncherModel extends BroadcastReceiver
             }
             return mCollator.compare(labelA, labelB);
         }
-    };
+    }
 
     static boolean isValidProvider(AppWidgetProviderInfo provider) {
         return (provider != null) && (provider.provider != null)

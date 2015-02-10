@@ -1359,7 +1359,6 @@ public class LauncherProvider extends ContentProvider {
             int type;
             while ((type = parser.next()) != XmlPullParser.START_TAG
                     && type != XmlPullParser.END_DOCUMENT) {
-                ;
             }
 
             if (type != XmlPullParser.START_TAG) {

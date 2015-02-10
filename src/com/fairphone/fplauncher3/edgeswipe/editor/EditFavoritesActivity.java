@@ -70,7 +70,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     public enum Themes
     {
         LIGHT, DARK
-    };
+    }
 
     private AllAppsListAdapter mAllAppsListAdapter;
     private ArrayList<AppInfo> mAllApps;

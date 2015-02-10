@@ -55,7 +55,8 @@ public class MemoryTracker extends Service {
         public long getUptime() {
             return System.currentTimeMillis() - startTime;
         }
-    };
+    }
+
     public final LongSparseArray<ProcessMemInfo> mData = new LongSparseArray<ProcessMemInfo>();
     public final ArrayList<Long> mPids = new ArrayList<Long>();
     private int[] mPidsArray = new int[0];

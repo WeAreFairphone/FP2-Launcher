@@ -22,4 +22,4 @@ public interface EdgeSwipeInterceptorViewListener
     public void onSelectionUpdate(float pointerX, float pointerY);
 
     public void onSelectionFinished(float pointerX, float pointerY);
-};
+}
