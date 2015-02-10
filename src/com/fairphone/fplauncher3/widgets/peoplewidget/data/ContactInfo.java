@@ -222,10 +222,10 @@ public class ContactInfo {
 			Uri uri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI,
 					Uri.encode(nationalNumber));
 
-			String[] projection = new String[] { PhoneLookup.DISPLAY_NAME,
+			String[] projection = { PhoneLookup.DISPLAY_NAME,
 					PhoneLookup.PHOTO_URI, PhoneLookup.TYPE,
 					PhoneLookup.LOOKUP_KEY, PhoneLookup._ID,
-					PhoneLookup.NUMBER, };
+					PhoneLookup.NUMBER };
 			ContentResolver contentResolver = context.getContentResolver();
 			String selection = PhoneLookup.NUMBER + " LIKE %" + number + "%";
 			Cursor cursor = contentResolver.query(uri, projection, selection,

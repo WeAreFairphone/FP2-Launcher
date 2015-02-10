@@ -336,7 +336,7 @@ public class TiledImageView extends FrameLayout {
 
     @SuppressWarnings("unused")
     private static class ColoredTiles implements TileSource {
-        private static final int[] COLORS = new int[] {
+        private static final int[] COLORS = {
             Color.RED,
             Color.BLUE,
             Color.YELLOW,

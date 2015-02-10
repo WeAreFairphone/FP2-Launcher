@@ -37,7 +37,7 @@ public class SmsObserver extends ContentObserver
     {
         super.onChange(selfChange);
 
-        String[] reqCols = new String[] {
+        String[] reqCols = {
                 "_id", "protocol", "type", "address", "body", "date"
         };
 

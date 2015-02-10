@@ -808,7 +808,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
 
         Matrix rotateMatrix = new Matrix();
         rotateMatrix.setRotate(rotation);
-        float[] rotatedBounds = new float[] { bounds.x, bounds.y };
+        float[] rotatedBounds = { bounds.x, bounds.y };
         rotateMatrix.mapPoints(rotatedBounds);
         rotatedBounds[0] = Math.abs(rotatedBounds[0]);
         rotatedBounds[1] = Math.abs(rotatedBounds[1]);

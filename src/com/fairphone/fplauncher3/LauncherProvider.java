@@ -1185,7 +1185,7 @@ public class LauncherProvider extends ContentProvider {
          */
         private void convertWidgets(SQLiteDatabase db) {
             final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
-            final int[] bindSources = new int[] {
+            final int[] bindSources = {
                     Favorites.ITEM_TYPE_WIDGET_CLOCK,
                     Favorites.ITEM_TYPE_WIDGET_PHOTO_FRAME,
                     Favorites.ITEM_TYPE_WIDGET_SEARCH,

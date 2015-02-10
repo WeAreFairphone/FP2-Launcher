@@ -2960,7 +2960,7 @@ public class Workspace extends SmoothPagedView
         int snapScreen = -1;
         boolean resizeOnDrop = false;
         if (d.dragSource != this) {
-            final int[] touchXY = new int[] { (int) mDragViewVisualCenter[0],
+            final int[] touchXY = { (int) mDragViewVisualCenter[0],
                     (int) mDragViewVisualCenter[1] };
             onDropExternal(touchXY, d.dragInfo, dropTargetLayout, false, d);
         } else if (mDragInfo != null) {

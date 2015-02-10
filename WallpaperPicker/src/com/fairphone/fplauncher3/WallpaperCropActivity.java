@@ -390,7 +390,7 @@ public class WallpaperCropActivity extends Activity {
 
         Matrix rotateMatrix = new Matrix();
         rotateMatrix.setRotate(cropRotation);
-        float[] rotatedInSize = new float[] { inSize.x, inSize.y };
+        float[] rotatedInSize = { inSize.x, inSize.y };
         rotateMatrix.mapPoints(rotatedInSize);
         rotatedInSize[0] = Math.abs(rotatedInSize[0]);
         rotatedInSize[1] = Math.abs(rotatedInSize[1]);
@@ -649,7 +649,7 @@ public class WallpaperCropActivity extends Activity {
                         return false;
                     }
 
-                    float[] rotatedBounds = new float[] { bounds.x, bounds.y };
+                    float[] rotatedBounds = { bounds.x, bounds.y };
                     rotateMatrix.mapPoints(rotatedBounds);
                     rotatedBounds[0] = Math.abs(rotatedBounds[0]);
                     rotatedBounds[1] = Math.abs(rotatedBounds[1]);
@@ -758,7 +758,7 @@ public class WallpaperCropActivity extends Activity {
                     return false;
                 }
                 if (mOutWidth > 0 && mOutHeight > 0 || mRotation > 0) {
-                    float[] dimsAfter = new float[] { crop.getWidth(), crop.getHeight() };
+                    float[] dimsAfter = { crop.getWidth(), crop.getHeight() };
                     rotateMatrix.mapPoints(dimsAfter);
                     dimsAfter[0] = Math.abs(dimsAfter[0]);
                     dimsAfter[1] = Math.abs(dimsAfter[1]);
