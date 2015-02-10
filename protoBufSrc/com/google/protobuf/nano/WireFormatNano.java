@@ -43,6 +43,7 @@ import java.io.IOException;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public final class WireFormatNano {
   // Do not allow instantiation.
   private WireFormatNano() {}

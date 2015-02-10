@@ -114,7 +114,7 @@ public class TiledImageRenderer {
 
     // Temp variables to avoid memory allocation
     private final Rect mTileRange = new Rect();
-    private final Rect mActiveRange[] = {new Rect(), new Rect()};
+    private final Rect[] mActiveRange = {new Rect(), new Rect()};
 
     private TileDecoder mTileDecoder;
     private boolean mBackgroundTileUploaded;
@@ -288,7 +288,7 @@ public class TiledImageRenderer {
         fromLevel = Math.max(0, Math.min(fromLevel, mLevelCount - 2));
         endLevel = Math.min(fromLevel + 2, mLevelCount);
 
-        Rect range[] = mActiveRange;
+        Rect[] range = mActiveRange;
         for (int i = fromLevel; i < endLevel; ++i) {
             getRange(range[i - fromLevel], mCenterX, mCenterY, i, mRotation);
         }

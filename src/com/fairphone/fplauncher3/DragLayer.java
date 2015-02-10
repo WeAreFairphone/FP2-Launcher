@@ -562,7 +562,7 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
         Rect r = new Rect();
         getViewRectRelativeToSelf(dragView, r);
 
-        int coord[] = new int[2];
+        int[] coord = new int[2];
         float childScale = child.getScaleX();
         coord[0] = lp.x + (int) (child.getMeasuredWidth() * (1 - childScale) / 2);
         coord[1] = lp.y + (int) (child.getMeasuredHeight() * (1 - childScale) / 2);

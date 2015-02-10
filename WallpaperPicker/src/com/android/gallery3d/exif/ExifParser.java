@@ -679,7 +679,7 @@ class ExifParser {
         switch (tag.getDataType()) {
             case ExifTag.TYPE_UNSIGNED_BYTE:
             case ExifTag.TYPE_UNDEFINED: {
-                byte buf[] = new byte[tag.getComponentCount()];
+                byte[] buf = new byte[tag.getComponentCount()];
                 read(buf);
                 tag.setValue(buf);
             }
@@ -688,7 +688,7 @@ class ExifParser {
                 tag.setValue(readString(tag.getComponentCount()));
                 break;
             case ExifTag.TYPE_UNSIGNED_LONG: {
-                long value[] = new long[tag.getComponentCount()];
+                long[] value = new long[tag.getComponentCount()];
                 for (int i = 0, n = value.length; i < n; i++) {
                     value[i] = readUnsignedLong();
                 }
@@ -696,7 +696,7 @@ class ExifParser {
             }
                 break;
             case ExifTag.TYPE_UNSIGNED_RATIONAL: {
-                Rational value[] = new Rational[tag.getComponentCount()];
+                Rational[] value = new Rational[tag.getComponentCount()];
                 for (int i = 0, n = value.length; i < n; i++) {
                     value[i] = readUnsignedRational();
                 }
@@ -704,7 +704,7 @@ class ExifParser {
             }
                 break;
             case ExifTag.TYPE_UNSIGNED_SHORT: {
-                int value[] = new int[tag.getComponentCount()];
+                int[] value = new int[tag.getComponentCount()];
                 for (int i = 0, n = value.length; i < n; i++) {
                     value[i] = readUnsignedShort();
                 }
@@ -712,7 +712,7 @@ class ExifParser {
             }
                 break;
             case ExifTag.TYPE_LONG: {
-                int value[] = new int[tag.getComponentCount()];
+                int[] value = new int[tag.getComponentCount()];
                 for (int i = 0, n = value.length; i < n; i++) {
                     value[i] = readLong();
                 }
@@ -720,7 +720,7 @@ class ExifParser {
             }
                 break;
             case ExifTag.TYPE_RATIONAL: {
-                Rational value[] = new Rational[tag.getComponentCount()];
+                Rational[] value = new Rational[tag.getComponentCount()];
                 for (int i = 0, n = value.length; i < n; i++) {
                     value[i] = readRational();
                 }

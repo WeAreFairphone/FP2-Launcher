@@ -3442,7 +3442,7 @@ public class Workspace extends SmoothPagedView
     // is the appropriate point to use when determining drop location.
     private float[] getDragViewVisualCenter(int x, int y, int xOffset, int yOffset,
             DragView dragView, float[] recycle) {
-        float res[];
+        float[] res;
         if (recycle == null) {
             res = new float[2];
         } else {
@@ -3798,7 +3798,7 @@ public class Workspace extends SmoothPagedView
                     // widgets/shortcuts/folders in a slightly different way
                     switch (pendingInfo.itemType) {
                     case LauncherSettings.Favorites.ITEM_TYPE_APPWIDGET:
-                        int span[] = new int[2];
+                        int[] span = new int[2];
                         span[0] = item.spanX;
                         span[1] = item.spanY;
                         mLauncher.addAppWidgetFromDrop((PendingAddWidgetInfo) pendingInfo,
@@ -3963,7 +3963,7 @@ public class Workspace extends SmoothPagedView
         mLauncher.getDragLayer().getViewRectRelativeToSelf(dragView, from);
 
         int[] finalPos = new int[2];
-        float scaleXY[] = new float[2];
+        float[] scaleXY = new float[2];
         boolean scalePreview = !(info instanceof PendingAddShortcutInfo);
         getFinalPositionForDropAnimation(finalPos, scaleXY, dragView, cellLayout, info, mTargetCell,
                 external, scalePreview);

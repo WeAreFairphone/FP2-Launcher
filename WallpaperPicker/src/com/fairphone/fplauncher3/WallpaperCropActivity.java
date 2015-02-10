@@ -841,8 +841,8 @@ public class WallpaperCropActivity extends Activity {
             // LUMA MATRIX MxN
             final int M = 5;
             final int N = 10;
-            int lumaMatrix[][] = new int[M][N];
-            int lumaMatrixN[][] = new int[M][N];
+            int[][] lumaMatrix = new int[M][N];
+            int[][] lumaMatrixN = new int[M][N];
             for(int x = 0; x < bmp.getWidth(); x += 3){
                 for(int y = 0; y < bmp.getHeight(); y += 3) {
                     int c = bmp.getPixel(x, y);

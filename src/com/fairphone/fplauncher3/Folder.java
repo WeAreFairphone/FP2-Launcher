@@ -777,7 +777,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     // is the appropriate point to use when determining drop location.
     private float[] getDragViewVisualCenter(int x, int y, int xOffset, int yOffset,
             DragView dragView, float[] recycle) {
-        float res[];
+        float[] res;
         if (recycle == null) {
             res = new float[2];
         } else {

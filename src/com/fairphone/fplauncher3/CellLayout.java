@@ -1385,7 +1385,7 @@ public class CellLayout extends ViewGroup {
      *         nearest the requested location.
      */
     private int[] findNearestArea(int cellX, int cellY, int spanX, int spanY, int[] direction,
-            boolean[][] occupied, boolean blockOccupied[][], int[] result) {
+            boolean[][] occupied, boolean[][] blockOccupied, int[] result) {
         // Keep track of best-scoring drop area
         final int[] bestXY = result != null ? result : new int[2];
         float bestDistance = Float.MAX_VALUE;
@@ -2034,7 +2034,7 @@ public class CellLayout extends ViewGroup {
 
         // We find the nearest cell into which we would place the dragged item, assuming there's
         // nothing in its way.
-        int result[] = new int[2];
+        int[] result = new int[2];
         result = findNearestArea(pixelX, pixelY, spanX, spanY, result);
 
         boolean success = false;
@@ -2471,7 +2471,7 @@ public class CellLayout extends ViewGroup {
     }
 
     int[] performReorder(int pixelX, int pixelY, int minSpanX, int minSpanY, int spanX, int spanY,
-            View dragView, int[] result, int resultSpan[], int mode) {
+            View dragView, int[] result, int[] resultSpan, int mode) {
         // First we determine if things have moved enough to cause a different layout
         result = findNearestArea(pixelX, pixelY, spanX, spanY, result);
 
@@ -2755,7 +2755,7 @@ public class CellLayout extends ViewGroup {
      * The superset of the above two methods
      */
     boolean findCellForSpanThatIntersectsIgnoring(int[] cellXY, int spanX, int spanY,
-            int intersectX, int intersectY, View ignoreView, boolean occupied[][]) {
+            int intersectX, int intersectY, View ignoreView, boolean[][] occupied) {
         // mark space take by ignoreView as available (method checks if ignoreView is null)
         markCellsAsUnoccupiedForView(ignoreView, occupied);
 
@@ -3014,7 +3014,7 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
     public void markCellsAsUnoccupiedForView(View view) {
         markCellsAsUnoccupiedForView(view, mOccupied);
     }
-    public void markCellsAsUnoccupiedForView(View view, boolean occupied[][]) {
+    public void markCellsAsUnoccupiedForView(View view, boolean[][] occupied) {
         if (view == null || view.getParent() != mShortcutsAndWidgets) return;
         LayoutParams lp = (LayoutParams) view.getLayoutParams();
         markCellsForView(lp.cellX, lp.cellY, lp.cellHSpan, lp.cellVSpan, occupied, false);

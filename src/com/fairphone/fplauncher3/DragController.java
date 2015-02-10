@@ -111,11 +111,11 @@ public class DragController {
 
     private InputMethodManager mInputMethodManager;
 
-    private int mLastTouch[] = new int[2];
+    private int[] mLastTouch = new int[2];
     private long mLastTouchUpTime = -1;
     private int mDistanceSinceScroll = 0;
 
-    private int mTmpPoint[] = new int[2];
+    private int[] mTmpPoint = new int[2];
     private Rect mDragLayerRect = new Rect();
 
     protected int mFlingToDeleteThresholdVelocity;

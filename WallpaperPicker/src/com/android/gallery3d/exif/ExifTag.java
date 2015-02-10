@@ -68,7 +68,7 @@ public class ExifTag {
     public static final short TYPE_RATIONAL = 10;
 
     private static Charset US_ASCII = Charset.forName("US-ASCII");
-    private static final int TYPE_TO_SIZE_MAP[] = new int[11];
+    private static final int[] TYPE_TO_SIZE_MAP = new int[11];
     private static final int UNSIGNED_SHORT_MAX = 65535;
     private static final long UNSIGNED_LONG_MAX = 4294967295L;
     private static final long LONG_MAX = Integer.MAX_VALUE;
