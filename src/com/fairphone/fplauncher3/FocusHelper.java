@@ -17,7 +17,6 @@
 package com.fairphone.fplauncher3;
 
 import android.content.res.Configuration;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SoundEffectConstants;
 import android.view.View;

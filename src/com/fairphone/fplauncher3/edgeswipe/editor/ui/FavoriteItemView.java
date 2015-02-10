@@ -3,15 +3,9 @@ package com.fairphone.fplauncher3.edgeswipe.editor.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.TextView;
-
-import com.fairphone.fplauncher3.R;
-import com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView.OnEditFavouritesIconDraggedListener;
 
 public class FavoriteItemView extends TextView {
 

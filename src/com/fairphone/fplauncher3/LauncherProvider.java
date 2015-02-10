@@ -50,7 +50,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.SparseArray;
 
 import com.fairphone.fplauncher3.R;
 import com.fairphone.fplauncher3.AutoInstallsLayout.LayoutParserCallback;

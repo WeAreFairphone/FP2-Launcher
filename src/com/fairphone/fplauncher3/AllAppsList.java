@@ -18,16 +18,11 @@ package com.fairphone.fplauncher3;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 
 import com.fairphone.fplauncher3.compat.LauncherActivityInfoCompat;
 import com.fairphone.fplauncher3.compat.LauncherAppsCompat;
 import com.fairphone.fplauncher3.compat.UserHandleCompat;
 import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
-import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInfoManager;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -20,7 +20,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 
 import com.fairphone.fplauncher3.Utilities;

@@ -38,7 +38,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.fairphone.fplauncher3.R;
-import com.fairphone.fplauncher3.applifecycle.AppDrawerView;
 
 import java.util.ArrayList;
 import java.util.Collections;

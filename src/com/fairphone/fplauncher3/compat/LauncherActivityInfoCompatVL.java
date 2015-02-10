@@ -20,7 +20,6 @@ import android.content.ComponentName;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.LauncherActivityInfo;
 import android.graphics.drawable.Drawable;
-import android.os.UserHandle;
 
 public class LauncherActivityInfoCompatVL extends LauncherActivityInfoCompat {
     private LauncherActivityInfo mLauncherActivityInfo;

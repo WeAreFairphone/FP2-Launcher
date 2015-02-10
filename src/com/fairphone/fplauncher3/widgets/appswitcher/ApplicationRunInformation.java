@@ -26,7 +26,6 @@ import com.fairphone.fplauncher3.R;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 /**
  * Represents the run data for a specific application in the system.

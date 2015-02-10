@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.content.pm.LauncherActivityInfo;
 import android.content.pm.LauncherApps;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.UserHandle;
 
