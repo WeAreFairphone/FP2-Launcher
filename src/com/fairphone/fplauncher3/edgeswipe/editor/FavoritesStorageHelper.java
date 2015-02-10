@@ -39,7 +39,7 @@ public abstract class FavoritesStorageHelper
     private static final String COMPONENT_NAME_DELIMITER = ";";
     private static final String FAVORITES_APPS_SHARED_PREFERENCES_FILE_NAME = "FAVORITES_APPS_SHARED_PREFERENCES_FILE_NAME";
     private static final String FAVORITES_APPS_KEY = "FAVORITES_APPS_KEY";
-	private static int MAX_FAVORITE_APPS = 4;
+	private static final int MAX_FAVORITE_APPS = 4;
 
     /**
      * Load the favorites apps from the shared preferences and get the Android

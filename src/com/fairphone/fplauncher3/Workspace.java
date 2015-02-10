@@ -129,7 +129,7 @@ public class Workspace extends SmoothPagedView
     private final WallpaperManager mWallpaperManager;
     private IBinder mWindowToken;
 
-    private int mOriginalDefaultPage;
+    private final int mOriginalDefaultPage;
     private int mDefaultPage;
 
     private ShortcutAndWidgetContainer mDragSourceInternal;
@@ -139,8 +139,8 @@ public class Workspace extends SmoothPagedView
     final static long EXTRA_EMPTY_SCREEN_ID = -201;
     private final static long CUSTOM_CONTENT_SCREEN_ID = -301;
 
-    private HashMap<Long, CellLayout> mWorkspaceScreens = new HashMap<Long, CellLayout>();
-    private ArrayList<Long> mScreenOrder = new ArrayList<Long>();
+    private final HashMap<Long, CellLayout> mWorkspaceScreens = new HashMap<Long, CellLayout>();
+    private final ArrayList<Long> mScreenOrder = new ArrayList<Long>();
 
     private Runnable mRemoveEmptyScreenRunnable;
     private boolean mDeferRemoveExtraEmptyScreen = false;
@@ -179,22 +179,22 @@ public class Workspace extends SmoothPagedView
      */
     private CellLayout mDropToLayout = null;
 
-    private Launcher mLauncher;
+    private final Launcher mLauncher;
     private IconCache mIconCache;
     private DragController mDragController;
 
     // These are temporary variables to prevent having to allocate a new object just to
     // return an (x, y) value from helper functions. Do NOT use them to maintain other state.
-    private int[] mTempCell = new int[2];
-    private int[] mTempPt = new int[2];
-    private int[] mTempEstimate = new int[2];
+    private final int[] mTempCell = new int[2];
+    private final int[] mTempPt = new int[2];
+    private final int[] mTempEstimate = new int[2];
     private float[] mDragViewVisualCenter = new float[2];
-    private float[] mTempCellLayoutCenterCoordinates = new float[2];
-    private Matrix mTempInverseMatrix = new Matrix();
+    private final float[] mTempCellLayoutCenterCoordinates = new float[2];
+    private final Matrix mTempInverseMatrix = new Matrix();
 
     private SpringLoadedDragController mSpringLoadedDragController;
-    private float mSpringLoadedShrinkFactor;
-    private float mOverviewModeShrinkFactor;
+    private final float mSpringLoadedShrinkFactor;
+    private final float mOverviewModeShrinkFactor;
 
     // State variable that indicates whether the pages are small (ie when you're
     // in all apps or customize mode)
@@ -213,14 +213,14 @@ public class Workspace extends SmoothPagedView
     /** Is the user is dragging an item near the edge of a page? */
     private boolean mInScrollArea = false;
 
-    private HolographicOutlineHelper mOutlineHelper;
+    private final HolographicOutlineHelper mOutlineHelper;
     private Bitmap mDragOutline = null;
     private static final Rect sTempRect = new Rect();
     private final int[] mTempXY = new int[2];
-    private int[] mTempVisiblePagesRange = new int[2];
+    private final int[] mTempVisiblePagesRange = new int[2];
     private boolean mOverscrollEffectSet;
     public static final int DRAG_BITMAP_PADDING = 2;
-    private boolean mWorkspaceFadeInAdjacentScreens;
+    private final boolean mWorkspaceFadeInAdjacentScreens;
 
     WallpaperOffsetInterpolator mWallpaperOffset;
     private boolean mWallpaperIsLiveWallpaper;
@@ -229,8 +229,8 @@ public class Workspace extends SmoothPagedView
 
     private Runnable mDelayedResizeRunnable;
     private Runnable mDelayedSnapToPageRunnable;
-    private Point mDisplaySize = new Point();
-    private int mCameraDistance;
+    private final Point mDisplaySize = new Point();
+    private final int mCameraDistance;
 
     // Variables relating to the creation of user folders by hovering shortcuts over shortcuts
     private static final int FOLDER_CREATION_TIMEOUT = 0;
@@ -241,7 +241,7 @@ public class Workspace extends SmoothPagedView
     private FolderIcon mDragOverFolderIcon = null;
     private boolean mCreateUserFolderOnDrop = false;
     private boolean mAddToExistingFolderOnDrop = false;
-    private DropTarget.DragEnforcer mDragEnforcer;
+    private final DropTarget.DragEnforcer mDragEnforcer;
     private float mMaxDistanceForFolderCreation;
 
     private final Canvas mCanvas = new Canvas();
@@ -283,7 +283,7 @@ public class Workspace extends SmoothPagedView
     private float[] mOldAlphas;
     private float[] mNewBackgroundAlphas;
     private float[] mNewAlphas;
-    private int mLastChildCount = -1;
+    private final int mLastChildCount = -1;
     private float mTransitionProgress;
 
     float mOverScrollEffect = 0f;
@@ -1921,7 +1921,7 @@ public class Workspace extends SmoothPagedView
      * from the camera.
      */
     static class ZInterpolator implements TimeInterpolator {
-        private float focalLength;
+        private final float focalLength;
 
         public ZInterpolator(float foc) {
             focalLength = foc;
@@ -1937,7 +1937,7 @@ public class Workspace extends SmoothPagedView
      * The exact reverse of ZInterpolator.
      */
     static class InverseZInterpolator implements TimeInterpolator {
-        private ZInterpolator zInterpolator;
+        private final ZInterpolator zInterpolator;
         public InverseZInterpolator(float foc) {
             zInterpolator = new ZInterpolator(foc);
         }

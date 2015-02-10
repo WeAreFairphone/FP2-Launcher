@@ -67,7 +67,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
     public static final String SHORTCUT_MIMETYPE =
             "com.android.launcher3/shortcut";
 
-    private static Object sLock = new Object();
+    private static final Object sLock = new Object();
 
     private static void addToStringSet(SharedPreferences sharedPrefs,
             SharedPreferences.Editor editor, String key, String value) {

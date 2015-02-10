@@ -35,10 +35,10 @@ public class LauncherAppWidgetHostView extends AppWidgetHostView implements Touc
 
     LayoutInflater mInflater;
 
-    private CheckLongPressHelper mLongPressHelper;
-    private Context mContext;
+    private final CheckLongPressHelper mLongPressHelper;
+    private final Context mContext;
     private int mPreviousOrientation;
-    private DragLayer mDragLayer;
+    private final DragLayer mDragLayer;
 
     private float mSlop;
 

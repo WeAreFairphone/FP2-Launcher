@@ -71,12 +71,12 @@ public class InstallWidgetReceiver {
      */
     public static class WidgetListAdapter implements ListAdapter, DialogInterface.OnClickListener {
         private LayoutInflater mInflater;
-        private Launcher mLauncher;
-        private String mMimeType;
-        private ClipData mClipData;
-        private List<WidgetMimeTypeHandlerData> mActivities;
-        private int mTargetLayoutScreen;
-        private int[] mTargetLayoutPos;
+        private final Launcher mLauncher;
+        private final String mMimeType;
+        private final ClipData mClipData;
+        private final List<WidgetMimeTypeHandlerData> mActivities;
+        private final int mTargetLayoutScreen;
+        private final int[] mTargetLayoutPos;
 
         public WidgetListAdapter(Launcher l, String mimeType, ClipData data,
                 List<WidgetMimeTypeHandlerData> list, int targetScreen, int[] targetPos) {

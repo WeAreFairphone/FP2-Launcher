@@ -37,7 +37,7 @@ public class ContactInfoManager
 
     private LimitedQueue<ContactInfo> _mostContacted;
     private LimitedQueue<ContactInfo> _lastContacted;
-    private Map<String, ContactInfo> _contactsInfoCache;
+    private final Map<String, ContactInfo> _contactsInfoCache;
 
     private int _mostContactedLimit;
     private int _lastContactedLimit;

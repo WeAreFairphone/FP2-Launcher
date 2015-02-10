@@ -51,8 +51,8 @@ class LauncherClings implements OnClickListener {
     // New Secure Setting in L
     private static final String SKIP_FIRST_USE_HINTS = "skip_first_use_hints";
 
-    private Launcher mLauncher;
-    private LayoutInflater mInflater;
+    private final Launcher mLauncher;
+    private final LayoutInflater mInflater;
 
     /** Ctor */
     public LauncherClings(Launcher launcher) {

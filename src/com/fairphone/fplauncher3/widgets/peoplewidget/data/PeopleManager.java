@@ -44,8 +44,8 @@ public class PeopleManager implements CallListener
     
 	private static final ContactInfoManager _instance = new ContactInfoManager();
     
-	private Context mContext;
-	private Launcher mLauncher;
+	private final Context mContext;
+	private final Launcher mLauncher;
 	private CallInterceptorReceiver mCallBroadcastReceiver;
     private ContentObserver smsObserver;
     private BroadcastReceiver mBCastAllContactsLauncher;

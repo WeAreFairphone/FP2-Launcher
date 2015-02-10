@@ -322,7 +322,7 @@ public class ExifInterface {
      * Tags that contain offset markers. These are included in the banned
      * defines.
      */
-    private static HashSet<Short> sOffsetTags = new HashSet<Short>();
+    private static final HashSet<Short> sOffsetTags = new HashSet<Short>();
     static {
         sOffsetTags.add(getTrueTagKey(TAG_GPS_IFD));
         sOffsetTags.add(getTrueTagKey(TAG_EXIF_IFD));

@@ -39,8 +39,8 @@ public class AppSwitcherManager {
 		return _instance;
 	}
 
-	private Context mContext;
-	private Launcher mLauncher;
+	private final Context mContext;
+	private final Launcher mLauncher;
 	private BroadcastReceiver mBCastLaunchAllApps;
 	private BroadcastReceiver mBCastAppLauncher;
 

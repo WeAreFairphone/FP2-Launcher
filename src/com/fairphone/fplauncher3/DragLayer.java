@@ -48,7 +48,7 @@ import java.util.ArrayList;
  */
 public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChangeListener {
     private DragController mDragController;
-    private int[] mTmpXY = new int[2];
+    private final int[] mTmpXY = new int[2];
 
     private int mXDown, mYDown;
     private Launcher mLauncher;
@@ -61,13 +61,13 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
     // Variables relating to animation of views after drop
     private ValueAnimator mDropAnim = null;
     private ValueAnimator mFadeOutAnim = null;
-    private TimeInterpolator mCubicEaseOutInterpolator = new DecelerateInterpolator(1.5f);
+    private final TimeInterpolator mCubicEaseOutInterpolator = new DecelerateInterpolator(1.5f);
     private DragView mDropView = null;
     private int mAnchorViewInitialScrollX = 0;
     private View mAnchorView = null;
 
     private boolean mHoverPointClosesFolder = false;
-    private Rect mHitRect = new Rect();
+    private final Rect mHitRect = new Rect();
     public static final int ANIMATION_END_DISAPPEAR = 0;
     public static final int ANIMATION_END_FADE_OUT = 1;
     public static final int ANIMATION_END_REMAIN_VISIBLE = 2;
@@ -81,16 +81,16 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
     private int mChildCountOnLastUpdate = -1;
 
     // Darkening scrim
-    private Drawable mBackground;
+    private final Drawable mBackground;
     private float mBackgroundAlpha = 0;
 
     // Related to adjacent page hints
     private boolean mInScrollArea;
     private boolean mShowPageHints;
-    private Drawable mLeftHoverDrawable;
-    private Drawable mRightHoverDrawable;
-    private Drawable mLeftHoverDrawableActive;
-    private Drawable mRightHoverDrawableActive;
+    private final Drawable mLeftHoverDrawable;
+    private final Drawable mRightHoverDrawable;
+    private final Drawable mLeftHoverDrawableActive;
+    private final Drawable mRightHoverDrawableActive;
 
     /**
      * Used to create a new DragLayer from XML.

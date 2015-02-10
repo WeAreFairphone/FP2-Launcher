@@ -40,14 +40,14 @@ import java.util.ArrayList;
 
 
 public class SavedWallpaperImages extends BaseAdapter {
-    private static String TAG = "Launcher3.SavedWallpaperImages";
-    private ImageDb mDb;
+    private static final String TAG = "Launcher3.SavedWallpaperImages";
+    private final ImageDb mDb;
     ArrayList<SavedWallpaperTile> mImages;
     Context mContext;
     LayoutInflater mLayoutInflater;
 
     public static class SavedWallpaperTile extends WallpaperPickerActivity.FileWallpaperInfo {
-        private int mDbId;
+        private final int mDbId;
         public SavedWallpaperTile(int dbId, File target, Drawable thumb) {
             super(target, thumb);
             mDbId = dbId;

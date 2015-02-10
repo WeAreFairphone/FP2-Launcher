@@ -78,8 +78,8 @@ class ExifOutputStream extends FilterOutputStream {
     private int mState = STATE_SOI;
     private int mByteToSkip;
     private int mByteToCopy;
-    private byte[] mSingleByteArray = new byte[1];
-    private ByteBuffer mBuffer = ByteBuffer.allocate(4);
+    private final byte[] mSingleByteArray = new byte[1];
+    private final ByteBuffer mBuffer = ByteBuffer.allocate(4);
     private final ExifInterface mInterface;
 
     protected ExifOutputStream(OutputStream ou, ExifInterface iRef) {

@@ -45,9 +45,9 @@ class AllAppsList {
     /** The list of apps that have been modified since the last notify() call. */
     public ArrayList<AppInfo> modified = new ArrayList<AppInfo>();
 
-    private IconCache mIconCache;
+    private final IconCache mIconCache;
 
-    private AppFilter mAppFilter;
+    private final AppFilter mAppFilter;
 
     /**
      * Boring constructor.

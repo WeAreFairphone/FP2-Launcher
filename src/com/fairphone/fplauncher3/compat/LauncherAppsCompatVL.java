@@ -33,9 +33,9 @@ import java.util.Map;
 
 public class LauncherAppsCompatVL extends LauncherAppsCompat {
 
-    private LauncherApps mLauncherApps;
+    private final LauncherApps mLauncherApps;
 
-    private Map<OnAppsChangedCallbackCompat, WrappedCallback> mCallbacks
+    private final Map<OnAppsChangedCallbackCompat, WrappedCallback> mCallbacks
             = new HashMap<OnAppsChangedCallbackCompat, WrappedCallback>();
 
     LauncherAppsCompatVL(Context context) {
@@ -104,7 +104,7 @@ public class LauncherAppsCompatVL extends LauncherAppsCompat {
     }
 
     private static class WrappedCallback extends LauncherApps.Callback {
-        private LauncherAppsCompat.OnAppsChangedCallbackCompat mCallback;
+        private final LauncherAppsCompat.OnAppsChangedCallbackCompat mCallback;
 
         public WrappedCallback(LauncherAppsCompat.OnAppsChangedCallbackCompat callback) {
             mCallback = callback;

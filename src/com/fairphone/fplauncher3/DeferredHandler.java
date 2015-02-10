@@ -33,9 +33,9 @@ import java.util.ListIterator;
  * This class is fifo.
  */
 public class DeferredHandler {
-    private LinkedList<Pair<Runnable, Integer>> mQueue = new LinkedList<Pair<Runnable, Integer>>();
-    private MessageQueue mMessageQueue = Looper.myQueue();
-    private Impl mHandler = new Impl();
+    private final LinkedList<Pair<Runnable, Integer>> mQueue = new LinkedList<Pair<Runnable, Integer>>();
+    private final MessageQueue mMessageQueue = Looper.myQueue();
+    private final Impl mHandler = new Impl();
 
     private class Impl extends Handler implements MessageQueue.IdleHandler {
         public void handleMessage(Message msg) {

@@ -28,9 +28,9 @@ public class DynamicGrid {
     @SuppressWarnings("unused")
     private static final String TAG = "DynamicGrid";
 
-    private DeviceProfile mProfile;
-    private float mMinWidth;
-    private float mMinHeight;
+    private final DeviceProfile mProfile;
+    private final float mMinWidth;
+    private final float mMinHeight;
 
     // This is a static that we use for the default icon size on a 4/5-inch phone
     static float DEFAULT_ICON_SIZE_DP = 60;

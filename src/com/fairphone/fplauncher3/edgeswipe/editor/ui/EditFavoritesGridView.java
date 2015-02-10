@@ -36,8 +36,8 @@ public class EditFavoritesGridView extends HeaderGridView
     private boolean hasStartedDraggingOut = false;
     private boolean ignoreDragging = false;
     private OnEditFavouritesIconDraggedListener listener=null;
-    private float xBias = 2.0f;
-    private float minMoveDistance = 40;
+    private final float xBias = 2.0f;
+    private final float minMoveDistance = 40;
     
     
     public EditFavoritesGridView(Context context)

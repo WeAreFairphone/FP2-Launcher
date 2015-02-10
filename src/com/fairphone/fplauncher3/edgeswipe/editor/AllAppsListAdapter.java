@@ -33,7 +33,7 @@ import android.widget.TextView;
 public class AllAppsListAdapter extends BaseAdapter
 {
     public static final int COMPOUND_DRAWABLE_PADDING = 20;
-    private Activity context;
+    private final Activity context;
     private ArrayList<AppInfo> allApps;
     
     static class ViewHolder

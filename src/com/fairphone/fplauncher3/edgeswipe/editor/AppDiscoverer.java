@@ -33,13 +33,13 @@ import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation.A
 
 public class AppDiscoverer
 {
-    private static AppDiscoverer _instance = new AppDiscoverer();
+    private static final AppDiscoverer _instance = new AppDiscoverer();
 
     public static final String PREFS_APPS_AGING_DATA = "com.fairphone.fplauncher3.applifecycle.FAIRPHONE_APP_AGING_DATA";
 
-    private Map<ComponentName, AppInfo> _allApps;
+    private final Map<ComponentName, AppInfo> _allApps;
 
-    private ApplicationRunInfoManager agingManager;
+    private final ApplicationRunInfoManager agingManager;
 
     public static AppDiscoverer getInstance()
     {

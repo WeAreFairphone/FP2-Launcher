@@ -126,7 +126,7 @@ public class DeviceProfile {
     int allAppsShortEdgeCount = -1;
     int allAppsLongEdgeCount = -1;
 
-    private ArrayList<DeviceProfileCallbacks> mCallbacks = new ArrayList<DeviceProfileCallbacks>();
+    private final ArrayList<DeviceProfileCallbacks> mCallbacks = new ArrayList<DeviceProfileCallbacks>();
 
     DeviceProfile(String n, float w, float h, float r, float c,
                   float is, float its, int dlId, int dnalId) {

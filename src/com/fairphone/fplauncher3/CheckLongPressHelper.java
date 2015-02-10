@@ -19,7 +19,7 @@ package com.fairphone.fplauncher3;
 import android.view.View;
 
 public class CheckLongPressHelper {
-    private View mView;
+    private final View mView;
     private boolean mHasPerformedLongPress;
     private CheckForLongPress mPendingCheckForLongPress;
 

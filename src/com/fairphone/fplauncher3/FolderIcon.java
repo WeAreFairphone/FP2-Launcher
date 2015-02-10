@@ -105,15 +105,15 @@ public class FolderIcon extends FrameLayout implements FolderListener {
     private int mPreviewOffsetY;
     private float mMaxPerspectiveShift;
     boolean mAnimating = false;
-    private Rect mOldBounds = new Rect();
+    private final Rect mOldBounds = new Rect();
 
     private float mSlop;
 
     private PreviewItemDrawingParams mParams = new PreviewItemDrawingParams(0, 0, 0, 0);
-    private PreviewItemDrawingParams mAnimParams = new PreviewItemDrawingParams(0, 0, 0, 0);
-    private ArrayList<ShortcutInfo> mHiddenItems = new ArrayList<ShortcutInfo>();
+    private final PreviewItemDrawingParams mAnimParams = new PreviewItemDrawingParams(0, 0, 0, 0);
+    private final ArrayList<ShortcutInfo> mHiddenItems = new ArrayList<ShortcutInfo>();
 
-    private Alarm mOpenAlarm = new Alarm();
+    private final Alarm mOpenAlarm = new Alarm();
     private ItemInfo mDragInfo;
 
     public FolderIcon(Context context, AttributeSet attrs) {

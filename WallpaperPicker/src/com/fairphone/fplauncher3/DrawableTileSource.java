@@ -32,9 +32,9 @@ public class DrawableTileSource implements TiledImageRenderer.TileSource {
     // due to decodePreview being allowed to be up to 2x the size of the target
     public static final int MAX_PREVIEW_SIZE = GL_SIZE_LIMIT / 2;
 
-    private int mTileSize;
-    private int mPreviewSize;
-    private Drawable mDrawable;
+    private final int mTileSize;
+    private final int mPreviewSize;
+    private final Drawable mDrawable;
     private BitmapTexture mPreview;
 
     public DrawableTileSource(Context context, Drawable d, int previewSize) {

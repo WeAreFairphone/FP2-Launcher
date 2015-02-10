@@ -42,7 +42,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
     protected final ViewGroup mParentView;
     protected final ViewGroup mMenuView;
-    private Context mContext;
+    private final Context mContext;
     private View mMenuBackgroundView;
     private FrameLayout mEdgeSwipeGroup;
     private LinearLayout mEdgeSwipeHolder;
@@ -51,9 +51,9 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
     private int mPreviousItem;
     boolean isAnimatingToEditMode;
     private boolean isAnimatingItem;
-    private Launcher mLauncher;
-    private DragController mDragController;
-    private int mEdgeSwipeMenuMaxItems;
+    private final Launcher mLauncher;
+    private final DragController mDragController;
+    private final int mEdgeSwipeMenuMaxItems;
     private long mEditMenuButtonStartTime;
     private MenuSide mSide;
 

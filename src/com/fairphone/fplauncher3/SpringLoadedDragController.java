@@ -26,7 +26,7 @@ public class SpringLoadedDragController implements OnAlarmListener {
 
     // the screen the user is currently hovering over, if any
     private CellLayout mScreen;
-    private Launcher mLauncher;
+    private final Launcher mLauncher;
 
     public SpringLoadedDragController(Launcher launcher) {
         mLauncher = launcher;

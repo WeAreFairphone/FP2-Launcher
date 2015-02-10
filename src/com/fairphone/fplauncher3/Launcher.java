@@ -253,9 +253,9 @@ public class Launcher extends Activity
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
     // How long to wait before the new-shortcut animation automatically pans the workspace
-    private static int NEW_APPS_PAGE_MOVE_DELAY = 500;
-    private static int NEW_APPS_ANIMATION_INACTIVE_TIMEOUT_SECONDS = 5;
-    private static int NEW_APPS_ANIMATION_DELAY = 500;
+    private static final int NEW_APPS_PAGE_MOVE_DELAY = 500;
+    private static final int NEW_APPS_ANIMATION_INACTIVE_TIMEOUT_SECONDS = 5;
+    private static final int NEW_APPS_ANIMATION_DELAY = 500;
     private static final int SINGLE_FRAME_DELAY = 16;
 
     private final BroadcastReceiver mCloseSystemDialogsReceiver
@@ -274,11 +274,11 @@ public class Launcher extends Activity
     private AppWidgetManagerCompat mAppWidgetManager;
     private LauncherAppWidgetHost mAppWidgetHost;
 
-    private ItemInfo mPendingAddInfo = new ItemInfo();
+    private final ItemInfo mPendingAddInfo = new ItemInfo();
     private AppWidgetProviderInfo mPendingAddWidgetInfo;
     private int mPendingAddWidgetId = -1;
 
-    private int[] mTmpAddItemCellCoordinates = new int[2];
+    private final int[] mTmpAddItemCellCoordinates = new int[2];
 
     private FolderInfo mFolderInfo;
 
@@ -306,8 +306,8 @@ public class Launcher extends Activity
     private boolean mWaitingForResult;
     private boolean mOnResumeNeedsLoad;
 
-    private ArrayList<Runnable> mBindOnResumeCallbacks = new ArrayList<Runnable>();
-    private ArrayList<Runnable> mOnResumeCallbacks = new ArrayList<Runnable>();
+    private final ArrayList<Runnable> mBindOnResumeCallbacks = new ArrayList<Runnable>();
+    private final ArrayList<Runnable> mOnResumeCallbacks = new ArrayList<Runnable>();
 
     private Bundle mSavedInstanceState;
 
@@ -320,7 +320,7 @@ public class Launcher extends Activity
 
     private static LocaleConfiguration sLocaleConfiguration = null;
 
-    private static HashMap<Long, FolderInfo> sFolders = new HashMap<Long, FolderInfo>();
+    private static final HashMap<Long, FolderInfo> sFolders = new HashMap<Long, FolderInfo>();
 
     private View.OnTouchListener mHapticFeedbackTouchListener;
 
@@ -330,7 +330,7 @@ public class Launcher extends Activity
     private final int mAdvanceStagger = 250;
     private long mAutoAdvanceSentTime;
     private long mAutoAdvanceTimeLeft = -1;
-    private HashMap<View, AppWidgetProviderInfo> mWidgetsToAdvance =
+    private final HashMap<View, AppWidgetProviderInfo> mWidgetsToAdvance =
         new HashMap<View, AppWidgetProviderInfo>();
 
     // Determines how long to wait after a rotation before restoring the screen orientation to
@@ -360,11 +360,11 @@ public class Launcher extends Activity
     private ImageView mFolderIconImageView;
     private Bitmap mFolderIconBitmap;
     private Canvas mFolderIconCanvas;
-    private Rect mRectForFolderAnimation = new Rect();
+    private final Rect mRectForFolderAnimation = new Rect();
 
     private BubbleTextView mWaitingForResume;
 
-    private Runnable mBuildLayersRunnable = new Runnable() {
+    private final Runnable mBuildLayersRunnable = new Runnable() {
         public void run() {
             if (mWorkspace != null) {
                 mWorkspace.buildPageHardwareLayers();
@@ -4681,7 +4681,7 @@ public class Launcher extends Activity
      * A number of packages were updated.
      */
     private ArrayList<Object> mWidgetsAndShortcuts;
-    private Runnable mBindPackagesUpdatedRunnable = new Runnable() {
+    private final Runnable mBindPackagesUpdatedRunnable = new Runnable() {
             public void run() {
                 bindPackagesUpdated(mWidgetsAndShortcuts);
                 mWidgetsAndShortcuts = null;

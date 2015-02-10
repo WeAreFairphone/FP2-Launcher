@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class MainThreadExecutor extends AbstractExecutorService {
 
-    private Handler mHandler = new Handler(Looper.getMainLooper());
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override
     public void execute(Runnable runnable) {

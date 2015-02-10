@@ -21,7 +21,7 @@ public class SmsObserver extends ContentObserver
 
     public static final int MESSAGE_TYPE_SENT = 2;
 
-    private Context mContext;
+    private final Context mContext;
 
     CallListener mListener;
 

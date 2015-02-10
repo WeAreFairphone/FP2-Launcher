@@ -14,14 +14,14 @@ import com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity;
 public class DropDragEventListener implements View.OnDragListener {
 
 	private static final String TAG = DropDragEventListener.class.getSimpleName();
-	private ArrayList<FrameLayout> mFavIcons;
-	private AppInfo[] mSelectedApps;
-	private ArrayList<AppInfo> mAllApps;
-	private DragDropItemLayoutListener mListener;
+	private final ArrayList<FrameLayout> mFavIcons;
+	private final AppInfo[] mSelectedApps;
+	private final ArrayList<AppInfo> mAllApps;
+	private final DragDropItemLayoutListener mListener;
 	/**
 	 * True means that a favorite will be removed from the list.
 	 */
-	private boolean mIsToRemove;
+	private final boolean mIsToRemove;
 
 	public DropDragEventListener(DragDropItemLayoutListener listener,
 			ArrayList<FrameLayout> favIcons, AppInfo[] mSelectedApps2,

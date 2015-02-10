@@ -107,7 +107,7 @@ public class LauncherModel extends BroadcastReceiver
 
     private final LauncherAppState mApp;
     private final Object mLock = new Object();
-    private DeferredHandler mHandler = new DeferredHandler();
+    private final DeferredHandler mHandler = new DeferredHandler();
     private LoaderTask mLoaderTask;
     private boolean mIsLoaderTaskRunning;
     private volatile boolean mFlushingWorkerThread;
@@ -176,7 +176,7 @@ public class LauncherModel extends BroadcastReceiver
 
     // </ only access in worker thread >
 
-    private IconCache mIconCache;
+    private final IconCache mIconCache;
 
     protected int mPreviousConfigMcc;
 
@@ -1476,13 +1476,13 @@ public class LauncherModel extends BroadcastReceiver
      */
     private class LoaderTask implements Runnable {
         private Context mContext;
-        private boolean mIsLaunching;
+        private final boolean mIsLaunching;
         private boolean mIsLoadingAndBindingWorkspace;
         private boolean mStopped;
         private boolean mLoadAndBindStepFinished;
-        private int mFlags;
+        private final int mFlags;
 
-        private HashMap<Object, CharSequence> mLabelCache;
+        private final HashMap<Object, CharSequence> mLabelCache;
 
         LoaderTask(Context context, boolean isLaunching, int flags) {
             mContext = context;
@@ -3637,8 +3637,8 @@ public class LauncherModel extends BroadcastReceiver
         }
     }
     public static class ShortcutNameComparator implements Comparator<LauncherActivityInfoCompat> {
-        private Collator mCollator;
-        private HashMap<Object, CharSequence> mLabelCache;
+        private final Collator mCollator;
+        private final HashMap<Object, CharSequence> mLabelCache;
         ShortcutNameComparator(PackageManager pm) {
             mLabelCache = new HashMap<Object, CharSequence>();
             mCollator = Collator.getInstance();

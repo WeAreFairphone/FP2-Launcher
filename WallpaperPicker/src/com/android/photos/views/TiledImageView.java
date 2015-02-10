@@ -71,7 +71,7 @@ public class TiledImageView extends FrameLayout {
         TiledImageRenderer image;
     }
 
-    private float[] mValues = new float[9];
+    private final float[] mValues = new float[9];
 
     // -------------------------
     // Guarded by mLock
@@ -135,7 +135,7 @@ public class TiledImageView extends FrameLayout {
         }
     }
 
-    private Runnable mFreeTextures = new Runnable() {
+    private final Runnable mFreeTextures = new Runnable() {
 
         @Override
         public void run() {
@@ -253,7 +253,7 @@ public class TiledImageView extends FrameLayout {
         }
     }
 
-    private RectF mTempRectF = new RectF();
+    private final RectF mTempRectF = new RectF();
     public void positionFromMatrix(Matrix matrix) {
         if (!IS_SUPPORTED) {
             return;
@@ -346,8 +346,8 @@ public class TiledImageView extends FrameLayout {
             Color.WHITE,
         };
 
-        private Paint mPaint = new Paint();
-        private Canvas mCanvas = new Canvas();
+        private final Paint mPaint = new Paint();
+        private final Canvas mCanvas = new Canvas();
 
         @Override
         public int getTileSize() {

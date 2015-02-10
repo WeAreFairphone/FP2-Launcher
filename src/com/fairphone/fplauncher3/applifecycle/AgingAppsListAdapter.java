@@ -38,15 +38,15 @@ import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation;
 
 public class AgingAppsListAdapter extends BaseAdapter
 {
-    private Context mContext;
+    private final Context mContext;
 
     private ArrayList<AppInfo> allApps;
 
-	private LayoutInflater mInflater;
+	private final LayoutInflater mInflater;
 
-	private Launcher mLauncher;
+	private final Launcher mLauncher;
 
-	private OnLongClickListener mLongClickListener;
+	private final OnLongClickListener mLongClickListener;
 
     public AgingAppsListAdapter(Context context, Launcher launcher, OnLongClickListener longClickListener)
     {

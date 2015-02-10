@@ -31,13 +31,13 @@ import android.view.animation.DecelerateInterpolator;
 import com.fairphone.fplauncher3.R;
 
 public class DragView extends View {
-    private static float sDragAlpha = 1f;
+    private static final float sDragAlpha = 1f;
 
-    private Bitmap mBitmap;
+    private final Bitmap mBitmap;
     private Bitmap mCrossFadeBitmap;
     private Paint mPaint;
-    private int mRegistrationX;
-    private int mRegistrationY;
+    private final int mRegistrationX;
+    private final int mRegistrationY;
 
     private Point mDragVisualizeOffset = null;
     private Rect mDragRegion = null;

@@ -100,7 +100,7 @@ public class IconCache {
     private final LauncherAppsCompat mLauncherApps;
     private final HashMap<CacheKey, CacheEntry> mCache =
             new HashMap<CacheKey, CacheEntry>(INITIAL_ICON_CACHE_CAPACITY);
-    private int mIconDpi;
+    private final int mIconDpi;
 
     public IconCache(Context context) {
         ActivityManager activityManager =

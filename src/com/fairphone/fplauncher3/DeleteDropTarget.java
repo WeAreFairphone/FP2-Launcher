@@ -41,11 +41,11 @@ import android.view.animation.LinearInterpolator;
 import com.fairphone.fplauncher3.compat.UserHandleCompat;
 
 public class DeleteDropTarget extends ButtonDropTarget {
-    private static int DELETE_ANIMATION_DURATION = 285;
-    private static int FLING_DELETE_ANIMATION_DURATION = 350;
-    private static float FLING_TO_DELETE_FRICTION = 0.035f;
-    private static int MODE_FLING_DELETE_TO_TRASH = 0;
-    private static int MODE_FLING_DELETE_ALONG_VECTOR = 1;
+    private static final int DELETE_ANIMATION_DURATION = 285;
+    private static final int FLING_DELETE_ANIMATION_DURATION = 350;
+    private static final float FLING_TO_DELETE_FRICTION = 0.035f;
+    private static final int MODE_FLING_DELETE_TO_TRASH = 0;
+    private static final int MODE_FLING_DELETE_ALONG_VECTOR = 1;
 
     private final int mFlingDeleteMode = MODE_FLING_DELETE_ALONG_VECTOR;
 
@@ -413,12 +413,12 @@ public class DeleteDropTarget extends ButtonDropTarget {
      * progressively.
      */
     private static class FlingAlongVectorAnimatorUpdateListener implements AnimatorUpdateListener {
-        private DragLayer mDragLayer;
-        private PointF mVelocity;
-        private Rect mFrom;
+        private final DragLayer mDragLayer;
+        private final PointF mVelocity;
+        private final Rect mFrom;
         private long mPrevTime;
         private boolean mHasOffsetForScale;
-        private float mFriction;
+        private final float mFriction;
 
         private final TimeInterpolator mAlphaInterpolator = new DecelerateInterpolator(0.75f);
 

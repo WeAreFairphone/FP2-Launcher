@@ -27,7 +27,7 @@ import com.fairphone.fplauncher3.R;
 public class DrawableStateProxyView extends LinearLayout {
 
     private View mView;
-    private int mViewId;
+    private final int mViewId;
 
     public DrawableStateProxyView(Context context) {
         this(context, null);

@@ -36,7 +36,7 @@ public class Utils {
     private static final long POLY64REV = 0x95AC9329AC4BC9B5L;
     private static final long INITIALCRC = 0xFFFFFFFFFFFFFFFFL;
 
-    private static long[] sCrcTable = new long[256];
+    private static final long[] sCrcTable = new long[256];
 
     private static final boolean IS_DEBUG_BUILD =
             Build.TYPE.equals("eng") || Build.TYPE.equals("userdebug");

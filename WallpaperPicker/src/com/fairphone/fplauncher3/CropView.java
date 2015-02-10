@@ -34,19 +34,19 @@ import com.android.photos.views.TiledImageView;
 
 public class CropView extends TiledImageView implements OnScaleGestureListener {
 
-    private ScaleGestureDetector mScaleGestureDetector;
+    private final ScaleGestureDetector mScaleGestureDetector;
     private long mTouchDownTime;
     private float mFirstX, mFirstY;
     private float mLastX, mLastY;
     private float mCenterX, mCenterY;
     private float mMinScale;
     private boolean mTouchEnabled = true;
-    private RectF mTempEdges = new RectF();
-    private float[] mTempPoint = { 0, 0 };
-    private float[] mTempCoef = { 0, 0 };
-    private float[] mTempAdjustment = { 0, 0 };
-    private float[] mTempImageDims = { 0, 0 };
-    private float[] mTempRendererCenter = { 0, 0 };
+    private final RectF mTempEdges = new RectF();
+    private final float[] mTempPoint = { 0, 0 };
+    private final float[] mTempCoef = { 0, 0 };
+    private final float[] mTempAdjustment = { 0, 0 };
+    private final float[] mTempImageDims = { 0, 0 };
+    private final float[] mTempRendererCenter = { 0, 0 };
     TouchCallback mTouchCallback;
     Matrix mRotateMatrix;
     Matrix mInverseRotateMatrix;

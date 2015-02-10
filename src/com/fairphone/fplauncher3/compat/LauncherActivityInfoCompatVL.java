@@ -22,7 +22,7 @@ import android.content.pm.LauncherActivityInfo;
 import android.graphics.drawable.Drawable;
 
 public class LauncherActivityInfoCompatVL extends LauncherActivityInfoCompat {
-    private LauncherActivityInfo mLauncherActivityInfo;
+    private final LauncherActivityInfo mLauncherActivityInfo;
 
     LauncherActivityInfoCompatVL(LauncherActivityInfo launcherActivityInfo) {
         super();

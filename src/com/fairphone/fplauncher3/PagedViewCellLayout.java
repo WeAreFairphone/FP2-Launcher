@@ -33,10 +33,10 @@ public class PagedViewCellLayout extends ViewGroup implements Page {
 
     private int mCellCountX;
     private int mCellCountY;
-    private int mOriginalCellWidth;
-    private int mOriginalCellHeight;
-    private int mCellWidth;
-    private int mCellHeight;
+    private final int mOriginalCellWidth;
+    private final int mOriginalCellHeight;
+    private final int mCellWidth;
+    private final int mCellHeight;
     private int mOriginalWidthGap;
     private int mOriginalHeightGap;
     private int mWidthGap;

@@ -56,6 +56,7 @@ import java.util.TreeMap;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public abstract class GeneratedMessage extends AbstractMessage
     implements Serializable {
   private static final long serialVersionUID = 1L;

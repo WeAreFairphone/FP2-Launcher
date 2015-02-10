@@ -43,6 +43,7 @@ import java.util.Map.Entry;
  *
  * @author xiangl@google.com (Xiang Li)
  */
+@SuppressWarnings("ALL")
 public class LazyField extends LazyFieldLite {
 
   /**

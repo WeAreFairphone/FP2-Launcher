@@ -21,7 +21,7 @@ public class FavoriteItemView extends TextView {
 	private float touchStartX;
 	private float touchStartY;
 	private boolean hasStartedDraggingOut;
-	private float minMoveDistance = 25;
+	private final float minMoveDistance = 25;
 
 	public FavoriteItemView(Context context) {
 		super(context);

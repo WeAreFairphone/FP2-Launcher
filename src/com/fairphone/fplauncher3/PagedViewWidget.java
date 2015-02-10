@@ -42,7 +42,7 @@ public class PagedViewWidget extends LinearLayout {
     private static boolean sDeletePreviewsWhenDetachedFromWindow = true;
     private static boolean sRecyclePreviewsWhenDetachedFromWindow = true;
 
-    private String mDimensionsFormatString;
+    private final String mDimensionsFormatString;
     CheckForShortPress mPendingCheckForShortPress = null;
     ShortPressListener mShortPressListener = null;
     boolean mShortPressTriggered = false;

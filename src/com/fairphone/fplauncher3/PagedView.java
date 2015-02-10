@@ -205,21 +205,21 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     protected boolean mAllowLongPress = true;
 
     // Page Indicator
-    private int mPageIndicatorViewId;
+    private final int mPageIndicatorViewId;
     private PageIndicator mPageIndicator;
     private boolean mAllowPagedViewAnimations = true;
 
     // The viewport whether the pages are to be contained (the actual view may be larger than the
     // viewport)
-    private Rect mViewport = new Rect();
+    private final Rect mViewport = new Rect();
 
     // Reordering
     // We use the min scale to determine how much to expand the actually PagedView measured
     // dimensions such that when we are zoomed out, the view is not clipped
-    private int REORDERING_DROP_REPOSITION_DURATION = 200;
+    private final int REORDERING_DROP_REPOSITION_DURATION = 200;
     protected int REORDERING_REORDER_REPOSITION_DURATION = 300;
     protected int REORDERING_ZOOM_IN_OUT_DURATION = 250;
-    private int REORDERING_SIDE_PAGE_HOVER_TIMEOUT = 80;
+    private final int REORDERING_SIDE_PAGE_HOVER_TIMEOUT = 80;
     private float mMinScale = 1f;
     private boolean mUseMinScale = false;
     protected View mDragView;
@@ -232,33 +232,33 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     // animation after endReordering()
     private boolean mIsReordering;
     // The runnable that settles the page after snapToPage and animateDragViewToOriginalPosition
-    private int NUM_ANIMATIONS_RUNNING_BEFORE_ZOOM_OUT = 2;
+    private final int NUM_ANIMATIONS_RUNNING_BEFORE_ZOOM_OUT = 2;
     private int mPostReorderingPreZoomInRemainingAnimationCount;
     private Runnable mPostReorderingPreZoomInRunnable;
 
     // Convenience/caching
-    private Matrix mTmpInvMatrix = new Matrix();
-    private float[] mTmpPoint = new float[2];
-    private int[] mTmpIntPoint = new int[2];
-    private Rect mTmpRect = new Rect();
-    private Rect mAltTmpRect = new Rect();
+    private final Matrix mTmpInvMatrix = new Matrix();
+    private final float[] mTmpPoint = new float[2];
+    private final int[] mTmpIntPoint = new int[2];
+    private final Rect mTmpRect = new Rect();
+    private final Rect mAltTmpRect = new Rect();
 
     // Fling to delete
-    private int FLING_TO_DELETE_FADE_OUT_DURATION = 350;
-    private float FLING_TO_DELETE_FRICTION = 0.035f;
+    private final int FLING_TO_DELETE_FADE_OUT_DURATION = 350;
+    private final float FLING_TO_DELETE_FRICTION = 0.035f;
     // The degrees specifies how much deviation from the up vector to still consider a fling "up"
-    private float FLING_TO_DELETE_MAX_FLING_DEGREES = 65f;
+    private final float FLING_TO_DELETE_MAX_FLING_DEGREES = 65f;
     protected int mFlingToDeleteThresholdVelocity = -1400;
     // Drag to delete
     private boolean mDeferringForDelete = false;
-    private int DELETE_SLIDE_IN_SIDE_PAGE_DURATION = 250;
-    private int DRAG_TO_DELETE_FADE_OUT_DURATION = 350;
+    private final int DELETE_SLIDE_IN_SIDE_PAGE_DURATION = 250;
+    private final int DRAG_TO_DELETE_FADE_OUT_DURATION = 350;
 
     // Drop to delete
     private View mDeleteDropTarget;
 
     // Bouncer
-    private boolean mTopAlignPageWhenShrinkingForBouncer = false;
+    private final boolean mTopAlignPageWhenShrinkingForBouncer = false;
 
     protected final Rect mInsets = new Rect();
 
@@ -2653,11 +2653,11 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
      * progressively.
      */
     private static class FlingAlongVectorAnimatorUpdateListener implements AnimatorUpdateListener {
-        private View mDragView;
-        private PointF mVelocity;
-        private Rect mFrom;
+        private final View mDragView;
+        private final PointF mVelocity;
+        private final Rect mFrom;
         private long mPrevTime;
-        private float mFriction;
+        private final float mFriction;
 
         private final TimeInterpolator mAlphaInterpolator = new DecelerateInterpolator(0.75f);
 
@@ -2785,7 +2785,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
         // start() (which we want to ignore).
         final TimeInterpolator tInterpolator = new TimeInterpolator() {
             private int mCount = -1;
-            private long mStartTime;
+            private final long mStartTime;
             private float mOffset;
             /* Anonymous inner class ctor */ {
                 mStartTime = startTime;

@@ -40,7 +40,7 @@ public class ContactInfo {
 	private long mCounter;
 	private Date mLastExecution;
 	private LAST_ACTION mLastAction;
-	private int mNumberType;
+	private final int mNumberType;
 
 	public ContactInfo(String name, String photoUri, String lookup,
 			String contactID, PhoneNumber phoneNumber, int numberType) {

@@ -74,9 +74,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
 
     private static final int CLOSE_FOLDER_DELAY_MS = 150;
 
-    private int mExpandDuration;
-    private int mMaterialExpandDuration;
-    private int mMaterialExpandStagger;
+    private final int mExpandDuration;
+    private final int mMaterialExpandDuration;
+    private final int mMaterialExpandStagger;
     protected CellLayout mContent;
     private ScrollView mScrollView;
     private final LayoutInflater mInflater;
@@ -87,22 +87,22 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     private static final int ON_EXIT_CLOSE_DELAY = 400;
     private boolean mRearrangeOnClose = false;
     private FolderIcon mFolderIcon;
-    private int mMaxCountX;
-    private int mMaxCountY;
-    private int mMaxNumItems;
-    private ArrayList<View> mItemsInReadingOrder = new ArrayList<View>();
+    private final int mMaxCountX;
+    private final int mMaxCountY;
+    private final int mMaxNumItems;
+    private final ArrayList<View> mItemsInReadingOrder = new ArrayList<View>();
     boolean mItemsInvalidated = false;
     private ShortcutInfo mCurrentDragInfo;
     private View mCurrentDragView;
     private boolean mIsExternalDrag;
     boolean mSuppressOnAdd = false;
     private int[] mTargetCell = new int[2];
-    private int[] mPreviousTargetCell = new int[2];
-    private int[] mEmptyCell = new int[2];
-    private Alarm mReorderAlarm = new Alarm();
-    private Alarm mOnExitAlarm = new Alarm();
+    private final int[] mPreviousTargetCell = new int[2];
+    private final int[] mEmptyCell = new int[2];
+    private final Alarm mReorderAlarm = new Alarm();
+    private final Alarm mOnExitAlarm = new Alarm();
     private int mFolderNameHeight;
-    private Rect mTempRect = new Rect();
+    private final Rect mTempRect = new Rect();
     private boolean mDragInProgress = false;
     private boolean mDeleteFolderOnDropCompleted = false;
     private boolean mSuppressFolderDeletion = false;
@@ -112,7 +112,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     private float mFolderIconPivotY;
 
     private boolean mIsEditingName = false;
-    private InputMethodManager mInputMethodManager;
+    private final InputMethodManager mInputMethodManager;
 
     private static String sDefaultFolderName;
     private static String sHintText;
@@ -214,7 +214,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         mAutoScrollHelper = new FolderAutoScrollHelper(mScrollView);
     }
 
-    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+    private final ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             return false;
         }

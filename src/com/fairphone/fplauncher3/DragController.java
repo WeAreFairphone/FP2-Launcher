@@ -67,11 +67,11 @@ public class DragController {
 
     private static final float MAX_FLING_DEGREES = 35f;
 
-    private Launcher mLauncher;
-    private Handler mHandler;
+    private final Launcher mLauncher;
+    private final Handler mHandler;
 
     // temporaries to avoid gc thrash
-    private Rect mRectTemp = new Rect();
+    private final Rect mRectTemp = new Rect();
     private final int[] mCoordinatesTemp = new int[2];
 
     /** Whether or not we're dragging. */
@@ -86,13 +86,13 @@ public class DragController {
     /** the area at the edge of the screen that makes the workspace go left
      *   or right while you're dragging.
      */
-    private int mScrollZone;
+    private final int mScrollZone;
 
     private DropTarget.DragObject mDragObject;
 
     /** Who can receive drop events */
-    private ArrayList<DropTarget> mDropTargets = new ArrayList<DropTarget>();
-    private ArrayList<DragListener> mListeners = new ArrayList<DragListener>();
+    private final ArrayList<DropTarget> mDropTargets = new ArrayList<DropTarget>();
+    private final ArrayList<DragListener> mListeners = new ArrayList<DragListener>();
     private DropTarget mFlingToDeleteDropTarget;
 
     /** The window token used as the parent for the DragView. */
@@ -105,18 +105,18 @@ public class DragController {
 
     private DragScroller mDragScroller;
     private int mScrollState = SCROLL_OUTSIDE_ZONE;
-    private ScrollRunnable mScrollRunnable = new ScrollRunnable();
+    private final ScrollRunnable mScrollRunnable = new ScrollRunnable();
 
     private DropTarget mLastDropTarget;
 
     private InputMethodManager mInputMethodManager;
 
-    private int[] mLastTouch = new int[2];
+    private final int[] mLastTouch = new int[2];
     private long mLastTouchUpTime = -1;
     private int mDistanceSinceScroll = 0;
 
-    private int[] mTmpPoint = new int[2];
-    private Rect mDragLayerRect = new Rect();
+    private final int[] mTmpPoint = new int[2];
+    private final Rect mDragLayerRect = new Rect();
 
     protected int mFlingToDeleteThresholdVelocity;
     private VelocityTracker mVelocityTracker;

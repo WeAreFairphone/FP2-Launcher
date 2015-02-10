@@ -42,11 +42,11 @@ import java.util.List;
  */
 public class LauncherAppsCompatV16 extends LauncherAppsCompat {
 
-    private PackageManager mPm;
-    private Context mContext;
-    private List<OnAppsChangedCallbackCompat> mCallbacks
+    private final PackageManager mPm;
+    private final Context mContext;
+    private final List<OnAppsChangedCallbackCompat> mCallbacks
             = new ArrayList<OnAppsChangedCallbackCompat>();
-    private PackageMonitor mPackageMonitor;
+    private final PackageMonitor mPackageMonitor;
 
     LauncherAppsCompatV16(Context context) {
         mPm = context.getPackageManager();

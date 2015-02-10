@@ -45,11 +45,11 @@ public class ApplicationRunInfoManager
 
     private LimitedQueue<ApplicationRunInformation> _mostUsed;
     private LimitedQueue<ApplicationRunInformation> _recentApps;
-    private Map<String, ApplicationRunInformation> _appRunInfos;
+    private final Map<String, ApplicationRunInformation> _appRunInfos;
 
     private int _mostUsedAppsLimit;
     private int _recentAppsLimit;
-    private boolean _updateLists;
+    private final boolean _updateLists;
 
     public ApplicationRunInfoManager(boolean updateLists)
     {

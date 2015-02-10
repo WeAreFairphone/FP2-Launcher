@@ -31,7 +31,7 @@ public class HolographicViewHelper {
     private final Canvas mTempCanvas = new Canvas();
 
     private boolean mStatesUpdated;
-    private int mHighlightColor, mHotwordColor;
+    private final int mHighlightColor, mHotwordColor;
 
     public HolographicViewHelper(Context context) {
         Resources res = context.getResources();

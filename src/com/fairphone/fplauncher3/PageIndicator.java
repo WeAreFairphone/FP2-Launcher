@@ -31,11 +31,11 @@ public class PageIndicator extends LinearLayout {
     // Want this to look good? Keep it odd
     private static final boolean MODULATE_ALPHA_ENABLED = false;
 
-    private LayoutInflater mLayoutInflater;
-    private int[] mWindowRange = new int[2];
-    private int mMaxWindowSize;
+    private final LayoutInflater mLayoutInflater;
+    private final int[] mWindowRange = new int[2];
+    private final int mMaxWindowSize;
 
-    private ArrayList<PageIndicatorMarker> mMarkers =
+    private final ArrayList<PageIndicatorMarker> mMarkers =
             new ArrayList<PageIndicatorMarker>();
     private int mActiveMarkerIndex;
 

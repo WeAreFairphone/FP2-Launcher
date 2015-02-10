@@ -34,7 +34,7 @@ public class FirstFrameAnimatorHelper extends AnimatorListenerAdapter
     private static final boolean DEBUG = false;
     private static final int MAX_DELAY = 1000;
     private static final int IDEAL_FRAME_DURATION = 16;
-    private View mTarget;
+    private final View mTarget;
     private long mStartFrame;
     private long mStartTime = -1;
     private boolean mHandlingOnAnimationUpdate;

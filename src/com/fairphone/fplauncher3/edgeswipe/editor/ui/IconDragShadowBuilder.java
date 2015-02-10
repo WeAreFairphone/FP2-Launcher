@@ -15,9 +15,9 @@ import com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity;
 
 public class IconDragShadowBuilder extends View.DragShadowBuilder {
 
-	private Drawable mIcon;
-	private Context mContext;
-	private int mOrigin;
+	private final Drawable mIcon;
+	private final Context mContext;
+	private final int mOrigin;
 
 	public IconDragShadowBuilder(Context context, View v, Drawable icon, int origin) {
 		super(v);

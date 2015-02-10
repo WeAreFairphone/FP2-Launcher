@@ -29,9 +29,9 @@ import android.graphics.drawable.Drawable;
 
 
 public class LauncherActivityInfoCompatV16 extends LauncherActivityInfoCompat {
-    private ActivityInfo mActivityInfo;
-    private ComponentName mComponentName;
-    private PackageManager mPm;
+    private final ActivityInfo mActivityInfo;
+    private final ComponentName mComponentName;
+    private final PackageManager mPm;
 
     LauncherActivityInfoCompatV16(Context context, ResolveInfo info) {
         super();

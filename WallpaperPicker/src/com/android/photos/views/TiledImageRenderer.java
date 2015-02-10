@@ -67,7 +67,7 @@ public class TiledImageRenderer {
     private static final int STATE_RECYCLING = 0x20;
     private static final int STATE_RECYCLED = 0x40;
 
-    private static Pool<Bitmap> sTilePool = new SynchronizedPool<Bitmap>(64);
+    private static final Pool<Bitmap> sTilePool = new SynchronizedPool<Bitmap>(64);
 
     // TILE_SIZE must be 2^N
     private int mTileSize;
@@ -116,11 +116,11 @@ public class TiledImageRenderer {
     private final Rect mTileRange = new Rect();
     private final Rect[] mActiveRange = {new Rect(), new Rect()};
 
-    private TileDecoder mTileDecoder;
+    private final TileDecoder mTileDecoder;
     private boolean mBackgroundTileUploaded;
 
     private int mViewWidth, mViewHeight;
-    private View mParent;
+    private final View mParent;
 
     /**
      * Interface for providing tiles to a {@link TiledImageRenderer}

@@ -136,7 +136,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
     }
 
     public static class UriWallpaperInfo extends WallpaperTileInfo {
-        private Uri mUri;
+        private final Uri mUri;
         private boolean mFirstClick = true;
         private BitmapRegionTileSource.UriBitmapSource mBitmapSource;
         public UriWallpaperInfo(Uri uri) {
@@ -197,7 +197,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
     }
 
     public static class FileWallpaperInfo extends WallpaperTileInfo {
-        private File mFile;
+        private final File mFile;
 
         public FileWallpaperInfo(File target, Drawable thumb) {
             mFile = target;
@@ -224,8 +224,8 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
     }
 
     public static class ResourceWallpaperInfo extends WallpaperTileInfo {
-        private Resources mResources;
-        private int mResId;
+        private final Resources mResources;
+        private final int mResId;
 
         public ResourceWallpaperInfo(Resources res, int resId, Drawable thumb) {
             mResources = res;

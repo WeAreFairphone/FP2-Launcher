@@ -47,7 +47,7 @@ import java.util.concurrent.ExecutionException;
 public class WidgetPreviewLoader {
 
     private static abstract class SoftReferenceThreadLocal<T> {
-        private ThreadLocal<SoftReference<T>> mThreadLocal;
+        private final ThreadLocal<SoftReference<T>> mThreadLocal;
         public SoftReferenceThreadLocal() {
             mThreadLocal = new ThreadLocal<SoftReference<T>>();
         }

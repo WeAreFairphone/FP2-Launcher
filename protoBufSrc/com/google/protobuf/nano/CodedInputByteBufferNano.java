@@ -44,6 +44,7 @@ import java.io.IOException;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public final class CodedInputByteBufferNano {
   /**
    * Create a new CodedInputStream wrapping the given byte array.
