@@ -654,22 +654,22 @@ class ExifParser {
                     Object event = mCorrespondingEvent.firstEntry().getValue();
                     if (event instanceof ImageEvent) {
                         // Tag value overlaps thumbnail, ignore thumbnail.
-                        Log.w(TAG, "Thumbnail overlaps value for tag: \n" + tag.toString());
+                        Log.w(TAG, "Thumbnail overlaps value for tag: \n" + tag);
                         Entry<Integer, Object> entry = mCorrespondingEvent.pollFirstEntry();
                         Log.w(TAG, "Invalid thumbnail offset: " + entry.getKey());
                     } else {
                         // Tag value overlaps another tag, shorten count
                         if (event instanceof IfdEvent) {
                             Log.w(TAG, "Ifd " + ((IfdEvent) event).ifd
-                                    + " overlaps value for tag: \n" + tag.toString());
+                                    + " overlaps value for tag: \n" + tag);
                         } else if (event instanceof ExifTagEvent) {
                             Log.w(TAG, "Tag value for tag: \n"
-                                    + ((ExifTagEvent) event).tag.toString()
-                                    + " overlaps value for tag: \n" + tag.toString());
+                                    + ((ExifTagEvent) event).tag
+                                    + " overlaps value for tag: \n" + tag);
                         }
                         size = mCorrespondingEvent.firstEntry().getKey()
                                 - mTiffStream.getReadByteCount();
-                        Log.w(TAG, "Invalid size of tag: \n" + tag.toString()
+                        Log.w(TAG, "Invalid size of tag: \n" + tag
                                 + " setting count to: " + size);
                         tag.forceSetComponentCount(size);
                     }
@@ -729,7 +729,7 @@ class ExifParser {
                 break;
         }
         if (LOGV) {
-            Log.v(TAG, "\n" + tag.toString());
+            Log.v(TAG, "\n" + tag);
         }
     }
 

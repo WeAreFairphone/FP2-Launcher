@@ -327,7 +327,7 @@ public class ContactInfo {
 							countryCode);
 				}
 			} catch (NumberParseException e) {
-				Log.e(TAG, "NumberParseException was thrown: " + e.toString());
+				Log.e(TAG, "NumberParseException was thrown: " + e);
 				parsedNumber = null;
 			}
 		}

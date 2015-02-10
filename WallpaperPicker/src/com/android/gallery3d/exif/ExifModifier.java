@@ -146,7 +146,7 @@ class ExifModifier {
 
     private void writeTagValue(ExifTag tag, int offset) {
         if (DEBUG) {
-            Log.v(TAG, "modifying tag to: \n" + tag.toString());
+            Log.v(TAG, "modifying tag to: \n" + tag);
             Log.v(TAG, "at offset: " + offset);
         }
         mByteBuffer.position(offset + mOffsetBase);

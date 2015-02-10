@@ -1666,7 +1666,7 @@ public class LauncherProvider extends ContentProvider {
                     // There is no logical choice for this meta-favorite, so rather than making
                     // a bad choice just add nothing.
                     Log.w(TAG, "No preference or single system activity found for "
-                            + metaIntent.toString());
+                            + metaIntent);
                     return -1;
                 }
                 resolved = systemApp;

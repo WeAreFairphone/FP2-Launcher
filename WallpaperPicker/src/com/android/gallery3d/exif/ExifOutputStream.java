@@ -287,7 +287,7 @@ class ExifOutputStream extends FilterOutputStream {
             dataOutputStream.writeShort(tag.getDataType());
             dataOutputStream.writeInt(tag.getComponentCount());
             if (DEBUG) {
-                Log.v(TAG, "\n" + tag.toString());
+                Log.v(TAG, "\n" + tag);
             }
             if (tag.getDataSize() > 4) {
                 dataOutputStream.writeInt(tag.getOffset());

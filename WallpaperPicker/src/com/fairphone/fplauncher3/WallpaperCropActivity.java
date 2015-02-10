@@ -558,7 +558,7 @@ public class WallpaperCropActivity extends Activity {
                         return new BufferedInputStream(mResources.openRawResource(mInResId));
                     }
                 } catch (FileNotFoundException e) {
-                    Log.w(LOGTAG, "cannot read file: " + mInUri.toString(), e);
+                    Log.w(LOGTAG, "cannot read file: " + mInUri, e);
                 }
             }
             return null;
@@ -677,14 +677,14 @@ public class WallpaperCropActivity extends Activity {
                 try {
                     is = regenerateInputStream();
                     if (is == null) {
-                        Log.w(LOGTAG, "cannot get input stream for uri=" + mInUri.toString());
+                        Log.w(LOGTAG, "cannot get input stream for uri=" + mInUri);
                         failure = true;
                         return false;
                     }
                     decoder = BitmapRegionDecoder.newInstance(is, false);
                     Utils.closeSilently(is);
                 } catch (IOException e) {
-                    Log.w(LOGTAG, "cannot open region decoder for file: " + mInUri.toString(), e);
+                    Log.w(LOGTAG, "cannot open region decoder for file: " + mInUri, e);
                 } finally {
                    Utils.closeSilently(is);
                    is = null;
@@ -753,7 +753,7 @@ public class WallpaperCropActivity extends Activity {
                 }
 
                 if (crop == null) {
-                    Log.w(LOGTAG, "cannot decode file: " + mInUri.toString());
+                    Log.w(LOGTAG, "cannot decode file: " + mInUri);
                     failure = true;
                     return false;
                 }

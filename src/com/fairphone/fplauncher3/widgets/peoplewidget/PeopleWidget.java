@@ -108,7 +108,7 @@ public class PeopleWidget extends AppWidgetProvider
                 if (fileDescriptor != null)
                 {
                     // Decodes the bitmap
-                    Log.i(TAG, "Uri = " + thumbUri.toString());
+                    Log.i(TAG, "Uri = " + thumbUri);
                     return BitmapFactory.decodeFileDescriptor(fileDescriptor, null, null);
                 }
                 // If the file isn't found
