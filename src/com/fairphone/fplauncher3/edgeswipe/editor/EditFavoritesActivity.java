@@ -127,7 +127,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
             @Override
             public void onClick(View v)
             {
-                if (mCurrentTheme.equals(Themes.DARK))
+                if (mCurrentTheme == Themes.DARK)
                 {
                     changeTheme(Themes.LIGHT);
                 }
@@ -142,7 +142,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
             @Override
             public void onClick(View v)
             {
-                if (mCurrentTheme.equals(Themes.LIGHT))
+                if (mCurrentTheme == Themes.LIGHT)
                 {
                     changeTheme(Themes.DARK);
                 }
