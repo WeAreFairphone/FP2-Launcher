@@ -49,6 +49,7 @@ import java.nio.ByteBuffer;
  *
  * @author kneton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public final class CodedOutputStream {
   private final byte[] buffer;
   private final int limit;

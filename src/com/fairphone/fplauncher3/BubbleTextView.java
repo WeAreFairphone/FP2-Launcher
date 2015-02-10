@@ -325,7 +325,9 @@ public class BubbleTextView extends TextView {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        if (mBackground != null) mBackground.setCallback(this);
+        if (mBackground != null) {
+            mBackground.setCallback(this);
+        }
         Drawable top = getCompoundDrawables()[1];
 
         if (top instanceof PreloadIconDrawable) {
@@ -337,7 +339,9 @@ public class BubbleTextView extends TextView {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if (mBackground != null) mBackground.setCallback(null);
+        if (mBackground != null) {
+            mBackground.setCallback(null);
+        }
     }
 
     @Override

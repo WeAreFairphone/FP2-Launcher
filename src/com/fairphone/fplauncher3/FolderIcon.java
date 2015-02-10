@@ -338,7 +338,9 @@ public class FolderIcon extends FrameLayout implements FolderListener {
     }
 
     public void onDragEnter(Object dragInfo) {
-        if (mFolder.isDestroyed() || !willAcceptItem((ItemInfo) dragInfo)) return;
+        if (mFolder.isDestroyed() || !willAcceptItem((ItemInfo) dragInfo)) {
+            return;
+        }
         CellLayout.LayoutParams lp = (CellLayout.LayoutParams) getLayoutParams();
         CellLayout layout = (CellLayout) getParent().getParent();
         mFolderRingAnimator.setCell(lp.cellX, lp.cellY);
@@ -603,8 +605,12 @@ public class FolderIcon extends FrameLayout implements FolderListener {
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
 
-        if (mFolder == null) return;
-        if (mFolder.getItemCount() == 0 && !mAnimating) return;
+        if (mFolder == null) {
+            return;
+        }
+        if (mFolder.getItemCount() == 0 && !mAnimating) {
+            return;
+        }
 
         ArrayList<View> items = mFolder.getItemsInReadingOrder();
         Drawable d;

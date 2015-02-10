@@ -177,7 +177,9 @@ public class AutoInstallsLayout implements WorkspaceLoader {
 
             TagParser tagParser = tagParserMap.get(parser.getName());
             if (tagParser == null) {
-                if (LOGD) Log.d(TAG, "Ignoring unknown element tag: " + parser.getName());
+                if (LOGD) {
+                    Log.d(TAG, "Ignoring unknown element tag: " + parser.getName());
+                }
                 continue;
             }
             long newElementId = tagParser.parseAndAdd(parser, res);
@@ -268,7 +270,9 @@ public class AutoInstallsLayout implements WorkspaceLoader {
                 }
                 return -1;
             } else {
-                if (LOGD) Log.d(TAG, "Skipping invalid <favorite> with no component or uri");
+                if (LOGD) {
+                    Log.d(TAG, "Skipping invalid <favorite> with no component or uri");
+                }
                 return -1;
             }
         }
@@ -281,7 +285,9 @@ public class AutoInstallsLayout implements WorkspaceLoader {
             final String packageName = getAttributeValue(parser, ATTR_PACKAGE_NAME);
             final String className = getAttributeValue(parser, ATTR_CLASS_NAME);
             if (TextUtils.isEmpty(packageName) || TextUtils.isEmpty(className)) {
-                if (LOGD) Log.d(TAG, "Skipping invalid <favorite> with no component");
+                if (LOGD) {
+                    Log.d(TAG, "Skipping invalid <favorite> with no component");
+                }
                 return -1;
             }
 
@@ -305,17 +311,23 @@ public class AutoInstallsLayout implements WorkspaceLoader {
             final int iconId = getAttributeResourceValue(parser, ATTR_ICON, 0);
 
             if (titleResId == 0 || iconId == 0) {
-                if (LOGD) Log.d(TAG, "Ignoring shortcut");
+                if (LOGD) {
+                    Log.d(TAG, "Ignoring shortcut");
+                }
                 return -1;
             }
 
             if (TextUtils.isEmpty(url) || !Patterns.WEB_URL.matcher(url).matches()) {
-                if (LOGD) Log.d(TAG, "Ignoring shortcut, invalid url: " + url);
+                if (LOGD) {
+                    Log.d(TAG, "Ignoring shortcut, invalid url: " + url);
+                }
                 return -1;
             }
             Drawable icon = res.getDrawable(iconId);
             if (icon == null) {
-                if (LOGD) Log.d(TAG, "Ignoring shortcut, can't load icon");
+                if (LOGD) {
+                    Log.d(TAG, "Ignoring shortcut, can't load icon");
+                }
                 return -1;
             }
 
@@ -336,7 +348,9 @@ public class AutoInstallsLayout implements WorkspaceLoader {
             final String packageName = getAttributeValue(parser, ATTR_PACKAGE_NAME);
             final String className = getAttributeValue(parser, ATTR_CLASS_NAME);
             if (TextUtils.isEmpty(packageName) || TextUtils.isEmpty(className)) {
-                if (LOGD) Log.d(TAG, "Skipping invalid <favorite> with no component");
+                if (LOGD) {
+                    Log.d(TAG, "Skipping invalid <favorite> with no component");
+                }
                 return -1;
             }
 
@@ -350,7 +364,9 @@ public class AutoInstallsLayout implements WorkspaceLoader {
                 try {
                     mPackageManager.getReceiverInfo(cn, 0);
                 } catch (Exception e1) {
-                    if (LOGD) Log.d(TAG, "Can't find widget provider: " + className);
+                    if (LOGD) {
+                        Log.d(TAG, "Can't find widget provider: " + className);
+                    }
                     return -1;
                 }
             }
@@ -387,7 +403,9 @@ public class AutoInstallsLayout implements WorkspaceLoader {
                 int appWidgetId = mAppWidgetHost.allocateAppWidgetId();
 
                 if (!appWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId, cn)) {
-                    if (LOGD) Log.e(TAG, "Unable to bind app widget id " + cn);
+                    if (LOGD) {
+                        Log.e(TAG, "Unable to bind app widget id " + cn);
+                    }
                     return -1;
                 }
 
@@ -410,7 +428,9 @@ public class AutoInstallsLayout implements WorkspaceLoader {
                     mContext.sendBroadcast(intent);
                 }
             } catch (RuntimeException ex) {
-                if (LOGD) Log.e(TAG, "Problem allocating appWidgetId", ex);
+                if (LOGD) {
+                    Log.e(TAG, "Problem allocating appWidgetId", ex);
+                }
             }
             return insertedId;
         }
@@ -437,7 +457,9 @@ public class AutoInstallsLayout implements WorkspaceLoader {
             mValues.put(Favorites._ID, mCallback.generateNewItemId());
             long folderId = mCallback.insertAndCheck(mDb, mValues);
             if (folderId < 0) {
-                if (LOGD) Log.e(TAG, "Unable to add folder");
+                if (LOGD) {
+                    Log.e(TAG, "Unable to add folder");
+                }
                 return -1;
             }
 
@@ -499,7 +521,9 @@ public class AutoInstallsLayout implements WorkspaceLoader {
             throws XmlPullParserException, IOException {
         int type;
         while ((type = parser.next()) != XmlPullParser.START_TAG
-                && type != XmlPullParser.END_DOCUMENT);
+                && type != XmlPullParser.END_DOCUMENT) {
+            ;
+        }
 
         if (type != XmlPullParser.START_TAG) {
             throw new XmlPullParserException("No start tag found");

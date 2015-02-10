@@ -128,25 +128,33 @@ public class ApplicationRunInformation
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) {
+            return true;
+        }
+		if (obj == null) {
+            return false;
+        }
+		if (getClass() != obj.getClass()) {
+            return false;
+        }
 		ApplicationRunInformation other = (ApplicationRunInformation) obj;
 		if (mComponentName == null) {
-			if (other.mComponentName != null)
-				return false;
-		} else if (!mComponentName.equals(other.mComponentName))
-			return false;
+			if (other.mComponentName != null) {
+                return false;
+            }
+		} else if (!mComponentName.equals(other.mComponentName)) {
+            return false;
+        }
 		if (mLastExecution == null) {
-			if (other.mLastExecution != null)
-				return false;
-		} else if (!mLastExecution.equals(other.mLastExecution))
-			return false;
-		if (mRunCount != other.mRunCount)
-			return false;
+			if (other.mLastExecution != null) {
+                return false;
+            }
+		} else if (!mLastExecution.equals(other.mLastExecution)) {
+            return false;
+        }
+		if (mRunCount != other.mRunCount) {
+            return false;
+        }
 		return true;
 	}
 

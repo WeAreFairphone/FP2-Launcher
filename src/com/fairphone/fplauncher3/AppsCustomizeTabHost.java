@@ -203,7 +203,9 @@ public class AppsCustomizeTabHost extends FrameLayout implements LauncherTransit
 
     private void setVisibilityOfSiblingsWithLowerZOrder(int visibility) {
         ViewGroup parent = (ViewGroup) getParent();
-        if (parent == null) return;
+        if (parent == null) {
+            return;
+        }
 
         View overviewPanel = ((Launcher) getContext()).getOverviewPanel();
         final int count = parent.getChildCount();

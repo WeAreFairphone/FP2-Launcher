@@ -219,7 +219,9 @@ class LauncherClings implements OnClickListener {
         }
 
         // disable clings when running in a test harness
-        if(ActivityManager.isRunningInTestHarness()) return false;
+        if(ActivityManager.isRunningInTestHarness()) {
+            return false;
+        }
 
         // Disable clings for accessibility when explore by touch is enabled
         final AccessibilityManager a11yManager = (AccessibilityManager) mLauncher.getSystemService(

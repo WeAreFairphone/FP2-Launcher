@@ -37,7 +37,9 @@ public class LauncherPreferencesBackupHelper extends SharedPreferencesBackupHelp
     @Override
     public void restoreEntity(BackupDataInputStream data) {
         if (mRestoreEnabled) {
-            if (VERBOSE) Log.v(TAG, "restoring preferences");
+            if (VERBOSE) {
+                Log.v(TAG, "restoring preferences");
+            }
             super.restoreEntity(data);
         }
     }

@@ -364,7 +364,9 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
                     mCurrentResizeFrame = null;
             }
         }
-        if (handled) return true;
+        if (handled) {
+            return true;
+        }
         return mDragController.onTouchEvent(ev);
     }
 
@@ -727,8 +729,12 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
             TimeInterpolator interpolator, final Runnable onCompleteRunnable,
             final int animationEndStyle, View anchorView) {
         // Clean up the previous animations
-        if (mDropAnim != null) mDropAnim.cancel();
-        if (mFadeOutAnim != null) mFadeOutAnim.cancel();
+        if (mDropAnim != null) {
+            mDropAnim.cancel();
+        }
+        if (mFadeOutAnim != null) {
+            mFadeOutAnim.cancel();
+        }
 
         // Show the drop view if it was previously hidden
         mDropView = view;

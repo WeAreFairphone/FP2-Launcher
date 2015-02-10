@@ -172,10 +172,11 @@ public class AppSwitcherWidget extends AppWidgetProvider
 
     private void toggleMostAndLastUsedViewsVisibility(RemoteViews widget, List<ApplicationRunInformation> mostRecent, List<ApplicationRunInformation> mostUsed)
     {
-        if (mostRecent.isEmpty() && mostUsed.isEmpty())
+        if (mostRecent.isEmpty() && mostUsed.isEmpty()) {
             widget.setViewVisibility(R.id.mostUsedAppsOOBEDescription, View.VISIBLE);
-        else
+        } else {
             widget.setViewVisibility(R.id.mostUsedAppsOOBEDescription, View.GONE);
+        }
     }
 
     private RemoteViews getMostUsedView(Context context, ApplicationRunInformation info, int code) throws NameNotFoundException

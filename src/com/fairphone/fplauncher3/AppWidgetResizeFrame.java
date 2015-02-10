@@ -246,7 +246,9 @@ public class AppWidgetResizeFrame extends FrameLayout {
             vSpanInc = Math.round(vSpanIncF);
         }
 
-        if (!onDismiss && (hSpanInc == 0 && vSpanInc == 0)) return;
+        if (!onDismiss && (hSpanInc == 0 && vSpanInc == 0)) {
+            return;
+        }
 
 
         CellLayout.LayoutParams lp = (CellLayout.LayoutParams) mWidgetView.getLayoutParams();
@@ -307,7 +309,9 @@ public class AppWidgetResizeFrame extends FrameLayout {
             }
         }
 
-        if (!onDismiss && vSpanDelta == 0 && hSpanDelta == 0) return;
+        if (!onDismiss && vSpanDelta == 0 && hSpanDelta == 0) {
+            return;
+        }
 
         // We always want the final commit to match the feedback, so we make sure to use the
         // last used direction vector when committing the resize / reorder.

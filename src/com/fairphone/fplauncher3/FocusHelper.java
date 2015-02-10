@@ -115,7 +115,9 @@ public class FocusHelper {
                             newParent = getAppsCustomizePage(container, pageIndex - 1);
                             if (newParent != null) {
                                 child = newParent.getChildAt(newParent.getChildCount() - 1);
-                                if (child != null) child.requestFocus();
+                                if (child != null) {
+                                    child.requestFocus();
+                                }
                             }
                         }
                     }
@@ -132,7 +134,9 @@ public class FocusHelper {
                             newParent = getAppsCustomizePage(container, pageIndex + 1);
                             if (newParent != null) {
                                 child = newParent.getChildAt(0);
-                                if (child != null) child.requestFocus();
+                                if (child != null) {
+                                    child.requestFocus();
+                                }
                             }
                         }
                     }
@@ -145,7 +149,9 @@ public class FocusHelper {
                     if (y > 0) {
                         int newWidgetIndex = ((y - 1) * cellCountX) + x;
                         child = parent.getChildAt(newWidgetIndex);
-                        if (child != null) child.requestFocus();
+                        if (child != null) {
+                            child.requestFocus();
+                        }
                     }
                 }
                 wasHandled = true;
@@ -156,7 +162,9 @@ public class FocusHelper {
                     if (y < (cellCountY - 1)) {
                         int newWidgetIndex = Math.min(widgetCount - 1, ((y + 1) * cellCountX) + x);
                         child = parent.getChildAt(newWidgetIndex);
-                        if (child != null) child.requestFocus();
+                        if (child != null) {
+                            child.requestFocus();
+                        }
                     }
                 }
                 wasHandled = true;
@@ -182,7 +190,9 @@ public class FocusHelper {
                     } else {
                         child = parent.getChildAt(0);
                     }
-                    if (child != null) child.requestFocus();
+                    if (child != null) {
+                        child.requestFocus();
+                    }
                 }
                 wasHandled = true;
                 break;
@@ -198,7 +208,9 @@ public class FocusHelper {
                     } else {
                         child = parent.getChildAt(widgetCount - 1);
                     }
-                    if (child != null) child.requestFocus();
+                    if (child != null) {
+                        child.requestFocus();
+                    }
                 }
                 wasHandled = true;
                 break;
@@ -206,7 +218,9 @@ public class FocusHelper {
                 if (handleKeyEvent) {
                     // Select the first item on this page
                     child = parent.getChildAt(0);
-                    if (child != null) child.requestFocus();
+                    if (child != null) {
+                        child.requestFocus();
+                    }
                 }
                 wasHandled = true;
                 break;
@@ -396,7 +410,9 @@ public class FocusHelper {
      * Handles key events in the tab widget.
      */
     static boolean handleTabKeyEvent(AccessibleTabView v, int keyCode, KeyEvent e) {
-        if (!LauncherAppState.getInstance().isScreenLarge()) return false;
+        if (!LauncherAppState.getInstance().isScreenLarge()) {
+            return false;
+        }
 
         final FocusOnlyTabWidget parent = (FocusOnlyTabWidget) v.getParent();
         final AppsCustomizeTabHost tabHost = findTabHostParent(parent);

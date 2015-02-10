@@ -42,35 +42,47 @@ public class EdgeSwipeApplicationInfo
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) {
+            return true;
+        }
+		if (obj == null) {
+            return false;
+        }
+		if (getClass() != obj.getClass()) {
+            return false;
+        }
 		EdgeSwipeApplicationInfo other = (EdgeSwipeApplicationInfo) obj;
 		if (appName == null) {
-			if (other.appName != null)
-				return false;
-		} else if (!appName.equals(other.appName))
-			return false;
+			if (other.appName != null) {
+                return false;
+            }
+		} else if (!appName.equals(other.appName)) {
+            return false;
+        }
 		if (icon == null) {
-			if (other.icon != null)
-				return false;
-		} else if (!icon.equals(other.icon))
-			return false;
+			if (other.icon != null) {
+                return false;
+            }
+		} else if (!icon.equals(other.icon)) {
+            return false;
+        }
 		if (packageName == null) {
-			if (other.packageName != null)
-				return false;
-		} else if (!packageName.equals(other.packageName))
-			return false;
-		if (versionCode != other.versionCode)
-			return false;
+			if (other.packageName != null) {
+                return false;
+            }
+		} else if (!packageName.equals(other.packageName)) {
+            return false;
+        }
+		if (versionCode != other.versionCode) {
+            return false;
+        }
 		if (versionName == null) {
-			if (other.versionName != null)
-				return false;
-		} else if (!versionName.equals(other.versionName))
-			return false;
+			if (other.versionName != null) {
+                return false;
+            }
+		} else if (!versionName.equals(other.versionName)) {
+            return false;
+        }
 		return true;
 	}
 

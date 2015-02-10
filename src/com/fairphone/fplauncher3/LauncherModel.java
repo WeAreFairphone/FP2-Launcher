@@ -1269,7 +1269,9 @@ public class LauncherModel extends BroadcastReceiver
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (DEBUG_RECEIVER) Log.d(TAG, "onReceive intent=" + intent);
+        if (DEBUG_RECEIVER) {
+            Log.d(TAG, "onReceive intent=" + intent);
+        }
 
         final String action = intent.getAction();
         if (Intent.ACTION_LOCALE_CHANGED.equals(action)) {
@@ -1312,8 +1314,12 @@ public class LauncherModel extends BroadcastReceiver
             // Stop any existing loaders first, so they don't set mAllAppsLoaded or
             // mWorkspaceLoaded to true later
             stopLoaderLocked();
-            if (resetAllAppsLoaded) mAllAppsLoaded = false;
-            if (resetWorkspaceLoaded) mWorkspaceLoaded = false;
+            if (resetAllAppsLoaded) {
+                mAllAppsLoaded = false;
+            }
+            if (resetWorkspaceLoaded) {
+                mWorkspaceLoaded = false;
+            }
         }
     }
 
@@ -1603,12 +1609,16 @@ public class LauncherModel extends BroadcastReceiver
                 // Elevate priority when Home launches for the first time to avoid
                 // starving at boot time. Staring at a blank home is not cool.
                 synchronized (mLock) {
-                    if (DEBUG_LOADERS) Log.d(TAG, "Setting thread priority to " +
-                            (mIsLaunching ? "DEFAULT" : "BACKGROUND"));
+                    if (DEBUG_LOADERS) {
+                        Log.d(TAG, "Setting thread priority to " +
+                                (mIsLaunching ? "DEFAULT" : "BACKGROUND"));
+                    }
                     android.os.Process.setThreadPriority(mIsLaunching
                             ? Process.THREAD_PRIORITY_DEFAULT : Process.THREAD_PRIORITY_BACKGROUND);
                 }
-                if (DEBUG_LOADERS) Log.d(TAG, "step 1: loading workspace");
+                if (DEBUG_LOADERS) {
+                    Log.d(TAG, "step 1: loading workspace");
+                }
                 isUpgrade = loadAndBindWorkspace();
 
                 if (mStopped) {
@@ -1619,14 +1629,18 @@ public class LauncherModel extends BroadcastReceiver
                 // settled down.
                 synchronized (mLock) {
                     if (mIsLaunching) {
-                        if (DEBUG_LOADERS) Log.d(TAG, "Setting thread priority to BACKGROUND");
+                        if (DEBUG_LOADERS) {
+                            Log.d(TAG, "Setting thread priority to BACKGROUND");
+                        }
                         android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
                     }
                 }
                 waitForIdle();
 
                 // second step
-                if (DEBUG_LOADERS) Log.d(TAG, "step 2: loading all apps");
+                if (DEBUG_LOADERS) {
+                    Log.d(TAG, "step 2: loading all apps");
+                }
                 loadAndBindAllApps();
 
                 // Restore the default thread priority after we are done loading items
@@ -1636,7 +1650,9 @@ public class LauncherModel extends BroadcastReceiver
             }
 
             // Update the saved icons if necessary
-            if (DEBUG_LOADERS) Log.d(TAG, "Comparing loaded icons to database icons");
+            if (DEBUG_LOADERS) {
+                Log.d(TAG, "Comparing loaded icons to database icons");
+            }
             synchronized (sBgLock) {
                 for (Object key : sBgDbIconCache.keySet()) {
                     updateSavedIcon(mContext, (ShortcutInfo) key, sBgDbIconCache.get(key));
@@ -1838,7 +1854,9 @@ public class LauncherModel extends BroadcastReceiver
                 final ArrayList<Long> itemsToRemove = new ArrayList<Long>();
                 final ArrayList<Long> restoredRows = new ArrayList<Long>();
                 final Uri contentUri = LauncherSettings.Favorites.CONTENT_URI_NO_NOTIFICATION;
-                if (DEBUG_LOADERS) Log.d(TAG, "loading model from " + contentUri);
+                if (DEBUG_LOADERS) {
+                    Log.d(TAG, "loading model from " + contentUri);
+                }
                 final Cursor c = contentResolver.query(contentUri, null, null, null, null);
 
                 // +1 for the hotseat (it can be larger than the workspace)
@@ -2441,7 +2459,9 @@ public class LauncherModel extends BroadcastReceiver
                 ArrayList<LauncherAppWidgetInfo> otherScreenWidgets) {
 
             for (LauncherAppWidgetInfo widget : appWidgets) {
-                if (widget == null) continue;
+                if (widget == null) {
+                    continue;
+                }
                 if (widget.container == LauncherSettings.Favorites.CONTAINER_DESKTOP &&
                         widget.screenId == currentScreenId) {
                     currentScreenWidgets.add(widget);
@@ -2461,7 +2481,9 @@ public class LauncherModel extends BroadcastReceiver
             for (long id : folders.keySet()) {
                 ItemInfo info = itemsIdMap.get(id);
                 FolderInfo folder = folders.get(id);
-                if (info == null || folder == null) continue;
+                if (info == null || folder == null) {
+                    continue;
+                }
                 if (info.container == LauncherSettings.Favorites.CONTAINER_DESKTOP &&
                         info.screenId == currentScreenId) {
                     currentScreenFolders.put(id, folder);
@@ -2957,14 +2979,18 @@ public class LauncherModel extends BroadcastReceiver
             switch (mOp) {
                 case OP_ADD:
                     for (int i=0; i<N; i++) {
-                        if (DEBUG_LOADERS) Log.d(TAG, "mAllAppsList.addPackage " + packages[i]);
+                        if (DEBUG_LOADERS) {
+                            Log.d(TAG, "mAllAppsList.addPackage " + packages[i]);
+                        }
                         mIconCache.remove(packages[i], mUser);
                         mBgAllAppsList.addPackage(context, packages[i], mUser);
                     }
                     break;
                 case OP_UPDATE:
                     for (int i=0; i<N; i++) {
-                        if (DEBUG_LOADERS) Log.d(TAG, "mAllAppsList.updatePackage " + packages[i]);
+                        if (DEBUG_LOADERS) {
+                            Log.d(TAG, "mAllAppsList.updatePackage " + packages[i]);
+                        }
                         mBgAllAppsList.updatePackage(context, packages[i], mUser);
                         WidgetPreviewLoader.removePackageFromDb(
                                 mApp.getWidgetPreviewCacheDb(), packages[i]);
@@ -2973,7 +2999,9 @@ public class LauncherModel extends BroadcastReceiver
                 case OP_REMOVE:
                 case OP_UNAVAILABLE:
                     for (int i=0; i<N; i++) {
-                        if (DEBUG_LOADERS) Log.d(TAG, "mAllAppsList.removePackage " + packages[i]);
+                        if (DEBUG_LOADERS) {
+                            Log.d(TAG, "mAllAppsList.removePackage " + packages[i]);
+                        }
                         mBgAllAppsList.removePackage(packages[i], mUser);
                         WidgetPreviewLoader.removePackageFromDb(
                                 mApp.getWidgetPreviewCacheDb(), packages[i]);
@@ -3592,8 +3620,12 @@ public class LauncherModel extends BroadcastReceiver
     public static final Comparator<AppInfo> APP_INSTALL_TIME_COMPARATOR
             = new Comparator<AppInfo>() {
         public final int compare(AppInfo a, AppInfo b) {
-            if (a.firstInstallTime < b.firstInstallTime) return 1;
-            if (a.firstInstallTime > b.firstInstallTime) return -1;
+            if (a.firstInstallTime < b.firstInstallTime) {
+                return 1;
+            }
+            if (a.firstInstallTime > b.firstInstallTime) {
+                return -1;
+            }
             return 0;
         }
     };

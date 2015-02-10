@@ -48,6 +48,7 @@ import java.io.UnsupportedEncodingException;
  *
  * @author kneton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public final class CodedOutputStreamMicro {
   private final byte[] buffer;
   private final int limit;

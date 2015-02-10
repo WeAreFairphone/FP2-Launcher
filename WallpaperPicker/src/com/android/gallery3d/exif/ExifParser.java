@@ -477,8 +477,9 @@ class ExifParser {
      * get the strip size.
      */
     protected int getStripSize() {
-        if (mStripSizeTag == null)
+        if (mStripSizeTag == null) {
             return 0;
+        }
         return (int) mStripSizeTag.getValueAt(0);
     }
 

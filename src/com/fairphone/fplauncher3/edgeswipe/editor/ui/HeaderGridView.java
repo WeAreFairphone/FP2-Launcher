@@ -242,8 +242,9 @@ public class HeaderGridView extends android.widget.GridView implements OnScrollL
     {
         boolean isLayedOut = !((v.getRight() == 0) && (v.getLeft() == 0) && (v.getTop() == 0) && (v.getBottom() == 0));
 
-        if (v.getMeasuredHeight() != 0 && isLayedOut)
+        if (v.getMeasuredHeight() != 0 && isLayedOut) {
             return;
+        }
 
         if (mDisplayWidth == 0)
         {

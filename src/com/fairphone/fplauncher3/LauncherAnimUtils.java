@@ -57,7 +57,9 @@ public class LauncherAnimUtils {
         view.getViewTreeObserver().addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
                 private boolean mStarted = false;
                 public void onDraw() {
-                    if (mStarted) return;
+                    if (mStarted) {
+                        return;
+                    }
                     mStarted = true;
                     // Use this as a signal that the animation was cancelled
                     if (animator.getDuration() == 0) {

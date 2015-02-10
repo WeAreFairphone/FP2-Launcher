@@ -69,7 +69,9 @@ class CountedDataInputStream extends FilterInputStream {
     }
 
     public void skipOrThrow(long length) throws IOException {
-        if (skip(length) != length) throw new EOFException();
+        if (skip(length) != length) {
+            throw new EOFException();
+        }
     }
 
     public void skipTo(long target) throws IOException {
@@ -81,7 +83,9 @@ class CountedDataInputStream extends FilterInputStream {
 
     public void readOrThrow(byte[] b, int off, int len) throws IOException {
         int r = read(b, off, len);
-        if (r != len) throw new EOFException();
+        if (r != len) {
+            throw new EOFException();
+        }
     }
 
     public void readOrThrow(byte[] b) throws IOException {

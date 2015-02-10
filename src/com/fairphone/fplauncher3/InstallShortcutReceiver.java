@@ -103,7 +103,9 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
                 }
                 json = json.endObject();
                 SharedPreferences.Editor editor = sharedPrefs.edit();
-                if (DBG) Log.d(TAG, "Adding to APPS_PENDING_INSTALL: " + json);
+                if (DBG) {
+                    Log.d(TAG, "Adding to APPS_PENDING_INSTALL: " + json);
+                }
                 addToStringSet(sharedPrefs, editor, APPS_PENDING_INSTALL, json.toString());
                 editor.commit();
             } catch (org.json.JSONException e) {
@@ -154,7 +156,9 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
             SharedPreferences sharedPrefs) {
         synchronized(sLock) {
             Set<String> strings = sharedPrefs.getStringSet(APPS_PENDING_INSTALL, null);
-            if (DBG) Log.d(TAG, "Getting and clearing APPS_PENDING_INSTALL: " + strings);
+            if (DBG) {
+                Log.d(TAG, "Getting and clearing APPS_PENDING_INSTALL: " + strings);
+            }
             if (strings == null) {
                 return new ArrayList<PendingInstallShortcutInfo>();
             }
@@ -221,7 +225,9 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
             return;
         }
 
-        if (DBG) Log.d(TAG, "Got INSTALL_SHORTCUT: " + data.toUri(0));
+        if (DBG) {
+            Log.d(TAG, "Got INSTALL_SHORTCUT: " + data.toUri(0));
+        }
 
         Intent intent = data.getParcelableExtra(Intent.EXTRA_SHORTCUT_INTENT);
         if (intent == null) {
@@ -276,7 +282,9 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
                 final String name = pendingInfo.name;
 
                 if (LauncherAppState.isDisableAllApps() && !isValidShortcutLaunchIntent(intent)) {
-                    if (DBG) Log.d(TAG, "Ignoring shortcut with launchIntent:" + intent);
+                    if (DBG) {
+                        Log.d(TAG, "Ignoring shortcut with launchIntent:" + intent);
+                    }
                     continue;
                 }
 
@@ -292,7 +300,9 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
                 if (packageName != null && !packageName.isEmpty()) {
                     UserHandleCompat myUserHandle = UserHandleCompat.myUserHandle();
                     if (!LauncherModel.isValidPackage(context, packageName, myUserHandle)) {
-                        if (DBG) Log.d(TAG, "Ignoring shortcut for absent package:" + intent);
+                        if (DBG) {
+                            Log.d(TAG, "Ignoring shortcut for absent package:" + intent);
+                        }
                         continue;
                     }
                 }

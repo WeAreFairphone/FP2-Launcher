@@ -764,8 +764,12 @@ public class DragController {
      * @return the vector at which the item was flung, or null if no fling was detected.
      */
     private PointF isFlingingToDelete(DragSource source) {
-        if (mFlingToDeleteDropTarget == null) return null;
-        if (!source.supportsFlingToDelete()) return null;
+        if (mFlingToDeleteDropTarget == null) {
+            return null;
+        }
+        if (!source.supportsFlingToDelete()) {
+            return null;
+        }
 
         ViewConfiguration config = ViewConfiguration.get(mLauncher);
         mVelocityTracker.computeCurrentVelocity(1000, config.getScaledMaximumFlingVelocity());
@@ -837,8 +841,9 @@ public class DragController {
         final int count = dropTargets.size();
         for (int i=count-1; i>=0; i--) {
             DropTarget target = dropTargets.get(i);
-            if (!target.isDropEnabled())
+            if (!target.isDropEnabled()) {
                 continue;
+            }
 
             target.getHitRectRelativeToDragLayer(r);
 

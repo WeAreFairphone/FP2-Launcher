@@ -689,7 +689,9 @@ public class Launcher extends Activity
                 final int result = sNextGeneratedId.get();
                 // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
                 int newValue = result + 1;
-                if (newValue > 0x00FFFFFF) newValue = 1; // Roll over to 1, not 0.
+                if (newValue > 0x00FFFFFF) {
+                    newValue = 1; // Roll over to 1, not 0.
+                }
                 if (sNextGeneratedId.compareAndSet(result, newValue)) {
                     return result;
                 }
@@ -1751,7 +1753,9 @@ public class Launcher extends Activity
                 observer.addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
                     private boolean mStarted = false;
                     public void onDraw() {
-                        if (mStarted) return;
+                        if (mStarted) {
+                            return;
+                        }
                         mStarted = true;
                         // We delay the layer building a bit in order to give
                         // other message processing a time to run.  In particular
@@ -1825,7 +1829,9 @@ public class Launcher extends Activity
     };
 
     void addWidgetToAutoAdvanceIfNeeded(View hostView, AppWidgetProviderInfo appWidgetInfo) {
-        if (appWidgetInfo == null || appWidgetInfo.autoAdvanceViewId == -1) return;
+        if (appWidgetInfo == null || appWidgetInfo.autoAdvanceViewId == -1) {
+            return;
+        }
         View v = hostView.findViewById(appWidgetInfo.autoAdvanceViewId);
         if (v instanceof Advanceable) {
             mWidgetsToAdvance.put(hostView, appWidgetInfo);
@@ -2582,7 +2588,9 @@ public class Launcher extends Activity
      * @param v The view that was clicked.
      */
     protected void onClickAllAppsButton(View v) {
-        if (LOGD) Log.d(TAG, "onClickAllAppsButton");
+        if (LOGD) {
+            Log.d(TAG, "onClickAllAppsButton");
+        }
         if (isAllAppsVisible()) {
             showWorkspace(true);
         } else if(!isAllAppsVisible()){
@@ -2619,7 +2627,9 @@ public class Launcher extends Activity
      * @param v The view that was clicked. Must be a tagged with a {@link ShortcutInfo}.
      */
     protected void onClickAppShortcut(final View v) {
-        if (LOGD) Log.d(TAG, "onClickAppShortcut");
+        if (LOGD) {
+            Log.d(TAG, "onClickAppShortcut");
+        }
         Object tag = v.getTag();
         if (!(tag instanceof ShortcutInfo)) {
             throw new IllegalArgumentException("Input must be a Shortcut");
@@ -2694,7 +2704,9 @@ public class Launcher extends Activity
      * @param v The view that was clicked. Must be an instance of {@link FolderIcon}.
      */
     protected void onClickFolderIcon(View v) {
-        if (LOGD) Log.d(TAG, "onClickFolder");
+        if (LOGD) {
+            Log.d(TAG, "onClickFolder");
+        }
         if (!(v instanceof FolderIcon)){
             throw new IllegalArgumentException("Input must be a FolderIcon");
         }
@@ -2738,7 +2750,9 @@ public class Launcher extends Activity
      * on the home screen.
      */
     protected void onClickAddWidgetButton(View view) {
-        if (LOGD) Log.d(TAG, "onClickAddWidgetButton");
+        if (LOGD) {
+            Log.d(TAG, "onClickAddWidgetButton");
+        }
         showAllApps(true, AppsCustomizePagedView.ContentType.Widgets, true);
     }
 
@@ -2747,7 +2761,9 @@ public class Launcher extends Activity
      * on the home screen.
      */
     protected void onClickWallpaperPicker(View v) {
-        if (LOGD) Log.d(TAG, "onClickWallpaperPicker");
+        if (LOGD) {
+            Log.d(TAG, "onClickWallpaperPicker");
+        }
         final Intent pickWallpaper = new Intent(Intent.ACTION_SET_WALLPAPER);
         pickWallpaper.setComponent(getWallpaperPickerComponent());
         startActivityForResult(pickWallpaper, REQUEST_PICK_WALLPAPER);
@@ -2758,7 +2774,9 @@ public class Launcher extends Activity
      * on the home screen.
      */
     protected void onClickSettingsButton(View v) {
-        if (LOGD) Log.d(TAG, "onClickSettingsButton");
+        if (LOGD) {
+            Log.d(TAG, "onClickSettingsButton");
+        }
         startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), REQUEST_PICK_SETTINGS);
     }
 
@@ -2971,7 +2989,9 @@ public class Launcher extends Activity
     }
 
     private void growAndFadeOutFolderIcon(FolderIcon fi) {
-        if (fi == null) return;
+        if (fi == null) {
+            return;
+        }
         PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat("alpha", 0);
         PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat("scaleX", 1.5f);
         PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat("scaleY", 1.5f);
@@ -2992,7 +3012,9 @@ public class Launcher extends Activity
     }
 
     private void shrinkAndFadeInFolderIcon(final FolderIcon fi) {
-        if (fi == null) return;
+        if (fi == null) {
+            return;
+        }
         PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat("alpha", 1.0f);
         PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat("scaleX", 1.0f);
         PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat("scaleY", 1.0f);
@@ -3076,9 +3098,15 @@ public class Launcher extends Activity
     }
 
     public boolean onLongClick(View v) {
-        if (!isDraggingEnabled()) return false;
-        if (isWorkspaceLocked()) return false;
-        if (mState != State.WORKSPACE) return false;
+        if (!isDraggingEnabled()) {
+            return false;
+        }
+        if (isWorkspaceLocked()) {
+            return false;
+        }
+        if (mState != State.WORKSPACE) {
+            return false;
+        }
 
         if (v instanceof Workspace) {
             if (!mWorkspace.isInOverviewMode()) {
@@ -3409,8 +3437,9 @@ public class Launcher extends Activity
                 public void run() {
                     // Check that mStateAnimation hasn't changed while
                     // we waited for a layout/draw pass
-                    if (mStateAnimation != stateAnimation)
+                    if (mStateAnimation != stateAnimation) {
                         return;
+                    }
                     dispatchOnLauncherTransitionStart(fromView, animated, false);
                     dispatchOnLauncherTransitionStart(toView, animated, false);
 
@@ -3423,7 +3452,9 @@ public class Launcher extends Activity
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                                     attached = v.isAttachedToWindow();
                                 }
-                                if (attached) v.buildLayer();
+                                if (attached) {
+                                    v.buildLayer();
+                                }
                             }
                         }
                     }
@@ -3676,8 +3707,9 @@ public class Launcher extends Activity
                 public void run() {
                     // Check that mStateAnimation hasn't changed while
                     // we waited for a layout/draw pass
-                    if (mStateAnimation != stateAnimation)
+                    if (mStateAnimation != stateAnimation) {
                         return;
+                    }
                     dispatchOnLauncherTransitionStart(fromView, animated, false);
                     dispatchOnLauncherTransitionStart(toView, animated, false);
 
@@ -3689,7 +3721,9 @@ public class Launcher extends Activity
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                                     attached = v.isAttachedToWindow();
                                 }
-                                if (attached) v.buildLayer();
+                                if (attached) {
+                                    v.buildLayer();
+                                }
                             }
                         }
                     }
@@ -3765,7 +3799,9 @@ public class Launcher extends Activity
 
     void showAllApps(boolean animated, AppsCustomizePagedView.ContentType contentType,
                      boolean resetPageToZero) {
-        if (mState != State.WORKSPACE) return;
+        if (mState != State.WORKSPACE) {
+            return;
+        }
 
         if (resetPageToZero) {
             mAppsCustomizeTabHost.reset();
@@ -3801,7 +3837,9 @@ public class Launcher extends Activity
 
     void exitSpringLoadedDragModeDelayed(final boolean successfulDrop, int delay,
             final Runnable onCompleteRunnable) {
-        if (mState != State.APPS_CUSTOMIZE_SPRING_LOADED) return;
+        if (mState != State.APPS_CUSTOMIZE_SPRING_LOADED) {
+            return;
+        }
 
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -4891,13 +4929,21 @@ public class Launcher extends Activity
     }
 
     void showWorkspaceSearchAndHotseat() {
-        if (mWorkspace != null) mWorkspace.setAlpha(1f);
-        if (mPageIndicators != null) mPageIndicators.setAlpha(1f);
+        if (mWorkspace != null) {
+            mWorkspace.setAlpha(1f);
+        }
+        if (mPageIndicators != null) {
+            mPageIndicators.setAlpha(1f);
+        }
     }
 
     void hideWorkspaceSearchAndHotseat() {
-        if (mWorkspace != null) mWorkspace.setAlpha(0f);
-        if (mPageIndicators != null) mPageIndicators.setAlpha(0f);
+        if (mWorkspace != null) {
+            mWorkspace.setAlpha(0f);
+        }
+        if (mPageIndicators != null) {
+            mPageIndicators.setAlpha(0f);
+        }
     }
 
     public ItemInfo createAppDragInfo(Intent appLaunchIntent) {

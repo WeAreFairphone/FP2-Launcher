@@ -12,8 +12,12 @@ public abstract class AppFilter {
     public abstract boolean shouldShowApp(ComponentName app);
 
     public static AppFilter loadByName(String className) {
-        if (TextUtils.isEmpty(className)) return null;
-        if (DBG) Log.d(TAG, "Loading AppFilter: " + className);
+        if (TextUtils.isEmpty(className)) {
+            return null;
+        }
+        if (DBG) {
+            Log.d(TAG, "Loading AppFilter: " + className);
+        }
         try {
             Class<?> cls = Class.forName(className);
             return (AppFilter) cls.newInstance();

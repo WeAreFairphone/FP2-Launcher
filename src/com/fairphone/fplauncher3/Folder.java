@@ -240,7 +240,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
 
     public boolean onLongClick(View v) {
         // Return if global dragging is not enabled
-        if (!mLauncher.isDraggingEnabled()) return true;
+        if (!mLauncher.isDraggingEnabled()) {
+            return true;
+        }
 
         Object tag = v.getTag();
         if (tag instanceof ShortcutInfo) {
@@ -443,7 +445,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
      * to its associated FolderIcon. This allows for a seamless transition into the expanded state.
      */
     private void positionAndSizeAsIcon() {
-        if (!(getParent() instanceof DragLayer)) return;
+        if (!(getParent() instanceof DragLayer)) {
+            return;
+        }
         setScaleX(0.8f);
         setScaleY(0.8f);
         setAlpha(0f);
@@ -458,7 +462,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     }
 
     public void animateOpen() {
-        if (!(getParent() instanceof DragLayer)) return;
+        if (!(getParent() instanceof DragLayer)) {
+            return;
+        }
 
         Animator openFolderAnim = null;
         final Runnable onCompleteRunnable;
@@ -594,7 +600,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     }
 
     public void animateClosed() {
-        if (!(getParent() instanceof DragLayer)) return;
+        if (!(getParent() instanceof DragLayer)) {
+            return;
+        }
         PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat("alpha", 0);
         PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat("scaleX", 0.9f);
         PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat("scaleY", 0.9f);
@@ -974,7 +982,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                 } else if (countY < mMaxCountY) {
                     countY++;
                 }
-                if (countY == 0) countY++;
+                if (countY == 0) {
+                    countY++;
+                }
             } else if ((countY - 1) * countX >= count && countY >= countX) {
                 countY = Math.max(0, countY - 1);
             } else if ((countX - 1) * countY >= count) {
@@ -1316,7 +1326,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         mItemsInvalidated = true;
         // If the item was dropped onto this open folder, we have done the work associated
         // with adding the item to the folder, as indicated by mSuppressOnAdd being set
-        if (mSuppressOnAdd) return;
+        if (mSuppressOnAdd) {
+            return;
+        }
         if (!findAndSetEmptyCells(item)) {
             // The current layout is full, can we expand it?
             setupContentForNumItems(getItemCount() + 1);
@@ -1331,7 +1343,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         mItemsInvalidated = true;
         // If this item is being dragged from this open folder, we have already handled
         // the work associated with removing the item, so we don't have to do anything here.
-        if (item == mCurrentDragInfo) return;
+        if (item == mCurrentDragInfo) {
+            return;
+        }
         View v = getViewForInfo(item);
         mContent.removeView(v);
         if (mState == STATE_ANIMATING) {

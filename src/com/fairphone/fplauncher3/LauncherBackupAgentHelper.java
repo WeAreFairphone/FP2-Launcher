@@ -65,7 +65,9 @@ public class LauncherBackupAgentHelper extends BackupAgentHelper {
     public void onCreate() {
         boolean restoreEnabled = 0 != Settings.Secure.getInt(
                 getContentResolver(), SETTING_RESTORE_ENABLED, 1);
-        if (VERBOSE) Log.v(TAG, "restore is " + (restoreEnabled ? "enabled" : "disabled"));
+        if (VERBOSE) {
+            Log.v(TAG, "restore is " + (restoreEnabled ? "enabled" : "disabled"));
+        }
 
         addHelper(LauncherBackupHelper.LAUNCHER_PREFS_PREFIX,
                 new LauncherPreferencesBackupHelper(this,
@@ -87,7 +89,9 @@ public class LauncherBackupAgentHelper extends BackupAgentHelper {
         c.close();
 
         if (!hasData) {
-            if (VERBOSE) Log.v(TAG, "Nothing was restored, clearing DB");
+            if (VERBOSE) {
+                Log.v(TAG, "Nothing was restored, clearing DB");
+            }
             LauncherAppState.getLauncherProvider().createEmptyDB();
         }
     }

@@ -183,7 +183,9 @@ public class LauncherProvider extends ContentProvider {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         addModifiedTime(initialValues);
         final long rowId = dbInsertAndCheck(mOpenHelper, db, args.table, null, initialValues);
-        if (rowId <= 0) return null;
+        if (rowId <= 0) {
+            return null;
+        }
 
         uri = ContentUris.withAppendedId(uri, rowId);
         sendNotify(uri);
@@ -235,7 +237,9 @@ public class LauncherProvider extends ContentProvider {
 
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int count = db.delete(args.table, args.where, args.args);
-        if (count > 0) sendNotify(uri);
+        if (count > 0) {
+            sendNotify(uri);
+        }
 
         return count;
     }
@@ -247,7 +251,9 @@ public class LauncherProvider extends ContentProvider {
         addModifiedTime(values);
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int count = db.update(args.table, values, args.where, args.args);
-        if (count > 0) sendNotify(uri);
+        if (count > 0) {
+            sendNotify(uri);
+        }
 
         return count;
     }
@@ -463,7 +469,9 @@ public class LauncherProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            if (LOGD) Log.d(TAG, "creating new launcher database");
+            if (LOGD) {
+                Log.d(TAG, "creating new launcher database");
+            }
 
             mMaxItemId = 1;
             mMaxScreenId = 0;
@@ -605,7 +613,9 @@ public class LauncherProvider extends ContentProvider {
 
         private boolean convertDatabase(SQLiteDatabase db, Uri uri,
                                         ContentValuesCallback cb, boolean deleteRows) {
-            if (LOGD) Log.d(TAG, "converting database from an older format, but not onUpgrade");
+            if (LOGD) {
+                Log.d(TAG, "converting database from an older format, but not onUpgrade");
+            }
             boolean converted = false;
 
             final ContentResolver resolver = mContext.getContentResolver();
@@ -633,12 +643,16 @@ public class LauncherProvider extends ContentProvider {
 
             if (converted) {
                 // Convert widgets from this import into widgets
-                if (LOGD) Log.d(TAG, "converted and now triggering widget upgrade");
+                if (LOGD) {
+                    Log.d(TAG, "converted and now triggering widget upgrade");
+                }
                 convertWidgets(db);
 
                 // Update max item id
                 mMaxItemId = initializeMaxItemId(db);
-                if (LOGD) Log.d(TAG, "mMaxItemId: " + mMaxItemId);
+                if (LOGD) {
+                    Log.d(TAG, "mMaxItemId: " + mMaxItemId);
+                }
             }
 
             return converted;
@@ -708,7 +722,9 @@ public class LauncherProvider extends ContentProvider {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            if (LOGD) Log.d(TAG, "onUpgrade triggered: " + oldVersion);
+            if (LOGD) {
+                Log.d(TAG, "onUpgrade triggered: " + oldVersion);
+            }
 
             int version = oldVersion;
             if (version < 3) {
@@ -960,9 +976,13 @@ public class LauncherProvider extends ContentProvider {
                 c = db.query(TABLE_FAVORITES,
                         new String[] { Favorites._ID, Favorites.INTENT },
                         selectWhere, null, null, null, null);
-                if (c == null) return false;
+                if (c == null) {
+                    return false;
+                }
 
-                if (LOGD) Log.d(TAG, "found upgrade cursor count=" + c.getCount());
+                if (LOGD) {
+                    Log.d(TAG, "found upgrade cursor count=" + c.getCount());
+                }
 
                 final int idIndex = c.getColumnIndex(Favorites._ID);
                 final int intentIndex = c.getColumnIndex(Favorites.INTENT);
@@ -1201,7 +1221,9 @@ public class LauncherProvider extends ContentProvider {
                 c = db.query(TABLE_FAVORITES, new String[] { Favorites._ID, Favorites.ITEM_TYPE },
                         selectWhere, null, null, null, null);
 
-                if (LOGD) Log.d(TAG, "found upgrade cursor count=" + c.getCount());
+                if (LOGD) {
+                    Log.d(TAG, "found upgrade cursor count=" + c.getCount());
+                }
 
                 final ContentValues values = new ContentValues();
                 while (c != null && c.moveToNext()) {
@@ -1264,7 +1286,9 @@ public class LauncherProvider extends ContentProvider {
 
             // Update max item id
             mMaxItemId = initializeMaxItemId(db);
-            if (LOGD) Log.d(TAG, "mMaxItemId: " + mMaxItemId);
+            if (LOGD) {
+                Log.d(TAG, "mMaxItemId: " + mMaxItemId);
+            }
         }
 
         private boolean initializeExternalAdd(ContentValues values) {
@@ -1415,7 +1439,9 @@ public class LauncherProvider extends ContentProvider {
                 ArrayList<Long> screenIds) {
 
             ContentValues values = new ContentValues();
-            if (LOGD) Log.v(TAG, String.format("Loading favorites from resid=0x%08x", workspaceResourceId));
+            if (LOGD) {
+                Log.v(TAG, String.format("Loading favorites from resid=0x%08x", workspaceResourceId));
+            }
 
             int count = 0;
             try {
@@ -1439,8 +1465,10 @@ public class LauncherProvider extends ContentProvider {
 
                         final int resId = getAttributeResourceValue(parser, ATTR_WORKSPACE, 0);
 
-                        if (LOGD) Log.v(TAG, String.format(("%" + (2*(depth+1)) + "s<include workspace=%08x>"),
-                                "", resId));
+                        if (LOGD) {
+                            Log.v(TAG, String.format(("%" + (2 * (depth + 1)) + "s<include workspace=%08x>"),
+                                    "", resId));
+                        }
 
                         if (resId != 0 && resId != workspaceResourceId) {
                             // recursively load some more favorites, why not?
@@ -1450,7 +1478,9 @@ public class LauncherProvider extends ContentProvider {
                             Log.w(TAG, String.format("Skipping <include workspace=0x%08x>", resId));
                         }
 
-                        if (LOGD) Log.v(TAG, String.format(("%" + (2*(depth+1)) + "s</include>"), ""));
+                        if (LOGD) {
+                            Log.v(TAG, String.format(("%" + (2 * (depth + 1)) + "s</include>"), ""));
+                        }
                         continue;
                     }
 
@@ -1791,7 +1821,9 @@ public class LauncherProvider extends ContentProvider {
             SearchManager searchManager =
                     (SearchManager) mContext.getSystemService(Context.SEARCH_SERVICE);
             ComponentName searchComponent = searchManager.getGlobalSearchActivity();
-            if (searchComponent == null) return null;
+            if (searchComponent == null) {
+                return null;
+            }
             return getProviderInPackage(searchComponent.getPackageName());
         }
 
@@ -1802,7 +1834,9 @@ public class LauncherProvider extends ContentProvider {
         private ComponentName getProviderInPackage(String packageName) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
             List<AppWidgetProviderInfo> providers = appWidgetManager.getInstalledProviders();
-            if (providers == null) return null;
+            if (providers == null) {
+                return null;
+            }
             final int providerCount = providers.size();
             for (int i = 0; i < providerCount; i++) {
                 ComponentName provider = providers.get(i).provider;
@@ -2152,7 +2186,9 @@ public class LauncherProvider extends ContentProvider {
                             db.beginTransaction();
                             try {
                                 for (ContentValues row: allItems) {
-                                    if (row == null) continue;
+                                    if (row == null) {
+                                        continue;
+                                    }
                                     if (dbInsertAndCheck(this, db, TABLE_FAVORITES, null, row)
                                             < 0) {
                                         return;
@@ -2196,7 +2232,9 @@ public class LauncherProvider extends ContentProvider {
             // Update max IDs; very important since we just grabbed IDs from another database
             mMaxItemId = initializeMaxItemId(db);
             mMaxScreenId = initializeMaxScreenId(db);
-            if (LOGD) Log.d(TAG, "mMaxItemId: " + mMaxItemId + " mMaxScreenId: " + mMaxScreenId);
+            if (LOGD) {
+                Log.d(TAG, "mMaxItemId: " + mMaxItemId + " mMaxScreenId: " + mMaxScreenId);
+            }
         }
     }
 

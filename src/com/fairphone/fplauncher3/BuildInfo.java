@@ -12,9 +12,13 @@ public class BuildInfo {
     }
 
     public static BuildInfo loadByName(String className) {
-        if (TextUtils.isEmpty(className)) return new BuildInfo();
+        if (TextUtils.isEmpty(className)) {
+            return new BuildInfo();
+        }
 
-        if (DBG) Log.d(TAG, "Loading BuildInfo: " + className);
+        if (DBG) {
+            Log.d(TAG, "Loading BuildInfo: " + className);
+        }
         try {
             Class<?> cls = Class.forName(className);
             return (BuildInfo) cls.newInstance();

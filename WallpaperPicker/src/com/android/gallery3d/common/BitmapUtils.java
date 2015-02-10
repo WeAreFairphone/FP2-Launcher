@@ -71,7 +71,9 @@ public class BitmapUtils {
     private static int computeInitialSampleSize(int w, int h,
             int minSideLength, int maxNumOfPixels) {
         if (maxNumOfPixels == UNCONSTRAINED
-                && minSideLength == UNCONSTRAINED) return 1;
+                && minSideLength == UNCONSTRAINED) {
+            return 1;
+        }
 
         int lowerBound = (maxNumOfPixels == UNCONSTRAINED) ? 1 :
                 (int) FloatMath.ceil(FloatMath.sqrt((float) (w * h) / maxNumOfPixels));
@@ -89,7 +91,9 @@ public class BitmapUtils {
     public static int computeSampleSizeLarger(int w, int h,
             int minSideLength) {
         int initialSize = Math.max(w / minSideLength, h / minSideLength);
-        if (initialSize <= 1) return 1;
+        if (initialSize <= 1) {
+            return 1;
+        }
 
         return initialSize <= 8
                 ? Utils.prevPowerOf2(initialSize)
@@ -99,7 +103,9 @@ public class BitmapUtils {
     // Find the min x that 1 / x >= scale
     public static int computeSampleSizeLarger(float scale) {
         int initialSize = (int) FloatMath.floor(1f / scale);
-        if (initialSize <= 1) return 1;
+        if (initialSize <= 1) {
+            return 1;
+        }
 
         return initialSize <= 8
                 ? Utils.prevPowerOf2(initialSize)
@@ -120,13 +126,17 @@ public class BitmapUtils {
         int width = Math.round(bitmap.getWidth() * scale);
         int height = Math.round(bitmap.getHeight() * scale);
         if (width == bitmap.getWidth()
-                && height == bitmap.getHeight()) return bitmap;
+                && height == bitmap.getHeight()) {
+            return bitmap;
+        }
         Bitmap target = Bitmap.createBitmap(width, height, getConfig(bitmap));
         Canvas canvas = new Canvas(target);
         canvas.scale(scale, scale);
         Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG | Paint.DITHER_FLAG);
         canvas.drawBitmap(bitmap, 0, 0, paint);
-        if (recycle) bitmap.recycle();
+        if (recycle) {
+            bitmap.recycle();
+        }
         return target;
     }
 
@@ -144,14 +154,18 @@ public class BitmapUtils {
         int srcHeight = bitmap.getHeight();
         float scale = Math.min(
                 (float) maxLength / srcWidth, (float) maxLength / srcHeight);
-        if (scale >= 1.0f) return bitmap;
+        if (scale >= 1.0f) {
+            return bitmap;
+        }
         return resizeBitmapByScale(bitmap, scale, recycle);
     }
 
     public static Bitmap resizeAndCropCenter(Bitmap bitmap, int size, boolean recycle) {
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
-        if (w == size && h == size) return bitmap;
+        if (w == size && h == size) {
+            return bitmap;
+        }
 
         // scale the image so that the shorter side equals to the target;
         // the longer side will be center-cropped.
@@ -165,12 +179,16 @@ public class BitmapUtils {
         canvas.scale(scale, scale);
         Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG | Paint.DITHER_FLAG);
         canvas.drawBitmap(bitmap, 0, 0, paint);
-        if (recycle) bitmap.recycle();
+        if (recycle) {
+            bitmap.recycle();
+        }
         return target;
     }
 
     public static void recycleSilently(Bitmap bitmap) {
-        if (bitmap == null) return;
+        if (bitmap == null) {
+            return;
+        }
         try {
             bitmap.recycle();
         } catch (Throwable t) {
@@ -179,13 +197,17 @@ public class BitmapUtils {
     }
 
     public static Bitmap rotateBitmap(Bitmap source, int rotation, boolean recycle) {
-        if (rotation == 0) return source;
+        if (rotation == 0) {
+            return source;
+        }
         int w = source.getWidth();
         int h = source.getHeight();
         Matrix m = new Matrix();
         m.postRotate(rotation);
         Bitmap bitmap = Bitmap.createBitmap(source, 0, 0, w, h, m, true);
-        if (recycle) source.recycle();
+        if (recycle) {
+            source.recycle();
+        }
         return bitmap;
     }
 
@@ -208,7 +230,9 @@ public class BitmapUtils {
                 byte[] data = (byte[]) clazz.getMethod("getEmbeddedPicture").invoke(instance);
                 if (data != null) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    if (bitmap != null) return bitmap;
+                    if (bitmap != null) {
+                        return bitmap;
+                    }
                 }
                 return (Bitmap) clazz.getMethod("getFrameAtTime").invoke(instance);
             }
@@ -248,14 +272,18 @@ public class BitmapUtils {
     }
 
     public static boolean isSupportedByRegionDecoder(String mimeType) {
-        if (mimeType == null) return false;
+        if (mimeType == null) {
+            return false;
+        }
         mimeType = mimeType.toLowerCase();
         return mimeType.startsWith("image/") &&
                 (!mimeType.equals("image/gif") && !mimeType.endsWith("bmp"));
     }
 
     public static boolean isRotationSupported(String mimeType) {
-        if (mimeType == null) return false;
+        if (mimeType == null) {
+            return false;
+        }
         mimeType = mimeType.toLowerCase();
         return mimeType.equals("image/jpeg");
     }

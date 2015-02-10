@@ -352,23 +352,29 @@ public class IconCache {
                 entry.title = "";
                 Bitmap preloaded = getPreloadedIcon(componentName, user);
                 if (preloaded != null) {
-                    if (DEBUG) Log.d(TAG, "using preloaded icon for " +
-                            componentName.toShortString());
+                    if (DEBUG) {
+                        Log.d(TAG, "using preloaded icon for " +
+                                componentName.toShortString());
+                    }
                     entry.icon = preloaded;
                 } else {
                     if (usePackageIcon) {
                         CacheEntry packageEntry = getEntryForPackage(
                                 componentName.getPackageName(), user);
                         if (packageEntry != null) {
-                            if (DEBUG) Log.d(TAG, "using package default icon for " +
-                                    componentName.toShortString());
+                            if (DEBUG) {
+                                Log.d(TAG, "using package default icon for " +
+                                        componentName.toShortString());
+                            }
                             entry.icon = packageEntry.icon;
                             entry.title = packageEntry.title;
                         }
                     }
                     if (entry.icon == null) {
-                        if (DEBUG) Log.d(TAG, "using default icon for " +
-                                componentName.toShortString());
+                        if (DEBUG) {
+                            Log.d(TAG, "using default icon for " +
+                                    componentName.toShortString());
+                        }
                         entry.icon = getDefaultIcon(user);
                     }
                 }
@@ -412,7 +418,9 @@ public class IconCache {
                 entry.title = info.loadLabel(mPackageManager);
                 entry.icon = Utilities.createIconBitmap(info.loadIcon(mPackageManager), mContext);
             } catch (NameNotFoundException e) {
-                if (DEBUG) Log.d(TAG, "Application not installed " + packageName);
+                if (DEBUG) {
+                    Log.d(TAG, "Application not installed " + packageName);
+                }
             }
 
             if (entry.icon == null) {
@@ -498,7 +506,9 @@ public class IconCache {
             return null;
         }
 
-        if (DEBUG) Log.v(TAG, "looking for pre-load icon for " + key);
+        if (DEBUG) {
+            Log.v(TAG, "looking for pre-load icon for " + key);
+        }
         Bitmap icon = null;
         FileInputStream resourceFile = null;
         try {
@@ -510,13 +520,17 @@ public class IconCache {
                 bytes.write(buffer, 0, bytesRead);
                 bytesRead = resourceFile.read(buffer, 0, buffer.length);
             }
-            if (DEBUG) Log.d(TAG, "read " + bytes.size());
+            if (DEBUG) {
+                Log.d(TAG, "read " + bytes.size());
+            }
             icon = BitmapFactory.decodeByteArray(bytes.toByteArray(), 0, bytes.size());
             if (icon == null) {
                 Log.w(TAG, "failed to decode pre-load icon for " + key);
             }
         } catch (FileNotFoundException e) {
-            if (DEBUG) Log.d(TAG, "there is no restored icon for: " + key);
+            if (DEBUG) {
+                Log.d(TAG, "there is no restored icon for: " + key);
+            }
         } catch (IOException e) {
             Log.w(TAG, "failed to read pre-load icon for: " + key, e);
         } finally {
@@ -547,10 +561,14 @@ public class IconCache {
             return false;
         }
         if (mCache.remove(componentName) != null) {
-            if (DEBUG) Log.d(TAG, "removed pre-loaded icon from the in-memory cache");
+            if (DEBUG) {
+                Log.d(TAG, "removed pre-loaded icon from the in-memory cache");
+            }
         }
         boolean success = mContext.deleteFile(getResourceFilename(componentName));
-        if (DEBUG && success) Log.d(TAG, "removed pre-loaded icon from persistent cache");
+        if (DEBUG && success) {
+            Log.d(TAG, "removed pre-loaded icon from persistent cache");
+        }
 
         return success;
     }

@@ -125,11 +125,15 @@ public class FirstFrameAnimatorHelper extends AnimatorListenerAdapter
                             }
                         });
                 }
-                if (DEBUG) print(animation);
+                if (DEBUG) {
+                    print(animation);
+                }
             }
             mHandlingOnAnimationUpdate = false;
         } else {
-            if (DEBUG) print(animation);
+            if (DEBUG) {
+                print(animation);
+            }
         }
     }
 

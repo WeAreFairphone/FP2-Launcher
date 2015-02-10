@@ -115,7 +115,9 @@ class AppsCustomizeAsyncTask extends AsyncTask<AsyncTaskPageData, Void, AsyncTas
     }
     @Override
     protected AsyncTaskPageData doInBackground(AsyncTaskPageData... params) {
-        if (params.length != 1) return null;
+        if (params.length != 1) {
+            return null;
+        }
         // Load each of the widget previews in the background
         params[0].doInBackgroundCallback.run(this, params[0]);
         return params[0];
@@ -320,7 +322,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     /** Returns the page in the current orientation which is expected to contain the specified
      *  item index. */
     int getPageForComponent(int index) {
-        if (index < 0) return 0;
+        if (index < 0) {
+            return 0;
+        }
 
         if (index < mApps.size()) {
             int numItemsPerPage = mCellCountX * mCellCountY;
@@ -333,7 +337,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
     /** Restores the page for an item at the specified index */
     void restorePageForIndex(int index) {
-        if (index < 0) return;
+        if (index < 0) {
+            return;
+        }
         mSaveInstanceStateItemIndex = index;
     }
 
@@ -450,7 +456,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         // When we have exited all apps or are in transition, disregard clicks
         if (!mLauncher.isAllAppsVisible()
                 || mLauncher.getWorkspace().isSwitchingState()
-                || !(v instanceof PagedViewWidget)) return;
+                || !(v instanceof PagedViewWidget)) {
+            return;
+        }
 
         // Let the user know that they have to long press to add a widget
         if (mWidgetInstructionToast != null) {
@@ -700,7 +708,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
     @Override
     protected boolean beginDragging(final View v) {
-        if (!super.beginDragging(v)) return false;
+        if (!super.beginDragging(v)) {
+            return false;
+        }
 
         if (v instanceof BubbleTextView) {
             beginDraggingApplication(v);
@@ -785,7 +795,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     public void onDropCompleted(View target, DragObject d, boolean isFlingToDelete,
             boolean success) {
         // Return early and wait for onFlingToDeleteCompleted if this was the result of a fling
-        if (isFlingToDelete) return;
+        if (isFlingToDelete) {
+            return;
+        }
 
         endDragging(target, false, success);
 
@@ -1073,7 +1085,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 @Override
                 public void run(AppsCustomizeAsyncTask task, AsyncTaskPageData data) {
                     mRunningTasks.remove(task);
-                    if (task.isCancelled()) return;
+                    if (task.isCancelled()) {
+                        return;
+                    }
                     // do cleanup inside onSyncWidgetPageItems
                     onSyncWidgetPageItems(data, false);
                 }
@@ -1233,7 +1247,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         for (int i = 0; i < count; ++i) {
             if (task != null) {
                 // Ensure we haven't been cancelled yet
-                if (task.isCancelled()) break;
+                if (task.isCancelled()) {
+                    break;
+                }
                 // Before work on each item, ensure that this task is running at the correct
                 // priority
                 task.syncThreadPriority();

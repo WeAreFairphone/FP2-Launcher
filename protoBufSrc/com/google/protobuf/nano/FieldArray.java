@@ -37,6 +37,7 @@ package com.google.protobuf.nano;
  *
  * Based on {@link android.support.v4.util.SpareArrayCompat}.
  */
+@SuppressWarnings("ALL")
 class FieldArray {
     private static final FieldData DELETED = new FieldData();
     private boolean mGarbage = false;

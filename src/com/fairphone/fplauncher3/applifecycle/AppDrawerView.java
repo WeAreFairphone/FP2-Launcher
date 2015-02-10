@@ -285,8 +285,9 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
     {
         // Return early and wait for onFlingToDeleteCompleted if this was the
         // result of a fling
-        if (isFlingToDelete)
+        if (isFlingToDelete) {
             return;
+        }
 
         endDragging(target, false, success);
 

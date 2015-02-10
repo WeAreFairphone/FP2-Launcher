@@ -55,6 +55,8 @@ public class IntArray {
 
     public void clear() {
         mSize = 0;
-        if (mData.length != INIT_CAPACITY) mData = new int[INIT_CAPACITY];
+        if (mData.length != INIT_CAPACITY) {
+            mData = new int[INIT_CAPACITY];
+        }
     }
 }

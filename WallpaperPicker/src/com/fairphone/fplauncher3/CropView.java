@@ -230,8 +230,9 @@ public class CropView extends TiledImageView implements OnScaleGestureListener {
         float sumX = 0, sumY = 0;
         final int count = event.getPointerCount();
         for (int i = 0; i < count; i++) {
-            if (skipIndex == i)
+            if (skipIndex == i) {
                 continue;
+            }
             sumX += event.getX(i);
             sumY += event.getY(i);
         }
@@ -305,7 +306,9 @@ public class CropView extends TiledImageView implements OnScaleGestureListener {
                     adjustment[1] = (edges.bottom - getHeight()) / scale;
                 }
                 for (int dim = 0; dim <= 1; dim++) {
-                    if (coef[dim] > 0) adjustment[dim] = FloatMath.ceil(adjustment[dim]);
+                    if (coef[dim] > 0) {
+                        adjustment[dim] = FloatMath.ceil(adjustment[dim]);
+                    }
                 }
 
                 mInverseRotateMatrix.mapPoints(adjustment);
