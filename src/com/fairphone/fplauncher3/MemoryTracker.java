@@ -59,6 +59,7 @@ public class MemoryTracker extends Service {
 
     public final LongSparseArray<ProcessMemInfo> mData = new LongSparseArray<ProcessMemInfo>();
     public final ArrayList<Long> mPids = new ArrayList<Long>();
+    @SuppressWarnings("ZeroLengthArrayAllocation")
     private int[] mPidsArray = new int[0];
     private final Object mLock = new Object();
 

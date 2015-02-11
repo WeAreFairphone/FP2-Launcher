@@ -2,7 +2,7 @@
 
 package com.fairphone.fplauncher3.backup;
 
-@SuppressWarnings("hiding")
+@SuppressWarnings("ALL")
 public interface BackupProtos {
 
     int PROTO_0 = 0;

@@ -57,6 +57,7 @@ public class HolographicViewHelper {
             states.addState(new int[] {android.R.attr.state_pressed}, outlineD);
             states.addState(new int[] {android.R.attr.state_focused}, outlineD);
             states.addState(new int[] {R.attr.stateHotwordOn}, hotwordD);
+            //noinspection ZeroLengthArrayAllocation
             states.addState(new int[] {}, originalD);
             v.setImageDrawable(states);
         }
