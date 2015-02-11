@@ -40,7 +40,7 @@ import java.util.ArrayList;
 public class DragController {
     private static final String TAG = "Launcher.DragController";
 
-	// Two states, the normal where the drag controller works as intended by
+    // Two states, the normal where the drag controller works as intended by
 	// google,
 	// the menu show where it shows the menu and does not scrolling
 	private static enum MovementState {
@@ -65,7 +65,8 @@ public class DragController {
     static final int SCROLL_LEFT = 0;
     static final int SCROLL_RIGHT = 1;
 
-    private static final float MAX_FLING_DEGREES = 35f;
+    //private static final float MAX_FLING_DEGREES = 35f;
+    private static final double MAX_FLING_RADIANS = 0.6108652381980153;
 
     private final Launcher mLauncher;
     private final Handler mHandler;
@@ -781,7 +782,7 @@ public class DragController {
             PointF upVec = new PointF(0f, -1f);
             float theta = (float) Math.acos(((vel.x * upVec.x) + (vel.y * upVec.y)) /
                     (vel.length() * upVec.length()));
-            if (theta <= Math.toRadians(MAX_FLING_DEGREES)) {
+            if (theta <= MAX_FLING_RADIANS) {
                 return vel;
             }
         }

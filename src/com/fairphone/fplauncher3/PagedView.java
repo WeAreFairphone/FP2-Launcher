@@ -247,7 +247,8 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     private final int FLING_TO_DELETE_FADE_OUT_DURATION = 350;
     private final float FLING_TO_DELETE_FRICTION = 0.035f;
     // The degrees specifies how much deviation from the up vector to still consider a fling "up"
-    private final float FLING_TO_DELETE_MAX_FLING_DEGREES = 65f;
+    //private final float FLING_TO_DELETE_MAX_FLING_DEGREES = 65f;
+    private static final double FLING_TO_DELETE_MAX_FLING_RADIANS = 1.1344640137963142;
     protected int mFlingToDeleteThresholdVelocity = -1400;
     // Drag to delete
     private boolean mDeferringForDelete = false;
@@ -2637,7 +2638,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
             PointF upVec = new PointF(0f, -1f);
             float theta = (float) Math.acos(((vel.x * upVec.x) + (vel.y * upVec.y)) /
                     (vel.length() * upVec.length()));
-            if (theta <= Math.toRadians(FLING_TO_DELETE_MAX_FLING_DEGREES)) {
+            if (theta <= FLING_TO_DELETE_MAX_FLING_RADIANS) {
                 return vel;
             }
         }

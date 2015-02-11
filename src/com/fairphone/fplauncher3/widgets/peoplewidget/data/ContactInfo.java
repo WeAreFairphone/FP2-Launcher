@@ -49,7 +49,7 @@ public class ContactInfo {
 		this.lookup = lookup;
 		this.contactId = contactID;
 		this.phoneNumber = phoneNumber;
-		this.mCounter = 0l;
+		this.mCounter = 0L;
 		this.mLastExecution = null;
 		this.mLastAction = null;
 		this.mNumberType = numberType;
@@ -61,7 +61,7 @@ public class ContactInfo {
 		this.lookup = "";
 		this.contactId = "";
 		this.phoneNumber = phoneNumber;
-		this.mCounter = 0l;
+		this.mCounter = 0L;
 		this.mLastExecution = null;
 		this.mLastAction = null;
 		this.mNumberType = Phone.TYPE_HOME;
@@ -147,7 +147,7 @@ public class ContactInfo {
 				Log.d(TAG, "Contact data > " + data);
 				String[] splits = data.split(SEPARATOR);
 				Date lastExecution = null;
-				long count = 0l;
+				long count = 0L;
 				String lastAction = null;
 				if (splits != null && splits.length == 3) {
 					try {
@@ -186,7 +186,7 @@ public class ContactInfo {
 	}
 
 	public void resetCount() {
-		mCounter = 0l;
+		mCounter = 0L;
 	}
 
 	public void incrementCount() {
