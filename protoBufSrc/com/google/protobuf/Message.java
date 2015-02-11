@@ -48,6 +48,7 @@ import java.util.Map;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public interface Message extends MessageLite, MessageOrBuilder {
 
   // (From MessageLite, re-declared here only for return type covariance.)
