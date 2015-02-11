@@ -263,7 +263,6 @@ public class DeviceProfile {
     private void computeAllAppsButtonSize(Context context) {
         Resources res = context.getResources();
         float padding = res.getInteger(R.integer.config_allAppsButtonPaddingPercent) / 100f;
-        LauncherAppState app = LauncherAppState.getInstance();
         allAppsButtonVisualSize = (int) (DEFAULT_ALL_APPS_ICON_SIZE_DP * (1 - padding));
     }
 
@@ -279,7 +278,6 @@ public class DeviceProfile {
         WindowManager windowManager =  (WindowManager)
                 context.getSystemService(Context.WINDOW_SERVICE);
         Resources resources = context.getResources();
-        DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();
         int rotation = windowManager.getDefaultDisplay().getRotation();
 
@@ -369,10 +367,6 @@ public class DeviceProfile {
         folderIconSizePx = iconSizePx + 2 * -folderBackgroundOffset;
 
         // All Apps
-        Rect padding = getWorkspacePadding(isLandscape ?
-                CellLayout.LANDSCAPE : CellLayout.PORTRAIT);
-        int pageIndicatorOffset =
-                resources.getDimensionPixelSize(R.dimen.apps_customize_page_indicator_offset);
         allAppsCellWidthPx = allAppsIconSizePx;
         allAppsCellHeightPx = allAppsIconSizePx + drawablePadding + iconTextSizePx;
         int maxLongEdgeCellCount =

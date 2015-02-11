@@ -45,7 +45,7 @@ class ExifReader {
             IOException {
         ExifParser parser = ExifParser.parse(inputStream, mInterface);
         ExifData exifData = new ExifData(parser.getByteOrder());
-        ExifTag tag = null;
+        ExifTag tag;
 
         int event = parser.next();
         while (event != ExifParser.EVENT_END) {

@@ -228,9 +228,10 @@ public class LauncherBackupHelper implements BackupHelper {
             if (buffer.length < dataSize) {
                 buffer = new byte[dataSize];
             }
-            Key key = null;
-        int bytesRead = 0;
+            Key key;
+        @SuppressWarnings("UnusedAssignment") int bytesRead = 0;
         try {
+            //noinspection UnusedAssignment
             bytesRead = data.read(buffer, 0, dataSize);
             if (DEBUG) {
                 Log.d(TAG, "read " + bytesRead + " of " + dataSize + " available");
@@ -810,7 +811,6 @@ public class LauncherBackupHelper implements BackupHelper {
         try {
             Key key = Key.parseFrom(Base64.decode(backupKey, Base64.DEFAULT));
             if (key.checksum != checkKey(key)) {
-                key = null;
                 throw new KeyParsingException("invalid key read from stream" + backupKey);
             }
             return key;
@@ -1191,7 +1191,7 @@ public class LauncherBackupHelper implements BackupHelper {
      * @param journal a Journal protocol buffer
      */
     private void writeJournal(ParcelFileDescriptor newState, Journal journal) {
-        FileOutputStream outStream = null;
+        FileOutputStream outStream;
         try {
             outStream = new FileOutputStream(newState.getFileDescriptor());
             final byte[] journalBytes = writeCheckedBytes(journal);

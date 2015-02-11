@@ -92,6 +92,7 @@ public class PageIndicator extends LinearLayout {
         transition.disableTransitionType(LayoutTransition.CHANGE_DISAPPEARING);
     }
 
+    @SuppressWarnings("UnusedAssignment")
     void offsetWindowCenterTo(int activeIndex, boolean allowAnimations) {
         if (activeIndex < 0) {
             new Throwable().printStackTrace();

@@ -1141,7 +1141,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         layout.setColumnCount(layout.getCellCountX());
         for (int i = 0; i < items.size(); ++i) {
             Object rawInfo = items.get(i);
-            PendingAddItemInfo createItemInfo = null;
+            PendingAddItemInfo createItemInfo;
             PagedViewWidget widget = (PagedViewWidget) mLayoutInflater.inflate(
                     R.layout.apps_customize_widget, layout, false);
             if (rawInfo instanceof AppWidgetProviderInfo) {
@@ -1570,8 +1570,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
     protected String getCurrentPageDescription() {
         int page = (mNextPage != INVALID_PAGE) ? mNextPage : mCurrentPage;
-        int stringId = R.string.default_scroll_format;
-        int count = 0;
+        int stringId;
+        int count;
 
         if (mContentType == ContentType.Applications) {
             stringId = R.string.apps_customize_apps_scroll_format;

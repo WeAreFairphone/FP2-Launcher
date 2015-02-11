@@ -69,7 +69,7 @@ public class AllAppsWidget extends AppWidgetProvider
         Intent launchIntent = new Intent();
         launchIntent.setAction(AppSwitcherWidget.ACTION_APP_SWITCHER_LAUNCH_ALL_APPS);
 
-        PendingIntent launchPendingIntent = PendingIntent.getBroadcast(context, code++, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent launchPendingIntent = PendingIntent.getBroadcast(context, code, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         widget.setOnClickPendingIntent(R.id.all_apps_launcher_widget, launchPendingIntent);
 
         // update the widget data

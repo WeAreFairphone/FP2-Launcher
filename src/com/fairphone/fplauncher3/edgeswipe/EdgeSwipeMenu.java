@@ -295,7 +295,6 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
     {
 
         float edgeSwipeHolderWidth = (float) mEdgeSwipeHolder.getWidth() / 2f;
-        float translateOffset = resources.getDimension(R.dimen.edge_swipe_translate_offset);
         long translateDuration = resources.getInteger(R.integer.edge_swipe_translate_duration);
         long translateDelayDuration = resources.getInteger(R.integer.edge_swipe_translate_delay_duration);
         float translateValue = 0;
@@ -381,9 +380,9 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         }
 
         Intent launchIntent = null;
-        ComponentName componentName = null;
+        ComponentName componentName;
         Drawable iconDrawable = null;
-        String label = "";
+        String label;
 
         if (applicationInfo == null)
         {
@@ -698,7 +697,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             {
                 float startingPoint = pointerY - menuHolderY;
                 int currentItem = (isInEditZone(pointerX, pointerY) && isTimeToShowEdit()) ? EDIT_BUTTON_ITEM : (int) (startingPoint / itemSize);
-                ViewGroup item = null;
+                ViewGroup item;
                 
                 if (mPreviousItem != currentItem && mPreviousItem != -1)
                 {
@@ -773,7 +772,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
             }
             else
             {
-                View item = null;
+                View item;
                 if (mPreviousItem != -1)
                 {
                     item = mEdgeSwipeHolder.getChildAt(mPreviousItem);
@@ -871,7 +870,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
     private boolean isInEditZone(float pointerX, float pointerY)
     {
         boolean validX = false;
-        boolean validY = false;
+        boolean validY;
         float dimenBottom = mContext.getResources().getDimensionPixelSize(R.dimen.edge_swipe_item_margin_bottom);
 
         if (mSide == null)

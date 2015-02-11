@@ -466,7 +466,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             return;
         }
 
-        Animator openFolderAnim = null;
+        Animator openFolderAnim;
         final Runnable onCompleteRunnable;
         if (!Utilities.isLmpOrAbove()) {
             positionAndSizeAsIcon();

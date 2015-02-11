@@ -294,7 +294,7 @@ public class LauncherProvider extends ContentProvider {
     }
 
     /**
-     * @param Should we load the old db for upgrade? first run only.
+     * Should we load the old db for upgrade? first run only.
      */
     synchronized public boolean justLoadedOldDb() {
         String spKey = LauncherAppState.getSharedPreferencesKey();
@@ -1432,8 +1432,9 @@ public class LauncherProvider extends ContentProvider {
          * Loads the default set of favorite packages from an xml file.
          *
          * @param db The database to write the values into
-         * @param filterContainerId The specific container id of items to load
-         * @param the set of screenIds which are used by the favorites
+         * @param res The resources
+         * @param workspaceResourceId The specific container id of items to load
+         * @param screenIds The set of screenIds which are used by the favorites
          */
         private int loadFavoritesRecursive(SQLiteDatabase db, Resources res, int workspaceResourceId,
                 ArrayList<Long> screenIds) {
@@ -1473,7 +1474,6 @@ public class LauncherProvider extends ContentProvider {
                         if (resId != 0 && resId != workspaceResourceId) {
                             // recursively load some more favorites, why not?
                             count += loadFavoritesRecursive(db, res, resId, screenIds);
-                            added = false;
                         } else {
                             Log.w(TAG, String.format("Skipping <include workspace=0x%08x>", resId));
                         }
@@ -2027,7 +2027,6 @@ public class LauncherProvider extends ContentProvider {
                         final int profileIndex
                                 = c.getColumnIndex(LauncherSettings.Favorites.PROFILE_ID);
 
-                        int i = 0;
                         int curX = 0;
                         int curY = 0;
 
@@ -2204,7 +2203,7 @@ public class LauncherProvider extends ContentProvider {
 
                         db.beginTransaction();
                         try {
-                            for (i=0; i<=curScreen; i++) {
+                            for (int i=0; i<=curScreen; i++) {
                                 final ContentValues values = new ContentValues();
                                 values.put(LauncherSettings.WorkspaceScreens._ID, i);
                                 values.put(LauncherSettings.WorkspaceScreens.SCREEN_RANK, i);

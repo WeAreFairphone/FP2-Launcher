@@ -1329,9 +1329,6 @@ public class CellLayout extends ViewGroup {
                         hitMaxY |= ySize >= spanY;
                         incX = !incX;
                     }
-                    incX = true;
-                    hitMaxX = xSize >= spanX;
-                    hitMaxY = ySize >= spanY;
                 }
                 final int[] cellXY = mTmpXY;
                 cellToCenterPoint(x, y, cellXY);
@@ -2057,10 +2054,9 @@ public class CellLayout extends ViewGroup {
         int[] result = new int[2];
         result = findNearestArea(pixelX, pixelY, spanX, spanY, result);
 
-        boolean success = false;
         // First we try the exact nearest position of the item being dragged,
         // we will then want to try to move this around to other neighbouring positions
-        success = rearrangementExists(result[0], result[1], spanX, spanY, direction, dragView,
+        boolean success = rearrangementExists(result[0], result[1], spanX, spanY, direction, dragView,
                 solution);
 
         if (!success) {

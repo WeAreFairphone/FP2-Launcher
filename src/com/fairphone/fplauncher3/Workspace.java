@@ -1679,12 +1679,11 @@ public class Workspace extends SmoothPagedView
         boolean shouldOverScroll = mOverScrollX < 0 || mOverScrollX > mMaxScrollX;
 
         if (shouldOverScroll) {
-            int index = 0;
             final int lowerIndex = 0;
             final int upperIndex = getChildCount() - 1;
 
             final boolean isLeftPage = mOverScrollX < 0;
-            index = (!isRtl && isLeftPage) || (isRtl && !isLeftPage) ? lowerIndex : upperIndex;
+            int index = (!isRtl && isLeftPage) || (isRtl && !isLeftPage) ? lowerIndex : upperIndex;
 
             CellLayout cl = (CellLayout) getChildAt(index);
             float effect = Math.abs(mOverScrollEffect);
@@ -2202,9 +2201,6 @@ public class Workspace extends SmoothPagedView
 
         final State oldState = mState;
         final boolean oldStateIsNormal = (oldState == State.NORMAL);
-        final boolean oldStateIsSpringLoaded = (oldState == State.SPRING_LOADED);
-        final boolean oldStateIsNormalHidden = (oldState == State.NORMAL_HIDDEN);
-        final boolean oldStateIsOverviewHidden = (oldState == State.OVERVIEW_HIDDEN);
         final boolean oldStateIsOverview = (oldState == State.OVERVIEW);
         setState(state);
         final boolean stateIsNormal = (state == State.NORMAL);
@@ -2215,7 +2211,6 @@ public class Workspace extends SmoothPagedView
         float finalBackgroundAlpha = (stateIsSpringLoaded || stateIsOverview) ? 1.0f : 0f;
         float finalHotseatAndPageIndicatorAlpha = (stateIsNormal || stateIsSpringLoaded) ? 1f : 0f;
         float finalOverviewPanelAlpha = stateIsOverview ? 1f : 0f;
-        float finalSearchBarAlpha = !stateIsNormal ? 0f : 1f;
         float finalWorkspaceTranslationY = stateIsOverview || stateIsOverviewHidden ?
                 getOverviewModeTranslationY() : 0;
 
@@ -2338,7 +2333,7 @@ public class Workspace extends SmoothPagedView
                     }
                 }
             }
-            Animator pageIndicatorAlpha = null;
+            Animator pageIndicatorAlpha;
             if (pageIndicator != null) {
                 pageIndicatorAlpha = new LauncherViewPropertyAnimator(pageIndicator)
                     .alpha(finalHotseatAndPageIndicatorAlpha).withLayer();
@@ -2779,8 +2774,8 @@ public class Workspace extends SmoothPagedView
             // We want the point to be mapped to the dragTarget.
             mapPointFromSelfToChild(dropTargetLayout, mDragViewVisualCenter, null);
 
-            int spanX = 1;
-            int spanY = 1;
+            int spanX;
+            int spanY;
             if (mDragInfo != null) {
                 final CellLayout.CellInfo dragCellInfo = mDragInfo;
                 spanX = dragCellInfo.spanX;
@@ -3369,23 +3364,6 @@ public class Workspace extends SmoothPagedView
        xy[1] = xy[1] - v.getTop();
    }
 
-   boolean isPointInSelfOverHotseat(int x, int y, Rect r) {
-       if (r == null) {
-           r = new Rect();
-       }
-       mTempPt[0] = x;
-       mTempPt[1] = y;
-       mLauncher.getDragLayer().getDescendantCoordRelativeToSelf(this, mTempPt, true);
-
-       LauncherAppState app = LauncherAppState.getInstance();
-       DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
-       r = grid.getHotseatRect();
-       if (r.contains(mTempPt[0], mTempPt[1])) {
-           return true;
-       }
-       return false;
-   }
-
    /*
     *
     * Convert the 2D coordinate xy from this CellLayout's coordinate space to
@@ -3508,7 +3486,6 @@ public class Workspace extends SmoothPagedView
             return;
         }
 
-        Rect r = new Rect();
         CellLayout layout = null;
         ItemInfo item = (ItemInfo) d.dragInfo;
         if (item == null) {
@@ -3862,7 +3839,7 @@ public class Workspace extends SmoothPagedView
                     animationStyle, finalView, true);
         } else {
             // This is for other drag/drop cases, like dragging from All Apps
-            View view = null;
+            View view;
 
             switch (info.itemType) {
             case LauncherSettings.Favorites.ITEM_TYPE_APPLICATION:

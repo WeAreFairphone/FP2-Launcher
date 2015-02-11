@@ -513,6 +513,7 @@ public class WidgetPreviewLoader {
             maxPreviewWidth = Integer.MAX_VALUE;
         }
         if (maxPreviewHeight < 0) {
+            //noinspection UnusedAssignment
             maxPreviewHeight = Integer.MAX_VALUE;
         }
 

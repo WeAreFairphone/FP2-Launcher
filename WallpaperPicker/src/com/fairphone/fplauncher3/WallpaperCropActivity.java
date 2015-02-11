@@ -645,7 +645,6 @@ public class WallpaperCropActivity extends Activity {
 
                     if (bounds == null) {
                         Log.w(LOGTAG, "cannot get bounds for image");
-                        failure = true;
                         return false;
                     }
 
@@ -664,7 +663,6 @@ public class WallpaperCropActivity extends Activity {
 
                 if (roundedTrueCrop.width() <= 0 || roundedTrueCrop.height() <= 0) {
                     Log.w(LOGTAG, "crop has bad values for full size image");
-                    failure = true;
                     return false;
                 }
 
@@ -678,7 +676,6 @@ public class WallpaperCropActivity extends Activity {
                     is = regenerateInputStream();
                     if (is == null) {
                         Log.w(LOGTAG, "cannot get input stream for uri=" + mInUri);
-                        failure = true;
                         return false;
                     }
                     decoder = BitmapRegionDecoder.newInstance(is, false);
@@ -687,7 +684,6 @@ public class WallpaperCropActivity extends Activity {
                     Log.w(LOGTAG, "cannot open region decoder for file: " + mInUri, e);
                 } finally {
                    Utils.closeSilently(is);
-                   is = null;
                 }
 
                 Bitmap crop = null;
@@ -754,7 +750,6 @@ public class WallpaperCropActivity extends Activity {
 
                 if (crop == null) {
                     Log.w(LOGTAG, "cannot decode file: " + mInUri);
-                    failure = true;
                     return false;
                 }
                 if (mOutWidth > 0 && mOutHeight > 0 || mRotation > 0) {

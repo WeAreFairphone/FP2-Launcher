@@ -2222,7 +2222,6 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
 
         final int newX = getScrollForPage(whichPage);
         int delta = newX - mUnboundedScrollX;
-        int duration = 0;
 
         if (Math.abs(velocity) < mMinFlingVelocity || isInOverScroll()) {
             // If the velocity is low enough, then treat this more as an automatic page advance
@@ -2245,7 +2244,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
         // we want the page's snap velocity to approximately match the velocity at which the
         // user flings, so we scale the duration by a value near to the derivative of the scroll
         // interpolator at zero, ie. 5. We use 4 to make it a little slower.
-        duration = 4 * Math.round(1000 * Math.abs(distance / velocity));
+        int duration = 4 * Math.round(1000 * Math.abs(distance / velocity));
 
         snapToPage(whichPage, delta, duration);
     }
@@ -2719,8 +2718,8 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
                     // dragViewIndex < pageUnderPointIndex, so after we remove the
                     // drag view all subsequent views to pageUnderPointIndex will
                     // shift down.
-                    int oldX = 0;
-                    int newX = 0;
+                    int oldX;
+                    int newX;
                     if (slideFromLeft) {
                         if (i == 0) {
                             // Simulate the page being offscreen with the page spacing

@@ -86,7 +86,7 @@ public class LauncherAppsCompatVL extends LauncherAppsCompat {
 
     public void removeOnAppsChangedCallback(
             LauncherAppsCompat.OnAppsChangedCallbackCompat callback) {
-        WrappedCallback wrappedCallback = null;
+        WrappedCallback wrappedCallback;
         synchronized (mCallbacks) {
             wrappedCallback = mCallbacks.remove(callback);
         }

@@ -109,7 +109,7 @@ public class ContactInfo {
 	}
 
 	private LAST_ACTION getLastActionFromString(String lastAction) {
-		LAST_ACTION action = null;
+		LAST_ACTION action;
 		try {
 			action = LAST_ACTION.valueOf(lastAction);
 		} catch (Exception e) {
@@ -244,8 +244,8 @@ public class ContactInfo {
 						.getColumnIndex(PhoneLookup.TYPE));
 
 				// Log.d(TAG, DatabaseUtils.dumpCursorToString(cursor));
-				String phonenumber = cursor.getString(cursor
-						.getColumnIndex(PhoneLookup.NUMBER));
+//				String phonenumber = cursor.getString(cursor
+//						.getColumnIndex(PhoneLookup.NUMBER));
 
 				contact = new ContactInfo(name, photoUri, lookup, contactId,
 						number, type);

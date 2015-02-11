@@ -80,7 +80,7 @@ public class DropDragEventListener implements View.OnDragListener {
 									event.getClipData().getItemCount() - 1)
 							.getText().toString());
 
-			int position = -1;
+			int position;
 			AppInfo info = null;
 
 			// obtain the applicationInfo

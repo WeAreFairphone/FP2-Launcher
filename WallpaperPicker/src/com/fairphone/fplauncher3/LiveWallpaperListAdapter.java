@@ -156,7 +156,7 @@ public class LiveWallpaperListAdapter extends BaseAdapter {
             });
 
             for (ResolveInfo resolveInfo : list) {
-                WallpaperInfo info = null;
+                WallpaperInfo info;
                 try {
                     info = new WallpaperInfo(mContext, resolveInfo);
                 } catch (XmlPullParserException e) {

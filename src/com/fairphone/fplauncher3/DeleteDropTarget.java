@@ -513,7 +513,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
                 return Math.min(1f, mOffset + t);
             }
         };
-        AnimatorUpdateListener updateCb = null;
+        AnimatorUpdateListener updateCb;
         if (mFlingDeleteMode == MODE_FLING_DELETE_TO_TRASH) {
             updateCb = createFlingToTrashAnimatorListener(dragLayer, d, vel, config);
         } else if (mFlingDeleteMode == MODE_FLING_DELETE_ALONG_VECTOR) {

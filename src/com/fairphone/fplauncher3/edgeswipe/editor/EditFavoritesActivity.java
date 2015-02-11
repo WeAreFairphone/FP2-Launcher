@@ -159,7 +159,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
 
     public static Themes getCurrentTheme(Context context)
     {
-        Themes currentTheme = Themes.DARK;
+        Themes currentTheme;
 
         SharedPreferences sharedPrefs = context.getSharedPreferences(PREFS_EDGE_SWIPE_MENU, Context.MODE_PRIVATE);
         String currentThemePref = sharedPrefs.getString(EDGE_SWIPE_THEME, Themes.DARK.name());
@@ -584,8 +584,8 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     private boolean isInRemoveZone(float pointerX, float pointerY)
     {
 
-        boolean validX = false;
-        boolean validY = false;
+        boolean validX;
+        boolean validY;
         View allAppsGroupView = findViewById(R.id.remove_favourite_overlay);
 
         validX = pointerX <= (allAppsGroupView.getX() + allAppsGroupView.getWidth());

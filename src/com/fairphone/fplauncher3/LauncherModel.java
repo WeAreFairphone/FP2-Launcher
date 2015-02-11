@@ -1396,7 +1396,7 @@ public class LauncherModel extends BroadcastReceiver
     void bindRemainingSynchronousPages() {
         // Post the remaining side pages to be loaded
         if (!mDeferredBindRunnables.isEmpty()) {
-            Runnable[] deferredBindRunnables = null;
+            Runnable[] deferredBindRunnables;
             synchronized (mDeferredBindRunnables) {
                 deferredBindRunnables = mDeferredBindRunnables.toArray(
                         new Runnable[mDeferredBindRunnables.size()]);
@@ -1521,6 +1521,7 @@ public class LauncherModel extends BroadcastReceiver
             return isUpgradePath;
         }
 
+        @SuppressWarnings("UnusedAssignment")
         private void waitForIdle() {
             // Wait until the either we're stopped or the other threads are done.
             // This way we don't start loading all apps until the workspace has settled
@@ -1593,6 +1594,7 @@ public class LauncherModel extends BroadcastReceiver
             onlyBindAllApps();
         }
 
+        @SuppressWarnings("UnusedAssignment")
         public void run() {
             boolean isUpgrade = false;
 
@@ -1802,6 +1804,7 @@ public class LauncherModel extends BroadcastReceiver
         }
 
         /** Returns whether this is an upgrade path */
+        @SuppressWarnings("UnusedAssignment")
         private boolean loadWorkspace() {
             // Log to disk
             Launcher.addDumpLog(TAG, "11683562 - loadWorkspace()", true);
@@ -2755,6 +2758,7 @@ public class LauncherModel extends BroadcastReceiver
             final ArrayList<AppInfo> list
                     = (ArrayList<AppInfo>) mBgAllAppsList.data.clone();
             Runnable r = new Runnable() {
+                @SuppressWarnings("UnusedAssignment")
                 public void run() {
                     final long t = SystemClock.uptimeMillis();
                     final Callbacks callbacks = tryGetCallbacks(oldCallbacks);
@@ -2775,6 +2779,7 @@ public class LauncherModel extends BroadcastReceiver
             }
         }
 
+        @SuppressWarnings("UnusedAssignment")
         private void loadAllApps() {
             final long loadTime = DEBUG_LOADERS ? SystemClock.uptimeMillis() : 0;
 
@@ -3073,7 +3078,6 @@ public class LauncherModel extends BroadcastReceiver
                 removedPackageNames.addAll(Arrays.asList(packages));
             } else if (mOp == OP_UPDATE) {
                 // Mark disabled packages in the broadcast to be removed
-                final PackageManager pm = context.getPackageManager();
                 for (int i=0; i<N; i++) {
                     if (isPackageDisabled(context, packages[i], mUser)) {
                         removedPackageNames.add(packages[i]);
@@ -3557,7 +3561,7 @@ public class LauncherModel extends BroadcastReceiver
         return false;
     }
     void updateSavedIcon(Context context, ShortcutInfo info, byte[] data) {
-        boolean needSave = false;
+        boolean needSave;
         try {
             if (data != null) {
                 Bitmap saved = BitmapFactory.decodeByteArray(data, 0, data.length);

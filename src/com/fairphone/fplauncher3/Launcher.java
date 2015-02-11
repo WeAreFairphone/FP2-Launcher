@@ -969,7 +969,7 @@ public class Launcher extends Activity
 
     @Override
     protected void onResume() {
-        long startTime = 0;
+        @SuppressWarnings("UnusedAssignment") long startTime = 0;
         if (DEBUG_RESUME_TIME) {
             startTime = System.currentTimeMillis();
             Log.v(TAG, "Launcher.onResume()");
@@ -997,7 +997,7 @@ public class Launcher extends Activity
         if (!mBindOnResumeCallbacks.isEmpty()) {
             // We might have postponed some bind calls until onResume (see waitUntilResume) --
             // execute them here
-            long startTimeCallbacks = 0;
+            @SuppressWarnings("UnusedAssignment") long startTimeCallbacks = 0;
             if (DEBUG_RESUME_TIME) {
                 startTimeCallbacks = System.currentTimeMillis();
             }
@@ -1448,7 +1448,7 @@ public class Launcher extends Activity
         int[] touchXY = mPendingAddInfo.dropPos;
         CellLayout layout = getCellLayout(container, screenId);
 
-        boolean foundCellSpan = false;
+        boolean foundCellSpan;
 
         ShortcutInfo info = mModel.infoFromShortcutIntent(this, data, null);
         if (info == null) {
@@ -1545,7 +1545,7 @@ public class Launcher extends Activity
         int[] cellXY = mTmpAddItemCellCoordinates;
         int[] touchXY = mPendingAddInfo.dropPos;
         int[] finalSpan = new int[2];
-        boolean foundCellSpan = false;
+        boolean foundCellSpan;
         if (mPendingAddInfo.cellX >= 0 && mPendingAddInfo.cellY >= 0) {
             cellXY[0] = mPendingAddInfo.cellX;
             cellXY[1] = mPendingAddInfo.cellY;
@@ -1889,6 +1889,7 @@ public class Launcher extends Activity
         setWaitingForResult(false);
     }
 
+    @SuppressWarnings("UnusedAssignment")
     @Override
     protected void onNewIntent(Intent intent) {
         long startTime = 0;
@@ -2822,10 +2823,8 @@ public class Launcher extends Activity
     protected void onInteractionBegin() {}
 
     void startApplicationDetailsActivity(ComponentName componentName, UserHandleCompat user) {
-        String packageName = componentName.getPackageName();
         try {
             LauncherAppsCompat launcherApps = LauncherAppsCompat.getInstance(this);
-            UserManagerCompat userManager = UserManagerCompat.getInstance(this);
             launcherApps.showAppDetailsForProfile(componentName, user);
         } catch (SecurityException e) {
             Toast.makeText(this, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
@@ -2992,8 +2991,6 @@ public class Launcher extends Activity
         PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat("alpha", 0);
         PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat("scaleX", 1.5f);
         PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat("scaleY", 1.5f);
-
-        FolderInfo info = (FolderInfo) fi.getTag();
 
         // Push an ImageView copy of the FolderIcon into the DragLayer and hide the original
         copyFolderIconToImage(fi);
@@ -3267,13 +3264,10 @@ public class Launcher extends Activity
 
         final Resources res = getResources();
 
-        final int duration = res.getInteger(R.integer.config_appsCustomizeZoomInTime);
-        final int fadeDuration = res.getInteger(R.integer.config_appsCustomizeFadeInTime);
         final int revealDuration = res.getInteger(R.integer.config_appsCustomizeRevealTime);
         final int itemsAlphaStagger =
                 res.getInteger(R.integer.config_appsCustomizeItemsAlphaStagger);
 
-        final float scale = (float) res.getInteger(R.integer.config_appsCustomizeZoomScaleFactor);
         final View fromView = mWorkspace;
         final AppsCustomizeTabHost toView = mAppsCustomizeTabHost;
 
@@ -3300,8 +3294,6 @@ public class Launcher extends Activity
             final View page = content.getPageAt(content.getCurrentPage());
             final View revealView = toView.findViewById(R.id.fake_page);
 
-            final float initialPanelAlpha = 1f;
-
             final boolean isWidgetTray = contentType == AppsCustomizePagedView.ContentType.Widgets;
             if (isWidgetTray) {
                 revealView.setBackground(res.getDrawable(R.drawable.quantum_panel_dark));
@@ -3327,8 +3319,8 @@ public class Launcher extends Activity
                     getPageIndicator(), null);
 
             float alpha = 0;
-            float xDrift = 0;
-            float yDrift = 0;
+            float xDrift;
+            float yDrift;
             if (material) {
                 alpha = isWidgetTray ? 0.3f : 1f;
                 yDrift = isWidgetTray ? height / 2 : allAppsToPanelDelta[1];
@@ -3495,14 +3487,10 @@ public class Launcher extends Activity
         boolean material = Utilities.isLmpOrAbove();
         Resources res = getResources();
 
-        final int duration = res.getInteger(R.integer.config_appsCustomizeZoomOutTime);
-        final int fadeOutDuration = res.getInteger(R.integer.config_appsCustomizeFadeOutTime);
         final int revealDuration = res.getInteger(R.integer.config_appsCustomizeConcealTime);
         final int itemsAlphaStagger =
                 res.getInteger(R.integer.config_appsCustomizeItemsAlphaStagger);
 
-        final float scaleFactor = (float)
-                res.getInteger(R.integer.config_appsCustomizeZoomScaleFactor);
         final View fromView = mAppsCustomizeTabHost;
         final View toView = mWorkspace;
         Animator workspaceAnim = null;
@@ -3563,8 +3551,8 @@ public class Launcher extends Activity
                 int[] allAppsToPanelDelta = Utilities.getCenterDeltaInScreenSpace(revealView,
                         pageIndicatorView, null);
 
-                float xDrift = 0;
-                float yDrift = 0;
+                float xDrift;
+                float yDrift;
                 if (material) {
                     yDrift = isWidgetTray ? height / 2 : allAppsToPanelDelta[1];
                     xDrift = isWidgetTray ? 0 : allAppsToPanelDelta[0];
@@ -3757,7 +3745,6 @@ public class Launcher extends Activity
 
     void showWorkspace(boolean animated, Runnable onCompleteRunnable) {
         if (mState != State.WORKSPACE || mWorkspace.getState() != Workspace.State.NORMAL) {
-            boolean wasInSpringLoadedMode = (mState != State.WORKSPACE);
             mWorkspace.setVisibility(View.VISIBLE);
             hideAppsCustomizeHelper(Workspace.State.NORMAL, animated, false, onCompleteRunnable);
 
@@ -4327,7 +4314,7 @@ public class Launcher extends Activity
             return;
         }
 
-        final long start = DEBUG_WIDGETS ? SystemClock.uptimeMillis() : 0;
+        @SuppressWarnings("UnusedAssignment") final long start = DEBUG_WIDGETS ? SystemClock.uptimeMillis() : 0;
         if (DEBUG_WIDGETS) {
             Log.d(TAG, "bindAppWidget: " + item);
         }
@@ -4536,7 +4523,7 @@ public class Launcher extends Activity
 
     @Override
     public void bindSearchablesChanged() {
-        boolean searchVisible = updateGlobalSearchIcon();
+        updateGlobalSearchIcon();
     }
 
     /**
@@ -5053,6 +5040,7 @@ public class Launcher extends Activity
     public void dumpLogsToLocalData() {
         if (DEBUG_DUMP_LOG) {
             new AsyncTask<Void, Void, Void>() {
+                @SuppressWarnings("UnusedAssignment")
                 public Void doInBackground(Void ... args) {
                     boolean success = false;
                     sDateStamp.setTime(sRunStart);

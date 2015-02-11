@@ -182,28 +182,4 @@ public abstract class FavoritesStorageHelper
         }
         return compName;
     }
-
-	public static void resetFavoritesToDefault(Context context) {
-		SharedPreferences sharedPreferences = context.getSharedPreferences(FAVORITES_APPS_SHARED_PREFERENCES_FILE_NAME, Activity.MODE_PRIVATE);
-		
-		SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putString(FAVORITES_APPS_KEY, null);
-		editor.commit();
-		
-		loadSelectedApps(context, MAX_FAVORITE_APPS);
-	}
-
-    public static void updateFavorites(Context context, ComponentName componentName) {
-        AppInfo[] currentApps = loadSelectedApps(context, MAX_FAVORITE_APPS);
-        
-        for (AppInfo appInfo : currentApps) {
-            if(appInfo != null){
-                ComponentName comp = appInfo.getComponentName();
-                if(comp != null && comp.equals(componentName)){
-                    appInfo = null;
-                }
-            }
-        }
-        storeSelectedApps(context, currentApps);
-    }
 }

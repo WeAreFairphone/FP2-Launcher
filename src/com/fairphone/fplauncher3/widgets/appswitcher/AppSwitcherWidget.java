@@ -101,18 +101,18 @@ public class AppSwitcherWidget extends AppWidgetProvider
         code = updateLastUsedAppsList(context, code, widget, mostRecent);
 
         // Process the most used apps
-        code = updateMostUsedAppsList(context, code, widget, mostUsed);
+        updateMostUsedAppsList(context, code, widget, mostUsed);
 
         // update the widget data
         appWidgetManager.updateAppWidget(appWidgetId, null);
         appWidgetManager.updateAppWidget(appWidgetId, widget);
     }
 
-    private int updateMostUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostUsed)
+    private void updateMostUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostUsed)
     {
         for (ApplicationRunInformation mostUsedInfo : mostUsed)
         {
-            RemoteViews view = null;
+            RemoteViews view;
             try
             {
                 view = getMostUsedView(context, mostUsedInfo, code);
@@ -139,15 +139,13 @@ public class AppSwitcherWidget extends AppWidgetProvider
         {
             widget.addView(R.id.mostUsedApps, allAppsView);
         }
-
-        return code;
     }
 
     private int updateLastUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostRecent)
     {
         for (ApplicationRunInformation appRunInfo : mostRecent)
         {
-            RemoteViews view = null;
+            RemoteViews view;
             try
             {
                 view = getRecentView(context, appRunInfo, code);
@@ -191,7 +189,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         CharSequence appLabel = pm.getActivityInfo(info.getComponentName(), 0).loadLabel(pm);
 
         // debug String with app count
-        String fullAppLabel = info.getCount() + "# " + appLabel;
+        @SuppressWarnings("UnusedAssignment") String fullAppLabel = info.getCount() + "# " + appLabel;
 
         mostUsedRow.setImageViewBitmap(android.R.id.content, iconBitmap);
 
@@ -219,7 +217,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         Intent launchIntent = new Intent();
         launchIntent.setAction(ACTION_APP_SWITCHER_LAUNCH_ALL_APPS);
 
-        PendingIntent launchPendingIntent = PendingIntent.getBroadcast(context, code++, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent launchPendingIntent = PendingIntent.getBroadcast(context, code, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         allAppsButton.setOnClickPendingIntent(R.id.mostUsedButton, launchPendingIntent);
 
         return allAppsButton;
@@ -251,7 +249,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         CharSequence appLabel = pm.getActivityInfo(info.getComponentName(), 0).loadLabel(pm);
 
         // debug String with app count
-        String fullAppLabel = info.getCount() + "# " + appLabel;
+        @SuppressWarnings("UnusedAssignment") String fullAppLabel = info.getCount() + "# " + appLabel;
 
         recentRow.setTextViewText(R.id.recentButton, APP_SWITCHER_DEBUG_MODE ? fullAppLabel : appLabel);
         recentRow.setImageViewBitmap(android.R.id.background, iconBitmap);

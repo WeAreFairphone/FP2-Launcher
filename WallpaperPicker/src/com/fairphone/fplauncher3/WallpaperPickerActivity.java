@@ -1017,7 +1017,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
         int resId = sysRes.getIdentifier("default_wallpaper", "drawable", "android");
 
         File defaultThumbFile = getDefaultThumbFile();
-        Bitmap thumb = null;
+        Bitmap thumb;
         boolean defaultWallpaperExists = false;
         if (defaultThumbFile.exists()) {
             thumb = BitmapFactory.decodeFile(defaultThumbFile.getAbsolutePath());

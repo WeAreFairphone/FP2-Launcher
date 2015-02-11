@@ -264,11 +264,11 @@ public class ApplicationRunInformation
 	public static ApplicationRunInformation deserializeApplicationRunInformation(String component, String data)
     {
         String[] splits = data.split(APP_RUN_INFO_SEPARATOR);
-        int count = 0;
+        int count;
         Date lastExecution = Calendar.getInstance().getTime();
-        boolean isNewApp = false;
-        boolean isUpdatedApp = false;
-        boolean isPinnedApp = false;
+        boolean isNewApp;
+        boolean isUpdatedApp;
+        boolean isPinnedApp;
 
         try
         {
