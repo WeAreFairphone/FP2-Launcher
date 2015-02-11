@@ -407,6 +407,7 @@ public class TiledImageRenderer {
         mActiveTiles.clear();
         mTileRange.set(0, 0, 0, 0);
 
+        //noinspection StatementWithEmptyBody
         while (sTilePool.acquire() != null) {}
     }
 

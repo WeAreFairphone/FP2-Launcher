@@ -520,6 +520,7 @@ public class AutoInstallsLayout implements WorkspaceLoader {
     private static final void beginDocument(XmlPullParser parser, String firstElementName)
             throws XmlPullParserException, IOException {
         int type;
+        //noinspection StatementWithEmptyBody
         while ((type = parser.next()) != XmlPullParser.START_TAG
                 && type != XmlPullParser.END_DOCUMENT) {
         }

@@ -4908,9 +4908,8 @@ public class Workspace extends SmoothPagedView
                     changedInfo.get(0).providerName) != null) {
                 // Re-inflate the widgets which have changed status
                 widgetRefresh.run();
-            } else {
-                // widgetRefresh will automatically run when the packages are updated.
             }
+            // widgetRefresh will automatically run when the packages are updated.
         }
     }
 

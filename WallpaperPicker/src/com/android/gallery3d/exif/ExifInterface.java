@@ -1749,9 +1749,10 @@ public class ExifInterface {
         if (mData.hasCompressedThumbnail()) {
             byte[] thumb = mData.getCompressedThumbnail();
             return BitmapFactory.decodeByteArray(thumb, 0, thumb.length);
-        } else if (mData.hasUncompressedStrip()) {
-            // TODO: implement uncompressed
         }
+        //else if (mData.hasUncompressedStrip()) {
+            // TODO: implement uncompressed
+        //}
         return null;
     }
 
@@ -1765,9 +1766,10 @@ public class ExifInterface {
     public byte[] getThumbnailBytes() {
         if (mData.hasCompressedThumbnail()) {
             return mData.getCompressedThumbnail();
-        } else if (mData.hasUncompressedStrip()) {
-            // TODO: implement this
         }
+        //else if (mData.hasUncompressedStrip()) {
+            // TODO: implement this
+        //}
         return null;
     }
 

@@ -98,6 +98,7 @@ public class DeferredHandler {
 
     public void cancelRunnable(Runnable runnable) {
         synchronized (mQueue) {
+            //noinspection StatementWithEmptyBody
             while (mQueue.remove(runnable)) { }
         }
     }

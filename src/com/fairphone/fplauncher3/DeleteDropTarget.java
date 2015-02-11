@@ -180,13 +180,8 @@ public class DeleteDropTarget extends ButtonDropTarget {
             }
         }
 
-        if (useUninstallLabel) {
-        	
-        }
-        else if(useDeleteLabel) {
-        	
-        } else {
-            isVisible = false;
+        if (!useUninstallLabel && !useDeleteLabel){
+                isVisible = false;
         }
 
         mActive = isVisible;

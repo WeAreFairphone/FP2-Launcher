@@ -1983,6 +1983,7 @@ public class LauncherModel extends BroadcastReceiver
 
                                             if ((promiseType & ShortcutInfo.FLAG_RESTORE_STARTED) != 0) {
                                                 // Restore has started once.
+                                                Log.v(TAG, "Restore has started once.");
                                             } else if (installingPkgs.contains(cn.getPackageName())) {
                                                 // App restore has started. Update the flag
                                                 promiseType |= ShortcutInfo.FLAG_RESTORE_STARTED;
@@ -2207,6 +2208,7 @@ public class LauncherModel extends BroadcastReceiver
 
                                         if ((restoreStatus & LauncherAppWidgetInfo.FLAG_RESTORE_STARTED) != 0) {
                                             // Restore has started once.
+                                            Log.v(TAG, "Restore has started once.");
                                         } else if (installingPkgs.contains(component.getPackageName())) {
                                             // App restore has started. Update the flag
                                             appWidgetInfo.restoreStatus |=

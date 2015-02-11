@@ -1381,6 +1381,7 @@ public class LauncherProvider extends ContentProvider {
         private static final void beginDocument(XmlPullParser parser, String firstElementName)
                 throws XmlPullParserException, IOException {
             int type;
+            //noinspection StatementWithEmptyBody
             while ((type = parser.next()) != XmlPullParser.START_TAG
                     && type != XmlPullParser.END_DOCUMENT) {
             }
@@ -2139,10 +2140,9 @@ public class LauncherProvider extends ContentProvider {
                                 values.put(LauncherSettings.Favorites.SCREEN, screen);
                                 values.put(LauncherSettings.Favorites.CELLX, cellX);
                                 values.put(LauncherSettings.Favorites.CELLY, cellY);
-                            } else {
-                                // For items contained directly on one of the workspace screen,
-                                // we'll determine their location (screen, x, y) in a second pass.
                             }
+                            // For items contained directly on one of the workspace screen,
+                            // we'll determine their location (screen, x, y) in a second pass.
 
                             values.put(LauncherSettings.Favorites.CONTAINER, container);
 

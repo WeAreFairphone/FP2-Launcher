@@ -4016,6 +4016,7 @@ public class Launcher extends Activity
         if (mPaused) {
             Log.i(TAG, "Deferring update until onResume");
             if (deletePreviousRunnables) {
+                //noinspection StatementWithEmptyBody
                 while (mBindOnResumeCallbacks.remove(run)) {
                 }
             }

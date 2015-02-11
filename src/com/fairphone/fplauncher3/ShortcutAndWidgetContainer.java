@@ -139,10 +139,9 @@ public class ShortcutAndWidgetContainer extends ViewGroup {
             lp.setup(cellWidth, cellHeight, mWidthGap, mHeightGap, invertLayoutHorizontally(),
                     mCountX);
 
-            if (child instanceof LauncherAppWidgetHostView) {
-                // Widgets have their own padding, so skip
-            } else {
-                // Otherwise, center the icon
+            // Widgets have their own padding, so skip
+            // Otherwise, center the icon
+            if (!(child instanceof LauncherAppWidgetHostView)) {
                 int cHeight = getCellContentHeight();
                 int cellPaddingY = (int) Math.max(0, ((lp.height - cHeight) / 2f));
                 int cellPaddingX = (int) (grid.edgeMarginPx / 2f);

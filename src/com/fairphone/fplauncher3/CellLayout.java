@@ -2207,8 +2207,7 @@ public class CellLayout extends ViewGroup {
             finalDeltaX = 0;
             finalDeltaY = 0;
             int dir = mode == MODE_HINT ? -1 : 1;
-            if (dX == dY && dX == 0) {
-            } else {
+            if (!(dX == dY && dX == 0)) {
                 if (dY == 0) {
                     finalDeltaX = - dir * Math.signum(dX) * mReorderPreviewAnimationMagnitude;
                 } else if (dX == 0) {

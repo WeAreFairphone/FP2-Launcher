@@ -2618,9 +2618,8 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
             snapToPage(indexOfChild(mDragView), 0);
             // Animate the drag view back to the front position
             animateDragViewToOriginalPosition();
-        } else {
-            // Handled in post-delete-animation-callbacks
         }
+        // Handled in post-delete-animation-callbacks
     }
 
     /*

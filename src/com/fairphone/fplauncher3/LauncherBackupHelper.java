@@ -767,9 +767,10 @@ public class LauncherBackupHelper implements BackupHelper {
                     Log.v(TAG, "restore not enabled: skipping database mutation");
                 }
                 return;
-            } else {
-                // future site of widget table mutation
             }
+            //else {
+                // future site of widget table mutation
+            //}
         } catch (InvalidProtocolBufferNanoException e) {
             Log.e(TAG, "failed to decode widget", e);
         }
