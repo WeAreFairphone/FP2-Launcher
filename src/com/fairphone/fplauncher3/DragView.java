@@ -109,7 +109,7 @@ public class DragView extends View {
         });
 
         mBitmap = Bitmap.createBitmap(bitmap, left, top, width, height);
-        setDragRegion(new Rect(0, 0, width, height));
+        mDragRegion = new Rect(0, 0, width, height);
 
         // The point in our scaled bitmap that the touch events are located
         mRegistrationX = registrationX;

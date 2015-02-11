@@ -351,7 +351,7 @@ public class PeopleWidget extends AppWidgetProvider
     {
         if (!TextUtils.isEmpty(contactInfo.contactId))
         {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, "" + contactInfo.contactId));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, contactInfo.contactId));
             PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             view.setOnClickPendingIntent(R.id.contact_photo, pendingIntent);
         }

@@ -296,10 +296,10 @@ public class ApplicationRunInformation
         }
 
         ApplicationRunInformation appRunInfo = new ApplicationRunInformation(ApplicationRunInformation.deserializeComponentName(component), count);
-        appRunInfo.setLastExecution(lastExecution);
-        appRunInfo.setIsNewApp(isNewApp);
-        appRunInfo.setIsUpdatedApp(isUpdatedApp);
-        appRunInfo.setIsPinnedApp(isPinnedApp);
+        appRunInfo.mLastExecution = lastExecution;
+        appRunInfo.mIsNewApp = isNewApp;
+        appRunInfo.mIsUpdatedApp = isUpdatedApp;
+        appRunInfo.mIsPinnedApp = isPinnedApp;
 
         return appRunInfo;
     }

@@ -1715,7 +1715,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
             }
         }
 
-        setEnableOverscroll(!freeScroll);
+        mAllowOverScroll = !freeScroll;
     }
 
     private void setEnableOverscroll(boolean enable) {

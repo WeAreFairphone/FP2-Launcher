@@ -395,7 +395,7 @@ public class CellLayout extends ViewGroup {
     void setIsDragOverlapping(boolean isDragOverlapping) {
         if (mIsDragOverlapping != isDragOverlapping) {
             mIsDragOverlapping = isDragOverlapping;
-            setUseActiveGlowBackground(mIsDragOverlapping);
+            mUseActiveGlowBackground = mIsDragOverlapping;
             invalidate();
         }
     }
@@ -2458,7 +2458,7 @@ public class CellLayout extends ViewGroup {
                             0, false, false);
                 }
             }
-            setItemPlacementDirty(false);
+            mItemPlacementDirty = false;
         }
     }
 
@@ -2477,13 +2477,13 @@ public class CellLayout extends ViewGroup {
             // committing anything or animating anything as we just want to determine if a solution
             // exists
             copySolutionToTempState(swapSolution, dragView);
-            setItemPlacementDirty(true);
+            mItemPlacementDirty = true;
             animateItemsToSolution(swapSolution, dragView, commit);
 
             if (commit) {
                 commitTempPlacement();
                 completeAndClearReorderPreviewAnimations();
-                setItemPlacementDirty(false);
+                mItemPlacementDirty = false;
             } else {
                 beginOrAdjustReorderPreviewAnimations(swapSolution, dragView,
                         REORDER_ANIMATION_DURATION, ReorderPreviewAnimation.MODE_PREVIEW);
@@ -2570,14 +2570,14 @@ public class CellLayout extends ViewGroup {
                 if (!DESTRUCTIVE_REORDER) {
                     copySolutionToTempState(finalSolution, dragView);
                 }
-                setItemPlacementDirty(true);
+                mItemPlacementDirty = true;
                 animateItemsToSolution(finalSolution, dragView, mode == MODE_ON_DROP);
 
                 if (!DESTRUCTIVE_REORDER &&
                         (mode == MODE_ON_DROP || mode == MODE_ON_DROP_EXTERNAL)) {
                     commitTempPlacement();
                     completeAndClearReorderPreviewAnimations();
-                    setItemPlacementDirty(false);
+                    mItemPlacementDirty = false;
                 } else {
                     beginOrAdjustReorderPreviewAnimations(finalSolution, dragView,
                             REORDER_ANIMATION_DURATION,  ReorderPreviewAnimation.MODE_PREVIEW);

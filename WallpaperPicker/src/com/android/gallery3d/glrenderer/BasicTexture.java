@@ -55,7 +55,7 @@ public abstract class BasicTexture implements Texture {
     private static final ThreadLocal sInFinalizer = new ThreadLocal();
 
     protected BasicTexture(GLCanvas canvas, int id, int state) {
-        setAssociatedCanvas(canvas);
+        mCanvasRef = canvas;
         mId = id;
         mState = state;
         synchronized (sAllTextures) {
@@ -176,7 +176,7 @@ public abstract class BasicTexture implements Texture {
             mId = -1; // Don't free it again.
         }
         mState = STATE_UNLOADED;
-        setAssociatedCanvas(null);
+        mCanvasRef = null;
     }
 
     @Override
@@ -205,7 +205,7 @@ public abstract class BasicTexture implements Texture {
         synchronized (sAllTextures) {
             for (BasicTexture t : sAllTextures.keySet()) {
                 t.mState = STATE_UNLOADED;
-                t.setAssociatedCanvas(null);
+                t.mCanvasRef = null;
             }
         }
     }

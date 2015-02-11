@@ -258,8 +258,8 @@ public class ContactInfo {
 				contact = new ContactInfo(number);
 				Log.d(TAG, "Number " + number + " as no contact associated.");
 			}
-			contact.setLastExecution(Calendar.getInstance().getTime());
-			contact.setLastAction(action);
+            contact.mLastExecution = Calendar.getInstance().getTime();
+            contact.mLastAction = action;
 
 			if (cursor != null) {
 				cursor.close();
