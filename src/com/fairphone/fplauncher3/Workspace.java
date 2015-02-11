@@ -283,7 +283,7 @@ public class Workspace extends SmoothPagedView
     private float[] mOldAlphas;
     private float[] mNewBackgroundAlphas;
     private float[] mNewAlphas;
-    private final int mLastChildCount = -1;
+    private static final int mLastChildCount = -1;
     private float mTransitionProgress;
 
     float mOverScrollEffect = 0f;
@@ -1303,9 +1303,9 @@ public class Workspace extends SmoothPagedView
         boolean mAnimating;
         long mAnimationStartTime;
         float mAnimationStartOffset;
-        private final int ANIMATION_DURATION = 250;
+        private static final int ANIMATION_DURATION = 250;
         // Don't use all the wallpaper for parallax until you have at least this many pages
-        private final int MIN_PARALLAX_PAGE_SPAN = 3;
+        private static final int MIN_PARALLAX_PAGE_SPAN = 3;
         int mNumScreens;
 
         public WallpaperOffsetInterpolator() {

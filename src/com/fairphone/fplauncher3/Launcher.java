@@ -325,9 +325,9 @@ public class Launcher extends Activity
     private View.OnTouchListener mHapticFeedbackTouchListener;
 
     // Related to the auto-advancing of widgets
-    private final int ADVANCE_MSG = 1;
-    private final int mAdvanceInterval = 20000;
-    private final int mAdvanceStagger = 250;
+    private static final int ADVANCE_MSG = 1;
+    private static final int mAdvanceInterval = 20000;
+    private static final int mAdvanceStagger = 250;
     private long mAutoAdvanceSentTime;
     private long mAutoAdvanceTimeLeft = -1;
     private final HashMap<View, AppWidgetProviderInfo> mWidgetsToAdvance =
@@ -335,7 +335,7 @@ public class Launcher extends Activity
 
     // Determines how long to wait after a rotation before restoring the screen orientation to
     // match the sensor state.
-    private final int mRestoreScreenOrientationDelay = 500;
+    private static final int mRestoreScreenOrientationDelay = 500;
 
     private Drawable mWorkspaceBackgroundDrawable;
 

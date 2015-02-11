@@ -48,7 +48,7 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
     private WidgetPreviewLoader.CacheDb mWidgetPreviewCacheDb;
     private final boolean mIsScreenLarge;
     private final float mScreenDensity;
-    private final int mLongPressTimeout = 300;
+    private static final int mLongPressTimeout = 300;
     private boolean mWallpaperChangedSinceLastCheck;
 
     private static WeakReference<LauncherProvider> sLauncherProvider;

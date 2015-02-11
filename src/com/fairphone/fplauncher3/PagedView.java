@@ -216,10 +216,10 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     // Reordering
     // We use the min scale to determine how much to expand the actually PagedView measured
     // dimensions such that when we are zoomed out, the view is not clipped
-    private final int REORDERING_DROP_REPOSITION_DURATION = 200;
+    private static final int REORDERING_DROP_REPOSITION_DURATION = 200;
     protected int REORDERING_REORDER_REPOSITION_DURATION = 300;
     protected int REORDERING_ZOOM_IN_OUT_DURATION = 250;
-    private final int REORDERING_SIDE_PAGE_HOVER_TIMEOUT = 80;
+    private static final int REORDERING_SIDE_PAGE_HOVER_TIMEOUT = 80;
     private float mMinScale = 1f;
     private boolean mUseMinScale = false;
     protected View mDragView;
@@ -232,7 +232,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     // animation after endReordering()
     private boolean mIsReordering;
     // The runnable that settles the page after snapToPage and animateDragViewToOriginalPosition
-    private final int NUM_ANIMATIONS_RUNNING_BEFORE_ZOOM_OUT = 2;
+    private static final int NUM_ANIMATIONS_RUNNING_BEFORE_ZOOM_OUT = 2;
     private int mPostReorderingPreZoomInRemainingAnimationCount;
     private Runnable mPostReorderingPreZoomInRunnable;
 
@@ -244,22 +244,22 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     private final Rect mAltTmpRect = new Rect();
 
     // Fling to delete
-    private final int FLING_TO_DELETE_FADE_OUT_DURATION = 350;
-    private final float FLING_TO_DELETE_FRICTION = 0.035f;
+    private static final int FLING_TO_DELETE_FADE_OUT_DURATION = 350;
+    private static final float FLING_TO_DELETE_FRICTION = 0.035f;
     // The degrees specifies how much deviation from the up vector to still consider a fling "up"
     //private final float FLING_TO_DELETE_MAX_FLING_DEGREES = 65f;
     private static final double FLING_TO_DELETE_MAX_FLING_RADIANS = 1.1344640137963142;
     protected int mFlingToDeleteThresholdVelocity = -1400;
     // Drag to delete
     private boolean mDeferringForDelete = false;
-    private final int DELETE_SLIDE_IN_SIDE_PAGE_DURATION = 250;
-    private final int DRAG_TO_DELETE_FADE_OUT_DURATION = 350;
+    private static final int DELETE_SLIDE_IN_SIDE_PAGE_DURATION = 250;
+    private static final int DRAG_TO_DELETE_FADE_OUT_DURATION = 350;
 
     // Drop to delete
     private View mDeleteDropTarget;
 
     // Bouncer
-    private final boolean mTopAlignPageWhenShrinkingForBouncer = false;
+    private static final boolean mTopAlignPageWhenShrinkingForBouncer = false;
 
     protected final Rect mInsets = new Rect();
 

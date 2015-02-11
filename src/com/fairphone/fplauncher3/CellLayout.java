@@ -92,7 +92,7 @@ public class CellLayout extends ViewGroup {
 
     boolean[][] mOccupied;
     boolean[][] mTmpOccupied;
-    private final boolean mLastDownOnOccupiedCell = false;
+    private static final boolean mLastDownOnOccupiedCell = false;
 
     private OnTouchListener mInterceptTouchListener;
 

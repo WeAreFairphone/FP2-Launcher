@@ -47,7 +47,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
     private static final int MODE_FLING_DELETE_TO_TRASH = 0;
     private static final int MODE_FLING_DELETE_ALONG_VECTOR = 1;
 
-    private final int mFlingDeleteMode = MODE_FLING_DELETE_ALONG_VECTOR;
+    private static final int mFlingDeleteMode = MODE_FLING_DELETE_ALONG_VECTOR;
 
     private ColorStateList mOriginalTextColor;
 

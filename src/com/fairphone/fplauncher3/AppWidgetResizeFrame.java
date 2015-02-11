@@ -58,10 +58,10 @@ public class AppWidgetResizeFrame extends FrameLayout {
     int[] mLastDirectionVector = new int[2];
     int[] mTmpPt = new int[2];
 
-    final int SNAP_DURATION = 150;
-    final int BACKGROUND_PADDING = 24;
-    final float DIMMED_HANDLE_ALPHA = 0f;
-    final float RESIZE_THRESHOLD = 0.66f;
+    static final int SNAP_DURATION = 150;
+    static final int BACKGROUND_PADDING = 24;
+    static final float DIMMED_HANDLE_ALPHA = 0f;
+    static final float RESIZE_THRESHOLD = 0.66f;
 
     private static final Rect mTmpRect = new Rect();
 
