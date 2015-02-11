@@ -46,6 +46,7 @@ import java.io.InputStream;
  *
  * @author liujisi@google.com (Pherl Liu)
  */
+@SuppressWarnings("ALL")
 public abstract class AbstractParser<MessageType extends MessageLite>
     implements Parser<MessageType> {
   /**

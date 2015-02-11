@@ -43,6 +43,7 @@ import java.io.IOException;
  *
  * @author xiangl@google.com (Xiang Li)
  */
+@SuppressWarnings("ALL")
 public class LazyFieldLite {
   private ByteString bytes;
   private ExtensionRegistryLite extensionRegistry;

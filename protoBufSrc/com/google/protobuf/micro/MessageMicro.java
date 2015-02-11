@@ -38,6 +38,7 @@ import java.io.IOException;
  *
  * @author wink@google.com Wink Saville
  */
+@SuppressWarnings("ALL")
 public abstract class MessageMicro {
     /**
      * Get the number of bytes required to encode this message.

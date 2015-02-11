@@ -37,6 +37,7 @@ import java.io.IOException;
  *
  * @author wink@google.com Wink Saville
  */
+@SuppressWarnings("ALL")
 public abstract class MessageNano {
     protected volatile int cachedSize = -1;
 

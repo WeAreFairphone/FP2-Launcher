@@ -41,6 +41,7 @@ import java.lang.reflect.Modifier;
  *
  * @author flynn@google.com Andrew Flynn
  */
+@SuppressWarnings("ALL")
 public final class MessageNanoPrinter {
     // Do not allow instantiation
     private MessageNanoPrinter() {}
