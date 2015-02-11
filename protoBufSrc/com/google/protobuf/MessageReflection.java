@@ -43,6 +43,7 @@ import java.util.TreeMap;
  *
  * @author liujisi@google.com (Pherl Liu)
  */
+@SuppressWarnings("ALL")
 class MessageReflection {
 
   static void writeMessageTo(Message message, CodedOutputStream output,

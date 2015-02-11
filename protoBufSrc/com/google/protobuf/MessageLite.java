@@ -64,6 +64,7 @@ import java.io.OutputStream;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public interface MessageLite extends MessageLiteOrBuilder {
 
 

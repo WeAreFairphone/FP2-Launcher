@@ -35,6 +35,7 @@ package com.google.protobuf;
  *
  * @author liujisi@google.com (Jisi Liu)
  */
+@SuppressWarnings("ALL")
 public abstract class Extension<ContainingType extends MessageLite, Type> {
   /** Returns the field number of the extension. */
   public abstract int getNumber();

@@ -47,6 +47,7 @@ import java.util.Map;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 final class FieldSet<FieldDescriptorType extends
       FieldSet.FieldDescriptorLite<FieldDescriptorType>> {
   /**

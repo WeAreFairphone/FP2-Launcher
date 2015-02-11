@@ -92,6 +92,7 @@ import java.util.Set;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public class ExtensionRegistry extends ExtensionRegistryLite {
   /** Construct a new, empty instance. */
   public static ExtensionRegistry newInstance() {

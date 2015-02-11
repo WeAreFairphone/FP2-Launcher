@@ -41,6 +41,7 @@ import java.util.Arrays;
  *
  * @author kenton@google.com (Kenton Varda)
  */
+@SuppressWarnings("ALL")
 public final class InternalNano {
 
   private InternalNano() {}

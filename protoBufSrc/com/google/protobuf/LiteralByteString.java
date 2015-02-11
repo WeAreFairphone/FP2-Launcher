@@ -49,6 +49,7 @@ import java.util.NoSuchElementException;
  *
  * @author carlanton@google.com (Carl Haverl)
  */
+@SuppressWarnings("ALL")
 class LiteralByteString extends ByteString {
 
   protected final byte[] bytes;

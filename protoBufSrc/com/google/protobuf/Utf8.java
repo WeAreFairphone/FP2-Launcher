@@ -64,6 +64,7 @@ package com.google.protobuf;
  *
  * @author martinrb@google.com (Martin Buchholz)
  */
+@SuppressWarnings("ALL")
 final class Utf8 {
   private Utf8() {}
 

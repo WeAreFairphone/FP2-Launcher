@@ -43,6 +43,7 @@ import java.util.Collection;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public abstract class AbstractMessageLite implements MessageLite {
   protected int memoizedHashCode = 0;
 

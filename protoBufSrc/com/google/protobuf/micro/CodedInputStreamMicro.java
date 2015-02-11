@@ -45,6 +45,7 @@ import java.io.InputStream;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public final class CodedInputStreamMicro {
   /**
    * Create a new CodedInputStream wrapping the given InputStream.
