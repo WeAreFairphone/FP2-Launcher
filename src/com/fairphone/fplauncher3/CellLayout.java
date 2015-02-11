@@ -67,7 +67,7 @@ public class CellLayout extends ViewGroup {
     public static final float INTERPOLATOR_FACTOR = 1.5f;
     public static final int MAX_DELAY_IN_SECONDS = 150;
 
-    private Launcher mLauncher;
+    private final Launcher mLauncher;
     private int mCellWidth;
     private int mCellHeight;
     private int mFixedCellWidth;
@@ -76,11 +76,11 @@ public class CellLayout extends ViewGroup {
     private int mCountX;
     private int mCountY;
 
-    private int mOriginalWidthGap;
-    private int mOriginalHeightGap;
+    private final int mOriginalWidthGap;
+    private final int mOriginalHeightGap;
     private int mWidthGap;
     private int mHeightGap;
-    private int mMaxGap;
+    private final int mMaxGap;
     private boolean mDropPending = false;
     private boolean mIsDragTarget = true;
 
@@ -92,12 +92,12 @@ public class CellLayout extends ViewGroup {
 
     boolean[][] mOccupied;
     boolean[][] mTmpOccupied;
-    private boolean mLastDownOnOccupiedCell = false;
+    private final boolean mLastDownOnOccupiedCell = false;
 
     private OnTouchListener mInterceptTouchListener;
 
-    private ArrayList<FolderRingAnimator> mFolderOuterRings = new ArrayList<FolderRingAnimator>();
-    private int[] mFolderLeaveBehindCell = {-1, -1};
+    private final ArrayList<FolderRingAnimator> mFolderOuterRings = new ArrayList<FolderRingAnimator>();
+    private final int[] mFolderLeaveBehindCell = {-1, -1};
 
     private static final float FOREGROUND_ALPHA_DAMPER = 0.65f;
     private int mForegroundAlpha = 0;
@@ -105,14 +105,14 @@ public class CellLayout extends ViewGroup {
     private float mBackgroundAlphaMultiplier = 1.0f;
     private boolean mDrawBackground = true;
 
-    private Drawable mNormalBackground;
-    private Drawable mActiveGlowBackground;
+    private final Drawable mNormalBackground;
+    private final Drawable mActiveGlowBackground;
     private Drawable mOverScrollForegroundDrawable;
-    private Drawable mOverScrollLeft;
-    private Drawable mOverScrollRight;
-    private Rect mBackgroundRect;
-    private Rect mForegroundRect;
-    private int mForegroundPadding;
+    private final Drawable mOverScrollLeft;
+    private final Drawable mOverScrollRight;
+    private final Rect mBackgroundRect;
+    private final Rect mForegroundRect;
+    private final int mForegroundPadding;
 
     // These values allow a fixed measurement to be set on the CellLayout.
     private int mFixedWidth = -1;
@@ -124,9 +124,9 @@ public class CellLayout extends ViewGroup {
 
     // These arrays are used to implement the drag visualization on x-large screens.
     // They are used as circular arrays, indexed by mDragOutlineCurrent.
-    private Rect[] mDragOutlines = new Rect[4];
-    private float[] mDragOutlineAlphas = new float[mDragOutlines.length];
-    private InterruptibleInOutAnimator[] mDragOutlineAnims =
+    private final Rect[] mDragOutlines = new Rect[4];
+    private final float[] mDragOutlineAlphas = new float[mDragOutlines.length];
+    private final InterruptibleInOutAnimator[] mDragOutlineAnims =
             new InterruptibleInOutAnimator[mDragOutlines.length];
 
     // Used as an index into the above 3 arrays; indicates which is the most current value.
@@ -135,9 +135,9 @@ public class CellLayout extends ViewGroup {
 
     private final FastBitmapView mTouchFeedbackView;
 
-    private HashMap<CellLayout.LayoutParams, Animator> mReorderAnimators = new
+    private final HashMap<CellLayout.LayoutParams, Animator> mReorderAnimators = new
             HashMap<CellLayout.LayoutParams, Animator>();
-    private HashMap<View, ReorderPreviewAnimation>
+    private final HashMap<View, ReorderPreviewAnimation>
             mShakeAnimators = new HashMap<View, ReorderPreviewAnimation>();
 
     private boolean mItemPlacementDirty = false;
@@ -147,8 +147,8 @@ public class CellLayout extends ViewGroup {
 
     private boolean mDragging = false;
 
-    private TimeInterpolator mEaseOutInterpolator;
-    private ShortcutAndWidgetContainer mShortcutsAndWidgets;
+    private final TimeInterpolator mEaseOutInterpolator;
+    private final ShortcutAndWidgetContainer mShortcutsAndWidgets;
 
     public static final int MODE_SHOW_REORDER_HINT = 0;
     public static final int MODE_DRAG_OVER = 1;
@@ -163,16 +163,16 @@ public class CellLayout extends ViewGroup {
 
     private static final float REORDER_PREVIEW_MAGNITUDE = 0.12f;
     private static final int REORDER_ANIMATION_DURATION = 150;
-    private float mReorderPreviewAnimationMagnitude;
+    private final float mReorderPreviewAnimationMagnitude;
 
-    private ArrayList<View> mIntersectingViews = new ArrayList<View>();
-    private Rect mOccupiedRect = new Rect();
-    private int[] mDirectionVector = new int[2];
+    private final ArrayList<View> mIntersectingViews = new ArrayList<View>();
+    private final Rect mOccupiedRect = new Rect();
+    private final int[] mDirectionVector = new int[2];
     int[] mPreviousReorderDirection = new int[2];
     private static final int INVALID_DIRECTION = -100;
-    private DropTarget.DragEnforcer mDragEnforcer;
+    private final DropTarget.DragEnforcer mDragEnforcer;
 
-    private Rect mTempRect = new Rect();
+    private final Rect mTempRect = new Rect();
 
     private final static Paint sPaint = new Paint();
 
@@ -2610,7 +2610,7 @@ public class CellLayout extends ViewGroup {
 
     private class ItemConfiguration {
         HashMap<View, CellAndSpan> map = new HashMap<View, CellAndSpan>();
-        private HashMap<View, CellAndSpan> savedMap = new HashMap<View, CellAndSpan>();
+        private final HashMap<View, CellAndSpan> savedMap = new HashMap<View, CellAndSpan>();
         ArrayList<View> sortedViews = new ArrayList<View>();
         ArrayList<View> intersectingViews;
         boolean isSolution = false;

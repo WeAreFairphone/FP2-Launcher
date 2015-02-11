@@ -15,41 +15,41 @@ import android.widget.ImageView;
 import com.fairphone.fplauncher3.R;
 
 public class AppWidgetResizeFrame extends FrameLayout {
-    private LauncherAppWidgetHostView mWidgetView;
-    private CellLayout mCellLayout;
-    private DragLayer mDragLayer;
-    private ImageView mLeftHandle;
-    private ImageView mRightHandle;
-    private ImageView mTopHandle;
-    private ImageView mBottomHandle;
+    private final LauncherAppWidgetHostView mWidgetView;
+    private final CellLayout mCellLayout;
+    private final DragLayer mDragLayer;
+    private final ImageView mLeftHandle;
+    private final ImageView mRightHandle;
+    private final ImageView mTopHandle;
+    private final ImageView mBottomHandle;
 
     private boolean mLeftBorderActive;
     private boolean mRightBorderActive;
     private boolean mTopBorderActive;
     private boolean mBottomBorderActive;
 
-    private int mWidgetPaddingLeft;
-    private int mWidgetPaddingRight;
-    private int mWidgetPaddingTop;
-    private int mWidgetPaddingBottom;
+    private final int mWidgetPaddingLeft;
+    private final int mWidgetPaddingRight;
+    private final int mWidgetPaddingTop;
+    private final int mWidgetPaddingBottom;
 
     private int mBaselineWidth;
     private int mBaselineHeight;
     private int mBaselineX;
     private int mBaselineY;
-    private int mResizeMode;
+    private final int mResizeMode;
 
     private int mRunningHInc;
     private int mRunningVInc;
-    private int mMinHSpan;
-    private int mMinVSpan;
+    private final int mMinHSpan;
+    private final int mMinVSpan;
     private int mDeltaX;
     private int mDeltaY;
     private int mDeltaXAddOn;
     private int mDeltaYAddOn;
 
-    private int mBackgroundPadding;
-    private int mTouchTargetWidth;
+    private final int mBackgroundPadding;
+    private final int mTouchTargetWidth;
 
     private int mTopTouchRegionAdjustment = 0;
     private int mBottomTouchRegionAdjustment = 0;
@@ -63,14 +63,14 @@ public class AppWidgetResizeFrame extends FrameLayout {
     final float DIMMED_HANDLE_ALPHA = 0f;
     final float RESIZE_THRESHOLD = 0.66f;
 
-    private static Rect mTmpRect = new Rect();
+    private static final Rect mTmpRect = new Rect();
 
     public static final int LEFT = 0;
     public static final int TOP = 1;
     public static final int RIGHT = 2;
     public static final int BOTTOM = 3;
 
-    private Launcher mLauncher;
+    private final Launcher mLauncher;
 
     public AppWidgetResizeFrame(Context context,
             LauncherAppWidgetHostView widgetView, CellLayout cellLayout, DragLayer dragLayer) {

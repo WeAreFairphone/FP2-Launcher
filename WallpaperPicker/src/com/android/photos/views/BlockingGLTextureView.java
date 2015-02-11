@@ -311,12 +311,12 @@ public class BlockingGLTextureView extends TextureView
         private static final int RESIZE_SURFACE = 3;
         private static final int FINISH = 4;
 
-        private EglHelper mEglHelper = new EglHelper();
+        private final EglHelper mEglHelper = new EglHelper();
 
-        private Object mLock = new Object();
+        private final Object mLock = new Object();
         private int mExecMsgId = INVALID;
         private SurfaceTexture mSurface;
-        private Renderer mRenderer;
+        private final Renderer mRenderer;
         private int mWidth, mHeight;
 
         private boolean mFinished = false;

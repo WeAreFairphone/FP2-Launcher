@@ -22,7 +22,7 @@ import java.nio.ByteBuffer;
 class ByteBufferInputStream extends InputStream {
 
     public static final int MAX_BUFFER = 0xFF;
-    private ByteBuffer mBuf;
+    private final ByteBuffer mBuf;
 
     public ByteBufferInputStream(ByteBuffer buf) {
         mBuf = buf;

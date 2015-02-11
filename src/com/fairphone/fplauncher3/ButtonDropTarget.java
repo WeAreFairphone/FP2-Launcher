@@ -35,7 +35,7 @@ public class ButtonDropTarget extends TextView implements DropTarget, DragContro
     protected final int mTransitionDuration;
 
     protected Launcher mLauncher;
-    private int mBottomDragPadding;
+    private final int mBottomDragPadding;
     protected TextView mText;
     protected SearchDropTargetBar mSearchDropTargetBar;
 

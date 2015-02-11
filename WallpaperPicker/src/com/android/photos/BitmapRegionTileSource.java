@@ -161,7 +161,7 @@ public class BitmapRegionTileSource implements TiledImageRenderer.TileSource {
     public static abstract class BitmapSource {
         private SimpleBitmapRegionDecoder mDecoder;
         private Bitmap mPreview;
-        private int mPreviewSize;
+        private final int mPreviewSize;
         private int mRotation;
         public enum State { NOT_LOADED, LOADED, ERROR_LOADING }
 
@@ -226,7 +226,7 @@ public class BitmapRegionTileSource implements TiledImageRenderer.TileSource {
     }
 
     public static class FilePathBitmapSource extends BitmapSource {
-        private String mPath;
+        private final String mPath;
         public FilePathBitmapSource(String path, int previewSize) {
             super(previewSize);
             mPath = path;
@@ -260,8 +260,8 @@ public class BitmapRegionTileSource implements TiledImageRenderer.TileSource {
     }
 
     public static class UriBitmapSource extends BitmapSource {
-        private Context mContext;
-        private Uri mUri;
+        private final Context mContext;
+        private final Uri mUri;
         public UriBitmapSource(Context context, Uri uri, int previewSize) {
             super(previewSize);
             mContext = context;
@@ -325,8 +325,8 @@ public class BitmapRegionTileSource implements TiledImageRenderer.TileSource {
     }
 
     public static class ResourceBitmapSource extends BitmapSource {
-        private Resources mRes;
-        private int mResId;
+        private final Resources mRes;
+        private final int mResId;
         public ResourceBitmapSource(Resources res, int resId, int previewSize) {
             super(previewSize);
             mRes = res;
@@ -375,8 +375,8 @@ public class BitmapRegionTileSource implements TiledImageRenderer.TileSource {
     private final int mRotation;
 
     // For use only by getTile
-    private Rect mWantRegion = new Rect();
-    private Rect mOverlapRegion = new Rect();
+    private final Rect mWantRegion = new Rect();
+    private final Rect mOverlapRegion = new Rect();
     private BitmapFactory.Options mOptions;
     private Canvas mCanvas;
 

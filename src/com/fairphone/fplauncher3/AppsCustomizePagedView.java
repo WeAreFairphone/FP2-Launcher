@@ -155,7 +155,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     public static final int SPRING_LOADED_DELAY_MILLIS = 150;
     public static final int MAX_ALPHA = 255;
 
-    private static Rect sTmpRect = new Rect();
+    private static final Rect sTmpRect = new Rect();
 
     /**
      * The different content types that this paged view can show.
@@ -177,18 +177,18 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
     // Content
     private ArrayList<AppInfo> mApps;
-    private ArrayList<Object> mWidgets;
+    private final ArrayList<Object> mWidgets;
 
     // Caching
-    private IconCache mIconCache;
+    private final IconCache mIconCache;
 
     // Dimens
     private int mContentWidth, mContentHeight;
-    private int mWidgetCountX, mWidgetCountY;
-    private PagedViewCellLayout mWidgetSpacingLayout;
+    private final int mWidgetCountX, mWidgetCountY;
+    private final PagedViewCellLayout mWidgetSpacingLayout;
     private int mNumAppsPages;
     private int mNumWidgetPages;
-    private Rect mAllAppsPadding = new Rect();
+    private final Rect mAllAppsPadding = new Rect();
 
     // Previews & outlines
     ArrayList<AppsCustomizeAsyncTask> mRunningTasks;
@@ -210,9 +210,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
     // Deferral of loading widget previews during launcher transitions
     private boolean mInTransition;
-    private ArrayList<AsyncTaskPageData> mDeferredSyncWidgetPageItems =
+    private final ArrayList<AsyncTaskPageData> mDeferredSyncWidgetPageItems =
         new ArrayList<AsyncTaskPageData>();
-    private ArrayList<Runnable> mDeferredPrepareLoadWidgetPreviewsTasks =
+    private final ArrayList<Runnable> mDeferredPrepareLoadWidgetPreviewsTasks =
         new ArrayList<Runnable>();
 
     WidgetPreviewLoader mWidgetPreviewLoader;

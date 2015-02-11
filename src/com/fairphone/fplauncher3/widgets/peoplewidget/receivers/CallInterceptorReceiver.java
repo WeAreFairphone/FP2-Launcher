@@ -8,7 +8,7 @@ import android.util.Log;
 public class CallInterceptorReceiver extends BroadcastReceiver
 {
     private static final String TAG = CallInterceptorReceiver.class.getSimpleName();
-    private CallListener mListener;
+    private final CallListener mListener;
 
     public CallInterceptorReceiver(CallListener listener)
     {
