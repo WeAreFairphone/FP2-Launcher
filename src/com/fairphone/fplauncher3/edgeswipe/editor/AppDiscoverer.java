@@ -88,13 +88,12 @@ public class AppDiscoverer
         {
         	ApplicationRunInformation appRunInfo = agingManager.getApplicationRunInformation(context, appInfo.getComponentName());
 
-            if (appRunInfo.getAge() == APP_AGE.FREQUENT_USE)
-            {
-                appLists.first.add(appInfo);
-            }
-            else
-            {
-                appLists.second.add(appInfo);
+            if (appRunInfo != null) {
+                if (appRunInfo.getAge() == APP_AGE.FREQUENT_USE) {
+                    appLists.first.add(appInfo);
+                } else {
+                    appLists.second.add(appInfo);
+                }
             }
         }
         Collections.sort(appLists.first, LauncherModel.getAppNameComparator());
