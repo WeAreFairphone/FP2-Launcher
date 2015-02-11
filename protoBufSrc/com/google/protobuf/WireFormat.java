@@ -41,6 +41,7 @@ package com.google.protobuf;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public final class WireFormat {
   // Do not allow instantiation.
   private WireFormat() {}

@@ -38,6 +38,7 @@ import java.io.UnsupportedEncodingException;
  * @author crazybob@google.com Bob Lee
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public final class ByteStringMicro {
   private final byte[] bytes;
 

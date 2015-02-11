@@ -70,6 +70,7 @@ import java.util.Map;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public class ExtensionRegistryLite {
 
   // Set true to enable lazy parsing feature for MessageSet.

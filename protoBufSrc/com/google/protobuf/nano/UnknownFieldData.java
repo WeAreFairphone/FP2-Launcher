@@ -39,6 +39,7 @@ import java.util.Arrays;
  *
  * @author bduff@google.com (Brian Duff)
  */
+@SuppressWarnings("ALL")
 final class UnknownFieldData {
 
     final int tag;

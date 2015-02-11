@@ -84,6 +84,7 @@ import java.util.SortedMap;
 // This class is final for all intents and purposes because the constructor is
 // private. However, the FieldDescriptor-specific logic is encapsulated in
 // a subclass to aid testability of the core logic.
+@SuppressWarnings("ALL")
 class SmallSortedMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
 
   /**

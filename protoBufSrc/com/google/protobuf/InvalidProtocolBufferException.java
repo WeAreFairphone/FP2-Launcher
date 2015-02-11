@@ -38,6 +38,7 @@ import java.io.IOException;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public class InvalidProtocolBufferException extends IOException {
   private static final long serialVersionUID = -1616151763072450476L;
   private MessageLite unfinishedMessage = null;

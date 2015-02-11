@@ -44,6 +44,7 @@ import java.util.RandomAccess;
  *
  * @author jonp@google.com (Jon Perlow)
  */
+@SuppressWarnings("ALL")
 public class UnmodifiableLazyStringList extends AbstractList<String>
     implements LazyStringList, RandomAccess {
 

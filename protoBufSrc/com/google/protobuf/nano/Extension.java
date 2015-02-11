@@ -43,6 +43,7 @@ import java.util.List;
  * @param <M> the type of the extendable message this extension is for.
  * @param <T> the Java type of the extension; see {@link #clazz}.
  */
+@SuppressWarnings("ALL")
 public class Extension<M extends ExtendableMessageNano<M>, T> {
 
     /*
