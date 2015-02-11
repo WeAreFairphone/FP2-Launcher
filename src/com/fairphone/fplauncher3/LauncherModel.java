@@ -881,10 +881,7 @@ public class LauncherModel extends BroadcastReceiver
      */
     static boolean appWasPromise(Context context, Intent intent, UserHandleCompat user) {
         final ComponentName component = intent.getComponent();
-        if (component == null) {
-            return false;
-        }
-        return !getItemsByPackageName(component.getPackageName(), user).isEmpty();
+        return component != null && !getItemsByPackageName(component.getPackageName(), user).isEmpty();
     }
 
     /**
@@ -3160,10 +3157,7 @@ public class LauncherModel extends BroadcastReceiver
             return false;
         }
         final LauncherAppsCompat launcherApps = LauncherAppsCompat.getInstance(context);
-        if (!launcherApps.isPackageEnabledForProfile(cn.getPackageName(), user)) {
-            return false;
-        }
-        return launcherApps.isActivityEnabledForProfile(cn, user);
+        return launcherApps.isPackageEnabledForProfile(cn.getPackageName(), user) && launcherApps.isActivityEnabledForProfile(cn, user);
     }
 
     public static boolean isValidPackage(Context context, String packageName,

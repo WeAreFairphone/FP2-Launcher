@@ -56,6 +56,7 @@ import java.util.TreeMap;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public final class UnknownFieldSet implements MessageLite {
   private UnknownFieldSet() {}
 

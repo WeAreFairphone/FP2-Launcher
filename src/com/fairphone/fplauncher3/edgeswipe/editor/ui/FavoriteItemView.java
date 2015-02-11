@@ -98,10 +98,6 @@ public class FavoriteItemView extends TextView {
 
 		}
 
-		if (!hasStartedDraggingOut) {
-			return super.onTouchEvent(ev);
-		} else {
-			return true;
-		}
+        return hasStartedDraggingOut || super.onTouchEvent(ev);
 	}
 }

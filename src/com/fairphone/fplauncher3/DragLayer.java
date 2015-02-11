@@ -364,10 +364,7 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
                     mCurrentResizeFrame = null;
             }
         }
-        if (handled) {
-            return true;
-        }
-        return mDragController.onTouchEvent(ev);
+        return handled || mDragController.onTouchEvent(ev);
     }
 
     /**

@@ -1271,10 +1271,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
             focusablePage = mCurrentPage;
         }
         View v = getPageAt(focusablePage);
-        if (v != null) {
-            return v.requestFocus(direction, previouslyFocusedRect);
-        }
-        return false;
+        return v != null && v.requestFocus(direction, previouslyFocusedRect);
     }
 
     @Override

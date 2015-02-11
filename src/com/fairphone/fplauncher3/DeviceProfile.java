@@ -403,11 +403,7 @@ public class DeviceProfile {
         isLandscape = (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE);
         isTablet = resources.getBoolean(R.bool.is_tablet);
         isLargeTablet = resources.getBoolean(R.bool.is_large_tablet);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            isLayoutRtl = (configuration.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL);
-        } else {
-            isLayoutRtl = false;
-        }
+        isLayoutRtl = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1 && (configuration.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL);
         widthPx = wPx;
         heightPx = hPx;
         availableWidthPx = awPx;

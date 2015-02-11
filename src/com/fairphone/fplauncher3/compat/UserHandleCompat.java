@@ -63,14 +63,7 @@ public class UserHandleCompat {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof UserHandleCompat)) {
-            return false;
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            return mUser.equals(((UserHandleCompat) other).mUser);
-        } else {
-            return true;
-        }
+        return other instanceof UserHandleCompat && (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1 || mUser.equals(((UserHandleCompat) other).mUser));
     }
 
     @Override

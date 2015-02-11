@@ -1079,11 +1079,7 @@ public class Workspace extends SmoothPagedView
 
     @Override
     public boolean dispatchUnhandledMove(View focused, int direction) {
-        if (workspaceInModalState() || !isFinishedSwitchingState()) {
-            // when the home screens are shrunken, shouldn't allow side-scrolling
-            return false;
-        }
-        return super.dispatchUnhandledMove(focused, direction);
+        return !(workspaceInModalState() || !isFinishedSwitchingState()) && super.dispatchUnhandledMove(focused, direction);
     }
 
     @Override
@@ -1109,12 +1105,7 @@ public class Workspace extends SmoothPagedView
     @Override
     public boolean onGenericMotionEvent(MotionEvent event) {
         // Ignore pointer scroll events if the custom content doesn't allow scrolling.
-        if ((getScreenIdForPageIndex(getCurrentPage()) == CUSTOM_CONTENT_SCREEN_ID)
-                && (mCustomContentCallbacks != null)
-                && !mCustomContentCallbacks.isScrollingAllowed()) {
-            return false;
-        }
-        return super.onGenericMotionEvent(event);
+        return !((getScreenIdForPageIndex(getCurrentPage()) == CUSTOM_CONTENT_SCREEN_ID) && (mCustomContentCallbacks != null) && !mCustomContentCallbacks.isScrollingAllowed()) && super.onGenericMotionEvent(event);
     }
 
     protected void reinflateWidgetsIfNecessary() {

@@ -1171,11 +1171,8 @@ public class Launcher extends Activity
         }
 
         // Eat the long press event so the keyboard doesn't come up.
-        if (keyCode == KeyEvent.KEYCODE_MENU && event.isLongPress()) {
-            return true;
-        }
+        return keyCode == KeyEvent.KEYCODE_MENU && event.isLongPress() || handled;
 
-        return handled;
     }
 
     private String getTypedText() {

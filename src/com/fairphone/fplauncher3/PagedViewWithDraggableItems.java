@@ -114,11 +114,8 @@ public abstract class PagedViewWithDraggableItems extends PagedView
             return false;
         }
         // Return if global dragging is not enabled
-        if (!mLauncher.isDraggingEnabled()) {
-            return false;
-        }
+        return mLauncher.isDraggingEnabled() && beginDragging(v);
 
-        return beginDragging(v);
     }
 
     /*
