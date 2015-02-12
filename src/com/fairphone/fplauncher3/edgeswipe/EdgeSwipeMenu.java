@@ -140,7 +140,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
 
         mHideEdgeSwipeAnimatorSet = new AnimatorSet();
         ObjectAnimator hideBackground = ObjectAnimator.ofFloat(mMenuBackgroundView, View.ALPHA, 0);
-        hideBackground.setStartDelay(resources.getInteger(R.dimen.edge_swipe_translate_delay_duration));
+        hideBackground.setStartDelay(resources.getInteger(R.integer.edge_swipe_translate_delay_duration));
         hideBackground.setDuration(resources.getInteger(R.integer.edge_swipe_animate_out_duration));
 
         ObjectAnimator hideItems = ObjectAnimator.ofFloat(mEdgeSwipeHolder, View.ALPHA, 0);

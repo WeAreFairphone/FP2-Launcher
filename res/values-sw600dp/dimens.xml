@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!-- Copyright (C) 2009 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,19 +12,11 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
--->
-
-<resources>
+--><resources>
     <dimen name="app_icon_size">64dp</dimen>
 
 <!-- AppsCustomize -->
-    <dimen name="apps_customize_tab_bar_height">60dp</dimen>
-    <dimen name="apps_customize_tab_bar_margin_top">8dp</dimen>
-    <dimen name="app_widget_preview_label_margin_top">8dp</dimen>
-    <dimen name="app_widget_preview_label_margin_left">@dimen/app_widget_preview_padding_left</dimen>
-    <dimen name="app_widget_preview_label_margin_right">@dimen/app_widget_preview_padding_right</dimen>
-
-<!-- Cling -->
+    <!-- Cling -->
     <dimen name="cling_migration_logo_height">400dp</dimen>
     <dimen name="cling_migration_logo_width">274dp</dimen>
     <dimen name="cling_migration_bg_size">600dp</dimen>

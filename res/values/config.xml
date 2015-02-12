@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
     <!-- Dynamic Grid -->
@@ -30,7 +31,6 @@
     <!-- AllApps/Customize/AppsCustomize -->
     <!-- The alpha of the AppsCustomize bg in spring loaded mode -->
     <integer name="config_workspaceScrimAlpha">55</integer>
-    <integer name="config_workspaceUnshrinkTime">300</integer>
     <integer name="config_overviewTransitionTime">250</integer>
 
     <!-- Out of 100, the percent to shrink the workspace during spring loaded mode. -->
@@ -41,11 +41,6 @@
          Note: This should be less than the workspaceShrinkTime as they happen together.
     -->
     <integer name="config_appsCustomizeRevealTime">220</integer>
-    <integer name="config_appsCustomizeZoomInTime">350</integer>
-    <integer name="config_appsCustomizeZoomOutTime">600</integer>
-    <integer name="config_appsCustomizeZoomScaleFactor">7</integer>
-    <integer name="config_appsCustomizeFadeInTime">250</integer>
-    <integer name="config_appsCustomizeFadeOutTime">200</integer>
     <integer name="config_appsCustomizeWorkspaceShrinkTime">300</integer>
     <integer name="config_appsCustomizeConcealTime">250</integer>
     <integer name="config_appsCustomizeItemsAlphaStagger">60</integer>
@@ -58,8 +53,6 @@
     <integer name="config_workspaceDefaultScreen">0</integer>
 
     <!-- Tab transition animation duration -->
-    <integer name="config_tabTransitionDuration">250</integer>
-
     <!--
          The slope, in percent, of the drag movement needed to drag an item out of
          AppsCustomize (y / x * 100%)
@@ -98,9 +91,6 @@
     <integer name="config_dropAnimMaxDist">800</integer>
 
     <!-- Properties controlling the workspace fade-out during dragging -->
-    <integer name="config_dragFadeOutAlpha">80</integer>
-    <integer name="config_dragFadeOutDuration">250</integer>
-
     <!-- Camera distance for the overscroll effect -->
     <integer name="config_cameraDistance">8000</integer>
 
@@ -111,13 +101,13 @@
          Name of a subclass of com.android.launcher3.AppFilter used to
          filter the activities shown in the launcher. Can be empty.
     -->
-    <string name="app_filter_class" translatable="false"></string>
+    <string name="app_filter_class" translatable="false"/>
 
     <!--
          Name of a subclass of com.android.launcher3.BuildInfo used to
          get build information. Can be empty.
     -->
-    <string name="build_info_class" translatable="false"></string>
+    <string name="build_info_class" translatable="false"/>
 
     <!-- Fairphone -->
     <!-- Edge menu -->
@@ -128,10 +118,6 @@
     <integer name="app_frequent_use_days">2</integer>
 
     <!-- Edit favorites -->
-    <integer name="edit_favorites_remove_text_size">23</integer>
-    <integer name="edit_favorites_drag_here_to_remove_text_size">16</integer>
-    <integer name="edit_favorites_drag_here_to_add_highlight_text_size">14</integer>
-    <integer name="edit_favorites_drag_here_to_add_normal_text_size">10</integer>
     <integer name="edge_swipe_text_integer_size">20</integer>
     <integer name="edge_swipe_text_integer_size_small">16</integer>
 

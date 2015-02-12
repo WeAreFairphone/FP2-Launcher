@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
      Copyright (C) 2009 The Android Open Source Project
 
@@ -13,9 +13,7 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
--->
-
-<resources>
+--><resources>
 
     <!-- Dynamic Grid -->
     <dimen name="dynamic_grid_edge_margin">6dp</dimen>
@@ -54,16 +52,10 @@
          The height of the tab bar - if this changes, we should update the
          external icon width/height above to compensate
     -->
-    <dimen name="apps_customize_tab_bar_height">52dp</dimen>
-    <dimen name="apps_customize_tab_bar_margin_top">0dp</dimen>
     <dimen name="app_icon_size">48dp</dimen>
     <dimen name="apps_customize_horizontal_padding">0dp</dimen>
 
     <!-- The AppsCustomize page indicator -->
-    <dimen name="apps_customize_page_indicator_height">12dp</dimen>
-    <dimen name="apps_customize_page_indicator_margin">4dp</dimen>
-    <dimen name="apps_customize_page_indicator_offset">16dp</dimen>
-
     <!-- Drag padding to add to the bottom of drop targets -->
     <dimen name="drop_target_drag_padding">14dp</dimen>
 
@@ -115,16 +107,8 @@
 
     <!-- Edge swipe menu -->
     <dimen name="edge_swipe_show_limit">8dp</dimen>
-    <dimen name="edge_swipe_translate_offset">100dp</dimen>
     <dimen name="edge_swipe_item_icon_translate">26dp</dimen>
     <dimen name="edge_swipe_item_text_translate">26dp</dimen>
-
-    <item name="edge_swipe_zoom_out" format="float" type="dimen">0.95</item>
-    <item name="edge_swipe_background_fade_duration" format="integer" type="dimen">250</item>
-    <item name="edge_swipe_translate_duration" format="integer" type="dimen">300</item>
-    <item name="edge_swipe_translate_delay_duration" format="integer" type="dimen">100</item>
-    <item name="edge_swipe_animate_out_duration" format="integer" type="dimen">200</item>
-    <item name="edge_swipe_items_ammount" format="integer" type="dimen">5</item>
 
     <dimen name="edge_swipe_dead_zone">45dp</dimen>
     <dimen name="edge_swipe_height">68dp</dimen>

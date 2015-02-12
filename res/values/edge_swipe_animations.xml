@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
     <integer name="edge_swipe_background_fade_duration">300</integer>
