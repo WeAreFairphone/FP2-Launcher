@@ -52,6 +52,7 @@ package com.google.protobuf;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public interface RpcChannel {
   /**
    * Call the given method of the remote service.  This method is similar to

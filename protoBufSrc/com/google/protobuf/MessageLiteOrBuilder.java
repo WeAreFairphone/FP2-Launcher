@@ -36,6 +36,7 @@ package com.google.protobuf;
  *
  * @author jonp@google.com (Jon Perlow)
  */
+@SuppressWarnings("ALL")
 public interface MessageLiteOrBuilder {
   /**
    * Get an instance of the type with no fields set. Because no fields are set,

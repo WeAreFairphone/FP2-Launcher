@@ -36,6 +36,7 @@ package com.google.protobuf;
  * @author kenton@google.com Kenton Varda
  * @author cpovirk@google.com Chris Povirk
  */
+@SuppressWarnings("ALL")
 public interface BlockingService {
   /**
    * Equivalent to {@link Service#getDescriptorForType}.

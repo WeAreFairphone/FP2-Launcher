@@ -39,6 +39,7 @@ import java.io.InputStream;
  *
  * @author liujisi@google.com (Pherl Liu)
  */
+@SuppressWarnings("ALL")
 public interface Parser<MessageType> {
   /**
    * Parses a message of {@code MessageType} from the input.

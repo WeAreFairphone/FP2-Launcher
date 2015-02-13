@@ -41,6 +41,7 @@ package com.google.protobuf.micro;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public final class WireFormatMicro {
   // Do not allow instantiation.
   private WireFormatMicro() {}

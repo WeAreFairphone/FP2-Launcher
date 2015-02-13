@@ -45,6 +45,7 @@ import java.util.List;
  *
  * @author jonp@google.com (Jon Perlow)
  */
+@SuppressWarnings("ALL")
 public interface LazyStringList extends ProtocolStringList {
 
   /**

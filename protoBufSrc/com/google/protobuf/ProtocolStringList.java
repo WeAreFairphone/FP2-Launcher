@@ -40,6 +40,7 @@ import java.util.List;
  * or last read, and it is often more efficient to deal with lists of
  * ByteStrings when handling protos that have been deserialized from bytes.
  */
+@SuppressWarnings("ALL")
 public interface ProtocolStringList extends List<String> {
 
   /** Returns a view of the data as a list of ByteStrings. */

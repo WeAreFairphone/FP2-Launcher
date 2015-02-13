@@ -45,6 +45,7 @@ package com.google.protobuf;
  *
  * @author kenton@google.com Kenton Varda
  */
+@SuppressWarnings("ALL")
 public interface Service {
   /**
    * Get the {@code ServiceDescriptor} describing this service and its methods.

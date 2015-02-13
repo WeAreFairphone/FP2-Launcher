@@ -36,6 +36,7 @@ import java.io.IOException;
  * Base class of those Protocol Buffer messages that need to store unknown fields,
  * such as extensions.
  */
+@SuppressWarnings("ALL")
 public abstract class ExtendableMessageNano<M extends ExtendableMessageNano<M>>
         extends MessageNano {
     /**

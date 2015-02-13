@@ -37,6 +37,7 @@ package com.google.protobuf;
  * @author kenton@google.com Kenton Varda
  * @author cpovirk@google.com Chris Povirk
  */
+@SuppressWarnings("ALL")
 public interface BlockingRpcChannel {
   /**
    * Call the given method of the remote service and blocks until it returns.

@@ -39,6 +39,7 @@ import java.util.List;
  * Stores unknown fields. These might be extensions or fields that the generated API doesn't
  * know about yet.
  */
+@SuppressWarnings("ALL")
 class FieldData {
     private Extension<?, ?> cachedExtension;
     private Object value;
