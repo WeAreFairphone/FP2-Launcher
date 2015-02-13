@@ -83,7 +83,7 @@ public class AppsCustomizeTabHost extends FrameLayout implements LauncherTransit
     /**
      * Returns the content type for the specified tab tag.
      */
-    public AppsCustomizePagedView.ContentType getContentTypeForTabTag(String tag) {
+    public static AppsCustomizePagedView.ContentType getContentTypeForTabTag(String tag) {
         if (tag.equals(APPS_TAB_TAG)) {
             return AppsCustomizePagedView.ContentType.Applications;
         } else if (tag.equals(WIDGETS_TAB_TAG)) {
@@ -95,7 +95,7 @@ public class AppsCustomizeTabHost extends FrameLayout implements LauncherTransit
     /**
      * Returns the tab tag for a given content type.
      */
-    public String getTabTagForContentType(AppsCustomizePagedView.ContentType type) {
+    public static String getTabTagForContentType(AppsCustomizePagedView.ContentType type) {
         if (type == AppsCustomizePagedView.ContentType.Applications) {
             return APPS_TAB_TAG;
         } else if (type == AppsCustomizePagedView.ContentType.Widgets) {

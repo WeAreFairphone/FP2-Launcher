@@ -811,7 +811,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 CellLayout layout = (CellLayout) workspace.getChildAt(currentScreen);
                 ItemInfo itemInfo = (ItemInfo) d.dragInfo;
                 if (layout != null) {
-                    layout.calculateSpans(itemInfo);
+                    CellLayout.calculateSpans(itemInfo);
                     showOutOfSpaceMessage =
                             !layout.findCellForSpan(null, itemInfo.spanX, itemInfo.spanY);
                 }
@@ -926,7 +926,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     /*
      * Apps PagedView implementation
      */
-    private void setVisibilityOnChildren(ViewGroup layout, int visibility) {
+    private static void setVisibilityOnChildren(ViewGroup layout, int visibility) {
         int childCount = layout.getChildCount();
         for (int i = 0; i < childCount; ++i) {
             layout.getChildAt(i).setVisibility(visibility);
@@ -1459,7 +1459,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             updatePageCountsAndInvalidateData();
         }
     }
-    private int findAppByComponent(List<AppInfo> list, AppInfo item) {
+    private static int findAppByComponent(List<AppInfo> list, AppInfo item) {
         ComponentName removeComponent = item.intent.getComponent();
         int length = list.size();
         for (int i = 0; i < length; ++i) {

@@ -305,7 +305,7 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
                 ItemInfo itemInfo = (ItemInfo) d.dragInfo;
                 if (layout != null)
                 {
-                    layout.calculateSpans(itemInfo);
+                    CellLayout.calculateSpans(itemInfo);
                     showOutOfSpaceMessage = !layout.findCellForSpan(null, itemInfo.spanX, itemInfo.spanY);
                 }
             }

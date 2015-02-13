@@ -909,7 +909,7 @@ public class ExifTag {
         }
     }
 
-    private boolean checkOverflowForUnsignedShort(int[] value) {
+    private static boolean checkOverflowForUnsignedShort(int[] value) {
         for (int v : value) {
             if (v > UNSIGNED_SHORT_MAX || v < 0) {
                 return true;
@@ -918,7 +918,7 @@ public class ExifTag {
         return false;
     }
 
-    private boolean checkOverflowForUnsignedLong(long[] value) {
+    private static boolean checkOverflowForUnsignedLong(long[] value) {
         for (long v : value) {
             if (v < 0 || v > UNSIGNED_LONG_MAX) {
                 return true;
@@ -927,7 +927,7 @@ public class ExifTag {
         return false;
     }
 
-    private boolean checkOverflowForUnsignedLong(int[] value) {
+    private static boolean checkOverflowForUnsignedLong(int[] value) {
         for (int v : value) {
             if (v < 0) {
                 return true;
@@ -936,7 +936,7 @@ public class ExifTag {
         return false;
     }
 
-    private boolean checkOverflowForUnsignedRational(Rational[] value) {
+    private static boolean checkOverflowForUnsignedRational(Rational[] value) {
         for (Rational v : value) {
             if (v.getNumerator() < 0 || v.getDenominator() < 0
                     || v.getNumerator() > UNSIGNED_LONG_MAX
@@ -947,7 +947,7 @@ public class ExifTag {
         return false;
     }
 
-    private boolean checkOverflowForRational(Rational[] value) {
+    private static boolean checkOverflowForRational(Rational[] value) {
         for (Rational v : value) {
             if (v.getNumerator() < LONG_MIN || v.getDenominator() < LONG_MIN
                     || v.getNumerator() > LONG_MAX

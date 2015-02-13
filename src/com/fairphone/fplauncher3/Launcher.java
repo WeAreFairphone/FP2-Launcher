@@ -521,7 +521,7 @@ public class Launcher extends Activity
     public void onLauncherProviderChange() { }
 
     /** To be overriden by subclasses to hint to Launcher that we have custom content */
-    protected boolean hasCustomContentToLeft() {
+    protected static boolean hasCustomContentToLeft() {
         return false;
     }
 
@@ -888,7 +888,7 @@ public class Launcher extends Activity
         mDragLayer.clearAnimatedView();
     }
 
-    private PendingAddArguments preparePendingAddArgs(int requestCode, Intent data, int
+    private static PendingAddArguments preparePendingAddArgs(int requestCode, Intent data, int
             appWidgetId, ItemInfo info) {
         PendingAddArguments args = new PendingAddArguments();
         args.requestCode = requestCode;
@@ -1111,11 +1111,11 @@ public class Launcher extends Activity
         boolean isScrollingAllowed();
     }
 
-    protected boolean hasSettings() {
+    protected static boolean hasSettings() {
         return false;
     }
     
-    protected boolean hasAllApps()
+    protected static boolean hasAllApps()
     {
         // Change to false to hide all apps on the overview pane
         return true;
@@ -1242,7 +1242,7 @@ public class Launcher extends Activity
         boolean renameFolder = savedState.getBoolean(RUNTIME_STATE_PENDING_FOLDER_RENAME, false);
         if (renameFolder) {
             long id = savedState.getLong(RUNTIME_STATE_PENDING_FOLDER_RENAME_ID);
-            mFolderInfo = mModel.getFolderById(this, sFolders, id);
+            mFolderInfo = LauncherModel.getFolderById(this, sFolders, id);
             mRestoring = true;
         }
 
@@ -1251,7 +1251,7 @@ public class Launcher extends Activity
             String curTab = savedState.getString("apps_customize_currentTab");
             if (curTab != null) {
                 mAppsCustomizeTabHost.setContentTypeImmediate(
-                        mAppsCustomizeTabHost.getContentTypeForTabTag(curTab));
+                        AppsCustomizeTabHost.getContentTypeForTabTag(curTab));
                 mAppsCustomizeContent.loadAssociatedPages(
                         mAppsCustomizeContent.getCurrentPage());
             }
@@ -1954,7 +1954,7 @@ public class Launcher extends Activity
      * Override point for subclasses to prevent movement to the default screen when the home
      * button is pressed. Used (for example) in GEL, to prevent movement during a search.
      */
-    protected boolean shouldMoveToDefaultScreenOnHomeIntent() {
+    protected static boolean shouldMoveToDefaultScreenOnHomeIntent() {
         return true;
     }
 
@@ -2008,7 +2008,7 @@ public class Launcher extends Activity
         // Save the current AppsCustomize tab
         if (mAppsCustomizeTabHost != null) {
             AppsCustomizePagedView.ContentType type = mAppsCustomizeContent.getContentType();
-            String currentTabTag = mAppsCustomizeTabHost.getTabTagForContentType(type);
+            String currentTabTag = AppsCustomizeTabHost.getTabTagForContentType(type);
             if (currentTabTag != null) {
                 outState.putString("apps_customize_currentTab", currentTabTag);
             }
@@ -2370,7 +2370,7 @@ public class Launcher extends Activity
         return newFolder;
     }
 
-    void removeFolder(FolderInfo folder) {
+    static void removeFolder(FolderInfo folder) {
         sFolders.remove(folder.id);
     }
 
@@ -2778,12 +2778,12 @@ public class Launcher extends Activity
         startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), REQUEST_PICK_SETTINGS);
     }
 
-    public void onTouchDownAllAppsButton(View v) {
+    public static void onTouchDownAllAppsButton(View v) {
         // Provide the same haptic feedback that the system offers for virtual keys.
         v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
     }
 
-    public void performHapticFeedbackOnTouchDown(View v) {
+    public static void performHapticFeedbackOnTouchDown(View v) {
         // Provide the same haptic feedback that the system offers for virtual keys.
         v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
     }
@@ -4325,7 +4325,7 @@ public class Launcher extends Activity
         if (((item.restoreStatus & LauncherAppWidgetInfo.FLAG_PROVIDER_NOT_READY) == 0) &&
                 ((item.restoreStatus & LauncherAppWidgetInfo.FLAG_ID_NOT_VALID) != 0)) {
 
-            appWidgetInfo = mModel.findAppWidgetProviderInfoWithComponent(this, item.providerName);
+            appWidgetInfo = LauncherModel.findAppWidgetProviderInfoWithComponent(this, item.providerName);
             if (appWidgetInfo == null) {
                 if (DEBUG_WIDGETS) {
                     Log.d(TAG, "Removing restored widget: id=" + item.appWidgetId
@@ -4501,7 +4501,7 @@ public class Launcher extends Activity
         return diff > (NEW_APPS_ANIMATION_INACTIVE_TIMEOUT_SECONDS * 1000);
     }
 
-    private ValueAnimator createNewAppBounceAnimation(View v, int i) {
+    private static ValueAnimator createNewAppBounceAnimation(View v, int i) {
         ValueAnimator bounceAnim = LauncherAnimUtils.ofPropertyValuesHolder(v,
                 PropertyValuesHolder.ofFloat("alpha", 1f),
                 PropertyValuesHolder.ofFloat("scaleX", 1f),
@@ -4512,12 +4512,12 @@ public class Launcher extends Activity
         return bounceAnim;
     }
 
-    public boolean useVerticalBarLayout() {
+    public static boolean useVerticalBarLayout() {
         return LauncherAppState.getInstance().getDynamicGrid().
                 getDeviceProfile().isVerticalBarLayout();
     }
 
-    protected Rect getSearchBarBounds() {
+    protected static Rect getSearchBarBounds() {
         return LauncherAppState.getInstance().getDynamicGrid().
                 getDeviceProfile().getSearchBarBounds();
     }
@@ -4770,32 +4770,32 @@ public class Launcher extends Activity
      * This method indicates whether or not we should suggest default wallpaper dimensions
      * when our wallpaper cropper was not yet used to set a wallpaper.
      */
-    protected boolean overrideWallpaperDimensions() {
+    protected static boolean overrideWallpaperDimensions() {
         return true;
     }
 
-    protected boolean shouldClingFocusHotseatApp() {
+    protected static boolean shouldClingFocusHotseatApp() {
         return false;
     }
-    protected String getFirstRunClingSearchBarHint() {
+    protected static String getFirstRunClingSearchBarHint() {
         return "";
     }
-    protected String getFirstRunCustomContentHint() {
+    protected static String getFirstRunCustomContentHint() {
         return "";
     }
-    protected int getFirstRunFocusedHotseatAppDrawableId() {
+    protected static int getFirstRunFocusedHotseatAppDrawableId() {
         return -1;
     }
-    protected ComponentName getFirstRunFocusedHotseatAppComponentName() {
+    protected static ComponentName getFirstRunFocusedHotseatAppComponentName() {
         return null;
     }
-    protected int getFirstRunFocusedHotseatAppRank() {
+    protected static int getFirstRunFocusedHotseatAppRank() {
         return -1;
     }
-    protected String getFirstRunFocusedHotseatAppBubbleTitle() {
+    protected static String getFirstRunFocusedHotseatAppBubbleTitle() {
         return "";
     }
-    protected String getFirstRunFocusedHotseatAppBubbleDescription() {
+    protected static String getFirstRunFocusedHotseatAppBubbleDescription() {
         return "";
     }
 
@@ -4803,14 +4803,14 @@ public class Launcher extends Activity
      * To be overridden by subclasses to indicate that there is an activity to launch
      * before showing the standard launcher experience.
      */
-    protected boolean hasFirstRunActivity() {
+    protected static boolean hasFirstRunActivity() {
         return false;
     }
 
     /**
      * To be overridden by subclasses to launch any first run activity
      */
-    protected Intent getFirstRunActivity() {
+    protected static Intent getFirstRunActivity() {
         return null;
     }
 
@@ -4846,14 +4846,14 @@ public class Launcher extends Activity
      * To be overridden by subclasses to indicate that there is an in-activity full-screen intro
      * screen that must be displayed and dismissed.
      */
-    protected boolean hasDismissableIntroScreen() {
+    protected static boolean hasDismissableIntroScreen() {
         return false;
     }
 
     /**
      * Full screen intro screen to be shown and dismissed before the launcher can be used.
      */
-    protected View getIntroScreen() {
+    protected static View getIntroScreen() {
         return null;
     }
 

@@ -390,8 +390,8 @@ public class Workspace extends SmoothPagedView
         }
     }
 
-    public Rect estimateItemPosition(CellLayout cl, ItemInfo pendingInfo,
-            int hCell, int vCell, int hSpan, int vSpan) {
+    public static Rect estimateItemPosition(CellLayout cl, ItemInfo pendingInfo,
+                                            int hCell, int vCell, int hSpan, int vSpan) {
         Rect r = new Rect();
         cl.cellToRect(hCell, vCell, hSpan, vSpan, r);
         return r;
@@ -740,7 +740,7 @@ public class Workspace extends SmoothPagedView
             mScreenOrder.add(EXTRA_EMPTY_SCREEN_ID);
 
             // Update the model if we have changed any screens
-            mLauncher.getModel().updateWorkspaceScreenOrder(mLauncher, mScreenOrder);
+            LauncherModel.updateWorkspaceScreenOrder(mLauncher, mScreenOrder);
             Launcher.addDumpLog(TAG, "11683562 -   extra empty screen: " + finalScreenId, true);
         }
     }
@@ -863,7 +863,7 @@ public class Workspace extends SmoothPagedView
         }
 
         // Update the model for the new screen
-        mLauncher.getModel().updateWorkspaceScreenOrder(mLauncher, mScreenOrder);
+        LauncherModel.updateWorkspaceScreenOrder(mLauncher, mScreenOrder);
 
         return newId;
     }
@@ -950,7 +950,7 @@ public class Workspace extends SmoothPagedView
 
         if (!removeScreens.isEmpty()) {
             // Update the model if we have changed any screens
-            mLauncher.getModel().updateWorkspaceScreenOrder(mLauncher, mScreenOrder);
+            LauncherModel.updateWorkspaceScreenOrder(mLauncher, mScreenOrder);
         }
 
         if (pageShift >= 0) {
@@ -1094,7 +1094,7 @@ public class Workspace extends SmoothPagedView
         case MotionEvent.ACTION_UP:
             if (mTouchState == TOUCH_STATE_REST) {
                 final CellLayout currentPage = (CellLayout) getChildAt(mCurrentPage);
-                if (currentPage != null && !currentPage.lastDownOnOccupiedCell()) {
+                if (currentPage != null && !CellLayout.lastDownOnOccupiedCell()) {
                     onWallpaperTap(ev);
                 }
             }
@@ -1268,7 +1268,7 @@ public class Workspace extends SmoothPagedView
                         mLauncher.getSharedPreferences(spKey, Context.MODE_MULTI_PROCESS);
                 LauncherWallpaperPickerActivity.suggestWallpaperDimension(mLauncher.getResources(),
                         sp, mLauncher.getWindowManager(), mWallpaperManager,
-                        mLauncher.overrideWallpaperDimensions());
+                        Launcher.overrideWallpaperDimensions());
                 return null;
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void) null);
@@ -1560,7 +1560,7 @@ public class Workspace extends SmoothPagedView
         }
     }
 
-    float backgroundAlphaInterpolator(float r) {
+    static float backgroundAlphaInterpolator(float r) {
         float pivotA = 0.1f;
         float pivotB = 0.4f;
         if (r < pivotA) {
@@ -2088,7 +2088,7 @@ public class Workspace extends SmoothPagedView
             mScreenOrder.add(getIdForScreen(cl));
         }
 
-        mLauncher.getModel().updateWorkspaceScreenOrder(mLauncher, mScreenOrder);
+        LauncherModel.updateWorkspaceScreenOrder(mLauncher, mScreenOrder);
 
         // Re-enable auto layout transitions for page deletion.
         enableLayoutTransitions();
@@ -3141,7 +3141,7 @@ public class Workspace extends SmoothPagedView
                 d.deferDragViewCleanupPostAnimation = false;
                 cell.setVisibility(VISIBLE);
             }
-            parent.onDropChild(cell);
+            CellLayout.onDropChild(cell);
         }
     }
 
@@ -3214,8 +3214,8 @@ public class Workspace extends SmoothPagedView
                 int height = smallestSize.y - padding.top - padding.bottom;
                 mLandscapeCellLayoutMetrics = new Rect();
                 mLandscapeCellLayoutMetrics.set(
-                        grid.calculateCellWidth(width, countX),
-                        grid.calculateCellHeight(height, countY), 0, 0);
+                        DeviceProfile.calculateCellWidth(width, countX),
+                        DeviceProfile.calculateCellHeight(height, countY), 0, 0);
             }
             return mLandscapeCellLayoutMetrics;
         } else if (orientation == CellLayout.PORTRAIT) {
@@ -3225,8 +3225,8 @@ public class Workspace extends SmoothPagedView
                 int height = largestSize.y - padding.top - padding.bottom;
                 mPortraitCellLayoutMetrics = new Rect();
                 mPortraitCellLayoutMetrics.set(
-                        grid.calculateCellWidth(width, countX),
-                        grid.calculateCellHeight(height, countY), 0, 0);
+                        DeviceProfile.calculateCellWidth(width, countX),
+                        DeviceProfile.calculateCellHeight(height, countY), 0, 0);
             }
             return mPortraitCellLayoutMetrics;
         }
@@ -3359,7 +3359,7 @@ public class Workspace extends SmoothPagedView
     * findMatchingPageForDragOver
     *
     */
-   void mapPointFromSelfToChild(View v, float[] xy, Matrix cachedInverseMatrix) {
+   static void mapPointFromSelfToChild(View v, float[] xy, Matrix cachedInverseMatrix) {
        xy[0] = xy[0] - v.getLeft();
        xy[1] = xy[1] - v.getTop();
    }
@@ -3370,7 +3370,7 @@ public class Workspace extends SmoothPagedView
     * the parent View's coordinate space. The argument xy is modified with the return result.
     *
     */
-   void mapPointFromChildToSelf(View v, float[] xy) {
+   static void mapPointFromChildToSelf(View v, float[] xy) {
        xy[0] += v.getLeft();
        xy[1] += v.getTop();
    }
@@ -3472,7 +3472,7 @@ public class Workspace extends SmoothPagedView
         return res;
     }
 
-    private boolean isDragWidget(DragObject d) {
+    private static boolean isDragWidget(DragObject d) {
         return (d.dragInfo instanceof LauncherAppWidgetInfo ||
                 d.dragInfo instanceof PendingAddWidgetInfo);
     }
@@ -3892,7 +3892,7 @@ public class Workspace extends SmoothPagedView
 
             addInScreen(view, container, screenId, mTargetCell[0], mTargetCell[1], info.spanX,
                     info.spanY, insertAtFirst);
-            cellLayout.onDropChild(view);
+            CellLayout.onDropChild(view);
             cellLayout.getShortcutsAndWidgets().measureChild(view);
 
             if (d.dragView != null) {
@@ -4061,8 +4061,8 @@ public class Workspace extends SmoothPagedView
      *
      * pixelX and pixelY should be in the coordinate system of layout
      */
-    private int[] findNearestArea(int pixelX, int pixelY,
-            int spanX, int spanY, CellLayout layout, int[] recycle) {
+    private static int[] findNearestArea(int pixelX, int pixelY,
+                                         int spanX, int spanY, CellLayout layout, int[] recycle) {
         return layout.findNearestArea(
                 pixelX, pixelY, spanX, spanY, recycle);
     }
@@ -4113,7 +4113,7 @@ public class Workspace extends SmoothPagedView
                         + "Workspace#onDropCompleted. Please file a bug. ");
             }
             if (cellLayout != null) {
-                cellLayout.onDropChild(mDragInfo.cell);
+                CellLayout.onDropChild(mDragInfo.cell);
             }
         }
         if ((d.cancelled || (beingCalledAfterUninstall && !mUninstallSuccessful))

@@ -236,7 +236,7 @@ public class PendingAppWidgetHostView extends LauncherAppWidgetHostView implemen
         }
     }
 
-    private DeviceProfile getDeviceProfile() {
+    private static DeviceProfile getDeviceProfile() {
         return LauncherAppState.getInstance().getDynamicGrid().getDeviceProfile();
     }
 }

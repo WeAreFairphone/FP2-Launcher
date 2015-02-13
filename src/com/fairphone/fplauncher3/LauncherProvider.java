@@ -271,7 +271,7 @@ public class LauncherProvider extends ContentProvider {
         }
     }
 
-    private void addModifiedTime(ContentValues values) {
+    private static void addModifiedTime(ContentValues values) {
         values.put(LauncherSettings.ChangeLogColumns.MODIFIED, System.currentTimeMillis());
     }
 
@@ -547,7 +547,7 @@ public class LauncherProvider extends ContentProvider {
             }
         }
 
-        private void addWorkspacesTable(SQLiteDatabase db) {
+        private static void addWorkspacesTable(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE " + TABLE_WORKSPACE_SCREENS + " (" +
                     LauncherSettings.WorkspaceScreens._ID + " INTEGER," +
                     LauncherSettings.WorkspaceScreens.SCREEN_RANK + " INTEGER," +
@@ -555,7 +555,7 @@ public class LauncherProvider extends ContentProvider {
                     ");");
         }
 
-        private void removeOrphanedItems(SQLiteDatabase db) {
+        private static void removeOrphanedItems(SQLiteDatabase db) {
             // Delete items directly on the workspace who's screen id doesn't exist
             //  "DELETE FROM favorites WHERE screen NOT IN (SELECT _id FROM workspaceScreens)
             //   AND container = -100"
@@ -603,7 +603,7 @@ public class LauncherProvider extends ContentProvider {
 
         // We rearrange the screens from the old launcher
         // 12345 -> 34512
-        private long upgradeLauncherDb_permuteScreens(long screen) {
+        private static long upgradeLauncherDb_permuteScreens(long screen) {
             if (screen >= 2) {
                 return screen - 2;
             } else {
@@ -1136,7 +1136,7 @@ public class LauncherProvider extends ContentProvider {
             }
         }
 
-        private long initializeMaxItemId(SQLiteDatabase db) {
+        private static long initializeMaxItemId(SQLiteDatabase db) {
             Cursor c = db.rawQuery("SELECT MAX(_id) FROM favorites", null);
 
             // get the result
@@ -1177,7 +1177,7 @@ public class LauncherProvider extends ContentProvider {
             mMaxScreenId = maxScreenId;
         }
 
-        private long initializeMaxScreenId(SQLiteDatabase db) {
+        private static long initializeMaxScreenId(SQLiteDatabase db) {
             Cursor c = db.rawQuery("SELECT MAX(" + LauncherSettings.WorkspaceScreens._ID + ") FROM " + TABLE_WORKSPACE_SCREENS, null);
 
             // get the result
@@ -1735,8 +1735,8 @@ public class LauncherProvider extends ContentProvider {
             return systemResolve;
         }
 
-        private boolean wouldLaunchResolverActivity(ResolveInfo resolved,
-                List<ResolveInfo> appList) {
+        private static boolean wouldLaunchResolverActivity(ResolveInfo resolved,
+                                                           List<ResolveInfo> appList) {
             // If the list contains the above resolved activity, then it can't be
             // ResolverActivity itself.
             for (int i = 0; i < appList.size(); ++i) {

@@ -73,13 +73,13 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
         mDeleteDropTarget.setLauncher(launcher);
     }
 
-    private void prepareStartAnimation(View v) {
+    private static void prepareStartAnimation(View v) {
         // Enable the hw layers before the animation starts (will be disabled in the onAnimationEnd
         // callback below)
         v.setLayerType(View.LAYER_TYPE_HARDWARE, null);
     }
 
-    private void setupAnimation(ObjectAnimator anim, final View v) {
+    private static void setupAnimation(ObjectAnimator anim, final View v) {
         anim.setInterpolator(sAccelerateInterpolator);
         anim.setDuration(sTransitionInDuration);
         anim.addListener(new AnimatorListenerAdapter() {
@@ -131,10 +131,10 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
     /*
      * Gets various transition durations.
      */
-    public int getTransitionInDuration() {
+    public static int getTransitionInDuration() {
         return sTransitionInDuration;
     }
-    public int getTransitionOutDuration() {
+    public static int getTransitionOutDuration() {
         return sTransitionOutDuration;
     }
 

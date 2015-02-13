@@ -46,7 +46,7 @@ public class CheckLongPressHelper {
             mPendingCheckForLongPress = new CheckForLongPress();
         }
         mView.postDelayed(mPendingCheckForLongPress,
-                LauncherAppState.getInstance().getLongPressTimeout());
+                LauncherAppState.getLongPressTimeout());
     }
 
     public void cancelLongPress() {

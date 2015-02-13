@@ -570,7 +570,7 @@ public class EdgeSwipeMenu implements EdgeSwipeInterceptorViewListener
         }
     }
 
-    private void translateViewAnimation(View view, float translateValue, long duration)
+    private static void translateViewAnimation(View view, float translateValue, long duration)
     {
     	if(view != null)
     	{

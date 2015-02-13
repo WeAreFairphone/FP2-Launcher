@@ -274,7 +274,7 @@ public class DeviceProfile {
         mCallbacks.remove(cb);
     }
 
-    private int getDeviceOrientation(Context context) {
+    private static int getDeviceOrientation(Context context) {
         WindowManager windowManager =  (WindowManager)
                 context.getSystemService(Context.WINDOW_SERVICE);
         Resources resources = context.getResources();
@@ -406,7 +406,7 @@ public class DeviceProfile {
         updateAvailableDimensions(context);
     }
 
-    private float dist(PointF p0, PointF p1) {
+    private static float dist(PointF p0, PointF p1) {
         return (float) Math.sqrt((p1.x - p0.x)*(p1.x-p0.x) +
                 (p1.y-p0.y)*(p1.y-p0.y));
     }
@@ -626,10 +626,10 @@ public class DeviceProfile {
         }
     }
 
-    int calculateCellWidth(int width, int countX) {
+    static int calculateCellWidth(int width, int countX) {
         return width / countX;
     }
-    int calculateCellHeight(int height, int countY) {
+    static int calculateCellHeight(int height, int countY) {
         return height / countY;
     }
 
@@ -651,7 +651,7 @@ public class DeviceProfile {
         return isVerticalBarLayout() || isLargeTablet();
     }
 
-    int getVisibleChildCount(ViewGroup parent) {
+    static int getVisibleChildCount(ViewGroup parent) {
         int visibleChildren = 0;
         for (int i = 0; i < parent.getChildCount(); i++) {
             if (parent.getChildAt(i).getVisibility() != View.GONE) {

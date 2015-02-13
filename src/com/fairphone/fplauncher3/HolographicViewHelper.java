@@ -76,7 +76,7 @@ public class HolographicViewHelper {
     /**
      * Creates a copy of the original image.
      */
-    private Bitmap createOriginalImage(ImageView v, Canvas canvas) {
+    private static Bitmap createOriginalImage(ImageView v, Canvas canvas) {
         final Drawable d = v.getDrawable();
         final Bitmap b = Bitmap.createBitmap(
                 d.getIntrinsicWidth(), d.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
@@ -94,7 +94,7 @@ public class HolographicViewHelper {
      * Creates a new press state image which is the old image with a blue overlay.
      * Responsibility for the bitmap is transferred to the caller.
      */
-    private Bitmap createImageWithOverlay(ImageView v, Canvas canvas, int color) {
+    private static Bitmap createImageWithOverlay(ImageView v, Canvas canvas, int color) {
         final Drawable d = v.getDrawable();
         final Bitmap b = Bitmap.createBitmap(
                 d.getIntrinsicWidth(), d.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);

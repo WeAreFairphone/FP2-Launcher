@@ -240,7 +240,7 @@ class ExifOutputStream extends FilterOutputStream {
         }
     }
 
-    private ArrayList<ExifTag> stripNullValueTags(ExifData data) {
+    private static ArrayList<ExifTag> stripNullValueTags(ExifData data) {
         ArrayList<ExifTag> nullTags = new ArrayList<ExifTag>();
         for(ExifTag t : data.getAllTags()) {
             if (t.getValue() == null && !ExifInterface.isOffsetTag(t.getTagId())) {
@@ -278,7 +278,7 @@ class ExifOutputStream extends FilterOutputStream {
         }
     }
 
-    private void writeIfd(IfdData ifd, OrderedDataOutputStream dataOutputStream)
+    private static void writeIfd(IfdData ifd, OrderedDataOutputStream dataOutputStream)
             throws IOException {
         ExifTag[] tags = ifd.getAllTags();
         dataOutputStream.writeShort((short) tags.length);
@@ -306,7 +306,7 @@ class ExifOutputStream extends FilterOutputStream {
         }
     }
 
-    private int calculateOffsetOfIfd(IfdData ifd, int offset) {
+    private static int calculateOffsetOfIfd(IfdData ifd, int offset) {
         offset += 2 + ifd.getTagCount() * TAG_SIZE + 4;
         ExifTag[] tags = ifd.getAllTags();
         for (ExifTag tag : tags) {

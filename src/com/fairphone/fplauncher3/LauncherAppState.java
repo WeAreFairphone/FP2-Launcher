@@ -69,7 +69,7 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
         return INSTANCE;
     }
 
-    public Context getContext() {
+    public static Context getContext() {
         return sContext;
     }
 
@@ -229,7 +229,7 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
         return mScreenDensity;
     }
 
-    public int getLongPressTimeout() {
+    public static int getLongPressTimeout() {
         return mLongPressTimeout;
     }
 
@@ -250,12 +250,12 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
 
     public static boolean isDisableAllApps() {
         // Returns false on non-dogfood builds.
-        return getInstance().mBuildInfo.isDogfoodBuild() &&
+        return BuildInfo.isDogfoodBuild() &&
                 Launcher.isPropertyEnabled(Launcher.DISABLE_ALL_APPS_PROPERTY);
     }
 
     public static boolean isDogfoodBuild() {
-        return getInstance().mBuildInfo.isDogfoodBuild();
+        return BuildInfo.isDogfoodBuild();
     }
 
     public void setPackageState(ArrayList<PackageInstallInfo> installInfo) {

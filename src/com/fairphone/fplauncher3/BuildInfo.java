@@ -7,7 +7,7 @@ public class BuildInfo {
     private static final boolean DBG = false;
     private static final String TAG = "BuildInfo";
 
-    public boolean isDogfoodBuild() {
+    public static boolean isDogfoodBuild() {
         return false;
     }
 

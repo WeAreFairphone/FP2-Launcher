@@ -60,7 +60,7 @@ public class AllAppsWidget extends AppWidgetProvider
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 
-    private void updateUI(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    private static void updateUI(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         int code = 0;
         // get the widgets

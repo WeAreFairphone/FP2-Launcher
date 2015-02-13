@@ -344,7 +344,7 @@ public class WidgetPreviewLoader {
         return output;
     }
 
-    private String getObjectPackage(Object o) {
+    private static String getObjectPackage(Object o) {
         if (o instanceof AppWidgetProviderInfo) {
             return ((AppWidgetProviderInfo) o).provider.getPackageName();
         } else {

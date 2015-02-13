@@ -77,7 +77,7 @@ public class SmsObserver extends ContentObserver
         }
     }
 
-    private long getLastSentSmsTimestamp(Context context)
+    private static long getLastSentSmsTimestamp(Context context)
     {
         Log.d(TAG, "getLastSentSmsTimestamp");
         SharedPreferences prefs = context.getSharedPreferences(PeopleManager.PREFS_PEOPLE_WIDGET_CONTACTS_DATA, 0);
@@ -88,7 +88,7 @@ public class SmsObserver extends ContentObserver
         return prefs.getLong(SmsObserver.PEOPLE_WIDGET_LAST_SENT_SMS_TIMESTAMP, defaultTimestamp);
     }
 
-    private void setLastSentSmsTimestamp(Context context, long timestamp)
+    private static void setLastSentSmsTimestamp(Context context, long timestamp)
     {
         SharedPreferences prefs = context.getSharedPreferences(PeopleManager.PREFS_PEOPLE_WIDGET_CONTACTS_DATA, 0);
 

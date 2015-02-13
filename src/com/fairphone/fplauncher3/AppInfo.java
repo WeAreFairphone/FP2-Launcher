@@ -69,7 +69,7 @@ public class AppInfo extends ItemInfo
         return intent;
     }
 
-    protected Intent getRestoredIntent()
+    protected static Intent getRestoredIntent()
     {
         return null;
     }

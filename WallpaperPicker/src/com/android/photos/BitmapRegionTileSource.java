@@ -502,7 +502,7 @@ public class BitmapRegionTileSource implements TiledImageRenderer.TileSource {
      * Note that the returned bitmap may have a long edge that's longer
      * than the targetSize, but it will always be less than 2x the targetSize
      */
-    private Bitmap decodePreview(BitmapSource source, int targetSize) {
+    private static Bitmap decodePreview(BitmapSource source, int targetSize) {
         Bitmap result = source.getPreviewBitmap();
         if (result == null) {
             return null;

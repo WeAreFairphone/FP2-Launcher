@@ -803,7 +803,7 @@ public class LauncherBackupHelper implements BackupHelper {
     }
 
     /** keys need to be strings, serialize and encode. */
-    private String keyToBackupKey(Key key) {
+    private static String keyToBackupKey(Key key) {
         return Base64.encodeToString(Key.toByteArray(key), Base64.NO_WRAP);
     }
 
@@ -822,7 +822,7 @@ public class LauncherBackupHelper implements BackupHelper {
         }
     }
 
-    private String getKeyName(Key key) {
+    private static String getKeyName(Key key) {
         if (TextUtils.isEmpty(key.name)) {
             return Long.toString(key.id);
         } else {
@@ -831,7 +831,7 @@ public class LauncherBackupHelper implements BackupHelper {
 
     }
 
-    private String geKeyType(Key key) {
+    private static String geKeyType(Key key) {
         switch (key.type) {
             case Key.FAVORITE:
                 return "favorite";
@@ -847,7 +847,7 @@ public class LauncherBackupHelper implements BackupHelper {
     }
 
     /** Compute the checksum over the important bits of a key. */
-    private long checkKey(Key key) {
+    private static long checkKey(Key key) {
         CRC32 checksum = new CRC32();
         checksum.update(key.type);
         checksum.update((int) (key.id & 0xffff));
@@ -978,7 +978,7 @@ public class LauncherBackupHelper implements BackupHelper {
     }
 
     /** Deserialize a Screen from persistence, after verifying checksum wrapper. */
-    private ContentValues unpackScreen(byte[] buffer, int offset, int dataSize)
+    private static ContentValues unpackScreen(byte[] buffer, int offset, int dataSize)
             throws InvalidProtocolBufferNanoException {
         Screen screen = new Screen();
         MessageNano.mergeFrom(screen, readCheckedBytes(buffer, offset, dataSize));
@@ -1044,7 +1044,7 @@ public class LauncherBackupHelper implements BackupHelper {
     }
 
     /** Deserialize a widget from persistence, after verifying checksum wrapper. */
-    private Widget unpackWidget(byte[] buffer, int offset, int dataSize)
+    private static Widget unpackWidget(byte[] buffer, int offset, int dataSize)
             throws InvalidProtocolBufferNanoException {
         Widget widget = new Widget();
         MessageNano.mergeFrom(widget, readCheckedBytes(buffer, offset, dataSize));
@@ -1063,7 +1063,7 @@ public class LauncherBackupHelper implements BackupHelper {
      * @param oldState the read-0only file descriptor pointing to the old journal
      * @return a Journal protocol buffer
      */
-    private Journal readJournal(ParcelFileDescriptor oldState) {
+    private static Journal readJournal(ParcelFileDescriptor oldState) {
         Journal journal = new Journal();
         if (oldState == null) {
             return journal;
@@ -1169,7 +1169,7 @@ public class LauncherBackupHelper implements BackupHelper {
         return savedIds;
     }
 
-    private int removeDeletedKeysFromBackup(Set<String> deletedIds, BackupDataOutput data)
+    private static int removeDeletedKeysFromBackup(Set<String> deletedIds, BackupDataOutput data)
             throws IOException {
         int rows = 0;
         for(String deleted: deletedIds) {
@@ -1207,7 +1207,7 @@ public class LauncherBackupHelper implements BackupHelper {
     }
 
     /** Wrap a proto in a CheckedMessage and compute the checksum. */
-    private byte[] writeCheckedBytes(MessageNano proto) {
+    private static byte[] writeCheckedBytes(MessageNano proto) {
         CheckedMessage wrapper = new CheckedMessage();
         wrapper.payload = MessageNano.toByteArray(proto);
         CRC32 checksum = new CRC32();
@@ -1242,7 +1242,7 @@ public class LauncherBackupHelper implements BackupHelper {
     }
 
 
-    private boolean initializeIconCache() {
+    private static boolean initializeIconCache() {
         if (mIconCache != null) {
             return true;
         }

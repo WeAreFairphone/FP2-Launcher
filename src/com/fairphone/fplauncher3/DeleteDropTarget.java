@@ -81,10 +81,10 @@ public class DeleteDropTarget extends ButtonDropTarget {
         }
     }
 
-    private boolean isAllAppsApplication(DragSource source, Object info) {
+    private static boolean isAllAppsApplication(DragSource source, Object info) {
         return source.supportsAppInfoDropTarget() && (info instanceof AppInfo);
     }
-    private boolean isAllAppsWidget(DragSource source, Object info) {
+    private static boolean isAllAppsWidget(DragSource source, Object info) {
         if (source instanceof AppsCustomizePagedView) {
             if (info instanceof PendingAddItemInfo) {
                 PendingAddItemInfo addInfo = (PendingAddItemInfo) info;
@@ -97,7 +97,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
         }
         return false;
     }
-    private boolean isDragSourceWorkspaceOrFolder(DragObject d) {
+    private static boolean isDragSourceWorkspaceOrFolder(DragObject d) {
         return (d.dragSource instanceof Workspace) || (d.dragSource instanceof Folder);
     }
     private boolean isWorkspaceOrFolderApplication(DragObject d) {
@@ -106,7 +106,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
     private boolean isWorkspaceOrFolderWidget(DragObject d) {
         return isDragSourceWorkspaceOrFolder(d) && (d.dragInfo instanceof LauncherAppWidgetInfo);
     }
-    private boolean isWorkspaceFolder(DragObject d) {
+    private static boolean isWorkspaceFolder(DragObject d) {
         return (d.dragSource instanceof Workspace) && (d.dragInfo instanceof FolderInfo);
     }
 
@@ -312,7 +312,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
         } else if (isWorkspaceFolder(d)) {
             // Remove the folder from the workspace and delete the contents from launcher model
             FolderInfo folderInfo = (FolderInfo) item;
-            mLauncher.removeFolder(folderInfo);
+            Launcher.removeFolder(folderInfo);
             LauncherModel.deleteFolderContentsFromDatabase(mLauncher, folderInfo);
         } else if (isWorkspaceOrFolderWidget(d)) {
             // Remove the widget from the workspace
@@ -455,9 +455,9 @@ public class DeleteDropTarget extends ButtonDropTarget {
         }
     }
 
-    private AnimatorUpdateListener createFlingAlongVectorAnimatorListener(final DragLayer dragLayer,
-            DragObject d, PointF vel, final long startTime, final int duration,
-            ViewConfiguration config) {
+    private static AnimatorUpdateListener createFlingAlongVectorAnimatorListener(final DragLayer dragLayer,
+                                                                                 DragObject d, PointF vel, final long startTime, final int duration,
+                                                                                 ViewConfiguration config) {
         final Rect from = new Rect();
         dragLayer.getViewRectRelativeToSelf(d.dragView, from);
 
@@ -526,7 +526,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
                     mLauncher.exitSpringLoadedDragMode();
                     completeDrop(d);
                 }
-                mLauncher.getDragController().onDeferredEndFling(d);
+                DragController.onDeferredEndFling(d);
             }
         };
         dragLayer.animateView(d.dragView, updateCb, duration, tInterpolator, onAnimationEndRunnable,

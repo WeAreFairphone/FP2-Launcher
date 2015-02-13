@@ -308,7 +308,7 @@ public class CellLayout extends ViewGroup {
         mShortcutsAndWidgets.buildLayer();
     }
 
-    public float getChildrenScale() {
+    public static float getChildrenScale() {
         return 1.0f;
     }
 
@@ -830,8 +830,8 @@ public class CellLayout extends ViewGroup {
             int paddedMeasureHeight, int countX, int countY) {
         LauncherAppState app = LauncherAppState.getInstance();
         DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
-        metrics.set(grid.calculateCellWidth(paddedMeasureWidth, countX),
-                grid.calculateCellHeight(paddedMeasureHeight, countY), 0, 0);
+        metrics.set(DeviceProfile.calculateCellWidth(paddedMeasureWidth, countX),
+                DeviceProfile.calculateCellHeight(paddedMeasureHeight, countY), 0, 0);
     }
 
     public void setFixedSize(int width, int height) {
@@ -851,8 +851,8 @@ public class CellLayout extends ViewGroup {
         int childWidthSize = widthSize - (getPaddingLeft() + getPaddingRight());
         int childHeightSize = heightSize - (getPaddingTop() + getPaddingBottom());
         if (mFixedCellWidth < 0 || mFixedCellHeight < 0) {
-            int cw = grid.calculateCellWidth(childWidthSize, mCountX);
-            int ch = grid.calculateCellHeight(childHeightSize, mCountY);
+            int cw = DeviceProfile.calculateCellWidth(childWidthSize, mCountX);
+            int ch = DeviceProfile.calculateCellHeight(childHeightSize, mCountY);
             if (cw != mCellWidth || ch != mCellHeight) {
                 mCellWidth = cw;
                 mCellHeight = ch;
@@ -2019,7 +2019,7 @@ public class CellLayout extends ViewGroup {
      * Returns a pair (x, y), where x,y are in {-1, 0, 1} corresponding to vector between
      * the provided point and the provided cell
      */
-    private void computeDirectionVector(float deltaX, float deltaY, int[] result) {
+    private static void computeDirectionVector(float deltaX, float deltaY, int[] result) {
         double angle = Math.atan(((float) deltaY) / deltaX);
 
         result[0] = 0;
@@ -2875,7 +2875,7 @@ public class CellLayout extends ViewGroup {
      *
      * @param child The child that is being dropped
      */
-    void onDropChild(View child) {
+    static void onDropChild(View child) {
         if (child != null) {
             LayoutParams lp = (LayoutParams) child.getLayoutParams();
             lp.dropped = true;
@@ -2926,9 +2926,9 @@ public class CellLayout extends ViewGroup {
 
         // Always assume we're working with the smallest span to make sure we
         // reserve enough space in both orientations.
-        int parentWidth = grid.calculateCellWidth(grid.widthPx
+        int parentWidth = DeviceProfile.calculateCellWidth(grid.widthPx
                 - padding.left - padding.right, (int) grid.numColumns);
-        int parentHeight = grid.calculateCellHeight(grid.heightPx
+        int parentHeight = DeviceProfile.calculateCellHeight(grid.heightPx
                 - padding.top - padding.bottom, (int) grid.numRows);
         int smallerSize = Math.min(parentWidth, parentHeight);
 
@@ -2954,7 +2954,7 @@ public class CellLayout extends ViewGroup {
     /**
      * Calculate the grid spans needed to fit given item
      */
-    public void calculateSpans(ItemInfo info) {
+    public static void calculateSpans(ItemInfo info) {
         final int minWidth;
         final int minHeight;
 
@@ -3289,7 +3289,7 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
         }
     }
 
-    public boolean lastDownOnOccupiedCell() {
+    public static boolean lastDownOnOccupiedCell() {
         return mLastDownOnOccupiedCell;
     }
 }

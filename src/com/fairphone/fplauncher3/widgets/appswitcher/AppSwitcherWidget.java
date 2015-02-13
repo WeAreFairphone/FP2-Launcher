@@ -168,7 +168,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         return code;
     }
 
-    private void toggleMostAndLastUsedViewsVisibility(RemoteViews widget, List<ApplicationRunInformation> mostRecent, List<ApplicationRunInformation> mostUsed)
+    private static void toggleMostAndLastUsedViewsVisibility(RemoteViews widget, List<ApplicationRunInformation> mostRecent, List<ApplicationRunInformation> mostUsed)
     {
         if (mostRecent.isEmpty() && mostUsed.isEmpty()) {
             widget.setViewVisibility(R.id.mostUsedAppsOOBEDescription, View.VISIBLE);
@@ -203,7 +203,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         return mostUsedRow;
     }
 
-    private RemoteViews getAllAppsButton(Context context, int code)
+    private static RemoteViews getAllAppsButton(Context context, int code)
     {
         // generate the mostUsed row
         RemoteViews allAppsButton = new RemoteViews(context.getPackageName(), R.layout.fp_most_used_item);
@@ -223,7 +223,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         return allAppsButton;
     }
 
-    private Intent generateLaunchIntent(ApplicationRunInformation info, String appLabel) throws NameNotFoundException
+    private static Intent generateLaunchIntent(ApplicationRunInformation info, String appLabel) throws NameNotFoundException
     {
         Intent i = new Intent();
         i.setAction(ACTION_APP_SWITCHER_LAUNCH_APP);

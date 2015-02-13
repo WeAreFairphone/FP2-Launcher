@@ -303,7 +303,7 @@ public class PagedViewCellLayout extends ViewGroup implements Page {
      *
      * @param child The child that is being dragged
      */
-    void onDragChild(View child) {
+    static void onDragChild(View child) {
         PagedViewCellLayout.LayoutParams lp = (PagedViewCellLayout.LayoutParams) child.getLayoutParams();
         lp.isDragging = true;
     }

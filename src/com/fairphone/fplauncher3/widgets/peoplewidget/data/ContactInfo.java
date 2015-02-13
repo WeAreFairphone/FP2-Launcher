@@ -108,7 +108,7 @@ public class ContactInfo {
 				PhoneNumberFormat.E164);
 	}
 
-	private LAST_ACTION getLastActionFromString(String lastAction) {
+	private static LAST_ACTION getLastActionFromString(String lastAction) {
 		LAST_ACTION action;
 		try {
 			action = LAST_ACTION.valueOf(lastAction);

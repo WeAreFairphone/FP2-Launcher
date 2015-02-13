@@ -2033,7 +2033,7 @@ public class ExifInterface {
         };
     }
 
-    private void doExifStreamIO(InputStream is, OutputStream os) throws IOException {
+    private static void doExifStreamIO(InputStream is, OutputStream os) throws IOException {
         byte[] buf = new byte[1024];
         int ret = is.read(buf, 0, 1024);
         while (ret != -1) {

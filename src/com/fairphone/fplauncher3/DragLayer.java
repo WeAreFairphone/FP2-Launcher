@@ -159,7 +159,7 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
         removeView(mOverlayView);
     }
 
-    private void setInsets(View child, Rect newInsets, Rect oldInsets) {
+    private static void setInsets(View child, Rect newInsets, Rect oldInsets) {
         final FrameLayout.LayoutParams flp = (FrameLayout.LayoutParams) child.getLayoutParams();
         if (child instanceof Insettable) {
             ((Insettable) child).setInsets(newInsets);

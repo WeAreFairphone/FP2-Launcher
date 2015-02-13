@@ -75,7 +75,7 @@ public class PeopleWidget extends AppWidgetProvider
         Bitmap bitmap = loadContactPhoto(photoUrl, mContext);
         if (bitmap != null)
         {
-            Bitmap circle = new CircleTransform().transform(bitmap, mContext.getResources().getDimension(R.dimen.contact_picture_size));
+            Bitmap circle = CircleTransform.transform(bitmap, mContext.getResources().getDimension(R.dimen.contact_picture_size));
             view.setImageViewBitmap(viewId, circle);
         }
         else
@@ -84,7 +84,7 @@ public class PeopleWidget extends AppWidgetProvider
         }
     }
 
-    private Bitmap loadContactPhoto(final String photoData, Context context)
+    private static Bitmap loadContactPhoto(final String photoData, Context context)
     {
         Uri thumbUri;
         AssetFileDescriptor afd = null;
@@ -164,7 +164,7 @@ public class PeopleWidget extends AppWidgetProvider
 
     }
     
-    private void toggleMostAndLastContactedViewsVisibility(RemoteViews widget, List<ContactInfo> mostContacted, List<ContactInfo> lastContacted)
+    private static void toggleMostAndLastContactedViewsVisibility(RemoteViews widget, List<ContactInfo> mostContacted, List<ContactInfo> lastContacted)
     {
         if (mostContacted.isEmpty() && lastContacted.isEmpty()) {
             widget.setViewVisibility(R.id.mostUsedContactsOOBEDescription, View.VISIBLE);

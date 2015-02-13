@@ -687,7 +687,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         }
     };
 
-    boolean readingOrderGreaterThan(int[] v1, int[] v2) {
+    static boolean readingOrderGreaterThan(int[] v1, int[] v2) {
         if (v1[1] > v2[1] || (v1[1] == v2[1] && v1[0] > v2[0])) {
             return true;
         } else {
@@ -783,8 +783,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     // This is used to compute the visual center of the dragView. The idea is that
     // the visual center represents the user's interpretation of where the item is, and hence
     // is the appropriate point to use when determining drop location.
-    private float[] getDragViewVisualCenter(int x, int y, int xOffset, int yOffset,
-            DragView dragView, float[] recycle) {
+    private static float[] getDragViewVisualCenter(int x, int y, int xOffset, int yOffset,
+                                                   DragView dragView, float[] recycle) {
         float[] res;
         if (recycle == null) {
             res = new float[2];
@@ -1205,7 +1205,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                     if (mFolderIcon instanceof DropTarget) {
                         mDragController.removeDropTarget((DropTarget) mFolderIcon);
                     }
-                    mLauncher.removeFolder(mInfo);
+                    Launcher.removeFolder(mInfo);
                 }
                 // We add the child after removing the folder to prevent both from existing at
                 // the same time in the CellLayout.  We need to add the new item with addInScreenFromBind()

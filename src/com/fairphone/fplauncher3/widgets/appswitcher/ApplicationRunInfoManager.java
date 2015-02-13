@@ -231,7 +231,7 @@ public class ApplicationRunInfoManager
         return cachedApp;
     }
     
-    private void updateAgeInfo(Context context, ApplicationRunInformation appRunInfo)
+    private static void updateAgeInfo(Context context, ApplicationRunInformation appRunInfo)
     {
         if(appRunInfo != null) 
         { 

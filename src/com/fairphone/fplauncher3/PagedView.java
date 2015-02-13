@@ -769,7 +769,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
         computeScrollHelper();
     }
 
-    protected boolean shouldSetTopAlignedPivotForWidget(int childIndex) {
+    protected static boolean shouldSetTopAlignedPivotForWidget(int childIndex) {
         return mTopAlignPageWhenShrinkingForBouncer;
     }
 
@@ -1542,7 +1542,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
         }
     }
 
-    protected float getMaxScrollProgress() {
+    protected static float getMaxScrollProgress() {
         return 1.0f;
     }
 
@@ -1622,7 +1622,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
 
     // This curve determines how the effect of scrolling over the limits of the page dimishes
     // as the user pulls further and further from the bounds
-    private float overScrollInfluenceCurve(float f) {
+    private static float overScrollInfluenceCurve(float f) {
         f -= 1.0f;
         return f * f * f + 1.0f;
     }
@@ -2210,7 +2210,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     // the screen has to travel, however, we don't want this duration to be effected in a
     // purely linear fashion. Instead, we use this method to moderate the effect that the distance
     // of travel has on the overall snap duration.
-    float distanceInfluenceForSnapDuration(float f) {
+    static float distanceInfluenceForSnapDuration(float f) {
         f -= 0.5f; // center the values about 0.
         f *= 0.3f * Math.PI / 2.0f;
         return (float) Math.sin(f);

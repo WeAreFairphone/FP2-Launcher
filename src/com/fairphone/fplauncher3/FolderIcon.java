@@ -641,7 +641,7 @@ public class FolderIcon extends FrameLayout implements FolderListener {
         }
     }
 
-    private Drawable getTopDrawable(TextView v) {
+    private static Drawable getTopDrawable(TextView v) {
         Drawable d = v.getCompoundDrawables()[1];
         return (d instanceof PreloadIconDrawable) ? ((PreloadIconDrawable) d).mIcon : d;
     }

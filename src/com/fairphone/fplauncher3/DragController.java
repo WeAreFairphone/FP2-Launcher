@@ -297,7 +297,7 @@ public class DragController {
     /**
      * Draw the view into a bitmap.
      */
-    Bitmap getViewBitmap(View v) {
+    static Bitmap getViewBitmap(View v) {
         v.clearFocus();
         v.setPressed(false);
 
@@ -426,7 +426,7 @@ public class DragController {
         }
     }
 
-    void onDeferredEndFling(DropTarget.DragObject d) {
+    static void onDeferredEndFling(DropTarget.DragObject d) {
         d.dragSource.onFlingToDeleteCompleted();
     }
 

@@ -217,7 +217,7 @@ public class LauncherModel extends BroadcastReceiver
     }
 
     LauncherModel(LauncherAppState app, IconCache iconCache, AppFilter appFilter) {
-        Context context = app.getContext();
+        Context context = LauncherAppState.getContext();
 
         mAppsCanBeOnRemoveableStorage = Environment.isExternalStorageRemovable();
         String oldProvider = context.getString(R.string.old_launcher_provider_uri);
@@ -936,7 +936,7 @@ public class LauncherModel extends BroadcastReceiver
     /**
      * Find a folder in the db, creating the FolderInfo if necessary, and adding it to folderList.
      */
-    FolderInfo getFolderById(Context context, HashMap<Long,FolderInfo> folderList, long id) {
+    static FolderInfo getFolderById(Context context, HashMap<Long, FolderInfo> folderList, long id) {
         final ContentResolver cr = context.getContentResolver();
         Cursor c = cr.query(LauncherSettings.Favorites.CONTENT_URI, null,
                 "_id=? and (itemType=? or itemType=?)",
@@ -1121,7 +1121,7 @@ public class LauncherModel extends BroadcastReceiver
      * Update the order of the workspace screens in the database. The array list contains
      * a list of screen ids in the order that they should appear.
      */
-    void updateWorkspaceScreenOrder(Context context, final ArrayList<Long> screens) {
+    static void updateWorkspaceScreenOrder(Context context, final ArrayList<Long> screens) {
         // Log to disk
         Launcher.addDumpLog(TAG, "11683562 - updateWorkspaceScreenOrder()", true);
         Launcher.addDumpLog(TAG, "11683562 -   screens: " + TextUtils.join(", ", screens), true);
@@ -1381,7 +1381,7 @@ public class LauncherModel extends BroadcastReceiver
                 // If there is already one running, tell it to stop.
                 // also, don't downgrade isLaunching if we're already running
                 isLaunching = isLaunching || stopLoaderLocked();
-                mLoaderTask = new LoaderTask(mApp.getContext(), isLaunching, loadFlags);
+                mLoaderTask = new LoaderTask(LauncherAppState.getContext(), isLaunching, loadFlags);
                 if (synchronousBindPage != PagedView.INVALID_RESTORE_PAGE
                         && mAllAppsLoaded && mWorkspaceLoaded) {
                     mLoaderTask.runBindSynchronousPage(synchronousBindPage);
@@ -1718,7 +1718,7 @@ public class LauncherModel extends BroadcastReceiver
         }
 
         private void verifyApplications() {
-            final Context context = mApp.getContext();
+            final Context context = LauncherAppState.getContext();
 
             // Cross reference all the applications in our apps list with items in the workspace
             ArrayList<ItemInfo> tmpInfos;
@@ -2878,7 +2878,7 @@ public class LauncherModel extends BroadcastReceiver
         public void onReceive(Context context, Intent intent) {
             synchronized (sBgLock) {
                 final LauncherAppsCompat launcherApps = LauncherAppsCompat
-                        .getInstance(mApp.getContext());
+                        .getInstance(LauncherAppState.getContext());
                 ArrayList<String> packagesRemoved;
                 for (Entry<UserHandleCompat, HashSet<String>> entry : sPendingPackages.entrySet()) {
                     UserHandleCompat user = entry.getKey();
@@ -2976,7 +2976,7 @@ public class LauncherModel extends BroadcastReceiver
         }
 
         public void run() {
-            final Context context = mApp.getContext();
+            final Context context = LauncherAppState.getContext();
 
             final String[] packages = mPackages;
             final int N = packages.length;
@@ -3211,7 +3211,7 @@ public class LauncherModel extends BroadcastReceiver
      * Make an Intent object for a restored application or shortcut item that points
      * to the market page for the item.
      */
-    private Intent getRestoredItemIntent(Cursor c, Context context, Intent intent) {
+    private static Intent getRestoredItemIntent(Cursor c, Context context, Intent intent) {
         ComponentName componentName = intent.getComponent();
         return getMarketIntent(componentName.getPackageName());
     }
@@ -3341,8 +3341,8 @@ public class LauncherModel extends BroadcastReceiver
         return new ArrayList<ItemInfo>(filtered);
     }
 
-    private ArrayList<ItemInfo> getItemInfoForComponentName(final ComponentName cname,
-            final UserHandleCompat user) {
+    private static ArrayList<ItemInfo> getItemInfoForComponentName(final ComponentName cname,
+                                                                   final UserHandleCompat user) {
         ItemInfoFilter filter  = new ItemInfoFilter() {
             @Override
             public boolean filterItem(ItemInfo parent, ItemInfo info, ComponentName cn) {
@@ -3441,7 +3441,7 @@ public class LauncherModel extends BroadcastReceiver
         return info;
     }
 
-    Bitmap getIconFromCursor(Cursor c, int iconIndex, Context context) {
+    static Bitmap getIconFromCursor(Cursor c, int iconIndex, Context context) {
         @SuppressWarnings("all") // suppress dead code warning
         final boolean debug = false;
         if (debug) {

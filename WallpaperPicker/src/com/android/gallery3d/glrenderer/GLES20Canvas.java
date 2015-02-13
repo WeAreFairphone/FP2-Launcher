@@ -531,7 +531,7 @@ public class GLES20Canvas implements GLCanvas {
         return mTempColor;
     }
 
-    private void enableBlending(boolean enableBlending) {
+    private static void enableBlending(boolean enableBlending) {
         if (enableBlending) {
             GLES20.glEnable(GLES20.GL_BLEND);
             checkError();

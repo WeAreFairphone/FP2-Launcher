@@ -11,7 +11,7 @@ public class CircleTransform
     public static final float FLOAT_TWO = 2f;
     public static final int INTEGER_TWO = 2;
 
-    public Bitmap transform(Bitmap source, float fixedSize)
+    public static Bitmap transform(Bitmap source, float fixedSize)
     {
     	int floorFixedSize = (int) Math.floor(fixedSize);
         Bitmap reduced = Bitmap.createScaledBitmap(source, floorFixedSize, floorFixedSize, true);

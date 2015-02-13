@@ -1083,8 +1083,8 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
         }
     }
 
-    private void addWallpapers(ArrayList<WallpaperTileInfo> known, Resources res,
-            String packageName, int listResId) {
+    private static void addWallpapers(ArrayList<WallpaperTileInfo> known, Resources res,
+                                      String packageName, int listResId) {
         final String[] extras = res.getStringArray(listResId);
         for (String extra : extras) {
             int resId = res.getIdentifier(extra, "drawable", packageName);
