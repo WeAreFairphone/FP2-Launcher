@@ -60,7 +60,7 @@ public class DeferredHandler {
         }
     }
 
-    private class IdleRunnable implements Runnable {
+    private static class IdleRunnable implements Runnable {
         Runnable mRunnable;
 
         IdleRunnable(Runnable r) {

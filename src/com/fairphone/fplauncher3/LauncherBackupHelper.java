@@ -1283,7 +1283,7 @@ public class LauncherBackupHelper implements BackupHelper {
                 .getSerialNumberForUser(UserHandleCompat.myUserHandle());
     }
 
-    private class KeyParsingException extends Throwable {
+    private static class KeyParsingException extends Throwable {
         private KeyParsingException(Throwable cause) {
             super(cause);
         }

@@ -345,7 +345,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         return mInfo;
     }
 
-    private class GridComparator implements Comparator<ShortcutInfo> {
+    private static class GridComparator implements Comparator<ShortcutInfo> {
         int mNumCols;
         public GridComparator(int numCols) {
             mNumCols = numCols;

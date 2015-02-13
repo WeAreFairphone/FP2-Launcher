@@ -2636,7 +2636,7 @@ public class CellLayout extends ViewGroup {
         }
     }
 
-    private class CellAndSpan {
+    private static class CellAndSpan {
         int x, y;
         int spanX, spanY;
 

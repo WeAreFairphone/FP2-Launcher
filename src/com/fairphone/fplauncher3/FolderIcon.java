@@ -520,7 +520,7 @@ public class FolderIcon extends FrameLayout implements FolderListener {
         computePreviewDrawingParams(d.getIntrinsicWidth(), getMeasuredWidth());
     }
 
-    class PreviewItemDrawingParams {
+    static class PreviewItemDrawingParams {
         PreviewItemDrawingParams(float transX, float transY, float scale, int overlayAlpha) {
             this.transX = transX;
             this.transY = transY;
