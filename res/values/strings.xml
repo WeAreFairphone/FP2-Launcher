@@ -269,10 +269,10 @@ s
 
     <!-- People widget -->
     <string name="people_widget_name">People Widget</string>
-    <string name="last_contacted_text_label">Recently Contacted</string>
-    <string name="most_contacted_text_label">Most Contacted</string>
+    <string name="recent_contacts">Recent contacts</string>
+    <string name="most_contacted">Most contacted</string>
     <string name="contacts_title">CONTACTS</string>
-    <string name="not_contacted_anyone_yet">You have not contacted anyone yet.\nJust make some calls or send some messages\nand come back to this screen.</string>
+    <string name="not_contacted_anyone_yet">No contacts have been made yet.\nJust start using your phone and come back to this screen.</string>
 
     <!-- Edit favorites -->
     <string name="edit">Edit</string>

@@ -1,52 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="73.3dp"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp" >
+             android:layout_width="154dp"
+             android:layout_height="60dp"
+             android:layout_marginLeft="8dp"
+             android:layout_marginRight="8dp">
 
     <ImageView
         android:id="@+id/contact_photo"
         android:layout_width="@dimen/contact_picture_size"
         android:layout_height="@dimen/contact_picture_size"
-        android:layout_gravity="center_horizontal"
-        android:scaleType="centerCrop" />
-
-    <ImageView
-        android:id="@+id/contact_indicator"
-        android:layout_width="20.6dp"
-        android:layout_height="20.6dp"
-        android:layout_gravity="right"
-        android:layout_marginRight="3dp"
-        android:layout_marginTop="43dp"
-        android:src="@drawable/icon_call_indicator" />
+        android:scaleType="centerCrop"/>
 
     <LinearLayout
         android:id="@+id/last_action"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical" >
+        android:layout_height="match_parent"
+        android:layout_marginLeft="66dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/contact_name"
-            style="@style/IconText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-3dp"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/contact_phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:fontFamily="sans-serif-condensed"
-            android:gravity="center_horizontal"
             android:includeFontPadding="false"
             android:lines="1"
-            android:textColor="#B1E7FF"
-            android:textSize="10sp" />
+            android:alpha="0.5"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textSize="12sp"/>
     </LinearLayout>
 
 </FrameLayout>

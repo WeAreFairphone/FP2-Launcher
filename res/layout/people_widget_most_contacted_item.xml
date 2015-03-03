@@ -1,55 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
-    android:layout_height="66.6dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp" >
+             android:layout_width="154dp"
+             android:layout_height="60dp"
+             android:layout_marginLeft="8dp"
+             android:layout_marginRight="8dp">
 
     <ImageView
         android:id="@+id/contact_photo"
         android:layout_width="@dimen/contact_picture_size"
         android:layout_height="@dimen/contact_picture_size"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"/>
 
-    <ImageView
-        android:id="@+id/contact_indicator"
-        android:layout_width="20.6dp"
-        android:layout_height="20.6dp"
-        android:layout_marginLeft="41dp"
-        android:layout_marginTop="43dp"
-        android:src="@drawable/icon_call_indicator" />
-
-    <LinearLayout
-        android:id="@+id/last_action"
+    <TextView
+        android:id="@+id/contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="66dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="-3dp"
+        android:fontFamily="sans-serif-medium"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="70dp"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/contact_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:includeFontPadding="false"
-            android:lineSpacingExtra="0dp"
-            android:maxLines="2"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/contact_phone_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-condensed"
-            android:includeFontPadding="false"
-            android:lines="1"
-            android:textColor="#B1E7FF"
-            android:textSize="12sp" />
-    </LinearLayout>
+        android:includeFontPadding="false"
+        android:maxLines="2"
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
 
 </FrameLayout>

@@ -29,266 +29,257 @@ import android.util.Log;
  */
 public class ContactInfoManager
 {
-    public static final boolean HIDE_SECOND_ROW = false;
-    public static final int MOST_CONTACTED_MAX_COUNT_LIMIT = 4;
-    public static final int LAST_CONTACTED_MAX_COUNT_LIMIT = 7;
-    public static final int MINIMAL_COUNT = 2;
-    private static final String TAG = null;
+	public static final int MOST_CONTACTED_MAX_COUNT_LIMIT = 4;
+	public static final int LAST_CONTACTED_MAX_COUNT_LIMIT = 5;
+	public static final int MINIMAL_COUNT = 2;
+	private static final String TAG = null;
 
-    private LimitedQueue<ContactInfo> _mostContacted;
-    private LimitedQueue<ContactInfo> _lastContacted;
-    private final Map<String, ContactInfo> _contactsInfoCache;
+	private LimitedQueue<ContactInfo> _mostContacted;
+	private LimitedQueue<ContactInfo> _lastContacted;
+	private final Map<String, ContactInfo> _contactsInfoCache;
 
-    private int _mostContactedLimit;
-    private int _lastContactedLimit;
+	private int _mostContactedLimit;
+	private int _lastContactedLimit;
 
-    public ContactInfoManager()
-    {
+	public ContactInfoManager()
+	{
+		setUpLimits(MOST_CONTACTED_MAX_COUNT_LIMIT, LAST_CONTACTED_MAX_COUNT_LIMIT);
 
-        if (!HIDE_SECOND_ROW)
-        {
-            setUpLimits(MOST_CONTACTED_MAX_COUNT_LIMIT, LAST_CONTACTED_MAX_COUNT_LIMIT);
-        }
-        else
-        {
-            setUpLimits(MOST_CONTACTED_MAX_COUNT_LIMIT / 2, LAST_CONTACTED_MAX_COUNT_LIMIT / 2);
-        }
+		_contactsInfoCache = new HashMap<String, ContactInfo>();
+	}
 
-        _contactsInfoCache = new HashMap<String, ContactInfo>();
-    }
+	public void setUpLimits(int maxMostContacted, int maxLastContacted)
+	{
+		_mostContactedLimit = maxMostContacted;
+		_lastContactedLimit = maxLastContacted;
 
-    public void setUpLimits(int maxMostContacted, int maxLastContacted)
-    {
-        _mostContactedLimit = maxMostContacted;
-        _lastContactedLimit = maxLastContacted;
+		// refactor the limits
+		setUpNewLimits();
+	}
 
-        // refactor the limits
-        setUpNewLimits();
-    }
+	private void setUpNewLimits()
+	{
+		_mostContacted = new LimitedQueue<ContactInfo>(_mostContactedLimit);
+		_lastContacted = new LimitedQueue<ContactInfo>(_lastContactedLimit);
 
-    private void setUpNewLimits()
-    {
-        _mostContacted = new LimitedQueue<ContactInfo>(_mostContactedLimit);
-        _lastContacted = new LimitedQueue<ContactInfo>(_lastContactedLimit);
+		// update the information
+		if (_contactsInfoCache != null)
+		{
+			updateContactInformation();
+		}
+	}
 
-        // update the information
-        if (_contactsInfoCache != null)
-        {
-            updateContactInformation();
-        }
-    }
+	public void resetState()
+	{
+		_mostContacted.clear();
+		_lastContacted.clear();
+		_contactsInfoCache.clear();
+	}
 
-    public void resetState()
-    {
-        _mostContacted.clear();
-        _lastContacted.clear();
-        _contactsInfoCache.clear();
-    }
+	public void contactUsed(ContactInfo contactInfo)
+	{
+		// obtain the cached contact information
+		ContactInfo cachedContact = _contactsInfoCache.get(contactInfo.getPhoneNumberOnE164Format());
+		// if does not exist, create one
+		if (cachedContact == null)
+		{
+			_contactsInfoCache.put(contactInfo.getPhoneNumberOnE164Format(), contactInfo);
 
-    public void contactUsed(ContactInfo contactInfo)
-    {
-        // obtain the cached contact information
-        ContactInfo cachedContact = _contactsInfoCache.get(contactInfo.getPhoneNumberOnE164Format());
-        // if does not exist, create one
-        if (cachedContact == null)
-        {
-            _contactsInfoCache.put(contactInfo.getPhoneNumberOnE164Format(), contactInfo);
+			cachedContact = contactInfo;
 
-            cachedContact = contactInfo;
+			cachedContact.resetCount();
+		}
 
-            cachedContact.resetCount();
-        }
+		// increment count
+		cachedContact.incrementCount();
 
-        // increment count
-        cachedContact.incrementCount();
+		Log.d(TAG, "Logging contact : " + contactInfo.getPhoneNumberOnE164Format() + " : " + cachedContact.getCount());
 
-        Log.d(TAG, "Logging contact : " + contactInfo.getPhoneNumberOnE164Format() + " : " + cachedContact.getCount());
+		// set the current time for the last execution
+		cachedContact.setLastExecution(contactInfo.getLastExecution());
+		cachedContact.setLastAction(contactInfo.getLastAction());
 
-        // set the current time for the last execution
-        cachedContact.setLastExecution(contactInfo.getLastExecution());
-        cachedContact.setLastAction(contactInfo.getLastAction());
+		// update the information
+		updateContactInformation();
+	}
 
-        // update the information
-        updateContactInformation();
-    }
+	public void contactRemoved(String phoneNumber)
+	{
+		// remove data
+		ContactInfo contactInfo = _contactsInfoCache.remove(phoneNumber);
 
-    public void contactRemoved(String phoneNumber)
-    {
-        // remove data
-        ContactInfo contactInfo = _contactsInfoCache.remove(phoneNumber);
+		// if does not exist return
+		if (contactInfo == null)
+		{
+			return;
+		}
 
-        // if does not exist return
-        if (contactInfo == null)
-        {
-            return;
-        }
+		// if its being used in the lists refactor the lists
+		if (_mostContacted.contains(contactInfo) || _lastContacted.contains(contactInfo))
+		{
+			updateContactInformation();
+		}
+	}
 
-        // if its being used in the lists refactor the lists
-        if (_mostContacted.contains(contactInfo) || _lastContacted.contains(contactInfo))
-        {
-            updateContactInformation();
-        }
-    }
+	private void updateContactInformation()
+	{
+		_mostContacted.clear();
+		_lastContacted.clear();
 
-    private void updateContactInformation()
-    {
-        _mostContacted.clear();
-        _lastContacted.clear();
+		// most used
+		// calculate the most used
+		for (ContactInfo current : _contactsInfoCache.values())
+		{
 
-        // most used
-        // calculate the most used
-        for (ContactInfo current : _contactsInfoCache.values())
-        {
+			if (current.getCount() >= MINIMAL_COUNT)
+			{
+				addByCount(current, _mostContacted, _mostContactedLimit);
+			}
+		}
 
-            if (current.getCount() >= MINIMAL_COUNT)
-            {
-                addByCount(current, _mostContacted, _mostContactedLimit);
-            }
-        }
+		printMostContacted();
 
-        printMostContacted();
+		// calculate the most recent
+		for (ContactInfo current : _contactsInfoCache.values())
+		{
+			if (!_mostContacted.contains(current))
+			{
+				addByDate(current, _lastContacted, _lastContactedLimit);
+			}
+		}
 
-        // calculate the most recent
-        for (ContactInfo current : _contactsInfoCache.values())
-        {
-            if (!_mostContacted.contains(current))
-            {
-                addByDate(current, _lastContacted, _lastContactedLimit);
-            }
-        }
+		printLastContacted();
+	}
 
-        printLastContacted();
-    }
+	private void printLastContacted()
+	{
+		for (ContactInfo current : _lastContacted)
+		{
+			Log.d(TAG, "Last contacted - " + current);
+		}
+	}
 
-    private void printLastContacted()
-    {
-        for (ContactInfo current : _lastContacted)
-        {
-            Log.d(TAG, "Last contacted - " + current);
-        }
-    }
+	private void printMostContacted()
+	{
+		for (ContactInfo current : _mostContacted)
+		{
+			Log.d(TAG, "Most contacted - " + current);
+		}
+	}
 
-    private void printMostContacted()
-    {
-        for (ContactInfo current : _mostContacted)
-        {
-            Log.d(TAG, "Most contacted - " + current);
-        }
-    }
+	private static void addByDate(ContactInfo info, LimitedQueue<ContactInfo> queue, int limit)
+	{
+		for (int insertIdx = 0; insertIdx < queue.size(); insertIdx++)
+		{
+			if (queue.get(insertIdx).getLastExecution().before(info.getLastExecution()))
+			{
+				Log.d(TAG, "Qs : " + queue.size() + " : Last contacted : Adding " + info.getPhoneNumberOnE164Format() + " to position " + insertIdx);
+				queue.add(insertIdx, info);
 
-    private static void addByDate(ContactInfo info, LimitedQueue<ContactInfo> queue, int limit)
-    {
-        for (int insertIdx = 0; insertIdx < queue.size(); insertIdx++)
-        {
-            if (queue.get(insertIdx).getLastExecution().before(info.getLastExecution()))
-            {
-                Log.d(TAG, "Qs : " + queue.size() + " : Last contacted : Adding " + info.getPhoneNumberOnE164Format() + " to position " + insertIdx);
-                queue.add(insertIdx, info);
+				return;
+			}
+		}
 
-                return;
-            }
-        }
+		if (queue.size() < limit)
+		{
+			queue.addLast(info);
+		}
+	}
 
-        if (queue.size() < limit)
-        {
-            queue.addLast(info);
-        }
-    }
+	private static void addByCount(ContactInfo info, LimitedQueue<ContactInfo> queue, int limit)
+	{
+		for (int insertIdx = 0; insertIdx < queue.size(); insertIdx++)
+		{
+			if (info.getCount() > queue.get(insertIdx).getCount())
+			{
+				Log.d(TAG, "Qs : " + queue.size() + " : Most contacted : Adding " + info.getPhoneNumberOnE164Format() + " to position " + insertIdx);
+				queue.add(insertIdx, info);
 
-    private static void addByCount(ContactInfo info, LimitedQueue<ContactInfo> queue, int limit)
-    {
-        for (int insertIdx = 0; insertIdx < queue.size(); insertIdx++)
-        {
-            if (info.getCount() > queue.get(insertIdx).getCount())
-            {
-                Log.d(TAG, "Qs : " + queue.size() + " : Most contacted : Adding " + info.getPhoneNumberOnE164Format() + " to position " + insertIdx);
-                queue.add(insertIdx, info);
+				return;
+			}
+		}
+		if (queue.size() < limit)
+		{
+			queue.addLast(info);
+		}
+	}
 
-                return;
-            }
-        }
-        if (queue.size() < limit)
-        {
-            queue.addLast(info);
-        }
-    }
+	private static class LimitedQueue<E> extends LinkedList<E>
+	{
 
-    private static class LimitedQueue<E> extends LinkedList<E>
-    {
-
-        /**
-		 * 
+		/**
+		 *
 		 */
-        private static final long serialVersionUID = 8174761694444365605L;
-        private final int limit;
+		private static final long serialVersionUID = 8174761694444365605L;
+		private final int limit;
 
-        public LimitedQueue(int limit)
-        {
-            this.limit = limit;
-        }
+		public LimitedQueue(int limit)
+		{
+			this.limit = limit;
+		}
 
-        @Override
-        public void add(int idx, E o)
-        {
-            super.add(idx, o);
+		@Override
+		public void add(int idx, E o)
+		{
+			super.add(idx, o);
 
-            while (size() > limit)
-            {
-                super.removeLast();
-            }
-        }
+			while (size() > limit)
+			{
+				super.removeLast();
+			}
+		}
 
-        @Override
-        public boolean add(E o)
-        {
-            super.addLast(o);
-            while (size() > limit)
-            {
-                super.removeLast();
-            }
-            return true;
-        }
-    }
+		@Override
+		public boolean add(E o)
+		{
+			super.addLast(o);
+			while (size() > limit)
+			{
+				super.removeLast();
+			}
+			return true;
+		}
+	}
 
-    public List<ContactInfo> getLastContacted()
-    {
+	public List<ContactInfo> getLastContacted()
+	{
 
-        Log.d(TAG, "Getting Last contacted ... " + _lastContacted.size());
-        return _lastContacted;
-    }
+		Log.d(TAG, "Getting Last contacted ... " + _lastContacted.size());
+		return _lastContacted;
+	}
 
-    public List<ContactInfo> getMostContacted()
-    {
-        Log.d(TAG, "Getting most contacted... " + _mostContacted.size());
+	public List<ContactInfo> getMostContacted()
+	{
+		Log.d(TAG, "Getting most contacted... " + _mostContacted.size());
 
-        return _mostContacted;
-    }
+		return _mostContacted;
+	}
 
-    public int getMostContactedLimit()
-    {
-        return _mostContactedLimit;
-    }
+	public int getMostContactedLimit()
+	{
+		return _mostContactedLimit;
+	}
 
-    public int getLastContactedLimit()
-    {
-        return _lastContactedLimit;
-    }
+	public int getLastContactedLimit()
+	{
+		return _lastContactedLimit;
+	}
 
-    public List<ContactInfo> getAllContactInfos()
-    {
-        return new ArrayList<ContactInfo>(_contactsInfoCache.values());
-    }
+	public List<ContactInfo> getAllContactInfos()
+	{
+		return new ArrayList<ContactInfo>(_contactsInfoCache.values());
+	}
 
-    public void setAllContactInfo(List<ContactInfo> allContacts)
-    {
-        resetState();
+	public void setAllContactInfo(List<ContactInfo> allContacts)
+	{
+		resetState();
 
-        for (ContactInfo contact : allContacts)
-        {
-            _contactsInfoCache.put(contact.getPhoneNumberOnE164Format(), contact);
-        }
+		for (ContactInfo contact : allContacts)
+		{
+			_contactsInfoCache.put(contact.getPhoneNumberOnE164Format(), contact);
+		}
 
-        updateContactInformation();
-    }
+		updateContactInformation();
+	}
 
 }

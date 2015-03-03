@@ -137,7 +137,9 @@
         <item name="android:paddingRight">5dp</item>
         <item name="android:textColor">@color/workspace_all_apps_and_delete_zone_text_color</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:shadowColor">@color/workspace_all_apps_and_delete_zone_text_shadow_color</item>
+        <item name="android:shadowColor">
+            @color/workspace_all_apps_and_delete_zone_text_shadow_color
+        </item>
         <item name="android:shadowDx">0.0</item>
         <item name="android:shadowDy">0.0</item>
         <item name="android:shadowRadius">2.0</item>
@@ -179,6 +181,20 @@
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">0</item>
         <item name="android:shadowRadius">4</item>
+    </style>
+
+    <style name="PeopleWidgetTitle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">34sp</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="PeopleWidgetSubTitle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="SubTitle">
