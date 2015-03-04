@@ -177,10 +177,7 @@
         <item name="android:lines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:shadowColor">#000000</item>
-        <item name="android:shadowDx">0</item>
-        <item name="android:shadowDy">0</item>
-        <item name="android:shadowRadius">4</item>
+
     </style>
 
     <style name="PeopleWidgetTitle">

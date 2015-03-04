@@ -30,13 +30,13 @@
             android:includeFontPadding="false"
             android:maxLines="2"
             android:textColor="@color/white"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/contact_phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
             android:ellipsize="end"
             android:fontFamily="sans-serif-condensed"
             android:includeFontPadding="false"
