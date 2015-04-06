@@ -297,7 +297,7 @@ public class PeopleWidget extends AppWidgetProvider
 		}
 
 		// open contact
-		addOpenContactBehaviour(view, info);
+		addOpenContactBehaviour(view, R.id.contact_photo,  info);
 
 		switch (info.getLastAction())
 		{
@@ -327,7 +327,11 @@ public class PeopleWidget extends AppWidgetProvider
 			intentSms.setData(Uri.parse(uriSms));
 
 			PendingIntent pendingIntentSms = PendingIntent.getActivity(mContext, 0, intentSms, PendingIntent.FLAG_UPDATE_CURRENT);
-			view.setOnClickPendingIntent(R.id.last_action, pendingIntentSms);
+            if(TextUtils.isEmpty(contactInfo.contactId)) {
+                view.setOnClickPendingIntent(R.id.last_action, pendingIntentSms);
+            }else{
+                addOpenContactBehaviour(view, R.id.last_action,  contactInfo);
+            }
 		}
 		else
 		{
@@ -344,7 +348,11 @@ public class PeopleWidget extends AppWidgetProvider
 			intentCall.setData(Uri.parse(uriCall));
 
 			PendingIntent pendingIntentCall = PendingIntent.getActivity(mContext, 0, intentCall, PendingIntent.FLAG_UPDATE_CURRENT);
-			view.setOnClickPendingIntent(R.id.last_action, pendingIntentCall);
+            if(TextUtils.isEmpty(contactInfo.contactId)) {
+			    view.setOnClickPendingIntent(R.id.last_action, pendingIntentCall);
+            }else{
+                addOpenContactBehaviour(view, R.id.last_action,  contactInfo);
+            }
 		}
 		else
 		{
@@ -352,17 +360,17 @@ public class PeopleWidget extends AppWidgetProvider
 		}
 	}
 
-	public void addOpenContactBehaviour(RemoteViews view, final ContactInfo contactInfo)
+	public void addOpenContactBehaviour(RemoteViews view, int clickViewId, final ContactInfo contactInfo)
 	{
 		if (!TextUtils.isEmpty(contactInfo.contactId))
 		{
 			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, contactInfo.contactId));
 			PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-			view.setOnClickPendingIntent(R.id.contact_photo, pendingIntent);
+			view.setOnClickPendingIntent(clickViewId, pendingIntent);
 		}
 		else
 		{
-			view.setOnClickPendingIntent(R.id.contact_photo, null);
+			view.setOnClickPendingIntent(clickViewId, null);
 		}
 	}
 }
