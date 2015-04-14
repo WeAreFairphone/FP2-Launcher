@@ -106,7 +106,7 @@
     <dimen name="contact_picture_size">60dp</dimen>
 
     <!-- Edge swipe menu -->
-    <dimen name="edge_swipe_show_limit">8dp</dimen>
+    <dimen name="edge_swipe_show_limit">8.5dp</dimen>
     <dimen name="edge_swipe_item_icon_translate">26dp</dimen>
     <dimen name="edge_swipe_item_text_translate">26dp</dimen>
 
