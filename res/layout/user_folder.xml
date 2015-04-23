@@ -20,7 +20,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/quantum_panel">
+    android:background="@drawable/quantum_panel"
+    android:paddingTop="20dp"
+    android:paddingBottom="15.33dp"
+    android:paddingRight="15.33dp"
+    android:paddingLeft="15.33dp">
 
     <ScrollView
         android:id="@+id/scroll_view"
@@ -44,8 +48,8 @@
         android:background="#00000000"
         android:hint="@string/folder_hint_text"
         android:textSize="14sp"
-        android:textColor="#ff777777"
-        android:textColorHighlight="#ffCCCCCC"
+        android:textColor="#ff2aa8e0"
+        android:textColorHighlight="#ffaadcf2"
         android:textCursorDrawable="@null"
         android:gravity="center_horizontal"
         android:singleLine="true"
