@@ -50,8 +50,8 @@
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:textColor">@color/workspace_icon_text_color</item>
-        <item name="android:shadowRadius">2.0</item>
-        <item name="android:shadowColor">#B0000000</item>
+        <item name="android:shadowRadius">0</item>
+        <item name="customShadows">false</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
