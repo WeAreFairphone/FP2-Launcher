@@ -140,8 +140,8 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         activeAppsDescription = (TextView) view.findViewById(R.id.activeAppsDescription);
         unusedAppsDescription = (TextView) view.findViewById(R.id.unusedAppsDescription);
 
-        setupListAdapter(mAllAppsGridView, mAllAppsListAdapter, mUsedApps);
-        setupListAdapter(mUnusedAppsGridView, mUnusedAppsListAdapter, mUnusedApps);
+        setupListAdapter(mAllAppsGridView, mAllAppsListAdapter, mUsedApps, false);
+        setupListAdapter(mUnusedAppsGridView, mUnusedAppsListAdapter, mUnusedApps, true);
 
         if (mUsedApps.isEmpty())
         {
@@ -162,9 +162,9 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         }
     }
 
-    public void setupListAdapter(GridView listView, AgingAppsListAdapter appsListAdapter, ArrayList<AppInfo> appList)
+    public void setupListAdapter(GridView listView, AgingAppsListAdapter appsListAdapter, ArrayList<AppInfo> appList, boolean isUnused)
     {
-        appsListAdapter = new AgingAppsListAdapter(mContext, mLauncher, this);
+        appsListAdapter = new AgingAppsListAdapter(mContext, mLauncher, this, isUnused);
 
         appsListAdapter.setAllApps(appList);
 

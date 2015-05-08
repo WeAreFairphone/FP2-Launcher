@@ -29,13 +29,13 @@ repositories {
 }
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 22
     buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "com.fairphone.fplauncher3"
         minSdkVersion 17
-        targetSdkVersion 21
+        targetSdkVersion 22
     }
 
     buildTypes {
@@ -78,7 +78,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v13:21.0.+'
+    compile 'com.android.support:support-v13:22.1.+'
     compile 'com.crashlytics.android:crashlytics:1.+'
     compile 'com.googlecode.libphonenumber:libphonenumber:6.+'
 }

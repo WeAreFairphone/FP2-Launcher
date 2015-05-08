@@ -20,6 +20,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnLongClickListener;
@@ -48,12 +53,15 @@ public class AgingAppsListAdapter extends BaseAdapter
 
 	private final OnLongClickListener mLongClickListener;
 
-    public AgingAppsListAdapter(Context context, Launcher launcher, OnLongClickListener longClickListener)
+    private final boolean isUnusedApp;
+
+    public AgingAppsListAdapter(Context context, Launcher launcher, OnLongClickListener longClickListener, boolean isUnused)
     {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mLauncher = launcher;
         mLongClickListener = longClickListener;
+        isUnusedApp = isUnused;
     }
 
     public void setAllApps(ArrayList<AppInfo> allApps)
@@ -80,11 +88,23 @@ public class AgingAppsListAdapter extends BaseAdapter
         icon.setOnTouchListener(null);
         icon.setOnKeyListener(null);
         icon.setOnFocusChangeListener(null);
-        
+
         ApplicationRunInformation appRunInfo = AppDiscoverer.getInstance().getApplicationRunInformation(mContext, info.getComponentName());
         if(appRunInfo != null) {
-	        updatedLabel.setVisibility(appRunInfo.isUpdatedApp() ? View.VISIBLE : View.GONE);
-	        newLabel.setVisibility(appRunInfo.isNewApp() ? View.VISIBLE : View.GONE);
+            if (appRunInfo.isUpdatedApp()){
+                updatedLabel.setVisibility(View.VISIBLE);
+            } else if (appRunInfo.isNewApp()) {
+                newLabel.setVisibility(View.VISIBLE);
+            }
+        }
+
+        if(isUnusedApp) {
+            Drawable icd = icon.getCompoundDrawables()[1]; // 1 is top
+            if(icd != null){
+                icd.setAlpha(178);
+                updatedLabel.setAlpha(178);
+                newLabel.setAlpha(178);
+            }
         }
         
         return fullIcon;

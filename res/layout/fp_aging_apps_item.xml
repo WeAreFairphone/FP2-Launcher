@@ -33,7 +33,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:text="@string/fp_aging_apps_icon_label_new"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-condensed"
         android:gravity="center"
         android:visibility="gone"
         android:background="#DD19cc63" />
@@ -47,7 +48,8 @@
         android:layout_marginRight="5dp"
         android:text="@string/fp_aging_apps_icon_label_updated"
         android:visibility="gone"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/blue_dark"
+        android:fontFamily="sans-serif-condensed"
         android:gravity="center"
         android:background="#DD4fc5fa" />
 </RelativeLayout>
