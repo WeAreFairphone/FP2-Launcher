@@ -268,7 +268,7 @@ s
     <string name="no_apps_have_been_opened_yet">No apps opened yet? Just start using your phone and come back to this screen</string>
 
     <!-- People widget -->
-    <string name="people_widget_name">People Widget</string>
+    <string name="people_widget_name">My contacts</string>
     <string name="recent_contacts">Recent contacts</string>
     <string name="most_contacted">Most contacted</string>
     <string name="contacts_title">CONTACTS</string>
