@@ -115,7 +115,8 @@
     <string name="edge_swipe_default_apps">com.android.contacts,com.android.contacts.activities.DialtactsActivity;com.android.mms,com.android.mms.ui.BootActivity;com.android.gallery3d,com.android.camera.CameraLauncher;com.android.browser,com.android.browser.BrowserActivity</string>
     
     <!-- App lifecycle -->
-    <integer name="app_frequent_use_days">2</integer>
+    <integer name="app_frequent_use_days">28</integer>
+    <integer name="color_alpha_70_percent">178</integer>
 
     <!-- Edit favorites -->
     <integer name="edge_swipe_text_integer_size">20</integer>

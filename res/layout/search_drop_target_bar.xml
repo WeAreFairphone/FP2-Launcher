@@ -25,9 +25,9 @@
     <LinearLayout
         android:id="@+id/drag_target_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="46dp"
         android:layout_gravity="center"
-        android:background="@drawable/stripe_light_up_tile"
+        android:background="@drawable/drop_target_idle_tile"
         android:orientation="horizontal" >
 
         <include layout="@layout/drop_target_bar" />

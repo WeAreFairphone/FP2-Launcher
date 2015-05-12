@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.drawable.TransitionDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation;
 public class PinAppDropTarget extends ButtonDropTarget {
 
     private ColorStateList mOriginalTextColor;
+    private TransitionDrawable mDrawable;
     private Context mContext;
     
     public PinAppDropTarget(Context context, AttributeSet attrs) {
@@ -53,6 +55,11 @@ public class PinAppDropTarget extends ButtonDropTarget {
         // Get the hover color
         Resources r = getResources();
         mHoverColor = r.getColor(R.color.pin_target_hover_tint);
+        mDrawable = (TransitionDrawable) getCurrentDrawable();
+        if (null != mDrawable) {
+            mDrawable.setCrossFadeEnabled(true);
+        }
+
 
         // Remove the text in the Phone UI in landscape
         int orientation = getResources().getConfiguration().orientation;
@@ -98,6 +105,9 @@ public class PinAppDropTarget extends ButtonDropTarget {
         }
 
         mActive = isVisible;
+        if(mDrawable != null){
+            mDrawable.resetTransition();
+        }
         setTextColor(mOriginalTextColor);
         ((ViewGroup) getParent()).setVisibility(isVisible ? View.VISIBLE : View.GONE);
         if (info != null && info instanceof AppInfo) {
@@ -120,14 +130,21 @@ public class PinAppDropTarget extends ButtonDropTarget {
 
     public void onDragEnter(DragObject d) {
         super.onDragEnter(d);
+
+        if(mDrawable != null){
+            mDrawable.startTransition(mTransitionDuration);
+        }
         setTextColor(mHoverColor);
-        setBackgroundResource(R.drawable.drop_target_background_pin_green);
+        setBackgroundResource(R.drawable.drop_target_selected_tile);
     }
 
     public void onDragExit(DragObject d) {
         super.onDragExit(d);
 
         if (!d.dragComplete) {
+            if(mDrawable != null){
+                mDrawable.resetTransition();
+            }
             setTextColor(mOriginalTextColor);
             setBackgroundResource(0);
         }

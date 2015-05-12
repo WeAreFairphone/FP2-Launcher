@@ -18,6 +18,7 @@ package com.fairphone.fplauncher3;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -87,7 +88,9 @@ public class ButtonDropTarget extends TextView implements DropTarget, DragContro
     }
 
     public void onDragEnter(DragObject d) {
-        d.dragView.setColor(mHoverColor);
+        int alpha = getResources().getInteger(R.integer.color_alpha_70_percent);
+        int tintColor = Color.argb(alpha, Color.red(mHoverColor), Color.green(mHoverColor), Color.blue(mHoverColor));
+        d.dragView.setColor(tintColor);
     }
 
     public void onDragOver(DragObject d) {

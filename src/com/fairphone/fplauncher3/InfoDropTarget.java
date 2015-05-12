@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.TransitionDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,7 @@ import com.fairphone.fplauncher3.compat.UserHandleCompat;
 public class InfoDropTarget extends ButtonDropTarget {
 
     private ColorStateList mOriginalTextColor;
+    private TransitionDrawable mDrawable;
 
     public InfoDropTarget(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -48,6 +51,17 @@ public class InfoDropTarget extends ButtonDropTarget {
         // Get the hover color
         Resources r = getResources();
         mHoverColor = r.getColor(R.color.info_target_hover_tint);
+        mDrawable = (TransitionDrawable) getCurrentDrawable();
+
+        if (mDrawable == null) {
+            // TODO: investigate why this is ever happening. Presently only on one known device.
+            mDrawable = (TransitionDrawable) r.getDrawable(R.drawable.info_target_selector);
+            setCompoundDrawablesRelativeWithIntrinsicBounds(mDrawable, null, null, null);
+        }
+
+        if (null != mDrawable) {
+            mDrawable.setCrossFadeEnabled(true);
+        }
 
         // Remove the text in the Phone UI in landscape
         int orientation = getResources().getConfiguration().orientation;
@@ -97,6 +111,9 @@ public class InfoDropTarget extends ButtonDropTarget {
         }
 
         mActive = isVisible;
+        if(mDrawable != null){
+            mDrawable.resetTransition();
+        }
         setTextColor(mOriginalTextColor);
         ((ViewGroup) getParent()).setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
@@ -111,14 +128,20 @@ public class InfoDropTarget extends ButtonDropTarget {
 
     public void onDragEnter(DragObject d) {
         super.onDragEnter(d);
+        if(mDrawable != null){
+            mDrawable.startTransition(mTransitionDuration);
+        }
         setTextColor(mHoverColor);
-        setBackgroundResource(R.drawable.drop_target_background_info_blue);
+        setBackgroundResource(R.drawable.drop_target_selected_tile);
     }
 
     public void onDragExit(DragObject d) {
         super.onDragExit(d);
 
         if (!d.dragComplete) {
+            if(mDrawable != null){
+                mDrawable.resetTransition();
+            }
             setTextColor(mOriginalTextColor);
             setBackgroundResource(0);
         }

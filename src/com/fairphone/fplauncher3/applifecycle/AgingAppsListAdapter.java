@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -101,9 +102,10 @@ public class AgingAppsListAdapter extends BaseAdapter
         if(isUnusedApp) {
             Drawable icd = icon.getCompoundDrawables()[1]; // 1 is top
             if(icd != null){
-                icd.setAlpha(178);
-                updatedLabel.setAlpha(178);
-                newLabel.setAlpha(178);
+                int alpha = mContext.getResources().getInteger(R.integer.color_alpha_70_percent);
+                icd.setAlpha(alpha);
+                updatedLabel.setAlpha(alpha);
+                newLabel.setAlpha(alpha);
             }
         }
         

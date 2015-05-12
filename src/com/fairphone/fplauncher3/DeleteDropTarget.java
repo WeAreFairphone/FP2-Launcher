@@ -26,6 +26,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -50,6 +51,9 @@ public class DeleteDropTarget extends ButtonDropTarget {
     private static final int mFlingDeleteMode = MODE_FLING_DELETE_ALONG_VECTOR;
 
     private ColorStateList mOriginalTextColor;
+    private TransitionDrawable mUninstallDrawable;
+    private TransitionDrawable mRemoveDrawable;
+    private TransitionDrawable mCurrentDrawable;
 
     private boolean mWaitingForUninstall = false;
 
@@ -71,6 +75,16 @@ public class DeleteDropTarget extends ButtonDropTarget {
         // Get the hover color
         Resources r = getResources();
         mHoverColor = r.getColor(R.color.delete_target_hover_tint);
+        mUninstallDrawable = (TransitionDrawable)
+                r.getDrawable(R.drawable.uninstall_target_selector);
+        mRemoveDrawable = (TransitionDrawable) r.getDrawable(R.drawable.remove_target_selector);
+
+        mRemoveDrawable.setCrossFadeEnabled(true);
+        mUninstallDrawable.setCrossFadeEnabled(true);
+
+        // The current drawable is set to either the remove drawable or the uninstall drawable
+        // and is initially set to the remove drawable, as set in the layout xml.
+        mCurrentDrawable = (TransitionDrawable) getCurrentDrawable();
 
         // Remove the text in the Phone UI in landscape
         int orientation = r.getConfiguration().orientation;
@@ -111,9 +125,15 @@ public class DeleteDropTarget extends ButtonDropTarget {
     }
 
     private void setHoverColor() {
+        if (mCurrentDrawable != null) {
+            mCurrentDrawable.startTransition(mTransitionDuration);
+        }
         setTextColor(mHoverColor);
     }
     private void resetHoverColor() {
+        if (mCurrentDrawable != null) {
+            mCurrentDrawable.resetTransition();
+        }
         setTextColor(mOriginalTextColor);
     }
 
@@ -180,9 +200,14 @@ public class DeleteDropTarget extends ButtonDropTarget {
             }
         }
 
-        if (!useUninstallLabel && !useDeleteLabel){
-                isVisible = false;
+        if (useUninstallLabel) {
+            setCompoundDrawablesRelativeWithIntrinsicBounds(mUninstallDrawable, null, null, null);
+        } else if (useDeleteLabel) {
+            setCompoundDrawablesRelativeWithIntrinsicBounds(mRemoveDrawable, null, null, null);
+        }else{
+            isVisible = false;
         }
+        mCurrentDrawable = (TransitionDrawable) getCurrentDrawable();
 
         mActive = isVisible;
         resetHoverColor();
@@ -205,7 +230,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
         super.onDragEnter(d);
 
         setHoverColor();
-        setBackgroundResource(R.drawable.drop_target_background_delete_red);
+        setBackgroundResource(R.drawable.drop_target_selected_tile);
     }
 
     public void onDragExit(DragObject d) {
@@ -226,8 +251,8 @@ public class DeleteDropTarget extends ButtonDropTarget {
         final Rect from = new Rect();
         dragLayer.getViewRectRelativeToSelf(d.dragView, from);
 
-        int width = 0;
-        int height = 0;
+        int width = mCurrentDrawable == null ? 0 : mCurrentDrawable.getIntrinsicWidth();
+        int height = mCurrentDrawable == null ? 0 : mCurrentDrawable.getIntrinsicHeight();
         final Rect to = getIconRect(d.dragView.getMeasuredWidth(), d.dragView.getMeasuredHeight(),
                 width, height);
         final float scale = (float) to.width() / from.width();
@@ -351,8 +376,8 @@ public class DeleteDropTarget extends ButtonDropTarget {
     private AnimatorUpdateListener createFlingToTrashAnimatorListener(final DragLayer dragLayer,
             DragObject d, PointF vel, ViewConfiguration config) {
 
-        int width = 0;
-        int height = 0;
+        int width = mCurrentDrawable == null ? 0 : mCurrentDrawable.getIntrinsicWidth();
+        int height = mCurrentDrawable == null ? 0 : mCurrentDrawable.getIntrinsicHeight();
         final Rect to = getIconRect(d.dragView.getMeasuredWidth(), d.dragView.getMeasuredHeight(),
                 width, height);
         final Rect from = new Rect();

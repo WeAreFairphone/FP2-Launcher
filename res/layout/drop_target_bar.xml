@@ -27,7 +27,8 @@
             android:id="@+id/info_target_text"
             style="@style/InfoDropTargetButton"
             android:layout_height="match_parent"
-            android:text="@string/info_target_label" />
+            android:text="@string/info_target_label"
+            android:drawableStart="@drawable/info_target_selector" />
     </FrameLayout>
 
     <FrameLayout
@@ -41,7 +42,8 @@
             android:id="@+id/pin_target_text"
             style="@style/PinDropTargetButton"
             android:layout_height="match_parent"
-            android:text="@string/pin_target_label" />
+            android:text="@string/pin_target_label"
+            android:drawableStart="@drawable/pin_target_selector" />
     </FrameLayout>
 
     <FrameLayout
@@ -55,7 +57,8 @@
             android:id="@+id/delete_target_text"
             style="@style/DeleteDropTargetButton"
             android:layout_height="match_parent"
-            android:text="@string/delete_zone_label_workspace" />
+            android:text="@string/delete_zone_label_workspace"
+            android:drawableStart="@drawable/remove_target_selector" />
     </FrameLayout>
 
 </merge>

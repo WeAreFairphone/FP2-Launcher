@@ -480,7 +480,7 @@ public class DeviceProfile {
         if (isTablet() && !isVerticalBarLayout()) {
             return 4 * edgeMarginPx;
         } else {
-            return 2 * edgeMarginPx;
+            return 0 * edgeMarginPx;
         }
     }
 
