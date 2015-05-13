@@ -50,8 +50,8 @@
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:textColor">@color/workspace_icon_text_color</item>
-        <item name="android:shadowRadius">0</item>
-        <item name="customShadows">false</item>
+        <item name="android:shadowRadius">2.0</item>
+        <item name="android:shadowColor">#B0000000</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
@@ -177,7 +177,13 @@
         <item name="android:lines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_horizontal</item>
+    </style>
 
+    <style name="AppSwitcherIconText" parent="@style/IconText">
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">4</item>
     </style>
 
     <style name="PeopleWidgetTitle">
@@ -185,13 +191,21 @@
         <item name="android:textSize">34sp</item>
         <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">4</item>
     </style>
 
     <style name="PeopleWidgetSubTitle">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">4</item>
     </style>
 
     <style name="AppSwitcherTitle">
@@ -199,11 +213,15 @@
         <item name="android:textSize">34sp</item>
         <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">4</item>
     </style>
 
     <style name="AppSwitcherSubTitle">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:shadowColor">@color/black</item>

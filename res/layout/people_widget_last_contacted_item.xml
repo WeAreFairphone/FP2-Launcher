@@ -30,7 +30,11 @@
             android:includeFontPadding="false"
             android:maxLines="2"
             android:textColor="@color/white"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:shadowColor="@color/black"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="4"/>
 
         <TextView
             android:id="@+id/contact_phone_number"
@@ -44,7 +48,11 @@
             android:alpha="0.5"
             android:textColor="@color/white"
             android:visibility="gone"
-            android:textSize="12sp"/>
+            android:textSize="12sp"
+            android:shadowColor="@color/black"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="4"/>
     </LinearLayout>
 
 </FrameLayout>

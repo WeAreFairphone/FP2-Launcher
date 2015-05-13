@@ -32,6 +32,5 @@
         android:id="@+id/folder_icon_name"
         android:layout_gravity="top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="@color/edge_swipe_text_blue"/>
+        android:layout_height="match_parent" />
 </com.fairphone.fplauncher3.FolderIcon>

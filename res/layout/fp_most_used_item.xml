@@ -17,7 +17,11 @@
         android:paddingLeft="92dp"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:shadowColor="@color/black"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="4" />
 
     <ImageView
         android:id="@android:id/content"

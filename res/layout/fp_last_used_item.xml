@@ -5,7 +5,7 @@
 
     <Button
         android:id="@+id/recentButton"
-        style="@style/IconText"
+        style="@style/AppSwitcherIconText"
         android:layout_width="95dp"
         android:layout_height="90dp"
         android:background="@drawable/button_last_used_app"
