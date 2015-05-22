@@ -24,6 +24,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import com.fairphone.fplauncher3.R;
 
@@ -163,5 +164,15 @@ public class ButtonDropTarget extends TextView implements DropTarget, DragContro
 
     public void getLocationInDragLayer(int[] loc) {
         mLauncher.getDragLayer().getLocationInDragLayer(this, loc);
+    }
+
+    protected void setButtonHighlight(int resource) {
+        ViewGroup parent = ((ViewGroup) getParent());
+        if(parent != null) {
+            View highlightView = parent.getChildAt(0);
+            if(highlightView != null) {
+                highlightView.setBackgroundResource(resource);
+            }
+        }
     }
 }

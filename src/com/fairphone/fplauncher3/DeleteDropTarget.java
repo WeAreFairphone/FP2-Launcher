@@ -223,14 +223,14 @@ public class DeleteDropTarget extends ButtonDropTarget {
         super.onDragEnd();
         mActive = false;
         setTextColor(mOriginalTextColor);
-        setBackgroundResource(0);
+        setButtonHighlight(0);
     }
 
     public void onDragEnter(DragObject d) {
         super.onDragEnter(d);
 
         setHoverColor();
-        setBackgroundResource(R.drawable.drop_target_selected_tile);
+        setButtonHighlight(R.drawable.drop_target_selected_tile);
     }
 
     public void onDragExit(DragObject d) {
@@ -238,11 +238,11 @@ public class DeleteDropTarget extends ButtonDropTarget {
 
         if (!d.dragComplete) {
             resetHoverColor();
-            setBackgroundResource(0);
+            setButtonHighlight(0);
         } else {
             // Restore the hover color if we are deleting
             d.dragView.setColor(mHoverColor);
-            setBackgroundResource(0);
+            setButtonHighlight(0);
         }
     }
 

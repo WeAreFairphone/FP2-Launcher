@@ -125,17 +125,17 @@ public class PinAppDropTarget extends ButtonDropTarget {
         super.onDragEnd();
         mActive = false;
         setTextColor(mOriginalTextColor);
-        setBackgroundResource(0);
+        setButtonHighlight(0);
     }
 
     public void onDragEnter(DragObject d) {
         super.onDragEnter(d);
 
-        if(mDrawable != null){
+        if (mDrawable != null) {
             mDrawable.startTransition(mTransitionDuration);
         }
         setTextColor(mHoverColor);
-        setBackgroundResource(R.drawable.drop_target_selected_tile);
+        setButtonHighlight(R.drawable.drop_target_selected_tile);
     }
 
     public void onDragExit(DragObject d) {
@@ -146,7 +146,7 @@ public class PinAppDropTarget extends ButtonDropTarget {
                 mDrawable.resetTransition();
             }
             setTextColor(mOriginalTextColor);
-            setBackgroundResource(0);
+            setButtonHighlight(0);
         }
     }
 }

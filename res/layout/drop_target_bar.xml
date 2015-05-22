@@ -21,6 +21,10 @@
         android:layout_height="match_parent"
         android:layout_weight="1" >
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <!-- Info target -->
 
         <com.fairphone.fplauncher3.InfoDropTarget
@@ -36,6 +40,10 @@
         android:layout_height="match_parent"
         android:layout_weight="1" >
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <!-- Pin/Unpin target -->
 
         <com.fairphone.fplauncher3.PinAppDropTarget
@@ -50,6 +58,10 @@
         style="@style/DropTargetButtonContainer"
         android:layout_height="match_parent"
         android:layout_weight="1" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <!-- Delete target -->
 
