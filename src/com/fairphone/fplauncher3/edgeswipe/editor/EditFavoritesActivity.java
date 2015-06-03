@@ -41,6 +41,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fairphone.fplauncher3.AppInfo;
 import com.fairphone.fplauncher3.R;
@@ -99,7 +100,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
 
         mSelectedApps = FavoritesStorageHelper.loadSelectedApps(this, 4);
 
-        mFavIcons = new ArrayList<FrameLayout>();
+        mFavIcons = new ArrayList<>();
 
         mFavIcons.add((FrameLayout) findViewById(R.id.favourite_group_1));
         mFavIcons.add((FrameLayout) findViewById(R.id.favourite_group_2));
@@ -122,36 +123,38 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         mCurrentTheme = getCurrentTheme(this);
         changeTheme(mCurrentTheme);
 
-        mThemeRadioButtonDark.setOnClickListener(new OnClickListener()
-        {
+        mThemeRadioGroup.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if (mCurrentTheme == Themes.DARK)
-                {
-                    changeTheme(Themes.LIGHT);
-                }
-                else
-                {
-                    changeTheme(Themes.DARK);
+            public void onClick(View v) {
+                if (v.getAlpha() == 0f){
+                    v.setAlpha(1f);
+                    Toast.makeText(getApplicationContext(), R.string.easter_egg_toast_theme, Toast.LENGTH_SHORT).show();
+                    mThemeRadioButtonDark.setVisibility(View.VISIBLE);
+                    mThemeRadioButtonLight.setVisibility(View.VISIBLE);
+                    mThemeRadioButtonDark.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mCurrentTheme == Themes.DARK) {
+                                changeTheme(Themes.LIGHT);
+                            } else {
+                                changeTheme(Themes.DARK);
+                            }
+                        }
+                    });
+                    mThemeRadioButtonLight.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mCurrentTheme == Themes.LIGHT) {
+                                changeTheme(Themes.DARK);
+                            } else {
+                                changeTheme(Themes.LIGHT);
+                            }
+                        }
+                    });
                 }
             }
         });
-        mThemeRadioButtonLight.setOnClickListener(new OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                if (mCurrentTheme == Themes.LIGHT)
-                {
-                    changeTheme(Themes.DARK);
-                }
-                else
-                {
-                    changeTheme(Themes.LIGHT);
-                }
-            }
-        });
+
 
         setupAllAppsList();
         setupSelectedAppsList();

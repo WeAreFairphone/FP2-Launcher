@@ -282,6 +282,8 @@ s
     <string name="add_app">Add app</string>
     <string name="edge_swipe_all_apps">All Apps</string>
 
+    <string name="easter_egg_toast_theme">Where did THAT come from?</string>
+
     <!-- All apps widget -->
     <string name="fp_all_apps_widget_name">All apps</string>
 
