@@ -20,14 +20,19 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.util.Pair;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fairphone.fplauncher3.AppInfo;
 import com.fairphone.fplauncher3.BubbleTextView;
@@ -44,6 +49,7 @@ import com.fairphone.fplauncher3.LauncherTransitionable;
 import com.fairphone.fplauncher3.R;
 import com.fairphone.fplauncher3.Workspace;
 import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
+import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation;
 
 /**
  * Edit favorites activity implements functionality to edit your favorite apps
@@ -77,6 +83,7 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
     private Launcher mLauncher;
 
     private boolean mInTransition;
+    private ImageView app_drawer_settings;
 
     public AppDrawerView(Context context)
     {
@@ -160,6 +167,43 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         {
             unusedAppsDescription.setVisibility(View.GONE);
         }
+
+        app_drawer_settings = (ImageView)view.findViewById(R.id.aging_drawer_menu_btn);
+
+        app_drawer_settings.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(mContext, app_drawer_settings);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.aging_drawer_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Resources resources = mContext.getResources();
+
+                        switch (item.getItemId()){
+                            case R.id.two_weeks_to_idle:
+                                ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_two_weeks));
+                                break;
+                            case R.id.one_month_to_idle:
+                                ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_month));
+                                break;
+                            case R.id.one_week_to_idle:
+                            default:
+                                ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_week));
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show(); //showing popup menu
+
+            }
+        }); //closing the setOnClickListener method
     }
 
     public void setupListAdapter(GridView listView, AgingAppsListAdapter appsListAdapter, ArrayList<AppInfo> appList, boolean isUnused)

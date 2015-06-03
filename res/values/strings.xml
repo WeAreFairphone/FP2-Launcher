@@ -300,5 +300,8 @@ s
     <string name="fp_aging_apps_icon_label_updated">UPDATED</string>
     <string name="fp_theme_dark">Dark</string>
     <string name="fp_theme_light">Light</string>
+    <string name="one_week_idle">One week to idle</string>
+    <string name="two_weeks_idle">Two weeks to idle</string>
+    <string name="one_month_idle">One month to idle</string>
 
 </resources>

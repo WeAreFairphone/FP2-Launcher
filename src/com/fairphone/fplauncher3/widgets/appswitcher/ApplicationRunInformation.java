@@ -23,6 +23,7 @@ import java.util.Map;
 
 import com.fairphone.fplauncher3.R;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -45,6 +46,8 @@ public class ApplicationRunInformation
     public static final long MINUTES_IN_HOUR = 60L;
     public static final long SECONDS_IN_MINUTE = 60L;
     public static final long MILLIS_IN_SECOND = 1000L;
+    public static final String APP_LIFECYCLE_PREFERENCES = "APP_LIFECYCLE_PREFERENCES";
+    public static final String APP_AGE_LIMIT_IN_DAYS = "APP_AGE_LIMIT_IN_DAYS";
     private ComponentName 	mComponentName;
 	private int 			mRunCount;
     private Date			mLastExecution;
@@ -312,7 +315,7 @@ public class ApplicationRunInformation
     public static long getAgeLevelInMiliseconds(Context context, APP_AGE age)
     {
         long result = toMilliSeconds(APP_RARE_USE_DAYS);
-        int frequentUseDays = context.getResources().getInteger(R.integer.app_frequent_use_days);
+        int frequentUseDays = getAppIdleLimitInDays(context);
         switch (age)
         {
             case FREQUENT_USE:
@@ -323,6 +326,20 @@ public class ApplicationRunInformation
                 break;
         }
         return result;
+    }
+
+    public static int getAppIdleLimitInDays(Context context){
+        int frequentUseDays = context.getResources().getInteger(R.integer.app_frequent_use_one_week);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(APP_LIFECYCLE_PREFERENCES, Activity.MODE_PRIVATE);
+        return sharedPreferences.getInt(APP_AGE_LIMIT_IN_DAYS, frequentUseDays);
+    }
+
+    public static void setAppIdleLimitInDays(Context context, int days){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(APP_LIFECYCLE_PREFERENCES, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt(APP_AGE_LIMIT_IN_DAYS, days);
+        editor.commit();
     }
 
     public static long toMilliSeconds(long days)
