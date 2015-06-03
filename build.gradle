@@ -78,7 +78,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v13:22.1.+'
+    compile 'com.android.support:support-v13:22.+'
     compile 'com.crashlytics.android:crashlytics:1.+'
     compile 'com.googlecode.libphonenumber:libphonenumber:6.+'
 }
