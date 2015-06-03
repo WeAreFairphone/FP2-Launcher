@@ -84,6 +84,7 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
 
     private boolean mInTransition;
     private ImageView app_drawer_settings;
+    private boolean mIsAppDrawerSettingsVisible = false;
 
     public AppDrawerView(Context context)
     {
@@ -169,22 +170,28 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         }
 
         app_drawer_settings = (ImageView)view.findViewById(R.id.aging_drawer_menu_btn);
+        app_drawer_settings.setAlpha(mIsAppDrawerSettingsVisible ? 1f : 0f);
 
         app_drawer_settings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Creating the instance of PopupMenu
+
+                //fire the easter egg
+                if(app_drawer_settings.getAlpha() == 0) {
+                    Toast.makeText(mContext, R.string.lifecyle_time_chooser_easter_egg, Toast.LENGTH_LONG).show();
+                    app_drawer_settings.setAlpha(1f);
+                    mIsAppDrawerSettingsVisible = true;
+                }
+
                 PopupMenu popup = new PopupMenu(mContext, app_drawer_settings);
-                //Inflating the Popup using xml file
                 popup.getMenuInflater()
                         .inflate(R.menu.aging_drawer_menu, popup.getMenu());
 
-                //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         Resources resources = mContext.getResources();
 
-                        switch (item.getItemId()){
+                        switch (item.getItemId()) {
                             case R.id.two_weeks_to_idle:
                                 ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_two_weeks));
                                 break;
@@ -196,17 +203,16 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
                                 ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_week));
                                 break;
                         }
-                        
+
                         //Redraw the drawer
                         init(mContext);
                         return true;
                     }
                 });
 
-                popup.show(); //showing popup menu
-
+                popup.show();
             }
-        }); //closing the setOnClickListener method
+        });
     }
 
     public void setupListAdapter(GridView listView, AgingAppsListAdapter appsListAdapter, ArrayList<AppInfo> appList, boolean isUnused)
