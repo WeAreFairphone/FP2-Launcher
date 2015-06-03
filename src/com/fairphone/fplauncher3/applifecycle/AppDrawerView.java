@@ -196,6 +196,9 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
                                 ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_week));
                                 break;
                         }
+                        
+                        //Redraw the drawer
+                        init(mContext);
                         return true;
                     }
                 });
