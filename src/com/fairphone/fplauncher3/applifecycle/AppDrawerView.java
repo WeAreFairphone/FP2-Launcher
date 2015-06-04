@@ -214,15 +214,15 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
                 Resources resources = mContext.getResources();
                 int itemId = item.getItemId();
                 switch (itemId) {
+                    case R.id.one_week_to_idle:
+                        ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_week));
+                        break;
                     case R.id.two_weeks_to_idle:
                         ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_two_weeks));
                         break;
                     case R.id.one_month_to_idle:
-                        ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_month));
-                        break;
-                    case R.id.one_week_to_idle:
                     default:
-                        ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_week));
+                        ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_month));
                         break;
                 }
 

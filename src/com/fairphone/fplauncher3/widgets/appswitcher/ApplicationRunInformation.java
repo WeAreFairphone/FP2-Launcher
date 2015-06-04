@@ -328,7 +328,7 @@ public class ApplicationRunInformation
     }
 
     public static int getAppIdleLimitInDays(Context context){
-        int frequentUseDays = context.getResources().getInteger(R.integer.app_frequent_use_one_week);
+        int frequentUseDays = context.getResources().getInteger(R.integer.app_frequent_use_one_month);
         SharedPreferences sharedPreferences = context.getSharedPreferences(AppDrawerView.APP_LIFECYCLE_PREFERENCES, Activity.MODE_PRIVATE);
         return sharedPreferences.getInt(AppDrawerView.APP_AGE_LIMIT_IN_DAYS, frequentUseDays);
     }

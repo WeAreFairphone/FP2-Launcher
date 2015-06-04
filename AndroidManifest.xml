@@ -94,7 +94,7 @@
             android:launchMode="singleTask"
             android:clearTaskOnLaunch="true"
             android:stateNotNeeded="true"
-            android:theme="@style/Theme"
+            android:theme="@android:style/Theme.DeviceDefault.Wallpaper.NoTitleBar"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="nosensor">
             <intent-filter>
