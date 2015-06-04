@@ -30,7 +30,7 @@
                 android:id="@+id/aging_drawer_menu_btn"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:src="@drawable/icon_app_lifecycle_settings"
+                android:src="@drawable/ic_more_vert_white_24dp"
                 android:tint="@color/blue"
                 android:scaleType="centerInside"
                 android:layout_gravity="center"
