@@ -90,7 +90,6 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
 
     private boolean mInTransition;
     private ImageView app_drawer_settings;
-    private boolean mIsAppDrawerSettingsVisible = false;
     private PopupMenu mAppSettingsPopup;
 
     public AppDrawerView(Context context)
@@ -164,20 +163,18 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         app_drawer_settings = (ImageView)view.findViewById(R.id.aging_drawer_menu_btn);
         setupAppSettingsMenu();
 
-        app_drawer_settings.setAlpha(mIsAppDrawerSettingsVisible ? 1f : 0f);
-
         app_drawer_settings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //fire the easter egg
-                if(app_drawer_settings.getAlpha() == 0) {
+                if (v.getAlpha() == 0f) {
+                    //fire the easter egg
                     Toast.makeText(mContext, R.string.lifecyle_time_chooser_easter_egg, Toast.LENGTH_LONG).show();
-                    app_drawer_settings.setAlpha(1f);
-                    mIsAppDrawerSettingsVisible = true;
-                }
+                    v.setAlpha(1f);
+                } else {
 
-                mAppSettingsPopup.show();
+                    mAppSettingsPopup.show();
+                }
             }
         });
     }
