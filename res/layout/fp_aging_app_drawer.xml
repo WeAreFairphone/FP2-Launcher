@@ -31,9 +31,11 @@
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:src="@drawable/icon_app_lifecycle_settings"
+                android:tint="@color/blue"
                 android:scaleType="centerInside"
                 android:layout_gravity="center"
-                android:layout_marginLeft="100dp" />
+                android:layout_marginLeft="100dp"
+                android:alpha="0.0"/>
         </LinearLayout>
 
         <TextView
