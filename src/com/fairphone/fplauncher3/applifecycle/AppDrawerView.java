@@ -19,7 +19,9 @@ package com.fairphone.fplauncher3.applifecycle;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.util.Pair;
@@ -59,6 +61,10 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
 {
     private static final String TAG = AppDrawerView.class.getSimpleName();
     public static final int DRAGGING_DELAY_MILLIS = 150;
+    public static final String APP_LIFECYCLE_PREFERENCES = "APP_LIFECYCLE_PREFERENCES";
+    public static final String APP_AGE_LIMIT_IN_DAYS = "APP_AGE_LIMIT_IN_DAYS";
+    public static final String CURENT_APP_AGE_LIMIT_IN_DAYS = "APP_AGE_LIMIT_IN_DAYS";
+    public static final String APP_AGE_LIMIT_CHOISE_RESOURCE = "APP_AGE_LIMIT_CHOISE_RESOURCE";
 
     private AgingAppsListAdapter mAllAppsListAdapter;
 
@@ -85,6 +91,7 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
     private boolean mInTransition;
     private ImageView app_drawer_settings;
     private boolean mIsAppDrawerSettingsVisible = false;
+    private PopupMenu mAppSettingsPopup;
 
     public AppDrawerView(Context context)
     {
@@ -117,13 +124,17 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         this.removeAllViews();
         View view = inflate(mContext, R.layout.fp_aging_app_drawer, null);
 
-        Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> appLists = AppDiscoverer.getInstance().getUsedAndUnusedApps(mContext);
-        mUsedApps = appLists.first;
-        mUnusedApps = appLists.second;
+        refreshAppLists();
 
         setupAllAppsList(view);
 
         addView(view);
+    }
+
+    private void refreshAppLists() {
+        Pair<ArrayList<AppInfo>, ArrayList<AppInfo>> appLists = AppDiscoverer.getInstance().getUsedAndUnusedApps(mContext);
+        mUsedApps = appLists.first;
+        mUnusedApps = appLists.second;
     }
 
     public void refreshView(Context context, Launcher launcher)
@@ -148,6 +159,30 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         activeAppsDescription = (TextView) view.findViewById(R.id.activeAppsDescription);
         unusedAppsDescription = (TextView) view.findViewById(R.id.unusedAppsDescription);
 
+        setupListAdapters();
+
+        app_drawer_settings = (ImageView)view.findViewById(R.id.aging_drawer_menu_btn);
+        setupAppSettingsMenu();
+
+        app_drawer_settings.setAlpha(mIsAppDrawerSettingsVisible ? 1f : 0f);
+
+        app_drawer_settings.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //fire the easter egg
+                if(app_drawer_settings.getAlpha() == 0) {
+                    Toast.makeText(mContext, R.string.lifecyle_time_chooser_easter_egg, Toast.LENGTH_LONG).show();
+                    app_drawer_settings.setAlpha(1f);
+                    mIsAppDrawerSettingsVisible = true;
+                }
+
+                mAppSettingsPopup.show();
+            }
+        });
+    }
+
+    private void setupListAdapters() {
         setupListAdapter(mAllAppsGridView, mAllAppsListAdapter, mUsedApps, false);
         setupListAdapter(mUnusedAppsGridView, mUnusedAppsListAdapter, mUnusedApps, true);
 
@@ -168,51 +203,59 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         {
             unusedAppsDescription.setVisibility(View.GONE);
         }
+    }
 
-        app_drawer_settings = (ImageView)view.findViewById(R.id.aging_drawer_menu_btn);
-        app_drawer_settings.setAlpha(mIsAppDrawerSettingsVisible ? 1f : 0f);
+    private void setupAppSettingsMenu() {
+        mAppSettingsPopup = new PopupMenu(mContext, app_drawer_settings);
+        mAppSettingsPopup.getMenuInflater()
+                .inflate(R.menu.aging_drawer_menu, mAppSettingsPopup.getMenu());
 
-        app_drawer_settings.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mAppSettingsPopup.getMenu().findItem(getAppIdleChoice(mContext)).setChecked(true);
 
-                //fire the easter egg
-                if(app_drawer_settings.getAlpha() == 0) {
-                    Toast.makeText(mContext, R.string.lifecyle_time_chooser_easter_egg, Toast.LENGTH_LONG).show();
-                    app_drawer_settings.setAlpha(1f);
-                    mIsAppDrawerSettingsVisible = true;
+        mAppSettingsPopup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                Resources resources = mContext.getResources();
+                int itemId = item.getItemId();
+                switch (itemId) {
+                    case R.id.two_weeks_to_idle:
+                        ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_two_weeks));
+                        break;
+                    case R.id.one_month_to_idle:
+                        ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_month));
+                        break;
+                    case R.id.one_week_to_idle:
+                    default:
+                        ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_week));
+                        break;
                 }
 
-                PopupMenu popup = new PopupMenu(mContext, app_drawer_settings);
-                popup.getMenuInflater()
-                        .inflate(R.menu.aging_drawer_menu, popup.getMenu());
+                setAppIdleChoice(mContext, itemId);
 
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Resources resources = mContext.getResources();
+                if (item.isChecked()){
+                    item.setChecked(false);
+                }
+                else {
+                    item.setChecked(true);
+                }
 
-                        switch (item.getItemId()) {
-                            case R.id.two_weeks_to_idle:
-                                ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_two_weeks));
-                                break;
-                            case R.id.one_month_to_idle:
-                                ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_month));
-                                break;
-                            case R.id.one_week_to_idle:
-                            default:
-                                ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_week));
-                                break;
-                        }
-
-                        //Redraw the drawer
-                        init(mContext);
-                        return true;
-                    }
-                });
-
-                popup.show();
+                //Redraw the drawer
+                refreshListAdapters();
+                return true;
             }
         });
+    }
+
+    public static int getAppIdleChoice(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(APP_LIFECYCLE_PREFERENCES, Activity.MODE_PRIVATE);
+        return sharedPreferences.getInt(APP_AGE_LIMIT_CHOISE_RESOURCE, R.id.one_week_to_idle);
+    }
+
+    public static void setAppIdleChoice(Context context, int choiceId){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(APP_LIFECYCLE_PREFERENCES, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt(APP_AGE_LIMIT_CHOISE_RESOURCE, choiceId);
+        editor.commit();
     }
 
     public void setupListAdapter(GridView listView, AgingAppsListAdapter appsListAdapter, ArrayList<AppInfo> appList, boolean isUnused)
@@ -222,6 +265,14 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         appsListAdapter.setAllApps(appList);
 
         listView.setAdapter(appsListAdapter);
+    }
+
+    public void refreshListAdapters()
+    {
+        refreshAppLists();
+        mAllAppsGridView.removeAllViewsInLayout();
+        mUnusedAppsGridView.removeAllViewsInLayout();
+        setupListAdapters();
     }
 
     private void beginDraggingApplication(View v)
