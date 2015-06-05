@@ -3,8 +3,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/one_week_to_idle"
-            android:title="@string/one_week_idle"
-            android:checked="true"/>
+            android:title="@string/one_week_idle"/>
 
         <item
             android:id="@+id/two_weeks_to_idle"
@@ -12,6 +11,7 @@
 
         <item
             android:id="@+id/one_month_to_idle"
-            android:title="@string/one_month_idle" />
+            android:title="@string/one_month_idle"
+            android:checked="true"/>
     </group>
 </menu>

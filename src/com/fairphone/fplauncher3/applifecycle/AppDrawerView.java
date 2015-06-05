@@ -244,7 +244,7 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
 
     public static int getAppIdleChoice(Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(APP_LIFECYCLE_PREFERENCES, Activity.MODE_PRIVATE);
-        return sharedPreferences.getInt(APP_AGE_LIMIT_CHOISE_RESOURCE, R.id.one_week_to_idle);
+        return sharedPreferences.getInt(APP_AGE_LIMIT_CHOISE_RESOURCE, R.id.one_month_to_idle);
     }
 
     public static void setAppIdleChoice(Context context, int choiceId){
