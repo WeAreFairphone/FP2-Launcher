@@ -166,14 +166,14 @@ public class ApplicationRunInformation
 	
 	/**
 	 * Serializes a component in order to be used has a map key
-	 * @param mComponentName component to serialize
+	 * @param componentName component to serialize
 	 * @return the serialized component
 	 */
-	public static String serializeComponentName(ComponentName mComponentName) {
+	public static String serializeComponentName(ComponentName componentName) {
 		StringBuffer sb = new StringBuffer();
     	
-    	sb.append(mComponentName.getPackageName()).append(COMPONENT_NAME_SEPARATOR).append(mComponentName.getClassName());
-    	
+    	sb.append(componentName.getPackageName()).append(COMPONENT_NAME_SEPARATOR).append(componentName.getClassName());
+
 		return sb.toString();
 	}
 	

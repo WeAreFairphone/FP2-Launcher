@@ -32,92 +32,105 @@ public class AppSwitcherManager {
 	private static final String TAG = AppSwitcherManager.class.getSimpleName();
 	private static final String PREFS_APP_SWITCHER_APPS_DATA = "com.fairphone.fplauncher3.PREFS_APP_SWITCHER_APPS_DATA";
 
-	private static final ApplicationRunInfoManager _instance = new ApplicationRunInfoManager(
-			true);
+	private static final ApplicationRunInfoManager _instance = new ApplicationRunInfoManager(true);
 
-	public static ApplicationRunInfoManager getInstance() {
+	public static synchronized ApplicationRunInfoManager getInstance() {
 		return _instance;
 	}
 
-	private final Context mContext;
-	private final Launcher mLauncher;
-	private BroadcastReceiver mBCastLaunchAllApps;
-	private BroadcastReceiver mBCastAppLauncher;
+	private static BroadcastReceiver sBCastLaunchAllApps;
+	private static BroadcastReceiver sBCastAppLauncher;
 
-	public AppSwitcherManager(Context context, Launcher launcher) {
-		mContext = context;
-		mLauncher = launcher;
-	}
-
-	public void unregisterAppSwitcherBroadcastReceivers() {
-		if (mBCastLaunchAllApps != null) {
-			mContext.unregisterReceiver(mBCastLaunchAllApps);
+	public static void unregisterAppSwitcherBroadcastReceivers(Context context) {
+		Log.d(TAG, "unregisterAppSwitcherBroadcastReceivers");
+		if (sBCastLaunchAllApps != null) {
+			context.unregisterReceiver(sBCastLaunchAllApps);
+			sBCastLaunchAllApps = null;
 		}
-		if (mBCastAppLauncher != null) {
-			mContext.unregisterReceiver(mBCastAppLauncher);
+		if (sBCastAppLauncher != null) {
+			context.unregisterReceiver(sBCastAppLauncher);
+			sBCastAppLauncher = null;
 		}
 	}
 
-	public void registerAppSwitcherBroadcastReceivers() {
-		// launching the application
-		mBCastLaunchAllApps = new BroadcastReceiver() {
+	public static void registerAppSwitcherBroadcastReceivers(Launcher launcher) {
+		Log.d(TAG, "registerAppSwitcherBroadcastReceivers");
+		if (sBCastLaunchAllApps == null) {
+			// launching the application
+			sBCastLaunchAllApps = new BroadcastReceiver() {
+				private Launcher launcher;
 
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				Log.i(TAG, "Received a call from widget....Show all apps");
-				mLauncher.showAllAppsDrawer();
-			}
-		};
-
-		mBCastAppLauncher = new BroadcastReceiver() {
-
-			@Override
-			public void onReceive(Context context, Intent intent) {
-
-				String packageName = intent
-						.getStringExtra(AppSwitcherWidget.EXTRA_LAUNCH_APP_PACKAGE);
-				String className = intent
-						.getStringExtra(AppSwitcherWidget.EXTRA_LAUNCH_APP_CLASS_NAME);
-
-				Log.i(TAG, "Received a call from widget....Launch App "
-						+ packageName + " - " + className);
-
-				Intent launchIntent = mContext.getPackageManager()
-						.getLaunchIntentForPackage(packageName);
-
-				if (launchIntent != null) {
-					launchIntent.setComponent(new ComponentName(packageName,
-							className));
-					mLauncher.launchActivity(null, launchIntent,
-							"AppSwitcherLaunch");
+				protected BroadcastReceiver setup(Launcher l) {
+					launcher = l;
+					return this;
 				}
-			}
-		};
 
-		mContext.registerReceiver(mBCastLaunchAllApps, new IntentFilter(
-				AppSwitcherWidget.ACTION_APP_SWITCHER_LAUNCH_ALL_APPS));
-		mContext.registerReceiver(mBCastAppLauncher, new IntentFilter(
-				AppSwitcherWidget.ACTION_APP_SWITCHER_LAUNCH_APP));
+				@Override
+				public void onReceive(Context context, Intent intent) {
+					Log.d(TAG, "Received a call from widget....Show all apps");
+					launcher.showAllAppsDrawer();
+				}
+			}.setup(launcher);
+			launcher.registerReceiver(sBCastLaunchAllApps, new IntentFilter(
+					AppSwitcherWidget.ACTION_APP_SWITCHER_LAUNCH_ALL_APPS));
+		}
+
+		if (sBCastAppLauncher == null) {
+			sBCastAppLauncher = new BroadcastReceiver() {
+				private Launcher launcher;
+
+				protected BroadcastReceiver setup(Launcher l) {
+					launcher = l;
+					return this;
+				}
+
+				@Override
+				public void onReceive(Context context, Intent intent) {
+
+					String packageName = intent
+							.getStringExtra(AppSwitcherWidget.EXTRA_LAUNCH_APP_PACKAGE);
+					String className = intent
+							.getStringExtra(AppSwitcherWidget.EXTRA_LAUNCH_APP_CLASS_NAME);
+
+					Log.d(TAG, "Received a call from widget....Launch App "
+							+ packageName + " - " + className);
+
+					Intent launchIntent = context.getPackageManager()
+							.getLaunchIntentForPackage(packageName);
+
+					if (launchIntent != null) {
+						launchIntent.setComponent(new ComponentName(packageName,
+								className));
+						launcher.launchActivity(null, launchIntent,
+								"AppSwitcherLaunch");
+					}
+				}
+			}.setup(launcher);
+			launcher.registerReceiver(sBCastAppLauncher, new IntentFilter(
+					AppSwitcherWidget.ACTION_APP_SWITCHER_LAUNCH_APP));
+		}
+
 	}
 
-	public void saveAppSwitcherData() {
-		ApplicationRunInformation.persistAppRunInfo(mContext,
+	public static void saveAppSwitcherData(Context context) {
+		Log.d(TAG, "saveAppSwitcherData");
+		ApplicationRunInformation.persistAppRunInfo(context,
 				PREFS_APP_SWITCHER_APPS_DATA, AppSwitcherManager.getInstance()
 						.getAllAppRunInfo());
 	}
 
-	public void loadAppSwitcherData() {
+	public static void loadAppSwitcherData(Context context) {
 		// Most Used
-		Log.d(TAG, "loadAppRunInfos: loading ");
+		Log.d(TAG, "loadAppSwitcherData ");
 		AppSwitcherManager.getInstance().resetState();
 
 		// set the all apps
 		AppSwitcherManager.getInstance().setAllRunInfo(
-				ApplicationRunInformation.loadAppRunInfo(mContext,
+				ApplicationRunInformation.loadAppRunInfo(context,
 						PREFS_APP_SWITCHER_APPS_DATA));
 	}
 	
-	public void updateAppSwitcherData(ArrayList<String> packageNames)
+	public static void updateAppSwitcherData(Context context,ArrayList<String> packageNames)
     {
         List<ApplicationRunInformation> allApps = AppSwitcherManager.getInstance().getAllAppRunInfo();
 
@@ -133,33 +146,34 @@ public class AppSwitcherManager {
 
         for (ApplicationRunInformation appToRemove : appsToRemove)
         {
-            applicationRemoved(appToRemove.getComponentName());
+            applicationRemoved(context, appToRemove.getComponentName());
         }
     }
 
-	public void updateAppSwitcherWidgets() {
+	public static void updateAppSwitcherWidgets(Context context) {
+		Log.d(TAG, "updateAppSwitcherWidgets");
 		AppWidgetManager appWidgetManager = AppWidgetManager
-				.getInstance(mContext);
+				.getInstance(context);
 		int[] appWidgetIds = appWidgetManager
-				.getAppWidgetIds(new ComponentName(mContext,
+				.getAppWidgetIds(new ComponentName(context,
 						AppSwitcherWidget.class));
 		if (appWidgetIds.length > 0) {
-			new AppSwitcherWidget().onUpdate(mContext, appWidgetManager,
+			new AppSwitcherWidget().onUpdate(context, appWidgetManager,
 					appWidgetIds);
 		}
 	}
 
-	public void applicationStarted(ComponentName componentName) {
+	public static void applicationStarted(Context context, ComponentName componentName) {
 		ApplicationRunInformation appRunInfo = ApplicationRunInfoManager
 				.generateApplicationRunInfo(componentName, false);
 		AppSwitcherManager.getInstance().applicationStarted(appRunInfo);
-		updateAppSwitcherWidgets();
-		saveAppSwitcherData();
+		saveAppSwitcherData(context);
+		updateAppSwitcherWidgets(context);
 	}
 
-	public void applicationRemoved(ComponentName componentName) {
+	public static void applicationRemoved(Context context, ComponentName componentName) {
 		AppSwitcherManager.getInstance().applicationRemoved(componentName);
-		updateAppSwitcherWidgets();
-		saveAppSwitcherData();
+		saveAppSwitcherData(context);
+		updateAppSwitcherWidgets(context);
 	}
 }

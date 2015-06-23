@@ -251,34 +251,5 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appswitcher_widget" />
         </receiver>
-        
-        <receiver
-            android:name="com.fairphone.fplauncher3.widgets.peoplewidget.PeopleWidget"
-            android:label="@string/people_widget_name" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <!-- This specifies the widget provider info -->
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/people_widget" />
-        </receiver>
-        <receiver android:name="com.fairphone.fplauncher3.widgets.peoplewidget.receivers.OutgoingCallInterceptor" >
-            <intent-filter android:priority="0" >
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL" >
-                </action>
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.fairphone.fplauncher3.widgets.allappswidget.AllAppsWidget"
-            android:label="@string/fp_all_apps_widget_name" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/all_apps_widget" />
-        </receiver>
     </application>
 </manifest>

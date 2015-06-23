@@ -33,12 +33,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.fairphone.fplauncher3.BuildConfig;
 import com.fairphone.fplauncher3.R;
 
 public class AppSwitcherWidget extends AppWidgetProvider
 {
     private static final String TAG = AppSwitcherWidget.class.getSimpleName();
-    private static final boolean APP_SWITCHER_DEBUG_MODE = false;
+    private static final boolean APP_SWITCHER_DEBUG_MODE = false; //BuildConfig.DEBUG;
 
     // AppSwitcher settings
     public static final String ACTION_APP_SWITCHER_LAUNCH_APP = "com.fairphone.fplauncher3.ACTION_APP_SWITCHER_LAUNCH_APP";
@@ -71,12 +72,12 @@ public class AppSwitcherWidget extends AppWidgetProvider
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
     {
-        updateUI(context, appWidgetManager, appWidgetId);
+        onUpdate(context, appWidgetManager, new int[]{appWidgetId});
         // Obtain appropriate widget and update it.
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 
-    private void updateUI(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    private static RemoteViews updateUI(Context context)
     {
         int code = 0;
         // get the widgets
@@ -87,10 +88,11 @@ public class AppSwitcherWidget extends AppWidgetProvider
         widget.removeAllViews(R.id.mostUsedApps);
 
         // obtain the current data saved
+        AppSwitcherManager.loadAppSwitcherData(context);
         ApplicationRunInfoManager instance = AppSwitcherManager.getInstance();
 
-        List<ApplicationRunInformation> mostRecent = new ArrayList<ApplicationRunInformation>(instance.getRecentApps());
-        List<ApplicationRunInformation> mostUsed = new ArrayList<ApplicationRunInformation>(instance.getMostUsedApps());
+        List<ApplicationRunInformation> mostRecent = instance.getRecentApps();
+        List<ApplicationRunInformation> mostUsed = instance.getMostUsedApps();
 
         Log.d(TAG, "mostRecent lenght: " + mostRecent.size());
         Log.d(TAG, "mostUsed lenght: " + mostUsed.size());
@@ -103,12 +105,10 @@ public class AppSwitcherWidget extends AppWidgetProvider
         // Process the most used apps
         updateMostUsedAppsList(context, code, widget, mostUsed);
 
-        // update the widget data
-        appWidgetManager.updateAppWidget(appWidgetId, null);
-        appWidgetManager.updateAppWidget(appWidgetId, widget);
+        return widget;
     }
 
-    private void updateMostUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostUsed)
+    private static void updateMostUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostUsed)
     {
         for (ApplicationRunInformation mostUsedInfo : mostUsed)
         {
@@ -141,7 +141,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         }
     }
 
-    private int updateLastUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostRecent)
+    private static int updateLastUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostRecent)
     {
         for (ApplicationRunInformation appRunInfo : mostRecent)
         {
@@ -177,7 +177,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         }
     }
 
-    private RemoteViews getMostUsedView(Context context, ApplicationRunInformation info, int code) throws NameNotFoundException
+    private static RemoteViews getMostUsedView(Context context, ApplicationRunInformation info, int code) throws NameNotFoundException
     {
         // generate the mostUsed row
         RemoteViews mostUsedRow = new RemoteViews(context.getPackageName(), R.layout.fp_most_used_item);
@@ -238,7 +238,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         return i;
     }
 
-    private RemoteViews getRecentView(Context context, ApplicationRunInformation info, int code) throws NameNotFoundException
+    private static RemoteViews getRecentView(Context context, ApplicationRunInformation info, int code) throws NameNotFoundException
     {
         RemoteViews recentRow = new RemoteViews(context.getPackageName(), R.layout.fp_last_used_item);
         PackageManager pm = context.getPackageManager();
@@ -280,20 +280,17 @@ public class AppSwitcherWidget extends AppWidgetProvider
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
     {
+        Log.i(TAG, "onUpdate");
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         // Called in response to the ACTION_APPWIDGET_UPDATE broadcast when this
         // AppWidget provider
         // is being asked to provide RemoteViews for a set of AppWidgets.
         // Override this method to implement your own AppWidget functionality.
 
-        // iterate through every instance of this widget
-        // remember that it can have more than one widget of the same type.
-        for (int i = 0; i < appWidgetIds.length; i++)
-        {
-            Log.d(TAG, "Updating AppSwitcher widget #" + i);
-            updateUI(context, appWidgetManager, appWidgetIds[i]);
-        }
 
+        // update the widget data
+        appWidgetManager.updateAppWidget(appWidgetIds, null);
+        appWidgetManager.updateAppWidget(appWidgetIds, updateUI(context));
     }
 
 }

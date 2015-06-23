@@ -41,7 +41,7 @@ public class ApplicationRunInfoManager
     public static final int RECENT_APP_MAX_COUNT_LIMIT = 5;
     public static final int MOST_APP_MAX_COUNT_LIMIT = 5;
     public static final int MINIMAL_COUNT = 2;
-    private static final String TAG = null;
+    private static final String TAG = ApplicationRunInfoManager.class.getSimpleName();
 
     private LimitedQueue<ApplicationRunInformation> _mostUsed;
     private LimitedQueue<ApplicationRunInformation> _recentApps;
@@ -53,7 +53,6 @@ public class ApplicationRunInfoManager
 
     public ApplicationRunInfoManager(boolean updateLists)
     {
-
         this._updateLists = updateLists;
         if (_updateLists)
         {
@@ -133,6 +132,7 @@ public class ApplicationRunInfoManager
         // if does not exist, create one
         if (cachedApp == null)
         {
+            Log.d(TAG, "No entry yet");
             _appRunInfos.put(ApplicationRunInformation.serializeComponentName(appInfo.getComponentName()), appInfo);
 
             cachedApp = appInfo;

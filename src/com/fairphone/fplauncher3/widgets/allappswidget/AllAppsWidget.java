@@ -55,12 +55,12 @@ public class AllAppsWidget extends AppWidgetProvider
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
     {
-        updateUI(context, appWidgetManager, appWidgetId);
+        onUpdate(context, appWidgetManager, new int[]{appWidgetId});
         // Obtain appropriate widget and update it.
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 
-    private static void updateUI(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
+    private static RemoteViews updateUI(Context context)
     {
         int code = 0;
         // get the widgets
@@ -72,9 +72,7 @@ public class AllAppsWidget extends AppWidgetProvider
         PendingIntent launchPendingIntent = PendingIntent.getBroadcast(context, code, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         widget.setOnClickPendingIntent(R.id.all_apps_launcher_widget, launchPendingIntent);
 
-        // update the widget data
-        appWidgetManager.updateAppWidget(appWidgetId, null);
-        appWidgetManager.updateAppWidget(appWidgetId, widget);
+        return widget;
     }
 
     /*
@@ -100,14 +98,9 @@ public class AllAppsWidget extends AppWidgetProvider
         // is being asked to provide RemoteViews for a set of AppWidgets.
         // Override this method to implement your own AppWidget functionality.
 
-        // iterate through every instance of this widget
-        // remember that it can have more than one widget of the same type.
-        for (int i = 0; i < appWidgetIds.length; i++)
-        { 
-            Log.d(TAG, "Updating All Apps widget #" + i);
-            updateUI(context, appWidgetManager, appWidgetIds[i]);
-        }
-
+        // update the widget data
+        appWidgetManager.updateAppWidget(appWidgetIds, null);
+        appWidgetManager.updateAppWidget(appWidgetIds, updateUI(context));
     }
 
 }

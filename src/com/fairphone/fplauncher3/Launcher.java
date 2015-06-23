@@ -116,7 +116,6 @@ import com.fairphone.fplauncher3.edgeswipe.EdgeSwipeMenu;
 import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
 import com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity;
 import com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherManager;
-import com.fairphone.fplauncher3.widgets.peoplewidget.data.PeopleManager;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -389,9 +388,7 @@ public class Launcher extends Activity
     private Stats mStats;
 
     FocusIndicatorView mFocusHandler;
-    
-	private AppSwitcherManager mAppSwitcherManager;
-	private PeopleManager mPeopleManager;
+
 	private FrameLayout mEdgeMenuContainerView;
 	private EdgeSwipeMenu mEdgeSwipeMenu;
 	private AppDrawerView mAgingAppDrawer;
@@ -511,9 +508,7 @@ public class Launcher extends Activity
             showFirstRunActivity();
             showFirstRunClings();
         }
-        
-        mAppSwitcherManager = new AppSwitcherManager(this, this);
-        mPeopleManager = new PeopleManager(this, this);
+
         setupEdgeSwipeMenu();
     }
 
@@ -1056,13 +1051,10 @@ public class Launcher extends Activity
         mWorkspace.onResume();
 
         PackageInstallerCompat.getInstance(this).onResume();
-        
-        mAppSwitcherManager.loadAppSwitcherData();
-        mAppSwitcherManager.registerAppSwitcherBroadcastReceivers();
-        
-        mPeopleManager.loadContactsInfo();
-        mPeopleManager.registerBroadcastReceivers();
-        
+
+        AppSwitcherManager.loadAppSwitcherData(this);
+        AppSwitcherManager.registerAppSwitcherBroadcastReceivers(this);
+
         AppDiscoverer.getInstance().loadAppAgingData(this);
     }
 
@@ -1083,11 +1075,8 @@ public class Launcher extends Activity
             mWorkspace.getCustomContentCallbacks().onHide();
         }
         
-        mAppSwitcherManager.saveAppSwitcherData();
-        mAppSwitcherManager.unregisterAppSwitcherBroadcastReceivers();
-        
-        mPeopleManager.savePeopleWidgetData();
-        mPeopleManager.unregisterBroadcastReceivers();
+        AppSwitcherManager.saveAppSwitcherData(this);
+        AppSwitcherManager.unregisterAppSwitcherBroadcastReceivers(this);
 
         AppDiscoverer.getInstance().saveAppAgingData(this);
         
@@ -4656,7 +4645,7 @@ public class Launcher extends Activity
         for (AppInfo appInfo : appInfos) {
         	ComponentName componentName = appInfo.getComponentName();
         	if(componentName != null){
-	            mAppSwitcherManager.applicationRemoved(componentName);
+	            AppSwitcherManager.applicationRemoved(this, componentName);
 	            AppDiscoverer.getInstance().applicationRemoved(this, componentName);
 	        }
 		}
@@ -5088,7 +5077,7 @@ public class Launcher extends Activity
     
     private void updateActivityInfoViaExplicitIntent(ComponentName component)
     {
-        mAppSwitcherManager.applicationStarted(component);
+        AppSwitcherManager.applicationStarted(this, component);
         AppDiscoverer.getInstance().applicationStarted(this, component);
     }
     
