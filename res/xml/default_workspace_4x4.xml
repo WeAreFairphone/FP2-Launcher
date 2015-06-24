@@ -15,102 +15,93 @@
 -->
 
 <favorites xmlns:launcher="http://schemas.android.com/apk/res-auto/com.android.launcher3">
-    <!-- Far-left screen [0] -->
 
-    <!-- Left screen [1] -->
     <appwidget
-        launcher:packageName="com.android.settings"
-        launcher:className="com.android.settings.widget.SettingsAppWidgetProvider"
+        launcher:packageName="com.fairphone.mycontacts"
+        launcher:className="com.fairphone.mycontacts.widget.PeopleWidget"
         launcher:screen="1"
         launcher:x="0"
-        launcher:y="3"
-        launcher:spanX="4"
-        launcher:spanY="1" />
-
-    <!-- Middle screen [2] -->
-    <appwidget
-        launcher:packageName="com.android.deskclock"
-        launcher:className="com.android.alarmclock.AnalogAppWidgetProvider"
-        launcher:screen="2"
-        launcher:x="1"
         launcher:y="0"
-        launcher:spanX="2"
-        launcher:spanY="2" />
-    <favorite
-        launcher:packageName="com.android.camera"
-        launcher:className="com.android.camera.Camera"
+        launcher:spanX="4"
+        launcher:spanY="5" />
+
+    <appwidget
+        launcher:packageName="com.fairphone.clock"
+        launcher:className="com.fairphone.clock.widget.ClockWidget"
         launcher:screen="2"
         launcher:x="0"
-        launcher:y="3" />
+        launcher:y="0"
+        launcher:spanX="4"
+        launcher:spanY="3" />
 
-    <!-- Right screen [3] -->
-    <favorite
-        launcher:packageName="com.android.gallery3d"
-        launcher:className="com.android.gallery3d.app.Gallery"
-        launcher:screen="3"
-        launcher:x="1"
-        launcher:y="3" />
-    <favorite
-        launcher:packageName="com.android.settings"
-        launcher:className="com.android.settings.Settings"
-        launcher:screen="3"
-        launcher:x="2"
-        launcher:y="3" />
-
-    <!-- Far-right screen [4] -->
-
-    <!-- Hotseat (We use the screen as the position of the item in the hotseat) -->
-    <!-- Dialer, Contacts, [All Apps], Messaging, Browser -->
-    <resolve
-        launcher:container="-101"
-        launcher:screen="0"
+    <folder
+        launcher:screen="2"
         launcher:x="0"
-        launcher:y="0" >
-        <favorite launcher:uri="#Intent;action=android.intent.action.DIAL;end" />
-        <favorite launcher:uri="tel:123" />
-        <favorite launcher:uri="#Intent;action=android.intent.action.CALL_BUTTON;end" />
-
+        launcher:y="4"
+        launcher:title="@string/google_title">
         <favorite
-            launcher:packageName="com.android.dialer"
-            launcher:className="com.android.dialer.DialtactsActivity" />
-    </resolve>
+            launcher:className="com.google.android.googlequicksearchbox.SearchActivity"
+            launcher:packageName="com.google.android.googlequicksearchbox" />
+        <favorite
+            launcher:className="com.google.android.apps.chrome.Main"
+            launcher:packageName="com.android.chrome" />
+        <favorite
+            launcher:className="com.google.android.gm.ConversationListActivityGmail"
+            launcher:packageName="com.google.android.gm" />
+        <favorite
+            launcher:className="com.google.android.maps.MapsActivity"
+            launcher:packageName="com.google.android.apps.maps" />
+        <favorite
+            launcher:className="com.google.android.youtube.app.honeycomb.Shell$HomeActivity"
+            launcher:packageName="com.google.android.youtube" />
+        <favorite
+            launcher:className="com.google.android.apps.docs.app.NewMainProxyActivity"
+            launcher:packageName="com.google.android.apps.docs" />
+        <favorite
+            launcher:className="com.android.music.activitymanagement.TopLevelActivity"
+            launcher:packageName="com.google.android.music" />
+        <favorite
+            launcher:className="com.google.android.youtube.videos.EntryPoint"
+            launcher:packageName="com.google.android.videos" />
+        <favorite
+            launcher:className="com.google.android.talk.SigningInActivity"
+            launcher:packageName="com.google.android.talk" />
+        <favorite
+            launcher:className="com.google.android.apps.plus.phone.ConversationListActivity"
+            launcher:packageName="com.google.android.apps.plus" />
+        <favorite
+            launcher:className="com.android.camera.CameraActivity"
+            launcher:packageName="com.google.android.GoogleCamera" />
+    </folder>
 
     <favorite
-        launcher:packageName="com.android.contacts"
-        launcher:className="com.android.contacts.activities.PeopleActivity"
-        launcher:container="-101"
-        launcher:screen="1"
+        launcher:packageName="com.fairphone.updater"
+        launcher:className="com.fairphone.updater.FairphoneUpdater"
+        launcher:screen="2"
         launcher:x="1"
-        launcher:y="0" />
+        launcher:y="4" />
 
-    <resolve
-        launcher:container="-101"
-        launcher:screen="3"
+    <favorite
+        launcher:packageName="com.fairphone.suggestedapps"
+        launcher:className="com.fairphone.suggestedapps.FairphoneSuggestedAppsActivity"
+        launcher:screen="2"
+        launcher:x="2"
+        launcher:y="4" />
+
+    <favorite
+        launcher:packageName="com.android.vending"
+        launcher:className="com.android.vending.AssetBrowserActivity"
+        launcher:screen="2"
         launcher:x="3"
-        launcher:y="0" >
-        <favorite
-            launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_MESSAGING;end" />
-        <favorite launcher:uri="sms:" />
-        <favorite launcher:uri="smsto:" />
-        <favorite launcher:uri="mms:" />
-        <favorite launcher:uri="mmsto:" />
+        launcher:y="4" />
 
-        <favorite
-            launcher:packageName="com.android.mms"
-            launcher:className="com.android.mms.ui.ConversationList" />
-    </resolve>
-    <resolve
-        launcher:container="-101"
-        launcher:screen="4"
-        launcher:x="4"
-        launcher:y="0" >
-        <favorite
-            launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_BROWSER;end" />
-        <favorite launcher:uri="http://www.example.com/" />
-
-        <favorite
-            launcher:packageName="com.android.browser"
-            launcher:className="com.android.browser.BrowserActivity" />
-    </resolve>
+    <appwidget
+        launcher:packageName="com.fairphone.fplauncher3"
+        launcher:className="com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherWidget"
+        launcher:screen="3"
+        launcher:x="0"
+        launcher:y="0"
+        launcher:spanX="4"
+        launcher:spanY="5" />
 
 </favorites>

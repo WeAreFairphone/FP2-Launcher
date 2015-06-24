@@ -305,4 +305,7 @@ s
     <string name="one_month_idle">One month to idle</string>
     <string name="lifecyle_time_chooser_easter_egg">Achievement unlocked: Control active apps idle time</string>
 
+
+    <string name="google_title" translatable="false">Google</string>
+
 </resources>
