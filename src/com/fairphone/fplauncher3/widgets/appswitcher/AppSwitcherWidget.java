@@ -15,7 +15,6 @@
  */
 package com.fairphone.fplauncher3.widgets.appswitcher;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.PendingIntent;
@@ -33,7 +32,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.fairphone.fplauncher3.BuildConfig;
 import com.fairphone.fplauncher3.R;
 
 public class AppSwitcherWidget extends AppWidgetProvider
