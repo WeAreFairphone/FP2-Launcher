@@ -39,7 +39,9 @@ LOCAL_PROTOC_FLAGS := --proto_path=$(LOCAL_PATH)/protos/
 LOCAL_SDK_VERSION := current
 
 LOCAL_PACKAGE_NAME := FairphoneLauncher3
-#LOCAL_CERTIFICATE := shared
+LOCAL_CERTIFICATE := platform
+
+LOCAL_PRIVILEGED_MODULE := true
 
 LOCAL_OVERRIDES_PACKAGES := Launcher2 \
 Launcher3
