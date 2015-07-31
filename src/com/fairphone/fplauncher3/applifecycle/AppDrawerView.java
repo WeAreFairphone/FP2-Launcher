@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
@@ -207,7 +208,12 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         mAppSettingsPopup.getMenuInflater()
                 .inflate(R.menu.aging_drawer_menu, mAppSettingsPopup.getMenu());
 
-        mAppSettingsPopup.getMenu().findItem(getAppIdleChoice(mContext)).setChecked(true);
+        MenuItem item = mAppSettingsPopup.getMenu().findItem(getAppIdleChoice(mContext));
+        if (item == null) {
+            setAppIdleChoice(mContext, R.id.one_month_to_idle);
+            item = mAppSettingsPopup.getMenu().findItem(getAppIdleChoice(mContext));
+        }
+        item.setChecked(true);
 
         mAppSettingsPopup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
@@ -221,8 +227,9 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
                         ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_two_weeks));
                         break;
                     case R.id.one_month_to_idle:
-                    default:
                         ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_month));
+                    default:
+                        ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_default));
                         break;
                 }
 

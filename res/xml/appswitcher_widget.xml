@@ -4,6 +4,6 @@
     android:label="@string/app_switcher_name"
     android:minHeight="400dp"
     android:minWidth="300dp"
-    android:previewImage="@drawable/appswicther_widget_icon"
+    android:previewImage="@drawable/widget_my_apps_icon"
     android:resizeMode="none"
     android:updatePeriodMillis="0" />

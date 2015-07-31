@@ -50,7 +50,7 @@
          is used for internal (baked-in) padding
     -->
     <integer name="config_allAppsButtonPaddingPercent">17</integer>
-    <integer name="config_workspaceDefaultScreen">0</integer>
+    <integer name="config_workspaceDefaultScreen">1</integer>
 
     <!-- Tab transition animation duration -->
     <!--
@@ -115,6 +115,7 @@
     <string name="edge_swipe_default_apps">com.android.contacts,com.android.contacts.activities.DialtactsActivity;com.android.mms,com.android.mms.ui.BootActivity;com.android.gallery3d,com.android.camera.CameraLauncher;com.android.browser,com.android.browser.BrowserActivity</string>
     
     <!-- App lifecycle -->
+    <integer name="app_frequent_use_default">@integer/app_frequent_use_one_month</integer>
     <integer name="app_frequent_use_one_week">5</integer>
     <integer name="app_frequent_use_two_weeks">15</integer>
     <integer name="app_frequent_use_one_month">28</integer>

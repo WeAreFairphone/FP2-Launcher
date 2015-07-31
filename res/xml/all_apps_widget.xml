@@ -4,6 +4,6 @@
     android:label="@string/fp_all_apps_widget_name"
     android:minHeight="@dimen/edit_favorites_icon_size"
     android:minWidth="@dimen/edit_favorites_icon_size"
-    android:previewImage="@drawable/icon_allapps_white"
+    android:previewImage="@drawable/widget_all_apps_icon"
     android:resizeMode="none"
     android:updatePeriodMillis="0" />

@@ -115,6 +115,7 @@ import com.fairphone.fplauncher3.compat.PackageInstallerCompat.PackageInstallInf
 import com.fairphone.fplauncher3.edgeswipe.EdgeSwipeMenu;
 import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
 import com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity;
+import com.fairphone.fplauncher3.oobe.OOBEActivity;
 import com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherManager;
 
 import java.io.DataInputStream;
@@ -164,6 +165,11 @@ public class Launcher extends Activity
     
     private static final int REQUEST_PICK_SETTINGS = 98;
     private static final int REQUEST_EDIT_FAVORITES = 99;
+
+    //OOBE setting
+    private static final String SHOW_OOBE_EDIT_FAVORITES = "SHOW_FP_OOBE_EDIT_FAVORITES";
+    private static final String SHOW_OOBE_EDGE_SWIPE_MENU = "SHOW_FP_OOBE_EDGE_SWIPE_MENU";
+    private static final String SHOW_VALUES_VIDEO = "SHOW_FAIRPHONE_VALUES_VIDEO";
 
     /**
      * IntentStarter uses request codes starting with this. This must be greater than all activity
@@ -1055,7 +1061,8 @@ public class Launcher extends Activity
         AppSwitcherManager.loadAppSwitcherData(this);
         AppSwitcherManager.registerAppSwitcherBroadcastReceivers(this);
 
-        AppDiscoverer.getInstance().loadAppAgingData(this);
+        // show OOBE
+        startOOBEActivityOnFirstUse(SHOW_OOBE_EDGE_SWIPE_MENU, OOBEActivity.OOBE_DEVICE_TUTORIAL);
     }
 
     @Override
@@ -4897,7 +4904,7 @@ public class Launcher extends Activity
             if (mModel.canMigrateFromOldLauncherDb(this)) {
                 launcherClings.showMigrationCling();
             } else {
-                launcherClings.showLongPressCling(true);
+                //launcherClings.showLongPressCling(true);
             }
         }
     }
@@ -5022,7 +5029,7 @@ public class Launcher extends Activity
             sDateStamp.setTime(System.currentTimeMillis());
             synchronized (sDumpLogs) {
                 sDumpLogs.add(sDateFormat.format(sDateStamp) + ": " + tag + ", " + log
-                    + (e == null ? "" : (", Exception: " + e)));
+                        + (e == null ? "" : (", Exception: " + e)));
             }
         }
     }
@@ -5093,8 +5100,50 @@ public class Launcher extends Activity
 		mEdgeMenuContainerView = (FrameLayout)findViewById(R.id.edge_menu_container);
         mEdgeSwipeMenu = new EdgeSwipeMenu(this, this, mDragController, mEdgeMenuContainerView);
 	}
-	
-	@TargetApi(21)
+
+    /**
+     * Show OOBE tutorial on first use of Edge Swipe, Edit Favorites, etc...
+     *
+     * @param oobeToShow
+     *            Activity identifier: SHOW_OOBE_EDIT_FAVORITES or
+     *            SHOW_OOBE_EDGE_SWIPE_MENU
+     * @param oobeTutorial
+     *            Tutorial to show: OOBEActivity.OOBE_EDIT_FAVORITES_TUTORIAL,
+     *            OOBEActivity.OOBE_EDGE_SWIPE_TUTORIAL,
+     *            OOBEActivity.OOBE_FULL_TUTORIAL
+     */
+    private boolean startOOBEActivityOnFirstUse(String oobeToShow,
+                                                int oobeTutorial) {
+        boolean result = false;
+
+        if (mSharedPrefs.getBoolean(oobeToShow, true)) {
+            startOOBEActivity(oobeTutorial);
+            SharedPreferences.Editor editor = mSharedPrefs.edit();
+            editor.putBoolean(oobeToShow, false);
+            editor.commit();
+
+            result = true;
+        }
+
+        return result;
+    }
+
+    /**
+     * Starts the OOBEActivity in the selected tutorial
+     *
+     * @param oobeTutorial
+     *            Tutorial to show: OOBEActivity.OOBE_EDIT_FAVORITES_TUTORIAL,
+     *            OOBEActivity.OOBE_EDGE_SWIPE_TUTORIAL,
+     *            OOBEActivity.OOBE_FULL_TUTORIAL
+     */
+    private void startOOBEActivity(int oobeTutorial) {
+        Intent oobeEditFavoritesIntent = new Intent(this, OOBEActivity.class);
+        oobeEditFavoritesIntent.putExtra(OOBEActivity.OOBE_TUTORIAL,
+                oobeTutorial);
+        startActivity(oobeEditFavoritesIntent);
+    }
+
+        @TargetApi(21)
 	public void showAgingAppDrawer() {
 	    
 	    if (Utilities.isLmpOrAbove()) {

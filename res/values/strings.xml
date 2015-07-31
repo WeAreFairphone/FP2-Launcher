@@ -308,4 +308,40 @@ s
 
     <string name="google_title" translatable="false">Google</string>
 
+    <!-- OOBE Texts -->
+    <string name="oobe_quick_access">Quick Access</string>
+
+    <string name="oobe_select_language">Select\nLanguage</string>
+    <string name="oobe_setup_wifi">Setup\nWi-Fi</string>
+    <string name="oobe_intro_top">Welcome!\nYou hold in your hands a phone built in a way that puts social values first. But yes, it makes phone calls, too.</string>
+    <string name="oobe_intro_bottom">Let\'s show you how to use it</string>
+
+    <string name="oobe_edge_swipe_title">Edge Swipe</string>
+    <string name="oobe_edge_swipe_text">Swipe from left or right of the phone without releasing your finger.</string>
+
+    <string name="oobe_open_app_text">Release your finger on top of an App to open it</string>
+
+    <string name="oobe_edit_drag_intro">Apps can be dragged and dropped making them easy to edit</string>
+    <string name="oobe_edit_drag_add_title">Drag and drop</string>
+    <string name="oobe_edit_drag_add_text">To right column to add to favorites</string>
+
+    <string name="oobe_edit_drag_remove_title">Drag and drop</string>
+    <string name="oobe_edit_drag_remove_text">To left column to remove from favorites</string>
+
+    <string name="oobe_edit_drag_trade_title">Drag favorites</string>
+    <string name="oobe_edit_drag_trade_text">To swap position</string>
+
+    <string name="oobe_your_apps_intro">Your most used apps all in one place</string>
+    <string name="oobe_your_apps_learning">Your phone learns from you and will remember your most used apps</string>
+    <string name="oobe_your_apps_last_ones">You can also see the last ones you\'ve used</string>
+    <string name="oobe_your_apps_start_using">Start using your phone, the apps will be waiting here for you</string>
+
+    <string name="oobe_start">Start</string>
+    <string name="oobe_back">Back</string>
+    <string name="oobe_skip">Skip</string>
+    <string name="oobe_next">Next</string>
+    <string name="oobe_done">Done</string>
+    <string name="oobe_try_it_yourself">Try it yourself</string>
+
+
 </resources>

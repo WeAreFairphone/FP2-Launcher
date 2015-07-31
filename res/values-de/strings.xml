@@ -72,7 +72,7 @@
     
     <!-- Fairphone -->
     <!-- Your Apps -->    
-    <string name="last_used">Zuletzt benutzte</string>
+    <string name="last_used">Letzte</string>
     <string name="most_used">Meistbenutzte</string>
     <string name="no_apps_have_been_opened_yet">Noch keine Apps geöffnet? Fangen Sie einfach an, Ihr Handy zu benutzen und kommen Sie zu diesem Bildschirm zurück</string>
 </resources>

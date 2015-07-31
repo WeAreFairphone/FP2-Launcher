@@ -64,6 +64,8 @@ public class AppDiscoverer
             
             _allApps.put(appInfo.getComponentName(), appInfo);
         }
+
+        loadAppAgingData(context);
     }
 
     public ArrayList<AppInfo> getPackages()

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/appSwitcher"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:minHeight="500dp"
     android:orientation="horizontal" >
 
@@ -10,6 +10,7 @@
         android:layout_width="124dp"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
+        android:layout_marginTop="30dp"
         android:orientation="vertical" >
 
         <TextView
@@ -17,16 +18,14 @@
             style="@style/AppSwitcherTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="3dp"
-            android:gravity="center_horizontal"
+            android:gravity="left"
             android:text="@string/last_used" />
 
         <LinearLayout
             android:id="@+id/lastUsedApps"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="14dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical" />
@@ -34,23 +33,24 @@
 
     <ImageView
         android:layout_width="1dp"
-        android:layout_height="match_parent"
+        android:layout_height="488dp"
+        android:layout_marginTop="30dp"
         android:background="@color/line_shadow" />
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="8dp" >
 
         <TextView
             android:id="@+id/mostUsedAppsTitle"
             style="@style/AppSwitcherTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginLeft="7dp"
             android:text="@string/most_used" />
 
         <TextView
@@ -58,7 +58,7 @@
             style="@style/AppSwitcherSubTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="7dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="20dp"
             android:text="@string/no_apps_have_been_opened_yet"
@@ -68,7 +68,7 @@
             android:id="@+id/mostUsedApps"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="14dp"
             android:orientation="vertical" />
     </LinearLayout>
 

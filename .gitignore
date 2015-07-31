@@ -9,3 +9,4 @@ res/values/com_crashlytics_export_strings.xml
 *.iml
 local.properties
 .gradle/
+androidCleaner.py

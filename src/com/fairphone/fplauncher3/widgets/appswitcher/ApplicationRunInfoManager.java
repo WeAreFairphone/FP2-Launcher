@@ -427,7 +427,9 @@ public class ApplicationRunInfoManager
 
     public void setAllRunInfo(List<ApplicationRunInformation> allApps)
     {
-        resetState();
+        if (_updateLists) {
+            resetState();
+        }
 
         for (ApplicationRunInformation app : allApps)
         {

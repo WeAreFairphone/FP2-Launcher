@@ -46,6 +46,8 @@
     <color name="background_blue_dark">#123C59</color>
     <color name="background_grey_light">#F7F7F7</color>
 
+    <color name="blue_alpha_50">#802AA8E0</color>
+
     <!-- Edit favourites -->
     <color name="edit_favourites_background_white">#F7F7F7</color>
     <color name="edit_favourites_background_grey_dark">#333333</color>
@@ -60,5 +62,8 @@
 
     <!-- App lifecycle -->
     <color name="pin_target_hover_tint">#92B851</color>
+
+    <color name="oobe_background">#f2174361</color>
+    <color name="oobe_blue_light">#2AA8E0</color>
 
 </resources>

@@ -41,4 +41,18 @@
     <style name="ActionBarSetWallpaperStyle" parent="@android:style/Widget.Holo.ActionButton">
         <item name="android:textColor">#ffffffff</item>
     </style>
+
+    <style name="oobe_title">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="oobe_description">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>

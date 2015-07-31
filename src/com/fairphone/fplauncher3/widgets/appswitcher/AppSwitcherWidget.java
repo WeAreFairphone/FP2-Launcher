@@ -196,7 +196,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         Intent launchIntent = generateLaunchIntent(info, appLabel.toString());
 
         PendingIntent clickRecentApps = PendingIntent.getBroadcast(context, code, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mostUsedRow.setOnClickPendingIntent(R.id.mostUsedButton, clickRecentApps);
+        mostUsedRow.setOnClickPendingIntent(R.id.mostUsedRow, clickRecentApps);
 
         return mostUsedRow;
     }
@@ -216,7 +216,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         launchIntent.setAction(ACTION_APP_SWITCHER_LAUNCH_ALL_APPS);
 
         PendingIntent launchPendingIntent = PendingIntent.getBroadcast(context, code, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        allAppsButton.setOnClickPendingIntent(R.id.mostUsedButton, launchPendingIntent);
+        allAppsButton.setOnClickPendingIntent(R.id.mostUsedRow, launchPendingIntent);
 
         return allAppsButton;
     }
@@ -256,7 +256,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         Intent launchIntent = generateLaunchIntent(info, appLabel.toString());
 
         PendingIntent clickRecentApps = PendingIntent.getBroadcast(context, code, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        recentRow.setOnClickPendingIntent(R.id.recentButton, clickRecentApps);
+        recentRow.setOnClickPendingIntent(R.id.recentRow, clickRecentApps);
 
         return recentRow;
     }

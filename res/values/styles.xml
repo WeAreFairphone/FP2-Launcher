@@ -183,6 +183,7 @@
     </style>
 
     <style name="AppSwitcherIconText" parent="@style/IconText">
+        <item name="android:textSize">14sp</item>
         <item name="android:shadowColor">@color/black</item>
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">0</item>
@@ -213,13 +214,14 @@
 
     <style name="AppSwitcherTitle">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">34sp</item>
-        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowColor">@color/transparent</item>
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">0</item>
         <item name="android:shadowRadius">0</item>
+        <item name="android:singleLine">true</item>
     </style>
 
     <style name="AppSwitcherSubTitle">
@@ -282,6 +284,44 @@
 
     <style name="ThemeRadioButtonDark" parent="@style/ThemeRadioButtonLight">
         <item name="android:textColor">@color/theme_toggle_text_color_blue</item>
+    </style>
+
+    <style name="OOBEButton">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:shadowColor">@color/white</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:shadowDx">0.5</item>
+        <item name="android:shadowDy">0.5</item>
+        <item name="android:shadowRadius">0.01</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
+
+    <style name="OOBETheme" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="OOBETitle">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:lineSpacingExtra">10dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:shadowColor">#FFF</item>
+        <item name="android:shadowDx">0.5</item>
+        <item name="android:shadowDy">0.5</item>
+        <item name="android:shadowRadius">0.01</item>
+    </style>
+
+    <style name="OOBEText" parent="@style/OOBETitle">
+        <item name="android:textColor">#dcdcdc</item>
+        <item name="android:shadowColor">#dcdcdc</item>
+    </style>
+
+    <style name="OOBETitleBig" parent="@style/OOBETitle">
+        <item name="android:textSize">45sp</item>
     </style>
 
 </resources>
