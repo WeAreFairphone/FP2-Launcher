@@ -10,3 +10,5 @@ res/values/com_crashlytics_export_strings.xml
 local.properties
 .gradle/
 androidCleaner.py
+.DS_Store
+

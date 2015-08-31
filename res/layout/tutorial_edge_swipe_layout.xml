@@ -1,13 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
      android:background="#00000000">
 
-    <com.fairphone.fplauncher3.oobe.animation.MenuTutorialAnimationView
+    <com.fairphone.fplauncher3.oobe.animation.EdgeSwipeTutorialAnimationView
         android:id="@+id/swipeAnimationView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <TextView
+            style="@style/OOBETitle"
+            android:id="@+id/swipeAnimationTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="77dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/oobe_edge_swipe_title"
+            />
+
+        <TextView
+            style="@style/OOBEText"
+            android:id="@+id/swipeAnimationText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="125dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/oobe_edge_swipe_text"
+            />
+
+        <TextView
+            android:id="@+id/swipeAnimationEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="340dp"
+            android:layout_marginLeft="70dp"
+            android:fontFamily="sans-serif"
+            android:textSize="14sp"
+            android:textColor="#2aa8e0"
+            android:textAllCaps="true"
+            android:text="@string/oobe_edge_swipe_edit"
+            />
+
+    </com.fairphone.fplauncher3.oobe.animation.EdgeSwipeTutorialAnimationView>
 
 </FrameLayout>

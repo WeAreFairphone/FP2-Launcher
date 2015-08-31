@@ -82,8 +82,8 @@
         launcher:y="4" />
 
     <favorite
-        launcher:packageName="com.fairphone.suggestedapps"
-        launcher:className="com.fairphone.suggestedapps.FairphoneSuggestedAppsActivity"
+        launcher:packageName="com.android.settings"
+        launcher:className="com.android.settings.Settings$NotificationAppListActivity"
         launcher:screen="2"
         launcher:x="2"
         launcher:y="4" />

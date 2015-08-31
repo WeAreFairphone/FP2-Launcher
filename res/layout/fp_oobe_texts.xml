@@ -59,11 +59,18 @@
     <LinearLayout
         android:id="@+id/oobeTextGroup3"
         android:layout_width="match_parent"
-        android:layout_height="324dp"
-        android:background="@drawable/oobe_popup_arrow_down"
+        android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="gone">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="290.2dp"
+        android:background="@drawable/oobe_popup_arrow_down"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
 
         <TextView
             style="@style/oobe_title"
@@ -82,28 +89,33 @@
         <Button
             android:id="@+id/got_it_button"
             android:layout_width="match_parent"
-            android:layout_height="34dp"
+            android:layout_height="48dp"
             android:layout_marginLeft="71dp"
             android:layout_marginRight="71dp"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/button_border"
             android:text="@string/workspace_cling_longpress_dismiss"
             android:textAllCaps="true"
+            android:textSize="16sp"
             android:textColor="@color/oobe_blue_light" />
-
     </LinearLayout>
+        <ImageView
+            android:layout_width="79.8dp"
+            android:layout_height="86.4dp"
+            android:src="@drawable/oobe_hand"
+            android:layout_marginLeft="170.2dp"
+            android:layout_marginRight="130dp"
+            android:layout_marginTop="37dp"/>
+</LinearLayout>
 
     <LinearLayout
         android:id="@+id/oobeTextGroup4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:paddingTop="40dp"
         android:visibility="gone">
 
-        <TextView
+   <!--     <TextView
             style="@style/oobe_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,7 +125,19 @@
             style="@style/oobe_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/oobe_edge_swipe_text" />
+            android:text="@string/oobe_edge_swipe_text" />-->
+
+        <Button
+            android:id="@+id/got_it_button_4"
+            android:layout_width="220dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="515dp"
+            android:background="@drawable/button_border"
+            android:text="@string/workspace_cling_longpress_dismiss"
+            android:textAllCaps="true"
+            android:textColor="@color/oobe_blue_light" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -140,10 +164,9 @@
 
         <Button
             android:id="@+id/try_it_button"
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_marginLeft="71dp"
-            android:layout_marginRight="71dp"
+            android:layout_width="220dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="380dp"
             android:background="@drawable/button_border"
             android:text="@string/oobe_try_it_yourself"
@@ -246,6 +269,43 @@
             android:layout_marginTop="-15dp"
             android:tag="fontHannah"
             android:text="@string/oobe_edit_drag_trade_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/oobeTextGroup10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+
+        android:visibility="gone">
+
+       <!-- <TextView
+            style="@style/OOBETitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/oobe_camera_button_title" />
+
+        <TextView
+            style="@style/OOBEText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/oobe_camera_button_text" />-->
+
+        <Button
+            android:id="@+id/got_it_button_10"
+            android:layout_width="220dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="525dp"
+            android:background="@drawable/button_border"
+            android:text="@string/workspace_cling_longpress_dismiss"
+            android:textAllCaps="true"
+            android:textColor="@color/oobe_blue_light" />
     </LinearLayout>
 
 </merge>

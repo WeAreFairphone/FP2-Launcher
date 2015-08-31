@@ -3,13 +3,13 @@
     android:id="@+id/oobe_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent" >
+    android:background="@android:color/transparent"
+    tools:context=".oobe.OOBEActivity">
 
     <FrameLayout
         android:id="@+id/tutorialAnimationViewContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="55dp" >
+        android:layout_height="match_parent">
     </FrameLayout>
 
     <include layout="@layout/fp_oobe_texts" />
@@ -22,7 +22,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:tag="fontHannah"
-        android:text="@string/oobe_skip" />
+        android:text="@string/oobe_skip"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/startButton"
@@ -32,7 +33,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:tag="fontHannah"
-        android:text="@string/oobe_start" />
+        android:text="@string/oobe_start"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/nextButton"
@@ -43,7 +45,8 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="25dp"
         android:tag="fontHannah"
-        android:text="@string/oobe_next" />
+        android:text="@string/oobe_next"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/backButton"
@@ -54,7 +57,8 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="25dp"
         android:tag="fontHannah"
-        android:text="@string/oobe_back" />
+        android:text="@string/oobe_back"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/oobeVideoViewGroup"

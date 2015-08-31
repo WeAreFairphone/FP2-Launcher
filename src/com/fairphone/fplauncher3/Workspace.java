@@ -48,9 +48,11 @@ import android.graphics.Region.Op;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Parcelable;
+import android.os.PowerManager;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -2119,7 +2121,12 @@ public class Workspace extends SmoothPagedView
         if (!enable) {
             finalState = Workspace.State.NORMAL;
         }
-
+        PowerManager powerManager = (PowerManager)
+                mLauncher.getSystemService(Context.POWER_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                && powerManager.isPowerSaveMode()) {
+            animated = false;
+        }
         Animator workspaceAnim = getChangeStateAnimation(finalState, animated, 0, snapPage);
         if (workspaceAnim != null && !mIsSwitchingState) {
             onTransitionPrepare();

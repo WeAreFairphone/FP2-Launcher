@@ -17,5 +17,8 @@
 
 <resources>
     <string-array name="wallpapers" translatable="false">
+        <item>wallpaper_screws</item>
+        <item>wallpaper_press</item>
+        <item>wallpaper_xrayback</item>
     </string-array>
 </resources>

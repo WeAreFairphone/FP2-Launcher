@@ -16,27 +16,35 @@
 package com.fairphone.fplauncher3.oobe;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import com.fairphone.fplauncher3.R;
 import com.fairphone.fplauncher3.oobe.animation.AddFavTutorialAnimationHelper;
+import com.fairphone.fplauncher3.oobe.animation.CameraTutorialAnimationHelper;
+import com.fairphone.fplauncher3.oobe.animation.EdgeGlowTutorialAnimationHelper;
 import com.fairphone.fplauncher3.oobe.animation.EdgeSwipeTutorialAnimationHelper;
 import com.fairphone.fplauncher3.oobe.animation.MoveFavTutorialAnimationHelper;
 import com.fairphone.fplauncher3.oobe.animation.OpenAppTutorialAnimationHelper;
@@ -52,9 +60,22 @@ import java.util.Locale;
 public class OOBEActivity extends Activity implements TutorialAnimationHelperListener {
 
     private View mOOBEGotItButton;
+    private View mOOBEGotItButton4;
+    private View mOOBEGotItButton10;
 
     public static enum OOBESteps {
-        SELECT_LANGUAGE, SETUP_WIFI, DEVICE_INTRO, EDGE_SWIPE_APPEAR, EDGE_SWIPE_SELECTION, EDIT_INTRO, EDIT_DRAG_NEW_FAVORITE, EDIT_DRAG_REMOVE_FAVORITE, EDIT_DRAG_TRADE_FAVORITE
+        SELECT_LANGUAGE,
+        SETUP_WIFI,
+        DEVICE_INTRO,
+        EDGE_GLOW,
+        EDGE_SWIPE_APPEAR,
+        EDGE_SWIPE_SELECTION,
+        EDIT_INTRO,
+        EDIT_DRAG_NEW_FAVORITE,
+        EDIT_DRAG_REMOVE_FAVORITE,
+        EDIT_DRAG_TRADE_FAVORITE,
+        CAMERA_BUTTON,
+        SHUTTER_BUTTON
     }
 
     public static final String OOBE_TUTORIAL = "OOBE_Tutorial";
@@ -77,6 +98,7 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
     private View mOOBETextGroup7;
     private View mOOBETextGroup8;
     private View mOOBETextGroup9;
+    private View mOOBETextGroup10;
 
     private ImageButton mSelectLanguageButton;
     private ImageButton mSetupWifiButton;
@@ -155,6 +177,7 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
         mOOBETextGroup7 = (View) findViewById(R.id.oobeTextGroup7);
         mOOBETextGroup8 = (View) findViewById(R.id.oobeTextGroup8);
         mOOBETextGroup9 = (View) findViewById(R.id.oobeTextGroup9);
+        mOOBETextGroup10 = (View) findViewById(R.id.oobeTextGroup10);
 
         mSelectLanguageButton = (ImageButton) findViewById(R.id.selectLanguageButton);
         mSetupWifiButton = (ImageButton) findViewById(R.id.setupWifiButton);
@@ -180,6 +203,8 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
         });
 
         mOOBEGotItButton = findViewById(R.id.got_it_button);
+        mOOBEGotItButton4 = findViewById(R.id.got_it_button_4);
+        mOOBEGotItButton10 = findViewById(R.id.got_it_button_10);
     }
 
 
@@ -208,7 +233,10 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
 //                setupTheVideo();
 //                setupDefinitionsSteps();
                 hideVideo();
+                setupDeviceIntroSteps();
                 setupEdgeSwipeTutorialSteps();
+                setupCameraButtonSteps();
+                //setupEdgeGlowTutorialSteps();
                 break;
             }
             case OOBE_EDIT_FAVORITES_TUTORIAL: {
@@ -246,10 +274,20 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
         mAnimationSteps.add(OOBESteps.SETUP_WIFI);
     }
 
-    private void setupEdgeSwipeTutorialSteps() {
+    private void setupDeviceIntroSteps(){
         mAnimationSteps.add(OOBESteps.DEVICE_INTRO);
+    }
+
+    private void setupEdgeSwipeTutorialSteps() {
         mAnimationSteps.add(OOBESteps.EDGE_SWIPE_APPEAR);
-        mAnimationSteps.add(OOBESteps.EDGE_SWIPE_SELECTION);
+    }
+
+    private void setupCameraButtonSteps(){
+        mAnimationSteps.add(OOBESteps.CAMERA_BUTTON);
+    }
+
+    private void setupEdgeGlowTutorialSteps(){
+        mAnimationSteps.add(OOBESteps.EDGE_GLOW);
     }
 
     private void setupTheVideo() {
@@ -331,6 +369,7 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
     private void setupFullTutorialSteps() {
         setupEdgeSwipeTutorialSteps();
         setupEditFavoritesTutorialSteps();
+        setupCameraButtonSteps();
     }
 
     private void jumpToNextSlide() {
@@ -356,6 +395,30 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
 
         if(mOOBEGotItButton!=null) {
             mOOBEGotItButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mCurrentStep < 2 && (mTutorialToShow == OOBE_DEVICE_TUTORIAL)) {
+                        jumpToNextSlide();
+                    } else {
+                        endOOBEActivity();
+                    }
+                }
+            });
+        }
+        if(mOOBEGotItButton4!=null) {
+            mOOBEGotItButton4.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mCurrentStep < 2 && (mTutorialToShow == OOBE_DEVICE_TUTORIAL)) {
+                        jumpToNextSlide();
+                    } else {
+                        endOOBEActivity();
+                    }
+                }
+            });
+        }
+        if(mOOBEGotItButton10!=null) {
+            mOOBEGotItButton10.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mCurrentStep < 2 && (mTutorialToShow == OOBE_DEVICE_TUTORIAL)) {
@@ -425,6 +488,10 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
                 break;
             case EDGE_SWIPE_APPEAR:
                 mMainBackground.setBackgroundResource(R.color.oobe_background);
+                Animation gotItButtonAnimation = new AlphaAnimation(0.0f, 1.0f);
+                gotItButtonAnimation.setDuration(200);
+                gotItButtonAnimation.setStartOffset(6500);
+                mOOBEGotItButton4.startAnimation(gotItButtonAnimation);
                 startAnimation(new EdgeSwipeTutorialAnimationHelper());
                 setTextView(mOOBETextGroup4);
                 break;
@@ -448,6 +515,18 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
                 startAnimation(new MoveFavTutorialAnimationHelper());
                 setTextView(mOOBETextGroup9);
                 break;
+            case CAMERA_BUTTON:
+                mMainBackground.setBackgroundResource(R.color.oobe_background);
+                Animation gotItButtonAnimation2 = new AlphaAnimation(0.0f, 1.0f);
+                gotItButtonAnimation2.setDuration(200);
+                gotItButtonAnimation2.setStartOffset(6500);
+                mOOBEGotItButton10.startAnimation(gotItButtonAnimation2);
+                startAnimation(new CameraTutorialAnimationHelper());
+                setTextView(mOOBETextGroup10);
+            case EDGE_GLOW:
+                //mMainBackground.setBackgroundResource(R.color.oobe_background);
+                //startAnimation(new EdgeGlowTutorialAnimationHelper());
+                //setTextView(mOOBETextGroup10);
             default:
 
         }
@@ -480,7 +559,6 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
                 visibilitySkip = View.GONE;
             }
         } else if (mCurrentStep >= (mAnimationSteps.size() - 1)) {
-
             mSkipButton.setText(getResources().getString(R.string.oobe_done));
             visibilityNext = View.GONE;
             visibilityStart = View.GONE;
@@ -492,42 +570,42 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
                     visibilityStart = View.GONE;
                     visibilityNext = View.GONE;
                 }
-
                 if (mCurrentStep < 1) {
                     visibilityBack = View.GONE;
                 }
             }
-
         }
 
-        mNextButton.setVisibility(visibilityNext);
+       /* mNextButton.setVisibility(visibilityNext);
         mBackButton.setVisibility(visibilityBack);
         mStartButton.setVisibility(visibilityStart);
-        mSkipButton.setVisibility(visibilitySkip);
+        mSkipButton.setVisibility(visibilitySkip);*/
     }
-
 
     private void setTextView(View targetTextView) {
         mOOBETextGroup1.setVisibility(targetTextView == mOOBETextGroup1 ? View.VISIBLE : View.GONE);
-//        Log.d("OOBE", "mTextGroup1 is " + (mOOBETextGroup1.getVisibility() == View.VISIBLE ? " visible" : " gone"));
+        Log.wtf("OOBE", "mTextGroup1 is " + (mOOBETextGroup1.getVisibility() == View.VISIBLE ? " visible" : " gone"));
         mOOBETextGroup2.setVisibility(targetTextView == mOOBETextGroup2 ? View.VISIBLE : View.GONE);
-//        Log.d("OOBE", "mTextGroup2 is " + (mOOBETextGroup2.getVisibility() == View.VISIBLE ? " visible" : " gone"));
+        Log.wtf("OOBE", "mTextGroup2 is " + (mOOBETextGroup2.getVisibility() == View.VISIBLE ? " visible" : " gone"));
         mOOBETextGroup3.setVisibility(targetTextView == mOOBETextGroup3 ? View.VISIBLE : View.GONE);
-//        Log.d("OOBE", "mTextGroup3 is " + (mOOBETextGroup3.getVisibility() == View.VISIBLE ? " visible" : " gone"));
+        Log.wtf("OOBE", "mTextGroup3 is " + (mOOBETextGroup3.getVisibility() == View.VISIBLE ? " visible" : " gone"));
         mOOBETextGroup4.setVisibility(targetTextView == mOOBETextGroup4 ? View.VISIBLE : View.GONE);
-//        Log.d("OOBE", "mTextGroup4 is " + (mOOBETextGroup4.getVisibility() == View.VISIBLE ? " visible" : " gone"));
+        Log.wtf("OOBE", "mTextGroup4 is " + (mOOBETextGroup4.getVisibility() == View.VISIBLE ? " visible" : " gone"));
         mOOBETextGroup5.setVisibility(targetTextView == mOOBETextGroup5 ? View.VISIBLE : View.GONE);
-//        Log.d("OOBE", "mTextGroup5 is " + (mOOBETextGroup5.getVisibility() == View.VISIBLE ? " visible" : " gone"));
+        Log.wtf("OOBE", "mTextGroup5 is " + (mOOBETextGroup5.getVisibility() == View.VISIBLE ? " visible" : " gone"));
         mOOBETextGroup6.setVisibility(targetTextView == mOOBETextGroup6 ? View.VISIBLE : View.GONE);
-//        Log.d("OOBE", "mTextGroup6 is " + (mOOBETextGroup6.getVisibility() == View.VISIBLE ? " visible" : " gone"));
+        Log.wtf("OOBE", "mTextGroup6 is " + (mOOBETextGroup6.getVisibility() == View.VISIBLE ? " visible" : " gone"));
         mOOBETextGroup7.setVisibility(targetTextView == mOOBETextGroup7 ? View.VISIBLE : View.GONE);
-//        Log.d("OOBE", "mTextGroup7 is " + (mOOBETextGroup7.getVisibility() == View.VISIBLE ? " visible" : " gone"));
+        Log.wtf("OOBE", "mTextGroup7 is " + (mOOBETextGroup7.getVisibility() == View.VISIBLE ? " visible" : " gone"));
 
         mOOBETextGroup8.setVisibility(targetTextView == mOOBETextGroup8 ? View.VISIBLE : View.GONE);
-//        Log.d("OOBE", "mTextGroup8 is " + (mOOBETextGroup8.getVisibility() == View.VISIBLE ? " visible" : " gone"));
+        Log.wtf("OOBE", "mTextGroup8 is " + (mOOBETextGroup8.getVisibility() == View.VISIBLE ? " visible" : " gone"));
 
         mOOBETextGroup9.setVisibility(targetTextView == mOOBETextGroup9 ? View.VISIBLE : View.GONE);
-//        Log.d("OOBE", "mTextGroup9 is " + (mOOBETextGroup9.getVisibility() == View.VISIBLE ? " visible" : " gone"));
+        Log.wtf("OOBE", "mTextGroup9 is " + (mOOBETextGroup9.getVisibility() == View.VISIBLE ? " visible" : " gone"));
+
+        mOOBETextGroup10.setVisibility(targetTextView == mOOBETextGroup10 ? View.VISIBLE : View.GONE);
+        Log.wtf("OOBE", "mTextGroup10 is " + (mOOBETextGroup10.getVisibility() == View.VISIBLE ? " visible" : " gone"));
 
         Animation oobeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in_fast);
 

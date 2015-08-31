@@ -206,7 +206,7 @@ s
     <!-- The title text for the workspace cling [CHAR_LIMIT=30] -->
     <!-- The description of how to use the workspace [CHAR_LIMIT=70] -->
     <!-- The title text for workspace longpress action [CHAR_LIMIT=40] -->
-    <string name="workspace_cling_longpress_title">Wallpapers, widgets, &amp; settings</string>
+    <string name="workspace_cling_longpress_title">Wallpapers,\n Widgets &amp; Settings</string>
     <!-- The description of how to use the workspace [CHAR_LIMIT=70] -->
     <string name="workspace_cling_longpress_description">Touch &amp; hold background to customize</string>
     <!-- The description of the button to dismiss the cling [CHAR_LIMIT=30] -->
@@ -316,9 +316,6 @@ s
     <string name="oobe_intro_top">Welcome!\nYou hold in your hands a phone built in a way that puts social values first. But yes, it makes phone calls, too.</string>
     <string name="oobe_intro_bottom">Let\'s show you how to use it</string>
 
-    <string name="oobe_edge_swipe_title">Edge Swipe</string>
-    <string name="oobe_edge_swipe_text">Swipe from left or right of the phone without releasing your finger.</string>
-
     <string name="oobe_open_app_text">Release your finger on top of an App to open it</string>
 
     <string name="oobe_edit_drag_intro">Apps can be dragged and dropped making them easy to edit</string>
@@ -335,6 +332,13 @@ s
     <string name="oobe_your_apps_learning">Your phone learns from you and will remember your most used apps</string>
     <string name="oobe_your_apps_last_ones">You can also see the last ones you\'ve used</string>
     <string name="oobe_your_apps_start_using">Start using your phone, the apps will be waiting here for you</string>
+
+    <string name="oobe_camera_button_title">Camera Button</string>
+    <string name="oobe_camera_button_text">Yes, it\'s a physical button on the side.\nPress it to launch the camera app \n and use it as the shutter when on the app.</string>
+
+    <string name="oobe_edge_swipe_title">Edge Swipe</string>
+    <string name="oobe_edge_swipe_text">Swipe from left or right edge of the phone \n and release it only on top of an app to open it.</string>
+    <string name="oobe_edge_swipe_edit">Edit</string>
 
     <string name="oobe_start">Start</string>
     <string name="oobe_back">Back</string>

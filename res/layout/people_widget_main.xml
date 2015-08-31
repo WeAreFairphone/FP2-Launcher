@@ -23,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="@string/not_contacted_anyone_yet"
+        android:fontFamily="roboto-light"
+        android:textSize="12sp"
         android:visibility="gone"/>
 
     <LinearLayout

@@ -118,4 +118,9 @@
     <dimen name="edge_swipe_item_translate_edit_background">165dp</dimen>
     <dimen name="edge_swipe_item_translate_edit_button">15dp</dimen>
 
+    <!-- Out of the box tutorial -->
+    <dimen name="oobe_title_size">34sp</dimen>
+    <dimen name="oobe_text_size">14sp</dimen>
+
+
 </resources>
