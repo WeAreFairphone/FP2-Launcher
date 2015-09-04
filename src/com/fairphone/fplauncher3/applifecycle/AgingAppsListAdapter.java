@@ -80,8 +80,9 @@ public class AgingAppsListAdapter extends BaseAdapter
                 R.layout.fp_aging_apps_item, parent, false);
         
         BubbleTextView icon = (BubbleTextView) fullIcon.findViewById(R.id.application_icon);
-        TextView newLabel = (TextView) fullIcon.findViewById(R.id.label_icon_new);
-        TextView updatedLabel = (TextView) fullIcon.findViewById(R.id.label_icon_updated);
+        View pinLabel = fullIcon.findViewById(R.id.label_icon_pinned);
+        View newLabel = fullIcon.findViewById(R.id.label_icon_new);
+        View updatedLabel = fullIcon.findViewById(R.id.label_icon_updated);
         
         icon.applyFromApplicationInfo(info);
         icon.setOnClickListener(mLauncher);
@@ -92,6 +93,9 @@ public class AgingAppsListAdapter extends BaseAdapter
 
         ApplicationRunInformation appRunInfo = AppDiscoverer.getInstance().getApplicationRunInformation(mContext, info.getComponentName());
         if(appRunInfo != null) {
+            if (appRunInfo.isPinnedApp()) {
+                pinLabel.setVisibility(View.VISIBLE);
+            }
             if (appRunInfo.isUpdatedApp()){
                 updatedLabel.setVisibility(View.VISIBLE);
             } else if (appRunInfo.isNewApp()) {
