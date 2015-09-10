@@ -159,7 +159,7 @@ public abstract class FavoritesStorageHelper
     }
 	
 	public static ArrayList<ComponentName> stringToComponentNameArray(String input) {
-		String[] componentNamesStringArray = FavoritesStorageHelper.stringToArray(input, COMPONENT_NAME_DELIMITER);
+		String[] componentNamesStringArray = FavoritesStorageHelper.stringToArray(input.replaceAll("\\s",""), COMPONENT_NAME_DELIMITER);
 		ArrayList<ComponentName> componentNamesArray = new ArrayList<ComponentName>();
 		for (int i=0; i< componentNamesStringArray.length; i++) {
 			if(!componentNamesStringArray[i].equals(PACKAGE_AND_CLASS_NAME_DELIMITER)){
