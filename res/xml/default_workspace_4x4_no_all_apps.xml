@@ -46,8 +46,8 @@
         launcher:x="3"
         launcher:y="0" />
     <favorite
-        launcher:packageName="com.google.android.GoogleCamera"
-        launcher:className="com.android.camera.CameraLauncher"
+        launcher:packageName="com.google.android.apps.photos"
+        launcher:className="com.google.android.apps.photos.home.HomeActivity"
         launcher:container="-101"
         launcher:screen="4"
         launcher:x="4"
