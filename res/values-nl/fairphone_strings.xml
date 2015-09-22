@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="last_used">Laatst gebruikt</string>
+    <string name="most_used">Meest gebruikt</string>
+    <string name="no_apps_have_been_opened_yet">Nog geen applicaties geopend? Begin met het gebruiken van je telefoon en kom terug naar dit scherm.</string>
+    <string name="edit">Bewerk</string>
+    <string name="edit_favourites">Bewerk Favorieten</string>
+    <string name="drag_here_to_add">Sleep hier naartoe</string>
+    <string name="drag_here_to_remove">Sleep hier naartoe om te wissen</string>
+    <string name="add_app">Voeg app toe</string>
+    <string name="edge_swipe_all_apps">Alle Apps</string>
+    <string name="easter_egg_toast_theme">Waar komt DIT vandaan?</string>
+    <string name="fp_theme_dark">Donker</string>
+    <string name="fp_theme_light">Licht</string>
+    <string name="no_active_apps">Je hebt nog geen actieve apps.</string>
+    <string name="no_idle_apps">Je hebt nog geen inactieve apps. Als je een app meer dan een maand niet gebruikt, wordt die app automatisch hier geplaatst.</string>
+    <string name="active_apps">Actieve apps</string>
+    <string name="idle_apps">Inactieve apps</string>
+    <string name="pin_target_label">Pin</string>
+    <string name="unpin_target_label">Unpin</string>
+    <string name="app_pin_message">App pinned</string>
+    <string name="app_unpin_message">App unpinned</string>
+    <string name="fp_aging_apps_icon_label_new">NIEUW</string>
+    <string name="fp_aging_apps_icon_label_updated">BIJGEWERKT</string>
+    <string name="one_week_idle">Inactief over een week</string>
+    <string name="two_weeks_idle">Inactief over twee weken</string>
+    <string name="one_month_idle">Inactief over een maand</string>
+    <string name="lifecyle_time_chooser_easter_egg">Optie geactiveerd: Regel de inactieve tijd van de actieve apps</string>
+
+    <string name="oobe_camera_button_title">Camera knop</string>
+    <string name="oobe_camera_button_text">Druk op de knop rechts om de camera te activeren.\n Nadat de camera-app geactiveerd is, \n maak je foto\'s door op de knop te drukken.</string>
+    <string name="oobe_edge_swipe_title">Edge Swipe</string>
+    <string name="oobe_edge_swipe_text">Swipe van de linker- of rechterkant van de telefoon \n zonder je vinger van het schermpje te halen.\n Om een app te openen, laat je je vinger op de gewenste app los.</string>
+    <string name="oobe_edge_swipe_edit">Bewerk</string>
+    <string name="oobe_start">Start</string>
+    <string name="oobe_back">Terug</string>
+    <string name="oobe_skip">Overslaan</string>
+    <string name="oobe_next">Volgende</string>
+    <string name="oobe_done">Klaar</string>
+    <string name="oobe_try_it_yourself">Probeer het zelf</string>
+    <string name="oobe_got_it">Ik snap het</string>
+    <string name="oobe_longpress_title">Wallpapers, widgets en instellingen</string>
+    <string name="oobe_longpress_description">Druk en hou het startscherm vast om aan te passen</string>
+
+</resources>

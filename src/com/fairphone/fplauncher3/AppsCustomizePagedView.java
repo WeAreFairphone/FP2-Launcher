@@ -254,7 +254,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
         Context context = getContext();
         Resources r = context.getResources();
-        setDragSlopeThreshold(r.getInteger(R.integer.config_appsCustomizeDragSlopeThreshold)/ PERCENT);
+        setDragSlopeThreshold(r.getInteger(R.integer.config_appsCustomizeDragSlopeThreshold) / PERCENT);
     }
 
     public void onFinishInflate() {
@@ -399,6 +399,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
         // Get the list of widgets and shortcuts
         mWidgets.clear();
+        Log.wtf(TAG, "Widget Count: " + widgetsAndShortcuts.size());
         for (Object o : widgetsAndShortcuts) {
             if (o instanceof AppWidgetProviderInfo) {
                 AppWidgetProviderInfo widget = (AppWidgetProviderInfo) o;
@@ -1049,6 +1050,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     private void prepareLoadWidgetPreviewsTask(int page, ArrayList<Object> widgets,
             int cellWidth, int cellHeight, int cellCountX) {
 
+        Log.wtf(TAG, "Entrei prepareLoadWidgetPreviewsTask");
+
         // Prune all tasks that are no longer needed
         Iterator<AppsCustomizeAsyncTask> iter = mRunningTasks.iterator();
         while (iter.hasNext()) {
@@ -1071,7 +1074,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 public void run(AppsCustomizeAsyncTask task, AsyncTaskPageData data) {
                     try {
                         try {
-                            Thread.sleep(sleepMs);
+                           Thread.sleep(sleepMs);
                         } catch (Exception e) {}
                         loadWidgetPreviewsInBackground(task, data);
                     } finally {
@@ -1196,12 +1199,13 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             lp.setGravity(Gravity.TOP | Gravity.START);
             layout.addView(widget, lp);
         }
-
+        Log.wtf(TAG, "Ando aqui");
         // wait until a call on onLayout to start loading, because
         // PagedViewWidget.getPreviewSize() will return 0 if it hasn't been laid out
         // TODO: can we do a measure/layout immediately?
         layout.setOnLayoutListener(new Runnable() {
             public void run() {
+                Log.wtf(TAG, "Entrei no listener");
                 // Load the widget previews
                 int maxPreviewWidth = cellWidth;
                 int maxPreviewHeight = cellHeight;
@@ -1223,6 +1227,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                     if (mInTransition) {
                         mDeferredPrepareLoadWidgetPreviewsTasks.add(this);
                     } else {
+                        Log.wtf(TAG, "Vou chamar prepareLoadWidgetPreviewsTask");
                         prepareLoadWidgetPreviewsTask(page, items,
                                 maxPreviewWidth, maxPreviewHeight, mWidgetCountX);
                     }
@@ -1233,6 +1238,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     }
     private void loadWidgetPreviewsInBackground(AppsCustomizeAsyncTask task,
             AsyncTaskPageData data) {
+        Log.wtf(TAG, "loadWidgetPreviewsInBackground = ");
         // loadWidgetPreviewsInBackground can be called without a task to load a set of widget
         // previews synchronously
         if (task != null) {
@@ -1254,6 +1260,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 // priority
                 task.syncThreadPriority();
             }
+
 
             images.add(getWidgetPreviewLoader().getPreview(items.get(i)));
         }
@@ -1320,7 +1327,10 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         }
 
         enablePagedViewAnimations();
+        this.invalidate();
     }
+
+
 
     @Override
     public void syncPageItems(int page, boolean immediate) {

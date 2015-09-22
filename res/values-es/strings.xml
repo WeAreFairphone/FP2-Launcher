@@ -17,7 +17,7 @@
 */
  --><resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="application_name" msgid="5181331383435256801">"Fairphone Launcher 3"</string>
-    <string name="folder_name" msgid="7371454440695724752"/>
+v    <string name="folder_name" msgid="7371454440695724752"/>
     <string name="activity_not_found" msgid="8071924732094499514">"La aplicación no está instalada."</string>
     <string name="safemode_shortcut_error" msgid="9160126848219158407">"Aplicación descargada inhabilitada en modo seguro"</string>
     <string name="toggle_weight_watcher" msgid="5645299835184636119">"Mostrar memoria"</string>
@@ -72,8 +72,8 @@
 
     <!-- Fairphone -->
     <!-- Your Apps -->
-    <string name="last_used">Recientes</string>
+   <!-- <string name="last_used">Recientes</string>
     <string name="most_used">Más usadas</string>
     <string name="no_apps_have_been_opened_yet">¿Aún no has usado tus aplicaciones?\nEmpieza a usar tu teléfono y regresa a esta pantalla.</string>
-    
+    -->
 </resources>

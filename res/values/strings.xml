@@ -260,56 +260,60 @@ s
     <string name="abandoned_promise_explanation">The app for this icon isn\'t installed.
         You can remove it, or search for the app and install it manually.</string>
 
-    <!-- Fairphone -->
+<!-- Fairphone -->
     <!-- Your Apps -->
-    <string name="app_switcher_name">My apps</string>
+ <!--   <string name="app_switcher_name">My apps</string>
     <string name="last_used">Recent</string>
     <string name="most_used">Most used</string>
     <string name="no_apps_have_been_opened_yet">No apps opened yet? Just start using your phone and come back to this screen</string>
 
-    <!-- People widget -->
+    &lt;!&ndash; People widget &ndash;&gt;
+    -->
     <string name="people_widget_name">My contacts</string>
     <string name="recent_contacts">Recent contacts</string>
     <string name="most_contacted">Most contacted</string>
+
     <string name="contacts_title">CONTACTS</string>
     <string name="not_contacted_anyone_yet">No contacts have been made yet.\nJust start using your phone and come back to this screen.</string>
+    <!--
+      &lt;!&ndash; Edit favorites &ndash;&gt;
+      <string name="edit">Edit</string>
+      <string name="edit_favourites">Edit Favourites</string>
+      <string name="drag_here_to_add">Drag here\nto add</string>
+      <string name="drag_here_to_remove">Drag here\nto remove</string>
+      <string name="add_app">Add app</string>
+      <string name="edge_swipe_all_apps">All Apps</string>
 
-    <!-- Edit favorites -->
-    <string name="edit">Edit</string>
-    <string name="edit_favourites">Edit Favourites</string>
-    <string name="drag_here_to_add">Drag here\nto add</string>
-    <string name="drag_here_to_remove">Drag here\nto remove</string>
-    <string name="add_app">Add app</string>
-    <string name="edge_swipe_all_apps">All Apps</string>
+      <string name="easter_egg_toast_theme">Where did THAT come from?</string>
 
-    <string name="easter_egg_toast_theme">Where did THAT come from?</string>
+      &lt;!&ndash; All apps widget &ndash;&gt;
+      <string name="fp_all_apps_widget_name">All apps</string>
 
-    <!-- All apps widget -->
-    <string name="fp_all_apps_widget_name">All apps</string>
-
-    <!-- FP Aging Drawer -->
-    <string name="no_active_apps">You have no active apps yet.\nJust open your favorite apps or pin to enhance your Fairphone experience.</string>
-    <string name="no_idle_apps">You have no idle apps yet.\nYou can unninstall these apps or pin to enhance your Fairphone experience.</string>
-    <string name="active_apps">Active Apps</string>
-    <string name="idle_apps">Idle Apps</string>
-    <string name="pin_target_label">Pin</string>
-    <string name="unpin_target_label">Unpin</string>
-    <string name="app_pin_message">App pinned</string>
-    <string name="app_unpin_message">App unpinned</string>
-    <string name="fp_aging_apps_icon_label_new">NEW</string>
-    <string name="fp_aging_apps_icon_label_updated">UPDATED</string>
-    <string name="fp_theme_dark">Dark</string>
-    <string name="fp_theme_light">Light</string>
-    <string name="one_week_idle">One week to idle</string>
-    <string name="two_weeks_idle">Two weeks to idle</string>
-    <string name="one_month_idle">One month to idle</string>
-    <string name="lifecyle_time_chooser_easter_egg">Achievement unlocked: Control active apps idle time</string>
+      &lt;!&ndash; FP Aging Drawer &ndash;&gt;
+      <string name="no_active_apps">You have no active apps yet.\nJust open your favorite apps or pin to enhance your Fairphone experience.</string>
+      <string name="no_idle_apps">You have no idle apps yet.\nYou can unninstall these apps or pin to enhance your Fairphone experience.</string>
+      <string name="active_apps">Active Apps</string>
+      <string name="idle_apps">Idle Apps</string>
+      <string name="pin_target_label">Pin</string>
+      <string name="unpin_target_label">Unpin</string>
+      <string name="app_pin_message">App pinned</string>
+      <string name="app_unpin_message">App unpinned</string>
+      <string name="fp_aging_apps_icon_label_new">NEW</string>
+      <string name="fp_aging_apps_icon_label_updated">UPDATED</string>
+      <string name="fp_theme_dark">Dark</string>
+      <string name="fp_theme_light">Light</string>
+      <string name="one_week_idle">One week to idle</string>
+      <string name="two_weeks_idle">Two weeks to idle</string>
+      <string name="one_month_idle">One month to idle</string>
+      <string name="lifecyle_time_chooser_easter_egg">Achievement unlocked: Control active apps idle time</string>
 
 
-    <string name="google_title" translatable="false">Google</string>
+      <string name="google_title" translatable="false">Google</string>
 
-    <!-- OOBE Texts -->
-    <string name="oobe_quick_access">Quick Access</string>
+      &lt;!&ndash; OOBE Texts &ndash;&gt;
+      <string name="oobe_quick_access">Quick Access</string>
+
+  -->
 
     <string name="oobe_select_language">Select\nLanguage</string>
     <string name="oobe_setup_wifi">Setup\nWi-Fi</string>
@@ -327,6 +331,8 @@ s
 
     <string name="oobe_edit_drag_trade_title">Drag favorites</string>
     <string name="oobe_edit_drag_trade_text">To swap position</string>
+
+    <!--
 
     <string name="oobe_your_apps_intro">Your most used apps all in one place</string>
     <string name="oobe_your_apps_learning">Your phone learns from you and will remember your most used apps</string>
@@ -346,6 +352,6 @@ s
     <string name="oobe_next">Next</string>
     <string name="oobe_done">Done</string>
     <string name="oobe_try_it_yourself">Try it yourself</string>
-
+-->
 
 </resources>

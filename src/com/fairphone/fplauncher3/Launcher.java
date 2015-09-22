@@ -3430,6 +3430,7 @@ public class Launcher extends Activity
 
                     revealView.setAlpha(initAlpha);
                     if (Utilities.isLmpOrAbove()) {
+
                         for (int i = 0; i < layerViews.size(); i++) {
                             View v = layerViews.get(i);
                             if (v != null) {
@@ -3441,6 +3442,7 @@ public class Launcher extends Activity
                                     v.buildLayer();
                                 }
                             }
+
                         }
                     }
                     mStateAnimation.start();
@@ -3449,6 +3451,8 @@ public class Launcher extends Activity
             toView.bringToFront();
             toView.setVisibility(View.VISIBLE);
             toView.post(startAnimRunnable);
+
+            Log.wtf(TAG, "Launcher Show widgets showAppsCustomizeHelper final step");
         } else {
             toView.setTranslationX(0.0f);
             toView.setTranslationY(0.0f);
@@ -3779,6 +3783,7 @@ public class Launcher extends Activity
 
     void showAllApps(boolean animated, AppsCustomizePagedView.ContentType contentType,
                      boolean resetPageToZero) {
+
         if (mState != State.WORKSPACE) {
             return;
         }
@@ -3786,7 +3791,9 @@ public class Launcher extends Activity
         if (resetPageToZero) {
             mAppsCustomizeTabHost.reset();
         }
+
         showAppsCustomizeHelper(animated, false, contentType);
+
         mAppsCustomizeTabHost.post(new Runnable() {
             @Override
             public void run() {

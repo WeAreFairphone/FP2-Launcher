@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="last_used">Recentes</string>
+    <string name="most_used">Mais usadas</string>
+    <string name="no_apps_have_been_opened_yet">Ainda não abriu aplicações? Basta começar a utilizar o seu telefone e voltar a este ecrã.</string>
+    <string name="edit">Editar</string>
+    <string name="edit_favourites">Editar Favoritos</string>
+    <string name="drag_here_to_add">Arraste para aqui para adicionar</string>
+    <string name="drag_here_to_remove">Arraste para aqui para remover</string>
+    <string name="add_app">Adicionar aplicação</string>
+    <string name="edge_swipe_all_apps">Aplicações</string>
+    <string name="easter_egg_toast_theme">Então? De onde veio isso?</string>
+    <string name="fp_theme_dark">Escuro</string>
+    <string name="fp_theme_light">Leve</string>
+    <string name="no_active_apps">Ainda não tem aplicações activas.</string>
+    <string name="no_idle_apps">Ainda não tem aplicações inactivas. Se não usar uma aplicação durante mais de um mês, a mesma aparecerá aqui automaticamente.</string>
+    <string name="active_apps">Aplicações Activas</string>
+    <string name="idle_apps">Aplicações Inactivas</string>
+    <string name="pin_target_label">Pregar</string>
+    <string name="unpin_target_label">Despregar</string>
+    <string name="app_pin_message">Aplicação pregada</string>
+    <string name="app_unpin_message">Aplicação despregada</string>
+    <string name="fp_aging_apps_icon_label_new">NOVA</string>
+    <string name="fp_aging_apps_icon_label_updated">ACTUALIZADA</string>
+    <string name="one_week_idle">Uma semana até desativar</string>
+    <string name="two_weeks_idle">Duas semanas até desativar</string>
+    <string name="one_month_idle">Um mês até desactivar</string>
+    <string name="lifecyle_time_chooser_easter_egg">Conquista desbloqueada: Controlar tempo de inactivação de aplicações activas</string>
+    <string name="oobe_camera_button_title">Botão da Câmera</string>
+    <string name="oobe_camera_button_text">Sim, é um botão físico na parte lateral. \n Pressione-o para iniciar a Câmera\n e use-o para tirar uma fotografia.</string>
+    <string name="oobe_edge_swipe_title">Edge Swipe</string>
+    <string name="oobe_edge_swipe_text">Deslize o dedo a partir da extremidade direita ou esquerda \n e levante o dedo sobre uma aplicação para a abrir.</string>
+    <string name="oobe_edge_swipe_edit">Editar</string>
+    <string name="oobe_start">Iniciar</string>
+    <string name="oobe_back">Voltar</string>
+    <string name="oobe_skip">Saltar</string>
+    <string name="oobe_next">Seguinte</string>
+    <string name="oobe_done">Terminar</string>
+    <string name="oobe_try_it_yourself">Experimente você mesmo</string>
+    <string name="oobe_got_it">Entendi</string>
+    <string name="oobe_longpress_title">Imagens de Fundo, Widgets &amp; Definições</string>
+    <string name="oobe_longpress_description">Toque e mantenha pressionado o ecrã inicial para customizar</string>
+
+</resources>

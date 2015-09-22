@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_switcher_name">Mes applications</string>
+    <string name="last_used">Récentes</string>
+    <string name="most_used">Les plus utilisées</string>
+    <string name="no_apps_have_been_opened_yet">Toujours pas d\'applications lancées ? Commencez par utiliser votre téléphone avant de revenir à cet écran.</string>
+    <string name="edit">Modifier</string>
+    <string name="edit_favourites">Modifier vos favoris</string>
+    <string name="drag_here_to_add">Faites glisser ici pour ajouter</string>
+    <string name="drag_here_to_remove">Faites glisser ici pour supprimer</string>
+    <string name="add_app">Ajouter l\'application</string>
+    <string name="edge_swipe_all_apps">Apps</string>
+    <string name="easter_egg_toast_theme">D\'où CELA vient-il ?</string>
+    <string name="fp_theme_dark">Sombre</string>
+    <string name="fp_theme_light">Clair</string>
+    <string name="fp_all_apps_widget_name">Toutes les applications</string>
+    <string name="no_active_apps">Vous n\'avez encore aucune application active.</string>
+    <string name="no_idle_apps">Vous n\'avez encore aucune application inactive. Si vous n\'utilisez pas une application pendant plus d\'un mois, elle apparaîtra automatiquement ici.</string>
+    <string name="active_apps">Applications actives</string>
+    <string name="idle_apps">Applications inactives</string>
+    <string name="pin_target_label">Ajouter</string>
+    <string name="unpin_target_label">Supprimer</string>
+    <string name="app_pin_message">Application ajoutée</string>
+    <string name="app_unpin_message">Application supprimée</string>
+    <string name="fp_aging_apps_icon_label_new">NOUVEAU</string>
+    <string name="fp_aging_apps_icon_label_updated">MIS À JOUR</string>
+    <string name="one_week_idle">Une semaine avant inaction</string>
+    <string name="two_weeks_idle">Deux semaines avant inaction</string>
+    <string name="one_month_idle">Un mois avant inaction</string>
+    <string name="lifecyle_time_chooser_easter_egg">Bonus : Contrôle du délai d\'inaction des applications</string>
+
+    <string name="google_title">Google</string>
+    <string name="oobe_camera_button_title">Appareil photo</string>
+    <string name="oobe_camera_button_text">Oui, il ya un bouton physique sur le côté. \n Appuyez une fois pour allumer l\'appareil photo \n et appuyez de nouveau sur le bouton pour déclencher une prise de vue.</string>
+    <string name="oobe_edge_swipe_title">Edge Swipe</string>
+    <string name="oobe_edge_swipe_text">Balayez l\'écran depuis le bord gauche ou droit du téléphone \n et relevez le doigt sur une application pour l\'exécuter.</string>
+    <string name="oobe_edge_swipe_edit">Modifier</string>
+    <string name="oobe_start">Commencer</string>
+    <string name="oobe_back">Retour</string>
+    <string name="oobe_skip">Passer</string>
+    <string name="oobe_next">Suivant</string>
+    <string name="oobe_done">Terminé</string>
+    <string name="oobe_try_it_yourself">Essayez par vous-même</string>
+    <string name="oobe_got_it">OK</string>
+    <string name="oobe_longpress_title">Fonds d\'écran, Widgets &amp; Réglages</string>
+    <string name="oobe_longpress_description">Appuyez de manière prolongée sur l\'arrière-plan pour le personnaliser</string>
+
+</resources>

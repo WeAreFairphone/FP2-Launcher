@@ -17,6 +17,7 @@
 package com.fairphone.fplauncher3;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -36,6 +37,7 @@ public class PagedViewGridLayout extends GridLayout implements Page {
         super(context, null, 0);
         mCellCountX = cellCountX;
         mCellCountY = cellCountY;
+
     }
 
     int getCellCountX() {
@@ -57,16 +59,25 @@ public class PagedViewGridLayout extends GridLayout implements Page {
     }
 
     @Override
+    protected void onAttachedToWindow() {
+        Log.wtf(TAG, "onAttachedToWindow");
+        super.onAttachedToWindow();
+
+    }
+
+    @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mOnLayoutListener = null;
     }
 
     public void setOnLayoutListener(Runnable r) {
+        Log.wtf(TAG, "fiz set do listener com o runnable IsNull =" + (r != null));
         mOnLayoutListener = r;
     }
 
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        Log.wtf(TAG, "onLayout ");
         super.onLayout(changed, left, top, right, bottom);
         if (mOnLayoutListener != null) {
             mOnLayoutListener.run();
