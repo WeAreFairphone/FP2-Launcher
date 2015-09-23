@@ -25,31 +25,43 @@
         style="@style/WorkspaceIcon.AppsCustomize"
         android:focusable="true" />
 
+    <ImageView
+        android:id="@+id/label_icon_pinned"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="49.7dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:src="@drawable/pinned_icon"/>
+
     <TextView
         android:id="@+id/label_icon_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="42.6dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:text="@string/fp_aging_apps_icon_label_new"
         android:textColor="@color/white"
         android:fontFamily="sans-serif-condensed"
+        android:textSize="12.7dp"
         android:gravity="center"
         android:visibility="gone"
         android:background="#DD19cc63" />
-     
+
     <TextView
         android:id="@+id/label_icon_updated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="42.6dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:text="@string/fp_aging_apps_icon_label_updated"
         android:visibility="gone"
         android:textColor="@color/blue_dark"
         android:fontFamily="sans-serif-condensed"
+        android:textSize="12.7dp"
         android:gravity="center"
         android:background="#DD4fc5fa" />
+
 </RelativeLayout>
