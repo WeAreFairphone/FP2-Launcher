@@ -70,8 +70,8 @@
             launcher:className="com.google.android.apps.plus.phone.ConversationListActivity"
             launcher:packageName="com.google.android.apps.plus" />
         <favorite
-            launcher:className="com.android.camera.CameraActivity"
-            launcher:packageName="com.google.android.GoogleCamera" />
+            launcher:className="com.google.android.apps.photos.home.HomeActivity"
+            launcher:packageName="com.google.android.apps.photos" />
     </folder>
 
     <favorite
