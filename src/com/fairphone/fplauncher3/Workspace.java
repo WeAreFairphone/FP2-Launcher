@@ -66,6 +66,7 @@ import android.view.accessibility.AccessibilityManager;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.TextView;
+import android.provider.Settings;
 
 import com.fairphone.fplauncher3.WallpaperCropActivity;
 import com.fairphone.fplauncher3.R;
@@ -2218,7 +2219,7 @@ public class Workspace extends SmoothPagedView
         float finalBackgroundAlpha = (stateIsSpringLoaded || stateIsOverview) ? 1.0f : 0f;
         float finalHotseatAndPageIndicatorAlpha = (stateIsNormal || stateIsSpringLoaded) ? 1f : 0f;
         float finalOverviewPanelAlpha = stateIsOverview ? 1f : 0f;
-        float finalWorkspaceTranslationY = stateIsOverview || stateIsOverviewHidden ?
+        final float finalWorkspaceTranslationY = stateIsOverview || stateIsOverviewHidden ?
                 getOverviewModeTranslationY() : 0;
 
         boolean workspaceToAllApps = (oldStateIsNormal && stateIsNormalHidden);
@@ -2303,6 +2304,15 @@ public class Workspace extends SmoothPagedView
                 .translationY(finalWorkspaceTranslationY)
                 .setDuration(duration)
                 .setInterpolator(mZoomInInterpolator);
+            scale.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    // in low power mode the animation doesn't play, so set the end value here
+                    setScaleX(mNewScale);
+                    setScaleY(mNewScale);
+                    setTranslationY(finalWorkspaceTranslationY);
+                }
+            });
             anim.play(scale);
             for (int index = 0; index < getChildCount(); index++) {
                 final int i = index;
@@ -2316,11 +2326,20 @@ public class Workspace extends SmoothPagedView
                         layerViews.add(cl);
                     }
                     if (mOldAlphas[i] != mNewAlphas[i] || currentAlpha != mNewAlphas[i]) {
+                        final View shortcutAndWidgets = cl.getShortcutsAndWidgets();
                         LauncherViewPropertyAnimator alphaAnim =
-                            new LauncherViewPropertyAnimator(cl.getShortcutsAndWidgets());
+                                new LauncherViewPropertyAnimator(shortcutAndWidgets);
                         alphaAnim.alpha(mNewAlphas[i])
                             .setDuration(duration)
                             .setInterpolator(mZoomInInterpolator);
+                        alphaAnim.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                // in low power mode the animation doesn't play,
+                                // so set the end value here
+                                shortcutAndWidgets.setAlpha(mNewAlphas[i]);
+                            }
+                        });
                         anim.play(alphaAnim);
                     }
                     if (mOldBackgroundAlphas[i] != 0 ||
@@ -2344,7 +2363,7 @@ public class Workspace extends SmoothPagedView
             if (pageIndicator != null) {
                 pageIndicatorAlpha = new LauncherViewPropertyAnimator(pageIndicator)
                     .alpha(finalHotseatAndPageIndicatorAlpha).withLayer();
-                pageIndicatorAlpha.addListener(new AlphaUpdateListener(pageIndicator));
+                pageIndicatorAlpha.addListener(new AlphaUpdateListener(pageIndicator, finalHotseatAndPageIndicatorAlpha));
             } else {
                 // create a dummy animation so we don't need to do null checks later
                 pageIndicatorAlpha = ValueAnimator.ofFloat(0, 0);
@@ -2352,7 +2371,7 @@ public class Workspace extends SmoothPagedView
 
             Animator overviewPanelAlpha = new LauncherViewPropertyAnimator(overviewPanel)
                 .alpha(finalOverviewPanelAlpha).withLayer();
-            overviewPanelAlpha.addListener(new AlphaUpdateListener(overviewPanel));
+            overviewPanelAlpha.addListener(new AlphaUpdateListener(overviewPanel, finalOverviewPanelAlpha));
 
             // For animation optimations, we may need to provide the Launcher transition
             // with a set of views on which to force build layers in certain scenarios.
@@ -2399,8 +2418,10 @@ public class Workspace extends SmoothPagedView
 
     static class AlphaUpdateListener implements AnimatorUpdateListener, AnimatorListener {
         View view;
-        public AlphaUpdateListener(View v) {
+        float endAlpha;
+        public AlphaUpdateListener(View v, float target) {
             view = v;
+            endAlpha = target;
         }
 
         @Override
@@ -2426,6 +2447,7 @@ public class Workspace extends SmoothPagedView
 
         @Override
         public void onAnimationEnd(Animator arg0) {
+            view.setAlpha(endAlpha);
             updateVisibility(view);
         }
 

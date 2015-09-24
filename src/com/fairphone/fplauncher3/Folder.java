@@ -25,7 +25,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.os.PowerManager;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.v4.widget.AutoScrollHelper;
 import android.text.InputType;
 import android.text.Selection;
@@ -73,6 +75,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     static final int STATE_OPEN = 2;
 
     private static final int CLOSE_FOLDER_DELAY_MS = 150;
+
+    private final PowerManager mPowerManager;
 
     private final int mExpandDuration;
     private final int mMaterialExpandDuration;
@@ -140,6 +144,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
      */
     public Folder(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        mPowerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 
         LauncherAppState app = LauncherAppState.getInstance();
         DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
@@ -461,6 +467,24 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         mState = STATE_SMALL;
     }
 
+    private static Animator setupAlphaAnimator(final View v, final float startAlpha,
+                                               final float endAlpha, final long duration, final long startDelay) {
+        v.setAlpha(startAlpha);
+        Animator animator = LauncherAnimUtils.ofFloat(v, "alpha", startAlpha, endAlpha);
+        animator.setDuration(duration);
+        animator.setStartDelay(startDelay);
+        animator.setInterpolator(new LogDecelerateInterpolator(60, 0));
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                // in low power mode the animation doesn't play, so set the end value here
+                v.setAlpha(endAlpha);
+            }
+        });
+
+        return animator;
+    }
+
     public void animateOpen() {
         if (!(getParent() instanceof DragLayer)) {
             return;
@@ -472,7 +496,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             positionAndSizeAsIcon();
             centerAboutIcon();
 
-            PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat("alpha", 1);
+            PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat("alpha", 1f);
             PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat("scaleX", 1.0f);
             PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat("scaleY", 1.0f);
             final ObjectAnimator oa =
@@ -496,10 +520,13 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
 
             float transX = - 0.075f * (width / 2 - getPivotX());
             float transY = - 0.075f * (height / 2 - getPivotY());
+            final float endTransX = 0;
+            final float endTransY = 0;
+
             setTranslationX(transX);
             setTranslationY(transY);
-            PropertyValuesHolder tx = PropertyValuesHolder.ofFloat("translationX", transX, 0);
-            PropertyValuesHolder ty = PropertyValuesHolder.ofFloat("translationY", transY, 0);
+            PropertyValuesHolder tx = PropertyValuesHolder.ofFloat("translationX", transX, endTransX);
+            PropertyValuesHolder ty = PropertyValuesHolder.ofFloat("translationY", transY, endTransY);
 
             int rx = (int) Math.max(Math.max(width - getPivotX(), 0), getPivotX());
             int ry = (int) Math.max(Math.max(height - getPivotY(), 0), getPivotY());
@@ -510,7 +537,14 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             reveal.setDuration(mMaterialExpandDuration);
             reveal.setInterpolator(new LogDecelerateInterpolator(100, 0));
 
-            mContent.setAlpha(0f);
+            View[] alphaViewSet = new View[] { mContent, mFolderName };
+            for (View view : alphaViewSet) {
+                Animator alphaAnimator = setupAlphaAnimator(view, 0f, 1f,
+                        mMaterialExpandDuration, mMaterialExpandStagger);
+                anim.play(alphaAnimator);
+            }
+
+           /* mContent.setAlpha(0f);
             Animator iconsAlpha = LauncherAnimUtils.ofFloat(mContent, "alpha", 0f, 1f);
             iconsAlpha.setDuration(mMaterialExpandDuration);
             iconsAlpha.setStartDelay(mMaterialExpandStagger);
@@ -520,16 +554,24 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             Animator textAlpha = LauncherAnimUtils.ofFloat(mFolderName, "alpha", 0f, 1f);
             textAlpha.setDuration(mMaterialExpandDuration);
             textAlpha.setStartDelay(mMaterialExpandStagger);
-            textAlpha.setInterpolator(new AccelerateInterpolator(1.5f));
+            textAlpha.setInterpolator(new AccelerateInterpolator(1.5f));*/
 
             Animator drift = LauncherAnimUtils.ofPropertyValuesHolder(this, tx, ty);
             drift.setDuration(mMaterialExpandDuration);
             drift.setStartDelay(mMaterialExpandStagger);
             drift.setInterpolator(new LogDecelerateInterpolator(60, 0));
+            drift.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    // in low power mode the animation doesn't play, so set the end value here
+                    Folder.this.setTranslationX(endTransX);
+                    Folder.this.setTranslationY(endTransY);
+                }
+            });
 
             anim.play(drift);
-            anim.play(iconsAlpha);
-            anim.play(textAlpha);
+           /* anim.play(iconsAlpha);
+            anim.play(textAlpha);*/
             anim.play(reveal);
 
             openFolderAnim = anim;
@@ -603,11 +645,25 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         if (!(getParent() instanceof DragLayer)) {
             return;
         }
-        PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat("alpha", 0);
+        PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat("alpha", 0f);
         PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat("scaleX", 0.9f);
         PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat("scaleY", 0.9f);
-        final ObjectAnimator oa =
-                LauncherAnimUtils.ofPropertyValuesHolder(this, alpha, scaleX, scaleY);
+        /*final ObjectAnimator oa =
+                LauncherAnimUtils.ofPropertyValuesHolder(this, alpha, scaleX, scaleY);*/
+
+        setLayerType(LAYER_TYPE_HARDWARE, null);
+
+        float animatorDurationScale = Settings.Global.getFloat(getContext().getContentResolver(),
+                               Settings.Global.ANIMATOR_DURATION_SCALE, 1);
+        ObjectAnimator oa;
+        if (mPowerManager.isPowerSaveMode() || animatorDurationScale < 0.01f) {
+            // power save mode is no fun - skip alpha animation and just set it to 0
+            // otherwise the icons will stay around until the duration of the animation
+            oa = LauncherAnimUtils.ofPropertyValuesHolder(this, scaleX, scaleY);
+            setAlpha(0f);
+        } else {
+            oa = LauncherAnimUtils.ofPropertyValuesHolder(this, alpha, scaleX, scaleY);
+        }
 
         oa.addListener(new AnimatorListenerAdapter() {
             @Override
