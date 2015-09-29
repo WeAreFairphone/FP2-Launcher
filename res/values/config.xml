@@ -115,7 +115,7 @@
     <string name="edge_swipe_default_apps">
         com.android.chrome,com.google.android.apps.chrome.Main;
         com.android.dialer,com.android.dialer.DialtactsActivity;
-        com.google.android.talk,com.google.android.talk.SigningInActivity;
+        com.android.mms,com.android.mms.ui.ConversationList;
     </string>
     
     <!-- App lifecycle -->
