@@ -111,6 +111,8 @@ public class PagedViewCellLayoutChildren extends ViewGroup {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int count = getChildCount();
 
+
+
         int offsetX = 0;
         if (mCenterContent && count > 0) {
             // determine the max width of all the rows and center accordingly

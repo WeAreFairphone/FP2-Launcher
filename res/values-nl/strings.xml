@@ -72,8 +72,8 @@
     
     <!-- Fairphone -->
     <!-- Your Apps -->
-    <string name="last_used">Laatst gebruikt</string>
+  <!--  <string name="last_used">Laatst gebruikt</string>
     <string name="most_used">Meest gebruikt</string>
     <string name="no_apps_have_been_opened_yet">Nog geen applicaties geopend? Begin met het gebruiken van je telefoon en kom terug naar dit scherm</string>
- 
+ -->
 </resources>

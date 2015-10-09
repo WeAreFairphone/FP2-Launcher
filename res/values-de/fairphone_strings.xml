@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="last_used">Letzte</string>
+    <string name="most_used">Meistbenutzte</string>
+    <string name="no_apps_have_been_opened_yet">Noch keine Apps geöffnet? Fange einfach an, dein Handy zu benutzen und komme zu diesem Bildschirm zurück.</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="edit_favourites">Favoriten bearbeiten</string>
+    <string name="drag_here_to_add">Hierher ziehen, um hinzuzufügen</string>
+    <string name="drag_here_to_remove">Hierher ziehen, um zu entfernen</string>
+    <string name="add_app">App hinzufügen</string>
+    <string name="edge_swipe_all_apps">Alle Apps</string>
+    <string name="easter_egg_toast_theme">Wo kam DAS her?</string>
+    <string name="fp_theme_dark">Dunkel</string>
+    <string name="fp_theme_light">Hell</string>
+    <string name="no_active_apps">Du hast noch keine aktiven Apps.</string>
+    <string name="no_idle_apps">Du hast noch keine inaktiven Apps. Wenn du eine App länger als einen Monat nicht verwendest wird sie automatisch hier angezeigt.</string>
+    <string name="active_apps">Aktive Apps</string>
+    <string name="idle_apps">Inaktive Apps</string>
+    <string name="pin_target_label">Anheften</string>
+    <string name="unpin_target_label">lösen</string>
+    <string name="app_pin_message">App angeheftet</string>
+    <string name="app_unpin_message">App losgemacht</string>
+    <string name="fp_aging_apps_icon_label_new">NEU</string>
+    <string name="fp_aging_apps_icon_label_updated">AKTUALISIERT</string>
+    <string name="one_week_idle">Eine Woche bis Inaktivierung</string>
+    <string name="two_weeks_idle">Zwei Wochen bis Inaktivierung</string>
+    <string name="one_month_idle">Einen Monat bis Inaktivierung</string>
+    <string name="lifecyle_time_chooser_easter_egg">Leistung freigeschaltet: Inaktive Zeit aktive Apps überprüfen</string>
+    <string name="oobe_camera_button_title">Kamera-Taste</string>
+    <string name="oobe_camera_button_text">Ja, es ist eine physische taste an der Seite. \n Drücken Sie die Taste, um die Kamera-App zu starten und,\n wenn auf dem App, als den Verschluss.</string>
+    <string name="oobe_edge_swipe_title">Edge Swipe</string>
+    <string name="oobe_edge_swipe_text">Streichen Sie vom der linke oder rechter Ecke des Telefons und, \n wenn auf dem App, als den Verschluss.</string>
+    <string name="oobe_edge_swipe_edit">Bearbeiten</string>
+    <string name="oobe_start">Start</string>
+    <string name="oobe_back">Zurück</string>
+    <string name="oobe_skip">Überspringen</string>
+    <string name="oobe_next">Weiter</string>
+    <string name="oobe_done">Fertig</string>
+    <string name="oobe_try_it_yourself">Probier es selbst aus</string>
+    <string name="oobe_got_it">Verstanden</string>
+    <string name="oobe_longpress_title">Hintergrundbilder, Widgets &amp; Einstellungen</string>
+    <string name="oobe_longpress_description">Home-Bildschirm antippen und gedrückt halten, um ihn anzupassen</string>
+
+</resources>

@@ -584,28 +584,15 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
 
     private void setTextView(View targetTextView) {
         mOOBETextGroup1.setVisibility(targetTextView == mOOBETextGroup1 ? View.VISIBLE : View.GONE);
-        Log.wtf("OOBE", "mTextGroup1 is " + (mOOBETextGroup1.getVisibility() == View.VISIBLE ? " visible" : " gone"));
         mOOBETextGroup2.setVisibility(targetTextView == mOOBETextGroup2 ? View.VISIBLE : View.GONE);
-        Log.wtf("OOBE", "mTextGroup2 is " + (mOOBETextGroup2.getVisibility() == View.VISIBLE ? " visible" : " gone"));
         mOOBETextGroup3.setVisibility(targetTextView == mOOBETextGroup3 ? View.VISIBLE : View.GONE);
-        Log.wtf("OOBE", "mTextGroup3 is " + (mOOBETextGroup3.getVisibility() == View.VISIBLE ? " visible" : " gone"));
         mOOBETextGroup4.setVisibility(targetTextView == mOOBETextGroup4 ? View.VISIBLE : View.GONE);
-        Log.wtf("OOBE", "mTextGroup4 is " + (mOOBETextGroup4.getVisibility() == View.VISIBLE ? " visible" : " gone"));
         mOOBETextGroup5.setVisibility(targetTextView == mOOBETextGroup5 ? View.VISIBLE : View.GONE);
-        Log.wtf("OOBE", "mTextGroup5 is " + (mOOBETextGroup5.getVisibility() == View.VISIBLE ? " visible" : " gone"));
         mOOBETextGroup6.setVisibility(targetTextView == mOOBETextGroup6 ? View.VISIBLE : View.GONE);
-        Log.wtf("OOBE", "mTextGroup6 is " + (mOOBETextGroup6.getVisibility() == View.VISIBLE ? " visible" : " gone"));
         mOOBETextGroup7.setVisibility(targetTextView == mOOBETextGroup7 ? View.VISIBLE : View.GONE);
-        Log.wtf("OOBE", "mTextGroup7 is " + (mOOBETextGroup7.getVisibility() == View.VISIBLE ? " visible" : " gone"));
-
         mOOBETextGroup8.setVisibility(targetTextView == mOOBETextGroup8 ? View.VISIBLE : View.GONE);
-        Log.wtf("OOBE", "mTextGroup8 is " + (mOOBETextGroup8.getVisibility() == View.VISIBLE ? " visible" : " gone"));
-
         mOOBETextGroup9.setVisibility(targetTextView == mOOBETextGroup9 ? View.VISIBLE : View.GONE);
-        Log.wtf("OOBE", "mTextGroup9 is " + (mOOBETextGroup9.getVisibility() == View.VISIBLE ? " visible" : " gone"));
-
         mOOBETextGroup10.setVisibility(targetTextView == mOOBETextGroup10 ? View.VISIBLE : View.GONE);
-        Log.wtf("OOBE", "mTextGroup10 is " + (mOOBETextGroup10.getVisibility() == View.VISIBLE ? " visible" : " gone"));
 
         Animation oobeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in_fast);
 
