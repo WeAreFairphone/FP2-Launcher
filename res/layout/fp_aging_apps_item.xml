@@ -46,6 +46,7 @@
         android:fontFamily="sans-serif-condensed"
         android:textSize="12.7dp"
         android:gravity="center"
+        android:singleLine="true"
         android:visibility="gone"
         android:background="#DD19cc63" />
 
@@ -57,6 +58,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:text="@string/fp_aging_apps_icon_label_updated"
+        android:singleLine="true"
         android:visibility="gone"
         android:textColor="@color/blue_dark"
         android:fontFamily="sans-serif-condensed"

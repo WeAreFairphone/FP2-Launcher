@@ -22,19 +22,21 @@
             <TextView
                 android:id="@+id/activeAppsTitle"
                 style="@style/AllAppsTitleBlue"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="9"
                 android:layout_height="wrap_content"
-                android:text="@string/active_apps" />
+                android:text="@string/active_apps"
+                android:singleLine="true"/>
 
             <ImageView
                 android:id="@+id/aging_drawer_menu_btn"
-                android:layout_width="55dp"
+                android:layout_width="25dp"
                 android:layout_height="55dp"
                 android:src="@drawable/ic_more_vert_white_24dp"
                 android:tint="@color/blue"
+                android:layout_weight="1"
                 android:scaleType="centerInside"
                 android:layout_gravity="center"
-                android:layout_marginLeft="100dp"
                 android:alpha="0.0"/>
         </LinearLayout>
 
@@ -76,6 +78,7 @@
                 style="@style/AllAppsTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="@string/idle_apps" />
 
             <TextView

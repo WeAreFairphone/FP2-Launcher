@@ -11,6 +11,7 @@
         android:paddingLeft="17dp"
         android:paddingRight="17dp"
         android:paddingTop="40dp"
+        android:maxLines="1"
         android:text="@string/edit_favourites" />
 
 </FrameLayout>

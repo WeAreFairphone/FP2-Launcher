@@ -249,6 +249,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         // debug String with app count
         @SuppressWarnings("UnusedAssignment") String fullAppLabel = info.getCount() + "# " + appLabel;
 
+
         recentRow.setTextViewText(R.id.recentButton, APP_SWITCHER_DEBUG_MODE ? fullAppLabel : appLabel);
         recentRow.setImageViewBitmap(android.R.id.background, iconBitmap);
 

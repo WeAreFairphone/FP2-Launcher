@@ -20,23 +20,29 @@
 
     <TextView
         android:id="@+id/text"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/edge_swipe_height"
+        android:maxWidth="185dp"
         android:layout_marginLeft="162dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="left|center_vertical"
+        android:layout_gravity="left"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textColor="@color/edge_swipe_text_blue"
         android:textSize="@dimen/edge_swipe_text_size" />
 
     <TextView
         android:id="@+id/edit_button"
-        android:layout_width="140dp"
+        android:layout_width="110dp"
         android:layout_height="@dimen/edge_swipe_height"
         android:layout_gravity="right|center_vertical"
         android:fontFamily="sans-serif-medium"
         android:gravity="right|center_vertical"
         android:paddingRight="37.3dp"
         android:text="@string/edit"
+        android:ellipsize="none"
+        android:maxLines="1"
         android:textAllCaps="true"
         android:textColor="@color/edge_swipe_text_blue"
         android:textSize="@dimen/edge_swipe_text_size_small" />

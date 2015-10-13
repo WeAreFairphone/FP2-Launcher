@@ -33,8 +33,9 @@
 
     <ImageView
         android:layout_width="1dp"
-        android:layout_height="488dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="25dp"
         android:background="@color/line_shadow" />
 
     <LinearLayout
@@ -71,5 +72,4 @@
             android:layout_marginTop="14dp"
             android:orientation="vertical" />
     </LinearLayout>
-
 </LinearLayout>

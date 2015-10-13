@@ -30,6 +30,7 @@
         android:fontFamily="sans-serif-condensed"
         android:gravity="center_horizontal"
         android:text="@string/wallpaper_button_text"
+        android:maxLines="2"
         android:textAllCaps="true"
         android:textSize="12sp" />
 
@@ -43,6 +44,7 @@
         android:fontFamily="sans-serif-condensed"
         android:gravity="center_horizontal"
         android:text="@string/settings_button_text"
+        android:maxLines="2"
         android:textAllCaps="true"
         android:textSize="12sp"
         android:visibility="gone" />
@@ -57,6 +59,7 @@
         android:fontFamily="sans-serif-condensed"
         android:gravity="center_horizontal"
         android:text="@string/widget_button_text"
+        android:maxLines="2"
         android:textAllCaps="true"
         android:textSize="12sp" />
 
@@ -70,6 +73,7 @@
         android:fontFamily="sans-serif-condensed"
         android:gravity="center_horizontal"
         android:text="@string/edge_swipe_all_apps"
+        android:maxLines="2"
         android:textAllCaps="true"
         android:textSize="12sp" />
 
