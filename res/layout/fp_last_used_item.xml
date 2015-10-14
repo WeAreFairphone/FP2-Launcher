@@ -13,7 +13,7 @@
         android:id="@android:id/background"
         android:layout_width="@dimen/edit_favorites_icon_size"
         android:layout_height="@dimen/edit_favorites_icon_size"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal"
         android:clickable="false" />
 
