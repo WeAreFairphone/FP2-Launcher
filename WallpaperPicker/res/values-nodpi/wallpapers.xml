@@ -19,6 +19,6 @@
     <string-array name="wallpapers" translatable="false">
         <item>wallpaper_screws</item>
         <item>wallpaper_press</item>
-        <item>wallpaper_xrayback</item>
+        <item>wallpaper_pcb</item>
     </string-array>
 </resources>
