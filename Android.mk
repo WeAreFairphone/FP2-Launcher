@@ -23,6 +23,8 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE_TAGS := optional
 
+LOCAL_JAVA_LIBRARIES := telephony-common
+
 LOCAL_STATIC_JAVA_LIBRARIES := flcrashlytics android-support-v13 libphonenumber
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src) \

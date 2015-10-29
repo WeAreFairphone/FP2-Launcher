@@ -136,6 +136,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import com.android.internal.telephony.cat.AppInterface;
 
 /**
  * Default launcher application.
@@ -1044,6 +1045,12 @@ public class Launcher extends Activity
         if (DEBUG_RESUME_TIME) {
             Log.d(TAG, "Time spent in onResume: " + (System.currentTimeMillis() - startTime));
         }
+
+	Intent idleScreenIntent = new Intent(AppInterface.CAT_IDLE_SCREEN_ACTION);
+	idleScreenIntent.putExtra("SCREEN_IDLE", true);
+	Log.d(TAG,"Broadcasting Home Idle Screen Intent ...");
+	sendBroadcast(idleScreenIntent);
+
 
         if (mWorkspace.getCustomContentCallbacks() != null) {
             // If we are resuming and the custom content is the current page, we call onShow().
