@@ -32,9 +32,9 @@
 
     <string name="google_title">Google</string>
     <string name="oobe_camera_button_title">Camera Button</string>
-    <string name="oobe_camera_button_text">Yes, it\’s a physical button on the side. \n Press it to launch the camera app \n and use it as the shutter when on the app.</string>
+    <string name="oobe_camera_button_text">Press the button on the right to launch the Camera.\n Once the Camera App is open, \n press the button to take a picture.</string>
     <string name="oobe_edge_swipe_title">Edge Swipe</string>
-    <string name="oobe_edge_swipe_text">Swipe from left or right edge of the phone\n and release it only on top of an app to open it.</string>
+    <string name="oobe_edge_swipe_text">Swipe from the left or right edge of the phone \n without releasing your finger.\n To open an app, release your finger from the selected app.</string>
     <string name="oobe_edge_swipe_edit">Edit</string>
     <string name="oobe_start">Start</string>
     <string name="oobe_back">Back</string>

@@ -30,9 +30,9 @@
     <string name="lifecyle_time_chooser_easter_egg">Logro desbloqueado: Controle el tiempo de inactividad de las apps activas</string>
     <string name="google_title">Google</string>
     <string name="oobe_camera_button_title">Botón de la cámara</string>
-    <string name="oobe_camera_button_text">Sí, es un botón físico en el lateral. \n Presionalo una vez para abrir la cámara \n y usarlo para hacer una foto.</string>
+    <string name="oobe_camera_button_text">Presiona una vez el botón a la derecha para abrir la cámara.\n Una vez que hayas abierto la app de la cámara,\n presiona el botón para hacer una foto.</string>
     <string name="oobe_edge_swipe_title">Edge Swipe</string>
-    <string name="oobe_edge_swipe_text">Pase el dedo desde el borde izquierdo del teléfono al derecho \n y despegue en una aplicación para abrirla.</string>
+    <string name="oobe_edge_swipe_text">Pase el dedo desde el borde izquierdo del teléfono \n al derecho sin despegarlo de la pantalla.\n Para abrir una app, despegue el dedo de la app seleccionada.</string>
     <string name="oobe_edge_swipe_edit">Editar</string>
     <string name="oobe_start">Inicio</string>
     <string name="oobe_back">Atrás</string>

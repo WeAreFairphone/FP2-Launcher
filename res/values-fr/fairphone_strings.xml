@@ -32,9 +32,9 @@
 
     <string name="google_title">Google</string>
     <string name="oobe_camera_button_title">Appareil photo</string>
-    <string name="oobe_camera_button_text">Oui, il ya un bouton physique sur le côté. \n Appuyez une fois pour allumer l\'appareil photo \n et appuyez de nouveau sur le bouton pour déclencher une prise de vue.</string>
+    <string name="oobe_camera_button_text">Appuyez une fois sur le bouton situé à droite \n pour allumer l\'appareil photo. \n Une fois l\'application appareil photo ouverte,\n appuyez sur le bouton pour prendre une photo.</string>
     <string name="oobe_edge_swipe_title">Edge Swipe</string>
-    <string name="oobe_edge_swipe_text">Balayez l\'écran depuis le bord gauche ou droit du téléphone \n et relevez le doigt sur une application pour l\'exécuter.</string>
+    <string name="oobe_edge_swipe_text">Faites glisser votre doigt à partir du bord gauche ou droit\n du téléphone sans lever le doigt.\n Pour ouvrir une application, enlevez votre doigt de l\'application sélectionnée.</string>
     <string name="oobe_edge_swipe_edit">Modifier</string>
     <string name="oobe_start">Commencer</string>
     <string name="oobe_back">Retour</string>

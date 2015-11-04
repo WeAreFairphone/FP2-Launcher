@@ -28,9 +28,9 @@
     <string name="one_month_idle">Einen Monat bis Inaktivierung</string>
     <string name="lifecyle_time_chooser_easter_egg">Leistung freigeschaltet: Inaktive Zeit aktive Apps überprüfen</string>
     <string name="oobe_camera_button_title">Kamera-Taste</string>
-    <string name="oobe_camera_button_text">Ja, es ist eine physische taste an der Seite. \n Drücken Sie die Taste, um die Kamera-App zu starten und,\n wenn auf dem App, als den Verschluss.</string>
+    <string name="oobe_camera_button_text">Drücke die Taste auf der rechten Seite einmal,\n um die Kamera zu starten. \n Drücke sobald die Kamera-App geöffnet\n ist die Taste, um ein Bild aufzunehmen.</string>
     <string name="oobe_edge_swipe_title">Edge Swipe</string>
-    <string name="oobe_edge_swipe_text">Streichen Sie vom der linke oder rechter Ecke des Telefons und, \n wenn auf dem App, als den Verschluss.</string>
+    <string name="oobe_edge_swipe_text">Streich vom linken oder rechten Rand des Telefons\n ohne den Finger anzuheben.\n Lass den Finger bei der ausgewählten App los, um diese zu öffnen.</string>
     <string name="oobe_edge_swipe_edit">Bearbeiten</string>
     <string name="oobe_start">Start</string>
     <string name="oobe_back">Zurück</string>

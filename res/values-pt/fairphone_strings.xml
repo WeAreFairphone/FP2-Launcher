@@ -28,9 +28,9 @@
     <string name="one_month_idle">Um mês até desactivar</string>
     <string name="lifecyle_time_chooser_easter_egg">Conquista desbloqueada: Controlar tempo de inactivação de aplicações activas</string>
     <string name="oobe_camera_button_title">Botão da Câmera</string>
-    <string name="oobe_camera_button_text">Sim, é um botão físico na parte lateral. \n Pressione-o para iniciar a Câmera\n e use-o para tirar uma fotografia.</string>
+    <string name="oobe_camera_button_text">Pressione o botão na parte lateral para iniciar a Câmera.\n Quando estiver na aplicação,\n pressione o botão para tirar uma fotografia.</string>
     <string name="oobe_edge_swipe_title">Edge Swipe</string>
-    <string name="oobe_edge_swipe_text">Deslize o dedo a partir da extremidade direita ou esquerda \n e levante o dedo sobre uma aplicação para a abrir.</string>
+    <string name="oobe_edge_swipe_text">Deslize o dedo a partir da extremidade \n direita ou esquerda sem o levantar.\n Para abrir uma aplicação, levante o dedo sobre a mesma.</string>
     <string name="oobe_edge_swipe_edit">Editar</string>
     <string name="oobe_start">Iniciar</string>
     <string name="oobe_back">Voltar</string>
