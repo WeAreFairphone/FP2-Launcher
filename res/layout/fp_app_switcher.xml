@@ -4,11 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minHeight="500dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:baselineAligned="false">
 
     <LinearLayout
-        android:layout_width="124dp"
+        android:layout_width="0px"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:orientation="vertical" >
@@ -18,15 +22,14 @@
             style="@style/AppSwitcherTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:gravity="center"
             android:text="@string/last_used" />
 
         <LinearLayout
             android:id="@+id/lastUsedApps"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="14dp"
-            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="vertical" />
     </LinearLayout>
@@ -35,16 +38,14 @@
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="25dp"
         android:background="@color/line_shadow" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="vertical"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="8dp" >
+        android:layout_marginTop="30dp" >
 
         <TextView
             android:id="@+id/mostUsedAppsTitle"

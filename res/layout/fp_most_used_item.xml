@@ -1,36 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mostUsedRow"
-    android:layout_width="200dp"
-    android:layout_height="73dp"
-    android:clickable="true"
-    android:background="@drawable/button_last_used_app" >
+    android:layout_width="match_parent"
+    android:layout_height="0px"
+    android:layout_weight="1"
+    android:gravity="center_vertical"
+    android:background="@drawable/button_last_used_app"
+    android:clickable="true">
 
-    <ImageView
-        android:id="@android:id/content"
-        android:layout_width="@dimen/edit_favorites_icon_size"
-        android:layout_height="@dimen/edit_favorites_icon_size"
-        android:layout_centerVertical="true"
-        android:clickable="false"
-        android:layout_marginLeft="7dp"/>
-
-    <TextView
-        android:id="@+id/mostUsedButton"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="false"
-        android:layout_toRightOf="@android:id/content"
-        android:layout_marginLeft="9dp"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center_vertical|left"
-        android:includeFontPadding="false"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:shadowColor="@color/black"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="0" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <ImageView
+            android:id="@+id/most_app_logo"
+            android:layout_width="@dimen/edit_favorites_icon_size"
+            android:layout_height="@dimen/edit_favorites_icon_size"
+            android:layout_marginLeft="7dp"
+            android:clickable="false" />
+
+        <TextView
+            android:id="@+id/mostUsedButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="9dp"
+            android:layout_toRightOf="@id/most_app_logo"
+            android:clickable="false"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical|left"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:shadowColor="@color/black"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="0"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
 </RelativeLayout>

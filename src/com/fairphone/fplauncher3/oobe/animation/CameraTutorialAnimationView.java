@@ -27,9 +27,6 @@ import com.fairphone.fplauncher3.oobe.utils.KWSprite;
  */
 public class CameraTutorialAnimationView extends FrameLayout {
 
-    private int mArrowStopPointXinDP;
-    private int mArrowMiddlePointXinDP;
-
     public interface CameraTutorialAnimationViewListener {
         public void OnAnimationFinished(CameraTutorialAnimationView view);
     }
@@ -117,9 +114,6 @@ public class CameraTutorialAnimationView extends FrameLayout {
         animationGroupCircle = new KWAnimationGroup(animationManager);
         animationGroupArrowPoint = new KWAnimationGroup(animationManager);
 
-        mArrowMiddlePointXinDP = SCREEN_WIDTH - DynamicGrid.pxFromDp(120, mDisplayMetrics);
-        mArrowStopPointXinDP = SCREEN_WIDTH - DynamicGrid.pxFromDp(100,mDisplayMetrics);
-
         setupCircleAnimation();
         setupArrowAnimation();
     }
@@ -204,7 +198,7 @@ public class CameraTutorialAnimationView extends FrameLayout {
                 spriteCameraIcon.alpha = 0;
 
                 spriteArrow.y = (SCREEN_HEIGHT - 650);
-                spriteArrow.x = SCREEN_WIDTH - DynamicGrid.pxFromDp(110,mDisplayMetrics);
+                spriteArrow.x = (SCREEN_WIDTH / 2) + (spriteCircle.drawable.getIntrinsicWidth()/2);
                 spriteArrow.pivotY = 0.5f;
 
                 spriteCircle.y = (SCREEN_HEIGHT - 650);
@@ -244,7 +238,7 @@ public class CameraTutorialAnimationView extends FrameLayout {
             public void onAnimationGroupStarted(KWAnimationGroup group) {
 
                 spriteArrow.y = (SCREEN_HEIGHT - 650);
-                spriteArrow.x = SCREEN_WIDTH - DynamicGrid.pxFromDp(110, mDisplayMetrics);
+                spriteArrow.x = (SCREEN_WIDTH / 2) + (spriteCircle.drawable.getIntrinsicWidth()/2);// - DynamicGrid.pxFromDp(110, mDisplayMetrics);
                 spriteArrow.pivotY = 0.5f;
             }
 

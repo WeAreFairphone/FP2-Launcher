@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/recentRow"
-    android:layout_width="112dp"
-    android:layout_height="88dp"
+    android:layout_width="match_parent"
+    android:layout_height="0px"
+    android:gravity="center_vertical"
+    android:layout_weight="1"
     android:clickable="true"
     android:paddingTop="3dp"
     android:paddingBottom="3dp"
@@ -10,7 +12,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@android:id/background"
+        android:id="@+id/recent_app_logo"
         android:layout_width="@dimen/edit_favorites_icon_size"
         android:layout_height="@dimen/edit_favorites_icon_size"
         android:scaleType="fitCenter"

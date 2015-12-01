@@ -33,15 +33,15 @@ public class EdgeSwipeTutorialAnimationView extends FrameLayout {
 
     private int mHandStopPointXinDP;
     private int mArrowStopPointXinDP;
-    private int mMarginTop;
+    int mMarginTop;
 
 
     public interface EdgeSwipeTutorialAnimationViewListener {
         public void OnAnimationFinished(EdgeSwipeTutorialAnimationView view);
     }
 
-    private int SCREEN_WIDTH = 540;
-    private int SCREEN_HEIGHT = 960;
+    int SCREEN_WIDTH = 540;
+    int SCREEN_HEIGHT = 960;
 
     KWSprite spriteRoot;
 
@@ -135,6 +135,7 @@ public class EdgeSwipeTutorialAnimationView extends FrameLayout {
         spriteAppIconWithName4.applySizeFromDrawable();
         spriteAppSelectionShadow.drawable = ContextCompat.getDrawable(getContext(), R.drawable.tutorial_app_selection_shader);
         spriteAppSelectionShadow.applySizeFromDrawable();
+        spriteAppSelectionShadow.width = SCREEN_WIDTH;
 
         spriteRoot.addChild(spriteArrow);
         spriteRoot.addChild(spriteAllAppsIcon);

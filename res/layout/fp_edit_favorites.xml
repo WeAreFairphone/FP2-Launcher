@@ -1,27 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/edit_favourites_menu_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/favourites_group"
         android:layout_width="125dp"
         android:layout_height="match_parent"
-        android:background="@color/edit_favourites_background_white"
-        android:orientation="vertical"
-        android:paddingTop="38dp" >
+        android:background="@color/edit_favourites_background_white">
 
         <RadioGroup
             android:id="@+id/theme_radio_group"
             android:layout_width="match_parent"
             android:layout_height="34dp"
-            android:layout_marginBottom="46dp"
+            android:layout_marginTop="38dp"
+            android:alpha="0"
             android:background="@drawable/stripe_light_up_tile"
             android:orientation="horizontal"
-            android:padding="3.6dp"
-            android:alpha="0" >
+            android:padding="3.6dp">
 
             <RadioButton
                 android:id="@+id/theme_radio_button_dark"
@@ -31,7 +28,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:text="@string/fp_theme_dark"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <RadioButton
                 android:id="@+id/theme_radio_button_light"
@@ -45,34 +42,42 @@
                 android:visibility="gone" />
         </RadioGroup>
 
-        <include
-            android:id="@+id/favourite_group_1"
-            layout="@layout/fp_edit_favorites_favourite_item" />
-
-        <include
-            android:id="@+id/favourite_group_2"
-            layout="@layout/fp_edit_favorites_favourite_item" />
-
-        <ImageView
-            android:id="@+id/all_apps_image_view"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="76.6dp"
-            android:padding="14dp"
-            android:src="@drawable/icon_allapps_grey" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
-        <include
-            android:id="@+id/favourite_group_3"
-            layout="@layout/fp_edit_favorites_favourite_item" />
+            <include
+                android:id="@+id/favourite_group_1"
+                layout="@layout/fp_edit_favorites_favourite_item" />
 
-        <include
-            android:id="@+id/favourite_group_4"
-            layout="@layout/fp_edit_favorites_favourite_item" />
-    </LinearLayout>
+            <include
+                android:id="@+id/favourite_group_2"
+                layout="@layout/fp_edit_favorites_favourite_item" />
+
+            <ImageView
+                android:id="@+id/all_apps_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="76.6dp"
+                android:padding="14dp"
+                android:src="@drawable/icon_allapps_grey" />
+
+            <include
+                android:id="@+id/favourite_group_3"
+                layout="@layout/fp_edit_favorites_favourite_item" />
+
+            <include
+                android:id="@+id/favourite_group_4"
+                layout="@layout/fp_edit_favorites_favourite_item" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/all_apps_group"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <com.fairphone.fplauncher3.edgeswipe.editor.ui.EditFavoritesGridView
             android:id="@+id/all_apps_gridview"

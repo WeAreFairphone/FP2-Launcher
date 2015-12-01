@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -130,7 +131,7 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
             mTutorialToShow = OOBE_FULL_TUTORIAL;
         }
 
-        mAnimationSteps = new ArrayList<OOBEActivity.OOBESteps>();
+        mAnimationSteps = new ArrayList<>();
 
         mCurrentStep = 0;
 
@@ -409,7 +410,7 @@ public class OOBEActivity extends Activity implements TutorialAnimationHelperLis
             mOOBEGotItButton4.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mCurrentStep < 2 && (mTutorialToShow == OOBE_DEVICE_TUTORIAL)) {
+                    if (mCurrentStep < 2 && (mTutorialToShow == OOBE_DEVICE_TUTORIAL) && Build.MODEL.equals("FP2")) {
                         jumpToNextSlide();
                     } else {
                         endOOBEActivity();

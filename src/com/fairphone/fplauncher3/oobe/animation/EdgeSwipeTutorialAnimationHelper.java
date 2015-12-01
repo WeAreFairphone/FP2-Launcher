@@ -16,14 +16,19 @@
 package com.fairphone.fplauncher3.oobe.animation;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fairphone.fplauncher3.R;
@@ -47,6 +52,14 @@ public class EdgeSwipeTutorialAnimationHelper implements TutorialAnimationHelper
         TextView titleView = (TextView) animView.findViewById(R.id.swipeAnimationTitle);
         TextView textView = (TextView) animView.findViewById(R.id.swipeAnimationText);
         editView = (TextView) animView.findViewById(R.id.swipeAnimationEditText);
+        LinearLayout.MarginLayoutParams params = (LinearLayout.MarginLayoutParams) editView.getLayoutParams();
+        params.setMargins(
+                params.leftMargin,
+                Math.round((animView.SCREEN_HEIGHT / 2) + animView.mMarginTop - ((animView.spriteAllAppsIcon.height-editView.getLineHeight())/2)),
+                params.rightMargin,
+                params.bottomMargin
+        );
+        editView.setLayoutParams(params);
 
         Animation titleAnimation = new AlphaAnimation(0.0f, 1.0f);
         titleAnimation.setDuration(500);

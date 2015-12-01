@@ -85,7 +85,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
     private RadioGroup mThemeRadioGroup;
     private RadioButton mThemeRadioButtonLight;
     private RadioButton mThemeRadioButtonDark;
-    private LinearLayout mFavouritesGroup;
+    private View mFavouritesGroup;
     private SharedPreferences mSharedPrefs;
     private Themes mCurrentTheme;
 
@@ -116,7 +116,7 @@ public class EditFavoritesActivity extends Activity implements View.OnDragListen
         mThemeRadioButtonLight = (RadioButton) findViewById(R.id.theme_radio_button_light);
         mThemeRadioButtonDark = (RadioButton) findViewById(R.id.theme_radio_button_dark);
 
-        mFavouritesGroup = (LinearLayout) findViewById(R.id.favourites_group);
+        mFavouritesGroup = findViewById(R.id.favourites_group);
 
         mSharedPrefs = getSharedPreferences(PREFS_EDGE_SWIPE_MENU, Context.MODE_PRIVATE);
 

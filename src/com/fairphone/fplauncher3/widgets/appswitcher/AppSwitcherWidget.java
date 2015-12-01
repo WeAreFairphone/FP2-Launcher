@@ -108,6 +108,8 @@ public class AppSwitcherWidget extends AppWidgetProvider
 
     private static void updateMostUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostUsed)
     {
+        int slot_count = ApplicationRunInfoManager.MOST_APP_MAX_COUNT_LIMIT;
+
         for (ApplicationRunInformation mostUsedInfo : mostUsed)
         {
             RemoteViews view;
@@ -137,10 +139,18 @@ public class AppSwitcherWidget extends AppWidgetProvider
         {
             widget.addView(R.id.mostUsedApps, allAppsView);
         }
+
+        for (int i = mostUsed.size(); i < slot_count; i++) {
+            RemoteViews emptyMostRow = new RemoteViews(context.getPackageName(), R.layout.fp_most_used_item);
+            emptyMostRow.setViewVisibility(R.id.mostUsedRow, View.INVISIBLE);
+            widget.addView(R.id.mostUsedApps, emptyMostRow);
+        }
     }
 
     private static int updateLastUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostRecent)
     {
+        int slot_count = ApplicationRunInfoManager.RECENT_APP_MAX_COUNT_LIMIT;
+
         for (ApplicationRunInformation appRunInfo : mostRecent)
         {
             RemoteViews view;
@@ -162,6 +172,11 @@ public class AppSwitcherWidget extends AppWidgetProvider
 
             // update the code
             code++;
+        }
+        for (int i = mostRecent.size(); i < slot_count; i++) {
+            RemoteViews emptyRecentRow = new RemoteViews(context.getPackageName(), R.layout.fp_last_used_item);
+            emptyRecentRow.setViewVisibility(R.id.recentRow, View.INVISIBLE);
+            widget.addView(R.id.lastUsedApps, emptyRecentRow);
         }
         return code;
     }
@@ -189,7 +204,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         // debug String with app count
         @SuppressWarnings("UnusedAssignment") String fullAppLabel = info.getCount() + "# " + appLabel;
 
-        mostUsedRow.setImageViewBitmap(android.R.id.content, iconBitmap);
+        mostUsedRow.setImageViewBitmap(R.id.most_app_logo, iconBitmap);
 
         mostUsedRow.setTextViewText(R.id.mostUsedButton, APP_SWITCHER_DEBUG_MODE ? fullAppLabel : appLabel);
 
@@ -208,7 +223,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
 
         Drawable draw = context.getResources().getDrawable(R.drawable.icon_allapps_white_widget);
         Bitmap icon = ((BitmapDrawable) draw).getBitmap();
-        allAppsButton.setImageViewBitmap(android.R.id.content, icon);
+        allAppsButton.setImageViewBitmap(R.id.most_app_logo, icon);
 
         allAppsButton.setTextViewText(R.id.mostUsedButton, context.getResources().getString(R.string.edge_swipe_all_apps).toUpperCase());
 
@@ -243,7 +258,6 @@ public class AppSwitcherWidget extends AppWidgetProvider
 
         // get application icon and label
         Drawable icon = pm.getActivityIcon(info.getComponentName());
-        Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
         CharSequence appLabel = pm.getActivityInfo(info.getComponentName(), 0).loadLabel(pm);
 
         // debug String with app count
@@ -251,7 +265,12 @@ public class AppSwitcherWidget extends AppWidgetProvider
 
 
         recentRow.setTextViewText(R.id.recentButton, APP_SWITCHER_DEBUG_MODE ? fullAppLabel : appLabel);
-        recentRow.setImageViewBitmap(android.R.id.background, iconBitmap);
+        try {
+            Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
+            recentRow.setImageViewBitmap(R.id.recent_app_logo, iconBitmap);
+        } catch (ClassCastException e) {
+            Log.e(TAG, "Failed to load bitmap drawable for "+fullAppLabel, e);
+        }
 
         // create the intent for this app
         Intent launchIntent = generateLaunchIntent(info, appLabel.toString());

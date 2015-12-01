@@ -5130,7 +5130,7 @@ public class Launcher extends Activity
                                                 int oobeTutorial) {
         boolean result = false;
 
-       // if (true || mSharedPrefs.getBoolean(oobeToShow, true)) { //Uncomment to loop the animation
+        //if (true || mSharedPrefs.getBoolean(oobeToShow, true)) { //Uncomment to loop the animation
         if (mSharedPrefs.getBoolean(oobeToShow, true)) {
             startOOBEActivity(oobeTutorial);
             SharedPreferences.Editor editor = mSharedPrefs.edit();

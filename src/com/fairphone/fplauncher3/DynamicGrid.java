@@ -20,7 +20,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import com.fairphone.fplauncher3.R;
+
 import java.util.ArrayList;
 
 
@@ -97,6 +97,9 @@ public class DynamicGrid {
         
         deviceProfiles.add(new DeviceProfile("FP1",
                 334.66666f, 614.667f, 5, 4,  DEFAULT_ICON_SIZE_DP, 13, R.xml.default_workspace_4x4,
+                R.xml.default_workspace_4x4_no_all_apps));
+        deviceProfiles.add(new DeviceProfile("FP2",
+                392.72726f, 650.1818f, 5, 4, DEFAULT_ICON_SIZE_DP, 13, R.xml.default_workspace_4x4,
                 R.xml.default_workspace_4x4_no_all_apps));
         
         mMinWidth = dpiFromPx(minWidthPx, dm);

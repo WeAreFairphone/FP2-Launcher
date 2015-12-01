@@ -77,6 +77,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/workspace_cling_longpress_title" />
 
         <TextView
@@ -84,6 +86,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/workspace_cling_longpress_description" />
 
         <Button
@@ -108,11 +112,10 @@
             android:layout_marginTop="37dp"/>
 </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/oobeTextGroup4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:visibility="gone">
 
    <!--     <TextView
@@ -131,14 +134,15 @@
             android:id="@+id/got_it_button_4"
             android:layout_width="220dp"
             android:layout_height="48dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="515dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15.7dp"
             android:background="@drawable/button_border"
             android:text="@string/workspace_cling_longpress_dismiss"
             android:textAllCaps="true"
             android:textColor="@color/oobe_blue_light" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/oobeTextGroup5"
@@ -271,11 +275,10 @@
             android:text="@string/oobe_edit_drag_trade_text" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/oobeTextGroup10"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
 
@@ -301,11 +304,13 @@
             android:layout_width="220dp"
             android:layout_height="48dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="525dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15.7dp"
             android:background="@drawable/button_border"
             android:text="@string/workspace_cling_longpress_dismiss"
             android:textAllCaps="true"
             android:textColor="@color/oobe_blue_light" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </merge>
