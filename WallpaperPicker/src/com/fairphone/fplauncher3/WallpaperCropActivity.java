@@ -618,8 +618,11 @@ public class WallpaperCropActivity extends Activity {
                             Log.w(LOGTAG, "cannot compress bitmap");
                             failure = true;
                         }
-                        
-                        wallpaperManager.setStream(is);
+
+			if(failure) {
+                            wallpaperManager.setStream(is);
+                        }
+
                         Utils.closeSilently(is);
                     }
                 } catch (IOException e) {
