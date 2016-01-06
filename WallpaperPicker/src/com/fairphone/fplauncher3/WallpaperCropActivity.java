@@ -29,7 +29,6 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
@@ -39,7 +38,10 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v8.renderscript.Allocation;
+import android.support.v8.renderscript.RenderScript;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -50,6 +52,7 @@ import com.android.gallery3d.common.Utils;
 import com.android.gallery3d.exif.ExifInterface;
 import com.android.photos.BitmapRegionTileSource;
 import com.android.photos.BitmapRegionTileSource.BitmapSource;
+import com.fairphone.fplauncher3.LauncherAppState;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -57,8 +60,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
-import com.fairphone.fplauncher3.R;
 
 public class WallpaperCropActivity extends Activity {
     private static final String LOGTAG = "Launcher3.CropActivity";
@@ -76,8 +77,6 @@ public class WallpaperCropActivity extends Activity {
     public static final int MAX_BMAP_IN_INTENT = 750000;
     private static final float WALLPAPER_SCREENS_SPAN = 2f;
     
-    private static final float MAX_BRIGHTNESS = 180f;
-
     protected static Point sDefaultWallpaperSize;
 
     protected CropView mCropView;
@@ -151,7 +150,7 @@ public class WallpaperCropActivity extends Activity {
     public void setCropViewTileSource(
             final BitmapRegionTileSource.BitmapSource bitmapSource, final boolean touchEnabled,
             final boolean moveToLeft, final Runnable postExecute) {
-        final Context context = WallpaperCropActivity.this;
+        final Context context = LauncherAppState.getContext();
         final View progressView = findViewById(R.id.loading);
         final AsyncTask<Void, Void, Void> loadBitmapTask = new AsyncTask<Void, Void, Void>() {
             protected Void doInBackground(Void...args) {
@@ -600,8 +599,7 @@ public class WallpaperCropActivity extends Activity {
                     InputStream is = regenerateInputStream();
                     if (is != null) {
                         Bitmap bmp = BitmapFactory.decodeStream(is);
-                        float bdiff = (MAX_BRIGHTNESS - getLuma(bmp));
-                        bmp = changeBitmapContrastBrightness(bmp, 1f, bdiff > 0 ? 0 : bdiff);
+                        bmp = changeBitmapContrastBrightness(bmp);
 
                         // Get output compression format
                         CompressFormat cf =
@@ -796,11 +794,11 @@ public class WallpaperCropActivity extends Activity {
                         crop = tmp;
                     }
                 }
-
-                float bdiff = (MAX_BRIGHTNESS - getLuma(crop));
-                crop = changeBitmapContrastBrightness(crop, 1f, bdiff > 0 ? 0 : bdiff);
+;
                 if (mSaveCroppedBitmap) {
                     mCroppedBitmap = crop;
+                } else {
+                    crop = changeBitmapContrastBrightness(crop);
                 }
 
                 // Get output compression format
@@ -830,53 +828,32 @@ public class WallpaperCropActivity extends Activity {
             }
             return !failure; // True if any of the operations failed
         }
-        
-        protected static float getLuma(Bitmap bmp)
-        {
-            // LUMA MATRIX MxN
-            final int M = 5;
-            final int N = 10;
-            int[][] lumaMatrix = new int[M][N];
-            int[][] lumaMatrixN = new int[M][N];
-            for(int x = 0; x < bmp.getWidth(); x += 3){
-                for(int y = 0; y < bmp.getHeight(); y += 3) {
-                    int c = bmp.getPixel(x, y);
-                    int mX = (int) (x*M/bmp.getWidth());
-                    int mY = (int) (y*N/bmp.getHeight());
 
-                    lumaMatrix[mX][mY] += 0.299f*Color.red(c) + 0.587f*Color.green(c) + 0.114f*Color.blue(c);
-                    lumaMatrixN[mX][mY] += 1;
-                }
-            }
-            float lumamax = 0f;
-            for(int x = 0; x < M; ++x){
-                for(int y = 0; y < N; ++y) {
-                    lumaMatrix[x][y] /= lumaMatrixN[x][y];
-                    final float luma = lumaMatrix[x][y];
-                    if (luma > lumamax) {
-                        lumamax = luma;
-                    }
-                }
-            }
-            return lumamax;
-        }
-        
         /**
          * 
          * @param bmp input bitmap
-         * @param contrast 0..10 1 is default
-         * @param brightness -255..255 0 is default
          * @return new bitmap
          */
-        protected static Bitmap changeBitmapContrastBrightness(Bitmap bmp, float contrast, float brightness)
+        protected Bitmap changeBitmapContrastBrightness(Bitmap bmp)
         {
-            ColorMatrix cm = new ColorMatrix(new float[]
-                    {
-                        contrast, 0, 0, 0, brightness,
-                        0, contrast, 0, 0, brightness,
-                        0, 0, contrast, 0, brightness,
-                        0, 0, 0, 1, 0
-                    });
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                final RenderScript rs = RenderScript.create(LauncherAppState.getContext());
+                final Allocation input = Allocation.createFromBitmap(rs, bmp, Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);
+                final Allocation output = Allocation.createTyped(rs, input.getType());
+
+                ScriptC_exposure exposure = new ScriptC_exposure(rs);
+                exposure.forEach_exposure(input, output);
+
+                output.copyTo(bmp);
+                return bmp;
+            } else {
+                ColorMatrix cm = new ColorMatrix(new float[]
+                        {
+                                1, 0, 0, 0, 180.f,
+                                0, 1, 0, 0, 180.f,
+                                0, 0, 1, 0, 180.f,
+                                0, 0, 0, 1, 0
+                        });
 
             Bitmap ret = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
 
@@ -887,6 +864,7 @@ public class WallpaperCropActivity extends Activity {
             canvas.drawBitmap(bmp, 0, 0, paint);
 
             return ret;
+          }
         }
 
         @Override
