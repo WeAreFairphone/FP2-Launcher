@@ -27,9 +27,12 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
 
 import com.fairphone.fplauncher3.R;
@@ -109,6 +112,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
     private static void updateMostUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostUsed)
     {
         int slot_count = ApplicationRunInfoManager.MOST_APP_MAX_COUNT_LIMIT;
+        int addedViewCount = 0;
 
         for (ApplicationRunInformation mostUsedInfo : mostUsed)
         {
@@ -120,6 +124,9 @@ public class AppSwitcherWidget extends AppWidgetProvider
                 if (view != null)
                 {
                     widget.addView(R.id.mostUsedApps, view);
+                    addedViewCount += 1;
+                } else {
+                    Log.e(TAG, "Got null view for most used app: "+mostUsedInfo.getComponentName().getPackageName());
                 }
             } catch (NameNotFoundException e)
             {
@@ -140,7 +147,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
             widget.addView(R.id.mostUsedApps, allAppsView);
         }
 
-        for (int i = mostUsed.size(); i < slot_count; i++) {
+        for (int i = addedViewCount; i < slot_count; i++) {
             RemoteViews emptyMostRow = new RemoteViews(context.getPackageName(), R.layout.fp_most_used_item);
             emptyMostRow.setViewVisibility(R.id.mostUsedRow, View.INVISIBLE);
             widget.addView(R.id.mostUsedApps, emptyMostRow);
@@ -150,6 +157,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
     private static int updateLastUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostRecent)
     {
         int slot_count = ApplicationRunInfoManager.RECENT_APP_MAX_COUNT_LIMIT;
+        int addedViewCount = 0;
 
         for (ApplicationRunInformation appRunInfo : mostRecent)
         {
@@ -161,6 +169,9 @@ public class AppSwitcherWidget extends AppWidgetProvider
                 if (view != null)
                 {
                     widget.addView(R.id.lastUsedApps, view);
+                    addedViewCount += 1;
+                } else {
+                    Log.e(TAG, "Got null view for last used app: "+appRunInfo.getComponentName().getPackageName());
                 }
             } catch (NameNotFoundException e)
             {
@@ -173,7 +184,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
             // update the code
             code++;
         }
-        for (int i = mostRecent.size(); i < slot_count; i++) {
+        for (int i = addedViewCount; i < slot_count; i++) {
             RemoteViews emptyRecentRow = new RemoteViews(context.getPackageName(), R.layout.fp_last_used_item);
             emptyRecentRow.setViewVisibility(R.id.recentRow, View.INVISIBLE);
             widget.addView(R.id.lastUsedApps, emptyRecentRow);
@@ -197,8 +208,10 @@ public class AppSwitcherWidget extends AppWidgetProvider
         PackageManager pm = context.getPackageManager();
 
         // get app icon and label
+        int iconSize = (int) context.getResources().getDimension(R.dimen.edit_favorites_icon_size);
         Drawable icon = pm.getActivityIcon(info.getComponentName());
         Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
+        iconBitmap = Bitmap.createScaledBitmap(iconBitmap, iconSize, iconSize, true);
         CharSequence appLabel = pm.getActivityInfo(info.getComponentName(), 0).loadLabel(pm);
 
         // debug String with app count
@@ -257,6 +270,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         PackageManager pm = context.getPackageManager();
 
         // get application icon and label
+        int iconSize = (int) context.getResources().getDimension(R.dimen.edit_favorites_icon_size);
         Drawable icon = pm.getActivityIcon(info.getComponentName());
         CharSequence appLabel = pm.getActivityInfo(info.getComponentName(), 0).loadLabel(pm);
 
@@ -267,6 +281,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         recentRow.setTextViewText(R.id.recentButton, APP_SWITCHER_DEBUG_MODE ? fullAppLabel : appLabel);
         try {
             Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
+            iconBitmap = Bitmap.createScaledBitmap(iconBitmap, iconSize, iconSize, true);
             recentRow.setImageViewBitmap(R.id.recent_app_logo, iconBitmap);
         } catch (ClassCastException e) {
             Log.e(TAG, "Failed to load bitmap drawable for "+fullAppLabel, e);
