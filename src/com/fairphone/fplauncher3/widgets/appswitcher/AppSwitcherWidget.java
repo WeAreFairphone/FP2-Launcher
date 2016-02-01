@@ -15,8 +15,6 @@
  */
 package com.fairphone.fplauncher3.widgets.appswitcher;
 
-import java.util.List;
-
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -27,18 +25,17 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RemoteViews;
 
 import com.fairphone.fplauncher3.R;
 
-public class AppSwitcherWidget extends AppWidgetProvider
-{
+import java.util.List;
+
+public class AppSwitcherWidget extends AppWidgetProvider {
     private static final String TAG = AppSwitcherWidget.class.getSimpleName();
     private static final boolean APP_SWITCHER_DEBUG_MODE = false; //BuildConfig.DEBUG;
 
@@ -50,36 +47,31 @@ public class AppSwitcherWidget extends AppWidgetProvider
     public static final String EXTRA_LAUNCH_APP_CLASS_NAME = "com.fairphone.fplauncher3.EXTRA_LAUNCH_APP_CLASS_NAME";
 
     @Override
-    public void onEnabled(Context context)
-    {
+    public void onEnabled(Context context) {
         Log.d(TAG, "Fairphone - WidgetProvicer Context is " + context);
     }
 
     @Override
-    public void onDisabled(Context context)
-    {
+    public void onDisabled(Context context) {
         // Called once the last instance of your widget is removed from the
         // homescreen
         super.onDisabled(context);
     }
 
     @Override
-    public void onDeleted(Context context, int[] appWidgetIds)
-    {
+    public void onDeleted(Context context, int[] appWidgetIds) {
         // Widget instance is removed from the homescreen
         Log.d(TAG, "onDeleted - " + appWidgetIds);
     }
 
     @Override
-    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
-    {
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
         onUpdate(context, appWidgetManager, new int[]{appWidgetId});
         // Obtain appropriate widget and update it.
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 
-    private static RemoteViews updateUI(Context context)
-    {
+    private static RemoteViews updateUI(Context context) {
         int code = 0;
         // get the widgets
         RemoteViews widget = new RemoteViews(context.getPackageName(), R.layout.fp_app_switcher);
@@ -109,27 +101,22 @@ public class AppSwitcherWidget extends AppWidgetProvider
         return widget;
     }
 
-    private static void updateMostUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostUsed)
-    {
+    private static void updateMostUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostUsed) {
         int slot_count = ApplicationRunInfoManager.MOST_APP_MAX_COUNT_LIMIT;
         int addedViewCount = 0;
 
-        for (ApplicationRunInformation mostUsedInfo : mostUsed)
-        {
+        for (ApplicationRunInformation mostUsedInfo : mostUsed) {
             RemoteViews view;
-            try
-            {
+            try {
                 view = getMostUsedView(context, mostUsedInfo, code);
 
-                if (view != null)
-                {
+                if (view != null) {
                     widget.addView(R.id.mostUsedApps, view);
                     addedViewCount += 1;
                 } else {
-                    Log.e(TAG, "Got null view for most used app: "+mostUsedInfo.getComponentName().getPackageName());
+                    Log.e(TAG, "Got null view for most used app: " + mostUsedInfo.getComponentName().getPackageName());
                 }
-            } catch (NameNotFoundException e)
-            {
+            } catch (NameNotFoundException e) {
                 // if no information is available log it and continue
                 Log.e(TAG, "Could not find the correct package", e);
 
@@ -142,8 +129,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
 
         RemoteViews allAppsView = getAllAppsButton(context, code);
 
-        if (allAppsView != null)
-        {
+        if (allAppsView != null) {
             widget.addView(R.id.mostUsedApps, allAppsView);
         }
 
@@ -154,27 +140,22 @@ public class AppSwitcherWidget extends AppWidgetProvider
         }
     }
 
-    private static int updateLastUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostRecent)
-    {
+    private static int updateLastUsedAppsList(Context context, int code, RemoteViews widget, List<ApplicationRunInformation> mostRecent) {
         int slot_count = ApplicationRunInfoManager.RECENT_APP_MAX_COUNT_LIMIT;
         int addedViewCount = 0;
 
-        for (ApplicationRunInformation appRunInfo : mostRecent)
-        {
+        for (ApplicationRunInformation appRunInfo : mostRecent) {
             RemoteViews view;
-            try
-            {
+            try {
                 view = getRecentView(context, appRunInfo, code);
 
-                if (view != null)
-                {
+                if (view != null) {
                     widget.addView(R.id.lastUsedApps, view);
                     addedViewCount += 1;
                 } else {
-                    Log.e(TAG, "Got null view for last used app: "+appRunInfo.getComponentName().getPackageName());
+                    Log.e(TAG, "Got null view for last used app: " + appRunInfo.getComponentName().getPackageName());
                 }
-            } catch (NameNotFoundException e)
-            {
+            } catch (NameNotFoundException e) {
                 // if no information is available log it and continue
                 Log.e(TAG, "Could not find the correct package", e);
 
@@ -192,8 +173,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         return code;
     }
 
-    private static void toggleMostAndLastUsedViewsVisibility(RemoteViews widget, List<ApplicationRunInformation> mostRecent, List<ApplicationRunInformation> mostUsed)
-    {
+    private static void toggleMostAndLastUsedViewsVisibility(RemoteViews widget, List<ApplicationRunInformation> mostRecent, List<ApplicationRunInformation> mostUsed) {
         if (mostRecent.isEmpty() && mostUsed.isEmpty()) {
             widget.setViewVisibility(R.id.mostUsedAppsOOBEDescription, View.VISIBLE);
         } else {
@@ -201,23 +181,32 @@ public class AppSwitcherWidget extends AppWidgetProvider
         }
     }
 
-    private static RemoteViews getMostUsedView(Context context, ApplicationRunInformation info, int code) throws NameNotFoundException
-    {
+    private static RemoteViews getMostUsedView(Context context, ApplicationRunInformation info, int code) throws NameNotFoundException {
         // generate the mostUsed row
         RemoteViews mostUsedRow = new RemoteViews(context.getPackageName(), R.layout.fp_most_used_item);
         PackageManager pm = context.getPackageManager();
 
         // get app icon and label
-        int iconSize = (int) context.getResources().getDimension(R.dimen.edit_favorites_icon_size);
         Drawable icon = pm.getActivityIcon(info.getComponentName());
-        Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
-        iconBitmap = Bitmap.createScaledBitmap(iconBitmap, iconSize, iconSize, true);
         CharSequence appLabel = pm.getActivityInfo(info.getComponentName(), 0).loadLabel(pm);
 
         // debug String with app count
         @SuppressWarnings("UnusedAssignment") String fullAppLabel = info.getCount() + "# " + appLabel;
 
-        mostUsedRow.setImageViewBitmap(R.id.most_app_logo, iconBitmap);
+        try {
+            Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
+
+            int iconSize = (int) context.getResources().getDimension(R.dimen.edit_favorites_icon_size);
+            int w = iconBitmap.getWidth();
+            int h = iconBitmap.getHeight();
+            int ws = w >= h ? iconSize : (int) (iconSize * (w / (double) h));
+            int hs = h >= w ? iconSize : (int) (iconSize * (h / (double) w));
+
+            iconBitmap = Bitmap.createScaledBitmap(iconBitmap, ws, hs, true);
+            mostUsedRow.setImageViewBitmap(R.id.most_app_logo, iconBitmap);
+        } catch (ClassCastException e) {
+            Log.e(TAG, "Failed to load bitmap drawable for " + fullAppLabel, e);
+        }
 
         mostUsedRow.setTextViewText(R.id.mostUsedButton, APP_SWITCHER_DEBUG_MODE ? fullAppLabel : appLabel);
 
@@ -229,8 +218,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         return mostUsedRow;
     }
 
-    private static RemoteViews getAllAppsButton(Context context, int code)
-    {
+    private static RemoteViews getAllAppsButton(Context context, int code) {
         // generate the mostUsed row
         RemoteViews allAppsButton = new RemoteViews(context.getPackageName(), R.layout.fp_most_used_item);
 
@@ -249,8 +237,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
         return allAppsButton;
     }
 
-    private static Intent generateLaunchIntent(ApplicationRunInformation info, String appLabel) throws NameNotFoundException
-    {
+    private static Intent generateLaunchIntent(ApplicationRunInformation info, String appLabel) throws NameNotFoundException {
         Intent i = new Intent();
         i.setAction(ACTION_APP_SWITCHER_LAUNCH_APP);
 
@@ -264,13 +251,11 @@ public class AppSwitcherWidget extends AppWidgetProvider
         return i;
     }
 
-    private static RemoteViews getRecentView(Context context, ApplicationRunInformation info, int code) throws NameNotFoundException
-    {
+    private static RemoteViews getRecentView(Context context, ApplicationRunInformation info, int code) throws NameNotFoundException {
         RemoteViews recentRow = new RemoteViews(context.getPackageName(), R.layout.fp_last_used_item);
         PackageManager pm = context.getPackageManager();
 
         // get application icon and label
-        int iconSize = (int) context.getResources().getDimension(R.dimen.edit_favorites_icon_size);
         Drawable icon = pm.getActivityIcon(info.getComponentName());
         CharSequence appLabel = pm.getActivityInfo(info.getComponentName(), 0).loadLabel(pm);
 
@@ -281,10 +266,17 @@ public class AppSwitcherWidget extends AppWidgetProvider
         recentRow.setTextViewText(R.id.recentButton, APP_SWITCHER_DEBUG_MODE ? fullAppLabel : appLabel);
         try {
             Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
-            iconBitmap = Bitmap.createScaledBitmap(iconBitmap, iconSize, iconSize, true);
+
+            int iconSize = (int) context.getResources().getDimension(R.dimen.edit_favorites_icon_size);
+            int w = iconBitmap.getWidth();
+            int h = iconBitmap.getHeight();
+            int ws = w >= h ? iconSize : (int) (iconSize * (w / (double) h));
+            int hs = h >= w ? iconSize : (int) (iconSize * (h / (double) w));
+
+            iconBitmap = Bitmap.createScaledBitmap(iconBitmap, ws, hs, true);
             recentRow.setImageViewBitmap(R.id.recent_app_logo, iconBitmap);
         } catch (ClassCastException e) {
-            Log.e(TAG, "Failed to load bitmap drawable for "+fullAppLabel, e);
+            Log.e(TAG, "Failed to load bitmap drawable for " + fullAppLabel, e);
         }
 
         // create the intent for this app
@@ -311,8 +303,7 @@ public class AppSwitcherWidget extends AppWidgetProvider
      * provider, or just a subset of them.
      */
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
-    {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.i(TAG, "onUpdate");
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         // Called in response to the ACTION_APPWIDGET_UPDATE broadcast when this

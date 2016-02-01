@@ -15,7 +15,6 @@
         android:id="@+id/recent_app_logo"
         android:layout_width="@dimen/edit_favorites_icon_size"
         android:layout_height="@dimen/edit_favorites_icon_size"
-        android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal"
         android:clickable="false" />
 
