@@ -24,6 +24,7 @@ import android.app.WallpaperInfo;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -68,9 +69,11 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.Toast;
 import com.android.photos.BitmapRegionTileSource;
 import com.android.photos.BitmapRegionTileSource.BitmapSource;
+import com.fairphone.fplauncher3.R;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -105,6 +108,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
     private WallpaperInfo mLiveWallpaperInfoOnPickerLaunch;
     private int mSelectedIndex = -1;
     private WallpaperInfo mLastClickedLiveWallpaperInfo;
+    private View mDarknessStrip;
 
     public static abstract class WallpaperTileInfo {
         protected View mView;
@@ -376,6 +380,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
         mCropView = (CropView) findViewById(R.id.cropView);
         mCropView.setVisibility(View.INVISIBLE);
 
+        mDarknessStrip = findViewById(R.id.darkness_strip);
         mWallpaperStrip = findViewById(R.id.wallpaper_strip);
         mCropView.setTouchCallback(new CropView.TouchCallback() {
             ViewPropertyAnimator mAnim;
@@ -392,6 +397,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
                     .setDuration(150)
                     .withEndAction(new Runnable() {
                         public void run() {
+                            mDarknessStrip.setVisibility(View.INVISIBLE);
                             mWallpaperStrip.setVisibility(View.INVISIBLE);
                         }
                     });
@@ -410,6 +416,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
                     if (mAnim != null) {
                         mAnim.cancel();
                     }
+                    mDarknessStrip.setVisibility(View.VISIBLE);
                     mWallpaperStrip.setVisibility(View.VISIBLE);
                     mAnim = mWallpaperStrip.animate();
                     mAnim.alpha(1f)
@@ -552,6 +559,12 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
                             WallpaperTileInfo info = (WallpaperTileInfo) mSelectedTile.getTag();
                             info.onSave(WallpaperPickerActivity.this);
                         } else {
+                            final SeekBar slider = ((SeekBar) findViewById(R.id.darkness_slider));
+                            if (slider != null){
+                                updateDarknessOverlayAlpha(1f-(slider.getProgress()/100f));
+                            } else {
+                                updateDarknessOverlayAlpha(0f);
+                            }
                             // no tile was selected, so we just finish the activity and go back
                             setResult(Activity.RESULT_OK);
                             finish();
@@ -648,6 +661,28 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
                 mActionMode = null;
             }
         };
+        String spKey = getSharedPreferencesKey();
+        SharedPreferences sp = getSharedPreferences(spKey, Context.MODE_MULTI_PROCESS);
+        float darknessAlpha = getDarknessOverlayAlpha(sp);
+        SeekBar darknessSlider = (SeekBar) findViewById(R.id.darkness_slider);
+        darknessSlider.setProgress((int)((1-darknessAlpha)*100));
+        findViewById(R.id.darkness_overlay).setAlpha(darknessAlpha);
+        darknessSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                findViewById(R.id.darkness_overlay).setAlpha(1f-(progress/100f));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     private void selectTile(View v) {

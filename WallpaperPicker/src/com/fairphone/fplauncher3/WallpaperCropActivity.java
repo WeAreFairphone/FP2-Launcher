@@ -22,6 +22,7 @@ import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -29,8 +30,6 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Canvas;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -38,21 +37,18 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v8.renderscript.Allocation;
-import android.support.v8.renderscript.RenderScript;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.android.gallery3d.common.Utils;
 import com.android.gallery3d.exif.ExifInterface;
 import com.android.photos.BitmapRegionTileSource;
 import com.android.photos.BitmapRegionTileSource.BitmapSource;
-import com.fairphone.fplauncher3.LauncherAppState;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -66,6 +62,7 @@ public class WallpaperCropActivity extends Activity {
 
     protected static final String WALLPAPER_WIDTH_KEY = "wallpaper.width";
     protected static final String WALLPAPER_HEIGHT_KEY = "wallpaper.height";
+    protected static final String WALLPAPER_DARKNESS_ALPHA = "wallpaper.darkness.alpha";
     private static final int DEFAULT_COMPRESS_QUALITY = 90;
     /**
      * The maximum bitmap size we allow to be returned through the intent.
@@ -88,7 +85,7 @@ public class WallpaperCropActivity extends Activity {
         super.onCreate(savedInstanceState);
         init();
         if (!enableRotation()) {
-            setRequestedOrientation(Configuration.ORIENTATION_PORTRAIT);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
 
@@ -150,7 +147,7 @@ public class WallpaperCropActivity extends Activity {
     public void setCropViewTileSource(
             final BitmapRegionTileSource.BitmapSource bitmapSource, final boolean touchEnabled,
             final boolean moveToLeft, final Runnable postExecute) {
-        final Context context = LauncherAppState.getContext();
+        final Context context = WallpaperCropActivity.this;
         final View progressView = findViewById(R.id.loading);
         final AsyncTask<Void, Void, Void> loadBitmapTask = new AsyncTask<Void, Void, Void>() {
             protected Void doInBackground(Void...args) {
@@ -319,6 +316,12 @@ public class WallpaperCropActivity extends Activity {
         BitmapCropTask cropTask = new BitmapCropTask(
                 this, uri, null, rotation, 0, 0, true, false, null);
         final Point bounds = cropTask.getImageBounds();
+        final SeekBar slider = ((SeekBar) findViewById(R.id.darkness_slider));
+        if (slider != null){
+            updateDarknessOverlayAlpha(1f-(slider.getProgress()/100f));
+        } else {
+            updateDarknessOverlayAlpha(0f);
+        }
         Runnable onEndCrop = new Runnable() {
             public void run() {
                 updateWallpaperDimensions(bounds.x, bounds.y);
@@ -343,6 +346,12 @@ public class WallpaperCropActivity extends Activity {
                 getWindowManager());
         RectF crop = getMaxCropRect(
                 inSize.x, inSize.y, outSize.x, outSize.y, false);
+        final SeekBar slider = ((SeekBar) findViewById(R.id.darkness_slider));
+        if (slider != null){
+            updateDarknessOverlayAlpha(1f-(slider.getProgress()/100f));
+        } else {
+            updateDarknessOverlayAlpha(0f);
+        }
         Runnable onEndCrop = new Runnable() {
             public void run() {
                 // Passing 0, 0 will cause launcher to revert to using the
@@ -599,7 +608,6 @@ public class WallpaperCropActivity extends Activity {
                     InputStream is = regenerateInputStream();
                     if (is != null) {
                         Bitmap bmp = BitmapFactory.decodeStream(is);
-                        bmp = changeBitmapContrastBrightness(bmp);
 
                         // Get output compression format
                         CompressFormat cf =
@@ -619,7 +627,7 @@ public class WallpaperCropActivity extends Activity {
                             failure = true;
                         }
 
-			if(failure) {
+                        if(failure) {
                             wallpaperManager.setStream(is);
                         }
 
@@ -800,8 +808,6 @@ public class WallpaperCropActivity extends Activity {
 ;
                 if (mSaveCroppedBitmap) {
                     mCroppedBitmap = crop;
-                } else {
-                    crop = changeBitmapContrastBrightness(crop);
                 }
 
                 // Get output compression format
@@ -832,44 +838,6 @@ public class WallpaperCropActivity extends Activity {
             return !failure; // True if any of the operations failed
         }
 
-        /**
-         * 
-         * @param bmp input bitmap
-         * @return new bitmap
-         */
-        protected Bitmap changeBitmapContrastBrightness(Bitmap bmp)
-        {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                final RenderScript rs = RenderScript.create(LauncherAppState.getContext());
-                final Allocation input = Allocation.createFromBitmap(rs, bmp, Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);
-                final Allocation output = Allocation.createTyped(rs, input.getType());
-
-                ScriptC_exposure exposure = new ScriptC_exposure(rs);
-                exposure.forEach_exposure(input, output);
-
-                output.copyTo(bmp);
-                return bmp;
-            } else {
-                ColorMatrix cm = new ColorMatrix(new float[]
-                        {
-                                1, 0, 0, 0, 180.f,
-                                0, 1, 0, 0, 180.f,
-                                0, 0, 1, 0, 180.f,
-                                0, 0, 0, 1, 0
-                        });
-
-            Bitmap ret = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
-
-            Canvas canvas = new Canvas(ret);
-
-            Paint paint = new Paint();
-            paint.setColorFilter(new ColorMatrixColorFilter(cm));
-            canvas.drawBitmap(bmp, 0, 0, paint);
-
-            return ret;
-          }
-        }
-
         @Override
         protected Boolean doInBackground(Void... params) {
             return cropBitmap();
@@ -881,6 +849,14 @@ public class WallpaperCropActivity extends Activity {
                 mOnEndRunnable.run();
             }
         }
+    }
+    
+    protected void updateDarknessOverlayAlpha(float alpha){
+        String spKey = getSharedPreferencesKey();
+        SharedPreferences sp = getSharedPreferences(spKey, Context.MODE_MULTI_PROCESS);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putFloat(WALLPAPER_DARKNESS_ALPHA, alpha);
+        editor.commit();
     }
 
     protected void updateWallpaperDimensions(int width, int height) {
@@ -898,6 +874,11 @@ public class WallpaperCropActivity extends Activity {
 
         suggestWallpaperDimension(getResources(),
                 sp, getWindowManager(), WallpaperManager.getInstance(this), true);
+    }
+    
+    static public float getDarknessOverlayAlpha(SharedPreferences sharedPrefs){
+        float savedAlpha = sharedPrefs.getFloat(WALLPAPER_DARKNESS_ALPHA, 0.f);
+        return savedAlpha;
     }
 
     static public void suggestWallpaperDimension(Resources res,

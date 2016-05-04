@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.provider.Settings;
@@ -43,14 +44,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
-import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.fairphone.fplauncher3.R;
 import com.fairphone.fplauncher3.FolderInfo.FolderListener;
 
 import java.util.ArrayList;
@@ -656,7 +655,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         float animatorDurationScale = Settings.Global.getFloat(getContext().getContentResolver(),
                                Settings.Global.ANIMATOR_DURATION_SCALE, 1);
         ObjectAnimator oa;
-        if (mPowerManager.isPowerSaveMode() || animatorDurationScale < 0.01f) {
+        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mPowerManager.isPowerSaveMode()) || animatorDurationScale < 0.01f) {
             // power save mode is no fun - skip alpha animation and just set it to 0
             // otherwise the icons will stay around until the duration of the animation
             oa = LauncherAnimUtils.ofPropertyValuesHolder(this, scaleX, scaleY);
@@ -1078,6 +1077,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         mLauncher.getWorkspace().setFinalScrollForPageChange(currentPage);
         // We first fetch the currently visible CellLayoutChildren
         CellLayout currentLayout = (CellLayout) mLauncher.getWorkspace().getChildAt(currentPage);
+        if (currentLayout == null) {
+            return;
+        }
         ShortcutAndWidgetContainer boundingLayout = currentLayout.getShortcutsAndWidgets();
         Rect bounds = new Rect();
         parent.getDescendantRectRelativeToSelf(boundingLayout, bounds);

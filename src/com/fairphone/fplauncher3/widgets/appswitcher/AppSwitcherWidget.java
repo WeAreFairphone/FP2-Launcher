@@ -222,7 +222,12 @@ public class AppSwitcherWidget extends AppWidgetProvider {
         // generate the mostUsed row
         RemoteViews allAppsButton = new RemoteViews(context.getPackageName(), R.layout.fp_most_used_item);
 
-        Drawable draw = context.getResources().getDrawable(R.drawable.icon_allapps_white_widget);
+        Drawable draw;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            draw = context.getResources().getDrawable(R.drawable.icon_allapps_white_widget, null);
+        } else {
+            draw = context.getResources().getDrawable(R.drawable.icon_allapps_white_widget);
+        }
         Bitmap icon = ((BitmapDrawable) draw).getBitmap();
         allAppsButton.setImageViewBitmap(R.id.most_app_logo, icon);
 

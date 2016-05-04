@@ -23,6 +23,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/workspace_bg">
 
+    <View
+        android:id="@+id/darkness_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:alpha="0.8"
+        />
+
     <com.fairphone.fplauncher3.DragLayer
         android:id="@+id/drag_layer"
         android:layout_width="match_parent"

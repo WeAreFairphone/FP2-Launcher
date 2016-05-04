@@ -27,20 +27,9 @@ LOCAL_JAVA_LIBRARIES := telephony-common
 
 LOCAL_STATIC_JAVA_LIBRARIES := flcrashlytics android-support-v13 libphonenumber
 
-LOCAL_STATIC_JAVA_LIBRARIES += android-support-v8-renderscript
-
-LOCAL_RENDERSCRIPT_INCLUDES_OVERRIDE := $(TOPDIR)external/clang/lib/Headers \
-                                        $(TOPDIR)frameworks/rs/scriptc
-LOCAL_RENDERSCRIPT_TARGET_API := 19
-LOCAL_RENDERSCRIPT_COMPATIBILITY := 18
-LOCAL_RENDERSCRIPT_FLAGS := -rs-package-name=android.support.v8.renderscript
-LOCAL_JNI_SHARED_LIBRARIES := librsjni
-LOCAL_32_BIT_ONLY := true
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src) \
     $(call all-java-files-under, WallpaperPicker/src) \
-    $(call all-renderscript-files-under, src) \
-    $(call all-renderscript-files-under, WallpaperPicker/src) \
     $(call all-proto-files-under, protos)
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/WallpaperPicker/res $(LOCAL_PATH)/res
 

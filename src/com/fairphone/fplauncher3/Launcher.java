@@ -978,6 +978,7 @@ public class Launcher extends Activity
         }
         super.onResume();
 
+        updateDarknessOverlay();
         // Restore the previous launcher state
         if (mOnResumeState == State.WORKSPACE) {
             showWorkspace(false);
@@ -3459,7 +3460,7 @@ public class Launcher extends Activity
             toView.setVisibility(View.VISIBLE);
             toView.post(startAnimRunnable);
 
-            Log.wtf(TAG, "Launcher Show widgets showAppsCustomizeHelper final step");
+            Log.d(TAG, "Launcher Show widgets showAppsCustomizeHelper final step");
         } else {
             toView.setTranslationX(0.0f);
             toView.setTranslationY(0.0f);
@@ -5214,6 +5215,14 @@ public class Launcher extends Activity
 	        mWorkspace.exitOverviewMode(true);
 	    }
 	}
+    
+    public void updateDarknessOverlay(){
+        String spKey = WallpaperCropActivity.getSharedPreferencesKey();
+        SharedPreferences sp =
+                getSharedPreferences(spKey, Context.MODE_MULTI_PROCESS);
+        float alpha = LauncherWallpaperPickerActivity.getDarknessOverlayAlpha(sp);
+        findViewById(R.id.darkness_overlay).setAlpha(alpha);
+    }
 }
 
 interface DebugIntents {

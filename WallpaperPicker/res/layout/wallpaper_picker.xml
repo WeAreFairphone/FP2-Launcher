@@ -27,6 +27,12 @@
         android:id="@+id/cropView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <View
+        android:id="@+id/darkness_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.3"
+        android:background="#000000" />
     <ProgressBar
         android:id="@+id/loading"
         style="@android:style/Widget.Holo.ProgressBar.Large"
@@ -73,5 +79,31 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@drawable/tile_shadow_bottom" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/darkness_strip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/wallpaper_strip"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:background="#77000000"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:tint="@android:color/white"
+            android:src="@drawable/darkness_icon" />
+        <SeekBar
+            android:id="@+id/darkness_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:max="100"
+            android:progress="70" />
     </LinearLayout>
 </com.fairphone.fplauncher3.WallpaperRootView>

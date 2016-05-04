@@ -60,7 +60,7 @@ public class PagedViewGridLayout extends GridLayout implements Page {
 
     @Override
     protected void onAttachedToWindow() {
-        Log.wtf(TAG, "onAttachedToWindow");
+        Log.d(TAG, "onAttachedToWindow");
         super.onAttachedToWindow();
 
     }
@@ -72,12 +72,12 @@ public class PagedViewGridLayout extends GridLayout implements Page {
     }
 
     public void setOnLayoutListener(Runnable r) {
-        Log.wtf(TAG, "fiz set do listener com o runnable IsNull =" + (r != null));
+        Log.d(TAG, "fiz set do listener com o runnable IsNull =" + (r != null));
         mOnLayoutListener = r;
     }
 
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        Log.wtf(TAG, "onLayout ");
+        Log.d(TAG, "onLayout ");
         super.onLayout(changed, left, top, right, bottom);
         if (mOnLayoutListener != null) {
             mOnLayoutListener.run();

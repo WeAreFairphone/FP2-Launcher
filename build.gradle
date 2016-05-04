@@ -30,25 +30,19 @@ repositories {
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.fairphone.fplauncher3"
         minSdkVersion 17
         targetSdkVersion 22
-        renderscriptTargetApi 19
-        renderscriptSupportModeEnabled true
     }
 
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-        }
-        debug {
-            renderscriptDebuggable true
-        }
+            proguardFiles 'proguard.flags'
     }
 
     sourceSets {
@@ -57,7 +51,7 @@ android {
             java.srcDirs = ['src', 'protoBufSrc', 'WallpaperPicker/src']
             resources.srcDirs = ['src']
             aidl.srcDirs = ['src']
-            renderscript.srcDirs = ['src', 'WallpaperPicker/src']
+            //renderscript.srcDirs = ['src', 'WallpaperPicker/src']
             res.srcDirs = ['res', 'WallpaperPicker/res']
             assets.srcDirs = ['assets']
         }

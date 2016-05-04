@@ -45,7 +45,7 @@ public class ApplicationRunInfoManager
 
     private LimitedQueue<ApplicationRunInformation> _mostUsed;
     private LimitedQueue<ApplicationRunInformation> _recentApps;
-    private final Map<String, ApplicationRunInformation> _appRunInfos;
+    private Map<String, ApplicationRunInformation> _appRunInfos;
 
     private int _mostUsedAppsLimit;
     private int _recentAppsLimit;
@@ -54,12 +54,11 @@ public class ApplicationRunInfoManager
     public ApplicationRunInfoManager(boolean updateLists)
     {
         this._updateLists = updateLists;
+        _appRunInfos = new HashMap<String, ApplicationRunInformation>();
         if (_updateLists)
         {
             setUpLimits(MOST_APP_MAX_COUNT_LIMIT, RECENT_APP_MAX_COUNT_LIMIT);
         }
-
-        _appRunInfos = new HashMap<String, ApplicationRunInformation>();
     }
 
     public static ApplicationRunInformation generateApplicationRunInfo(ComponentName component, boolean isFreshInstall, boolean isUpdated)

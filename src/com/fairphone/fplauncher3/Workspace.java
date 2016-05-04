@@ -1274,6 +1274,11 @@ public class Workspace extends SmoothPagedView
                         Launcher.overrideWallpaperDimensions());
                 return null;
             }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                mLauncher.updateDarknessOverlay();
+            }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void) null);
     }
 
