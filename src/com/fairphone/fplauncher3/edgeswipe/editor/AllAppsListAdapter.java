@@ -22,6 +22,7 @@ import com.fairphone.fplauncher3.R;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -96,4 +97,5 @@ public class AllAppsListAdapter extends BaseAdapter
     {
         return position;
     }
+
 }
