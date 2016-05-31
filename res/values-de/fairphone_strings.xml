@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+\<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="last_used">Letzte</string>
@@ -38,8 +38,8 @@
     <string name="oobe_next">Weiter</string>
     <string name="oobe_done">Fertig</string>
     <string name="oobe_try_it_yourself">Probier es selbst aus</string>
-    <string name="oobe_got_it">Verstanden</string>
-    <string name="oobe_longpress_title">Hintergrundbilder, Widgets &amp; Einstellungen</string>
+    <string name="oobe_got_it">Ich verstehe</string>
+    <string name="oobe_longpress_title">Hintergrundbilder, Widgets &amp; Apps</string>
     <string name="oobe_longpress_description">Home-Bildschirm antippen und gedrückt halten, um ihn anzupassen</string>
 
 </resources>

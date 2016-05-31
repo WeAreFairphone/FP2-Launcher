@@ -41,7 +41,7 @@
     <string name="oobe_done">Hecho</string>
     <string name="oobe_try_it_yourself">Pruébalo tu mismo</string>
     <string name="oobe_got_it">Lo entiendo</string>
-    <string name="oobe_longpress_title">Fondos de pantalla, widgets y ajustes</string>
+    <string name="oobe_longpress_title">Fondos de pantalla, widgets y apps</string>
     <string name="oobe_longpress_description">Toca y mantén presionada la pantalla de inicio para personalizarla</string>
 
 </resources>

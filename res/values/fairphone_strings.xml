@@ -43,7 +43,7 @@
     <string name="oobe_done">Done</string>
     <string name="oobe_try_it_yourself">Try it yourself</string>
     <string name="oobe_got_it">Got it</string>
-    <string name="oobe_longpress_title">Wallpapers, Widgets &amp; Settings</string>
+    <string name="oobe_longpress_title">Wallpapers, Widgets &amp; Apps</string>
     <string name="oobe_longpress_description">Touch and hold the home screen to customize</string>
 
 </resources>

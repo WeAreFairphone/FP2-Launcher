@@ -39,7 +39,7 @@
     <string name="oobe_done">Terminar</string>
     <string name="oobe_try_it_yourself">Experimente você mesmo</string>
     <string name="oobe_got_it">Entendi</string>
-    <string name="oobe_longpress_title">Imagens de Fundo, Widgets &amp; Definições</string>
+    <string name="oobe_longpress_title">Imagens de Fundo, Widgets &amp; Aplicações</string>
     <string name="oobe_longpress_description">Toque e mantenha pressionado o ecrã inicial para customizar</string>
 
 </resources>

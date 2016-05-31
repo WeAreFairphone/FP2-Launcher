@@ -40,7 +40,7 @@
     <string name="oobe_done">Klaar</string>
     <string name="oobe_try_it_yourself">Probeer het zelf</string>
     <string name="oobe_got_it">Ik snap het</string>
-    <string name="oobe_longpress_title">Wallpapers, widgets en instellingen</string>
+    <string name="oobe_longpress_title">Wallpapers, widgets en apps</string>
     <string name="oobe_longpress_description">Druk en hou het startscherm vast om aan te passen</string>
 
 </resources>

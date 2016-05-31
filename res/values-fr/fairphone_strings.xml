@@ -43,7 +43,7 @@
     <string name="oobe_done">Terminé</string>
     <string name="oobe_try_it_yourself">Essayez par vous-même</string>
     <string name="oobe_got_it">OK</string>
-    <string name="oobe_longpress_title">Fonds d\'écran, Widgets &amp; Réglages</string>
+    <string name="oobe_longpress_title">Fonds d\'écran, Widgets &amp; Apps</string>
     <string name="oobe_longpress_description">Appuyez de manière prolongée sur l\'arrière-plan pour le personnaliser</string>
 
 </resources>
