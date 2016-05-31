@@ -41,6 +41,7 @@ import android.view.animation.LinearInterpolator;
 
 import com.fairphone.fplauncher3.compat.UserHandleCompat;
 
+
 public class DeleteDropTarget extends ButtonDropTarget {
     private static final int DELETE_ANIMATION_DURATION = 285;
     private static final int FLING_DELETE_ANIMATION_DURATION = 350;
@@ -265,7 +266,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
             public void run() {
                 completeDrop(d);
                 mSearchDropTargetBar.onDragEnd();
-                mLauncher.exitSpringLoadedDragMode();
+                mLauncher.exitSpringLoadedDragModeDelayed(true, 0, null);
             }
         };
         dragLayer.animateView(d.dragView, from, to, scale, 1f, 1f, 0.1f, 0.1f,

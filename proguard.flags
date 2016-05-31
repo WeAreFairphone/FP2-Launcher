@@ -69,3 +69,8 @@
 }
 
 -keep class android.support.v8.renderscript.** { *; }
+
+-keep class com.android.launcher3.FastBitmapDrawable {
+  public int getBrightness();
+  public void setBrightness(int);
+}

@@ -73,8 +73,6 @@ public class LauncherProvider extends ContentProvider {
     private static final String TAG = "Launcher.LauncherProvider";
     private static final boolean LOGD = false;
 
-    private static final String DATABASE_NAME = "launcher.db";
-
     private static final int DATABASE_VERSION = 20;
 
     static final String OLD_AUTHORITY = "com.android.launcher2.settings";
@@ -437,7 +435,7 @@ public class LauncherProvider extends ContentProvider {
         private boolean mNewDbCreated = false;
 
         DatabaseHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+            super(context, LauncherFiles.LAUNCHER_DB, null, DATABASE_VERSION);
             mContext = context;
             mPackageManager = context.getPackageManager();
             mAppWidgetHost = new AppWidgetHost(context, Launcher.APPWIDGET_HOST_ID);
@@ -1069,7 +1067,7 @@ public class LauncherProvider extends ContentProvider {
                     long id = c.getLong(idIndex);
                     byte[] data = c.getBlob(iconIndex);
                     try {
-                        Bitmap bitmap = Utilities.resampleIconBitmap(
+                        Bitmap bitmap = Utilities.createIconBitmap(
                                 BitmapFactory.decodeByteArray(data, 0, data.length),
                                 mContext);
                         if (bitmap != null) {
@@ -2105,9 +2103,13 @@ public class LauncherProvider extends ContentProvider {
 
                                     // Canonicalize
                                     // the Play Store sets the package parameter, but Launcher
-                                    // does not, so we clear that out to keep them the same
+                                    // does not, so we clear that out to keep them the same.
+                                    // Also ignore intent flags for the purposes of deduping.
                                     intent.setPackage(null);
+                                    int flags = intent.getFlags();
+                                    intent.setFlags(0);
                                     final String key = intent.toUri(0);
+                                    intent.setFlags(flags);
                                     if (seenIntents.contains(key)) {
                                         Launcher.addDumpLog(TAG, "skipping duplicate", true);
                                         continue;

@@ -15,9 +15,10 @@
      limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal|bottom"
+    android:gravity="top"
     android:orientation="horizontal" >
 
     <TextView
@@ -30,24 +31,8 @@
         android:fontFamily="sans-serif-condensed"
         android:gravity="center_horizontal"
         android:text="@string/wallpaper_button_text"
-        android:maxLines="2"
         android:textAllCaps="true"
         android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/settings_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:drawablePadding="4dp"
-        android:drawableTop="@drawable/ic_setting"
-        android:fontFamily="sans-serif-condensed"
-        android:gravity="center_horizontal"
-        android:text="@string/settings_button_text"
-        android:maxLines="2"
-        android:textAllCaps="true"
-        android:textSize="12sp"
-        android:visibility="gone" />
 
     <TextView
         android:id="@+id/widget_button"
@@ -59,7 +44,6 @@
         android:fontFamily="sans-serif-condensed"
         android:gravity="center_horizontal"
         android:text="@string/widget_button_text"
-        android:maxLines="2"
         android:textAllCaps="true"
         android:textSize="12sp" />
 
@@ -73,7 +57,19 @@
         android:fontFamily="sans-serif-condensed"
         android:gravity="center_horizontal"
         android:text="@string/edge_swipe_all_apps"
-        android:maxLines="2"
+        android:textAllCaps="true"
+        android:textSize="12sp" />
+
+   <TextView
+        android:id="@+id/settings_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawablePadding="4dp"
+        android:drawableTop="@drawable/ic_setting"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center_horizontal"
+        android:text="@string/settings_button_text"
         android:textAllCaps="true"
         android:textSize="12sp" />
 
