@@ -73,7 +73,6 @@ import android.text.TextUtils;
 import android.text.method.TextKeyListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
@@ -136,7 +135,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import com.android.internal.telephony.cat.AppInterface;
 
 /**
  * Default launcher application.
@@ -183,7 +181,6 @@ public class Launcher extends Activity
     static final int SCREEN_COUNT = 5;
     static final int DEFAULT_SCREEN = 2;
 
-    private static final String PREFERENCES = "launcher.preferences";
     // To turn on these properties, type
     // adb shell setprop log.tag.PROPERTY_NAME [VERBOSE | SUPPRESS]
     static final String FORCE_ENABLE_ROTATION_PROPERTY = "launcher_force_rotate";
@@ -612,7 +609,7 @@ public class Launcher extends Activity
     private static void readConfiguration(Context context, LocaleConfiguration configuration) {
         DataInputStream in = null;
         try {
-            in = new DataInputStream(context.openFileInput(PREFERENCES));
+            in = new DataInputStream(context.openFileInput(LauncherFiles.LAUNCHER_PREFERENCES));
             configuration.locale = in.readUTF();
             configuration.mcc = in.readInt();
             configuration.mnc = in.readInt();
@@ -634,7 +631,8 @@ public class Launcher extends Activity
     private static void writeConfiguration(Context context, LocaleConfiguration configuration) {
         DataOutputStream out = null;
         try {
-            out = new DataOutputStream(context.openFileOutput(PREFERENCES, MODE_PRIVATE));
+            out = new DataOutputStream(context.openFileOutput(
+                    LauncherFiles.LAUNCHER_PREFERENCES, MODE_PRIVATE));
             out.writeUTF(configuration.locale);
             out.writeInt(configuration.mcc);
             out.writeInt(configuration.mnc);
@@ -643,7 +641,7 @@ public class Launcher extends Activity
             // Ignore
         } catch (IOException e) {
             //noinspection ResultOfMethodCallIgnored
-            context.getFileStreamPath(PREFERENCES).delete();
+            context.getFileStreamPath(LauncherFiles.LAUNCHER_PREFERENCES).delete();
         } finally {
             if (out != null) {
                 try {
@@ -745,8 +743,7 @@ public class Launcher extends Activity
         return screenId;
     }
 
-    @Override
-    protected void onActivityResult(
+    private void handleActivityResult(
             final int requestCode, final int resultCode, final Intent data) {
         // Reset the startActivity waiting flag
         setWaitingForResult(false);
@@ -888,6 +885,13 @@ public class Launcher extends Activity
                     ON_ACTIVITY_RESULT_ANIMATION_DELAY, false);
         }
         mDragLayer.clearAnimatedView();
+
+    }
+
+    @Override
+    protected void onActivityResult(
+            final int requestCode, final int resultCode, final Intent data) {
+        handleActivityResult(requestCode, resultCode, data);
     }
 
     private static PendingAddArguments preparePendingAddArgs(int requestCode, Intent data, int
@@ -1300,11 +1304,18 @@ public class Launcher extends Activity
         widgetButton.setOnTouchListener(getHapticFeedbackTouchListener());
 
         View wallpaperButton = findViewById(R.id.wallpaper_button);
+        wallpaperButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (!mWorkspace.isSwitchingState()) {
+                    onClickWallpaperPicker(arg0);
+                }
+            }
+        });
+        wallpaperButton.setOnTouchListener(getHapticFeedbackTouchListener());
 
         View settingsButton = findViewById(R.id.settings_button);
         if (hasSettings()) {
-        	wallpaperButton.setVisibility(View.GONE);
-            
             settingsButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
@@ -1316,16 +1327,6 @@ public class Launcher extends Activity
             settingsButton.setOnTouchListener(getHapticFeedbackTouchListener());
         } else {
             settingsButton.setVisibility(View.GONE);
-            
-            wallpaperButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View arg0) {
-                    if (!mWorkspace.isSwitchingState()) {
-                        onClickWallpaperPicker(arg0);
-                    }
-                }
-            });
-            wallpaperButton.setOnTouchListener(getHapticFeedbackTouchListener());
         }
         
         View appsButton = findViewById(R.id.applications_button);
@@ -1357,9 +1358,6 @@ public class Launcher extends Activity
         else
         {
             appsButton.setVisibility(View.GONE);
-            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) widgetButton.getLayoutParams();
-            lp.gravity = Gravity.END | Gravity.TOP;
-            widgetButton.requestLayout();
         }
 
         mOverviewPanel.setAlpha(0f);
@@ -1377,7 +1375,7 @@ public class Launcher extends Activity
         // Setup AppsCustomize
         mAppsCustomizeTabHost = (AppsCustomizeTabHost) findViewById(R.id.apps_customize_pane);
         mAppsCustomizeContent = (AppsCustomizePagedView)
-                mAppsCustomizeTabHost.findViewById(R.id.apps_customize_pane_content);
+        mAppsCustomizeTabHost.findViewById(R.id.apps_customize_pane_content);
         mAppsCustomizeContent.setup(this, dragController);
 
         // Setup the drag controller (drop targets have to be added in reverse order in priority)
@@ -1454,7 +1452,7 @@ public class Launcher extends Activity
 
         boolean foundCellSpan;
 
-        ShortcutInfo info = mModel.infoFromShortcutIntent(this, data, null);
+        ShortcutInfo info = mModel.infoFromShortcutIntent(this, data);
         if (info == null) {
             return;
         }
@@ -2608,7 +2606,7 @@ public class Launcher extends Activity
 
     private void showBrokenAppInstallDialog(final String packageName,
             DialogInterface.OnClickListener onSearchClickListener) {
-        new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_DeviceDefault))
+        new AlertDialog.Builder(this)
             .setTitle(R.string.abandoned_promises_title)
             .setMessage(R.string.abandoned_promise_explanation)
             .setPositiveButton(R.string.abandoned_search, onSearchClickListener)
@@ -3565,17 +3563,17 @@ public class Launcher extends Activity
                     yDrift = isWidgetTray ? height / 2 : allAppsToPanelDelta[1];
                     xDrift = isWidgetTray ? 0 : allAppsToPanelDelta[0];
                 } else {
-                    yDrift = 5 * height / 4;
+                    yDrift = 2 * height / 3;
                     xDrift = 0;
                 }
 
                 revealView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
                 TimeInterpolator decelerateInterpolator = material ?
                         new LogDecelerateInterpolator(100, 0) :
-                        new LogDecelerateInterpolator(30, 0);
+                        new DecelerateInterpolator(1f);
 
                 // The vertical motion of the apps panel should be delayed by one frame
-                // from the conceal animation in order to give the right feel. We correpsondingly
+                // from the conceal animation in order to give the right feel. We correspondingly
                 // shorten the duration so that the slide and conceal end at the same time.
                 ObjectAnimator panelDriftY = LauncherAnimUtils.ofFloat(revealView, "translationY",
                         0, yDrift);
@@ -3596,9 +3594,9 @@ public class Launcher extends Activity
                     revealView.setAlpha(1f);
                     ObjectAnimator panelAlpha = LauncherAnimUtils.ofFloat(revealView, "alpha",
                             1f, finalAlpha);
-                    panelAlpha.setDuration(revealDuration);
-                    panelAlpha.setInterpolator(material ? decelerateInterpolator :
-                        new AccelerateInterpolator(1.5f));
+                    panelAlpha.setDuration(material ? revealDuration : 150);
+                    panelAlpha.setInterpolator(decelerateInterpolator);
+                    panelAlpha.setStartDelay(material ? 0 : itemsAlphaStagger + SINGLE_FRAME_DELAY);
                     mStateAnimation.play(panelAlpha);
                 }
 
@@ -4784,32 +4782,7 @@ public class Launcher extends Activity
     protected static boolean overrideWallpaperDimensions() {
         return true;
     }
-
-    protected static boolean shouldClingFocusHotseatApp() {
-        return false;
-    }
-    protected static String getFirstRunClingSearchBarHint() {
-        return "";
-    }
-    protected static String getFirstRunCustomContentHint() {
-        return "";
-    }
-    protected static int getFirstRunFocusedHotseatAppDrawableId() {
-        return -1;
-    }
-    protected static ComponentName getFirstRunFocusedHotseatAppComponentName() {
-        return null;
-    }
-    protected static int getFirstRunFocusedHotseatAppRank() {
-        return -1;
-    }
-    protected static String getFirstRunFocusedHotseatAppBubbleTitle() {
-        return "";
-    }
-    protected static String getFirstRunFocusedHotseatAppBubbleDescription() {
-        return "";
-    }
-
+    
     /**
      * To be overridden by subclasses to indicate that there is an activity to launch
      * before showing the standard launcher experience.

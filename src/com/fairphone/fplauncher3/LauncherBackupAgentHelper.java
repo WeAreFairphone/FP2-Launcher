@@ -81,12 +81,29 @@ public class LauncherBackupAgentHelper extends BackupAgentHelper {
     public void onRestore(BackupDataInput data, int appVersionCode, ParcelFileDescriptor newState)
             throws IOException {
         super.onRestore(data, appVersionCode, newState);
+        if (!Utilities.isLmpOrAbove()) {
+            // No restore for old devices.
+            Log.i(TAG, "You shall not pass!!!");
+            Log.d(TAG, "Restore is only supported on devices running Lollipop and above.");
+            return;
+        }
 
-        // If no favorite was migrated, clear the data and start fresh.
-        final Cursor c = getContentResolver().query(
-                LauncherSettings.Favorites.CONTENT_URI_NO_NOTIFICATION, null, null, null, null);
-        boolean hasData = c.moveToNext();
-        c.close();
+        // Clear dB before restore
+        LauncherAppState.getLauncherProvider().createEmptyDB();
+
+        boolean hasData;
+        try {
+            super.onRestore(data, appVersionCode, newState);
+            // If no favorite was migrated, clear the data and start fresh.
+            final Cursor c = getContentResolver().query(
+                    LauncherSettings.Favorites.CONTENT_URI_NO_NOTIFICATION, null, null, null, null);
+            hasData = c.moveToNext();
+            c.close();
+        } catch (Exception e) {
+            // If the restore fails, we should do a fresh start.
+            Log.e(TAG, "Restore failed", e);
+            hasData = false;
+        }
 
         if (!hasData) {
             if (VERBOSE) {
