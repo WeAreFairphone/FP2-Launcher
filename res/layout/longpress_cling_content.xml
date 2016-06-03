@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="36dp"
         android:paddingRight="36dp"
-        android:text="@string/workspace_cling_longpress_title"
+        android:text="@string/oobe_longpress_title"
         android:textColor="#E1000000"
         android:textSize="24sp" />
 
