@@ -88,7 +88,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@string/workspace_cling_longpress_description" />
+            android:text="@string/oobe_longpress_description" />
 
         <Button
             android:id="@+id/got_it_button"
@@ -98,8 +98,7 @@
             android:layout_marginRight="71dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/button_border"
-            android:text="@string/workspace_cling_longpress_dismiss"
-            android:textAllCaps="true"
+            android:text="@string/oobe_got_it"
             android:textSize="16sp"
             android:textColor="@color/oobe_blue_light" />
     </LinearLayout>
@@ -138,8 +137,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15.7dp"
             android:background="@drawable/button_border"
-            android:text="@string/workspace_cling_longpress_dismiss"
-            android:textAllCaps="true"
+            android:text="@string/oobe_got_it"
             android:textColor="@color/oobe_blue_light" />
 
     </RelativeLayout>
@@ -308,8 +306,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15.7dp"
             android:background="@drawable/button_border"
-            android:text="@string/workspace_cling_longpress_dismiss"
-            android:textAllCaps="true"
+            android:text="@string/oobe_got_it"
             android:textColor="@color/oobe_blue_light" />
     </RelativeLayout>
 

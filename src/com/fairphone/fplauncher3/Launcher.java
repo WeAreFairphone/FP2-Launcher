@@ -100,7 +100,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fairphone.fplauncher3.R;
 import com.fairphone.fplauncher3.DropTarget.DragObject;
 import com.fairphone.fplauncher3.PagedView.PageSwitchListener;
 import com.fairphone.fplauncher3.applifecycle.AppDrawerView;
@@ -108,9 +107,9 @@ import com.fairphone.fplauncher3.compat.AppWidgetManagerCompat;
 import com.fairphone.fplauncher3.compat.LauncherActivityInfoCompat;
 import com.fairphone.fplauncher3.compat.LauncherAppsCompat;
 import com.fairphone.fplauncher3.compat.PackageInstallerCompat;
+import com.fairphone.fplauncher3.compat.PackageInstallerCompat.PackageInstallInfo;
 import com.fairphone.fplauncher3.compat.UserHandleCompat;
 import com.fairphone.fplauncher3.compat.UserManagerCompat;
-import com.fairphone.fplauncher3.compat.PackageInstallerCompat.PackageInstallInfo;
 import com.fairphone.fplauncher3.edgeswipe.EdgeSwipeMenu;
 import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
 import com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity;
@@ -162,7 +161,7 @@ public class Launcher extends Activity
 
     private static final int REQUEST_BIND_APPWIDGET = 11;
     private static final int REQUEST_RECONFIGURE_APPWIDGET = 12;
-    
+
     private static final int REQUEST_PICK_SETTINGS = 98;
     private static final int REQUEST_EDIT_FAVORITES = 99;
 
@@ -1094,15 +1093,15 @@ public class Launcher extends Activity
         if (mWorkspace.getCustomContentCallbacks() != null) {
             mWorkspace.getCustomContentCallbacks().onHide();
         }
-        
+
         AppSwitcherManager.saveAppSwitcherData(this);
         AppSwitcherManager.unregisterAppSwitcherBroadcastReceivers(this);
 
         AppDiscoverer.getInstance().saveAppAgingData(this);
-        
-        if(isAgingAppDrawerVisible()){
-    		hideAgingAppDrawer();
-    	}
+
+        if (isAgingAppDrawerVisible()) {
+            hideAgingAppDrawer();
+        }
     }
 
     public interface CustomContentCallbacks {
@@ -2417,15 +2416,15 @@ public class Launcher extends Activity
     @Override
     public void onBackPressed() {
         if (isAllAppsVisible()) {
-            hideAgingAppDrawer();
+            mAgingAppDrawer.hideSearchOrClose();
             if (mAppsCustomizeContent.getContentType() ==
                     AppsCustomizePagedView.ContentType.Applications) {
                 showWorkspace(true);
             } else {
                 showOverviewMode(true);
             }
-        } else if(isAgingAppDrawerVisible()){
-        	hideAgingAppDrawer();
+        } else if (isAgingAppDrawerVisible()) {
+            mAgingAppDrawer.hideSearchOrClose();
         } else if (mWorkspace.isInOverviewMode() && !mWorkspace.isSwitchingState()) {
             mWorkspace.exitOverviewMode(true);
         } else if (mWorkspace.getOpenFolder() != null) {

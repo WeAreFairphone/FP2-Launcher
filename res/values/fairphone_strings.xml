@@ -16,7 +16,7 @@
     <string name="fp_theme_light">Light</string>
     <string name="fp_all_apps_widget_name">All apps</string>
     <string name="no_active_apps">You have no active apps yet.</string>
-    <string name="no_idle_apps">You have no idle apps yet. If you don’t use an app for more than one month, it will automatically appear here.</string>
+    <string name="no_idle_apps">You have no idle apps yet. If you don’t use an app for more than %s, it will automatically appear here.</string>
     <string name="active_apps">Active Apps</string>
     <string name="idle_apps">Idle Apps</string>
     <string name="pin_target_label">Pin</string>

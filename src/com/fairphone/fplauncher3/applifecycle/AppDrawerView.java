@@ -16,8 +16,6 @@
 
 package com.fairphone.fplauncher3.applifecycle;
 
-import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -26,12 +24,15 @@ import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -54,12 +55,13 @@ import com.fairphone.fplauncher3.Workspace;
 import com.fairphone.fplauncher3.edgeswipe.editor.AppDiscoverer;
 import com.fairphone.fplauncher3.widgets.appswitcher.ApplicationRunInformation;
 
+import java.util.ArrayList;
+
 /**
  * Edit favorites activity implements functionality to edit your favorite apps
  * that will appear with the edge swipe.
  */
-public class AppDrawerView extends FrameLayout implements DragSource, LauncherTransitionable, OnLongClickListener
-{
+public class AppDrawerView extends FrameLayout implements DragSource, LauncherTransitionable, OnLongClickListener {
     private static final String TAG = AppDrawerView.class.getSimpleName();
     public static final int DRAGGING_DELAY_MILLIS = 150;
     public static final String APP_LIFECYCLE_PREFERENCES = "APP_LIFECYCLE_PREFERENCES";
@@ -89,38 +91,36 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
 
     private Launcher mLauncher;
 
+    private AppSearchResultsHelper mSearchHelper;
+
+
     private boolean mInTransition;
     private ImageView app_drawer_settings;
     private PopupMenu mAppSettingsPopup;
 
-    public AppDrawerView(Context context)
-    {
+    public AppDrawerView(Context context) {
         super(context);
         init(context);
     }
 
-    public AppDrawerView(Context context, AttributeSet attrs)
-    {
+    public AppDrawerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public AppDrawerView(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public AppDrawerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     @SuppressLint("NewApi")
-    public AppDrawerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
+    public AppDrawerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
-    protected void init(Context context)
-    {
-        mContext = context;
+    protected void init(Context context) {
+        mContext = context.getApplicationContext();
         this.removeAllViews();
         View view = inflate(mContext, R.layout.fp_aging_app_drawer, null);
 
@@ -128,7 +128,22 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
 
         setupAllAppsList(view);
 
+        setupSearchButton(view);
+
         addView(view);
+
+        ((LinearLayout)view).getLayoutTransition().setDuration(300);
+    }
+
+    private void setupSearchButton(View view) {
+        View searchBtn = view.findViewById(R.id.all_apps_search_btn);
+
+        searchBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSearchHelper.showSearchView();
+            }
+        });
     }
 
     private void refreshAppLists() {
@@ -137,19 +152,19 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         mUnusedApps = appLists.second;
     }
 
-    public void refreshView(Context context, Launcher launcher)
-    {
+    public void refreshView(Context context, Launcher launcher) {
         mLauncher = launcher;
         init(context);
+        mSearchHelper = new AppSearchResultsHelper(AppDrawerView.this, mLauncher);
     }
 
     /**
      * Setup the list with all the apps installed on the device.
-     * 
+     *
      * @param view
      */
-    private void setupAllAppsList(View view)
-    {
+    @SuppressLint("StringFormatInvalid")
+    private void setupAllAppsList(View view) {
         mScroll = (ScrollView) view.findViewById(R.id.agingDrawerScroll);
         mScroll.setSmoothScrollingEnabled(true);
 
@@ -161,7 +176,10 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
 
         setupListAdapters();
 
-        app_drawer_settings = (ImageView)view.findViewById(R.id.aging_drawer_menu_btn);
+        String noIdleAppMessage = String.format(getResources().getString(R.string.no_idle_apps), "one month");
+        unusedAppsDescription.setText(noIdleAppMessage);
+
+        app_drawer_settings = (ImageView) view.findViewById(R.id.aging_drawer_menu_btn);
         setupAppSettingsMenu();
 
         app_drawer_settings.setOnClickListener(new OnClickListener() {
@@ -178,31 +196,61 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
                 }
             }
         });
+
+        view.findViewById(R.id.agingDrawerScroll).setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    if (mSearchHelper.isActive()) {
+                        mSearchHelper.hideKeyboard();
+                    }
+                }
+                return false;
+            }
+        });
+        mAllAppsGridView.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (mSearchHelper.isActive()) {
+                        mSearchHelper.hideKeyboard();
+                    }
+                }
+                return true;
+            }
+        });
+        mUnusedAppsGridView.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (mSearchHelper.isActive()) {
+                        mSearchHelper.hideKeyboard();
+                    }
+                }
+                return true;
+            }
+        });
+
     }
 
     private void setupListAdapters() {
         setupListAdapter(mAllAppsGridView, mAllAppsListAdapter, mUsedApps, false);
         setupListAdapter(mUnusedAppsGridView, mUnusedAppsListAdapter, mUnusedApps, true);
 
-        if (mUsedApps.isEmpty())
-        {
+        if (mUsedApps.isEmpty()) {
             activeAppsDescription.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             activeAppsDescription.setVisibility(View.GONE);
         }
 
-        if (mUnusedApps.isEmpty())
-        {
+        if (mUnusedApps.isEmpty()) {
             unusedAppsDescription.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             unusedAppsDescription.setVisibility(View.GONE);
         }
     }
 
+    @SuppressLint("StringFormatInvalid")
     private void setupAppSettingsMenu() {
         mAppSettingsPopup = new PopupMenu(mContext, app_drawer_settings);
         mAppSettingsPopup.getMenuInflater()
@@ -219,26 +267,34 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
             public boolean onMenuItemClick(MenuItem item) {
                 Resources resources = mContext.getResources();
                 int itemId = item.getItemId();
+                String noIdleAppMessage;
                 switch (itemId) {
                     case R.id.one_week_to_idle:
                         ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_week));
+                        noIdleAppMessage = String.format(resources.getString(R.string.no_idle_apps), "one week");
+                        unusedAppsDescription.setText(noIdleAppMessage);
                         break;
                     case R.id.two_weeks_to_idle:
                         ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_two_weeks));
+                        noIdleAppMessage = String.format(resources.getString(R.string.no_idle_apps), "two weeks");
+                        unusedAppsDescription.setText(noIdleAppMessage);
                         break;
                     case R.id.one_month_to_idle:
                         ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_one_month));
+                        noIdleAppMessage = String.format(resources.getString(R.string.no_idle_apps), "one month");
+                        unusedAppsDescription.setText(noIdleAppMessage);
                     default:
                         ApplicationRunInformation.setAppIdleLimitInDays(mContext, resources.getInteger(R.integer.app_frequent_use_default));
+                        noIdleAppMessage = String.format(resources.getString(R.string.no_idle_apps), "one month");
+                        unusedAppsDescription.setText(noIdleAppMessage);
                         break;
                 }
 
                 setAppIdleChoice(mContext, itemId);
 
-                if (item.isChecked()){
+                if (item.isChecked()) {
                     item.setChecked(false);
-                }
-                else {
+                } else {
                     item.setChecked(true);
                 }
 
@@ -249,12 +305,12 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         });
     }
 
-    public static int getAppIdleChoice(Context context){
+    public static int getAppIdleChoice(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(APP_LIFECYCLE_PREFERENCES, Activity.MODE_PRIVATE);
-        return sharedPreferences.getInt(APP_AGE_LIMIT_CHOISE_RESOURCE, R.id.one_month_to_idle);
+        return sharedPreferences.getInt(APP_AGE_LIMIT_CHOISE_RESOURCE, R.id.two_weeks_to_idle);
     }
 
-    public static void setAppIdleChoice(Context context, int choiceId){
+    public static void setAppIdleChoice(Context context, int choiceId) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(APP_LIFECYCLE_PREFERENCES, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -262,8 +318,7 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         editor.commit();
     }
 
-    public void setupListAdapter(GridView listView, AgingAppsListAdapter appsListAdapter, ArrayList<AppInfo> appList, boolean isUnused)
-    {
+    public void setupListAdapter(GridView listView, AgingAppsListAdapter appsListAdapter, ArrayList<AppInfo> appList, boolean isUnused) {
         appsListAdapter = new AgingAppsListAdapter(mContext, mLauncher, this, isUnused);
 
         appsListAdapter.setAllApps(appList);
@@ -271,61 +326,49 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         listView.setAdapter(appsListAdapter);
     }
 
-    public void refreshListAdapters()
-    {
+    public void refreshListAdapters() {
         refreshAppLists();
         mAllAppsGridView.removeAllViewsInLayout();
         mUnusedAppsGridView.removeAllViewsInLayout();
         setupListAdapters();
     }
 
-    private void beginDraggingApplication(View v)
-    {
+    private void beginDraggingApplication(View v) {
         mLauncher.getWorkspace().beginDragShared(v, this);
     }
 
     /**
      * Clean up after dragging.
      *
-     * @param target
-     *            where the item was dragged to (can be null if the item was
-     *            flung)
+     * @param target where the item was dragged to (can be null if the item was
+     *               flung)
      */
-    private void endDragging(View target, boolean isFlingToDelete, boolean success)
-    {
-        if (isFlingToDelete || !success || (target != mLauncher.getWorkspace() && !(target instanceof DeleteDropTarget) && !(target instanceof Folder)))
-        {
+    private void endDragging(View target, boolean isFlingToDelete, boolean success) {
+        if (isFlingToDelete || !success || (target != mLauncher.getWorkspace() && !(target instanceof DeleteDropTarget) && !(target instanceof Folder))) {
             // Exit spring loaded mode if we have not successfully dropped or
             // have not handled the
             // drop in Workspace
             mLauncher.exitSpringLoadedDragMode();
             mLauncher.unlockScreenOrientation(false);
-        }
-        else
-        {
+        } else {
             mLauncher.unlockScreenOrientation(false);
         }
     }
 
-    protected boolean beginDragging(final View v)
-    {
+    protected boolean beginDragging(final View v) {
 
-        if (v instanceof BubbleTextView)
-        {
+        if (v instanceof BubbleTextView) {
             beginDraggingApplication(v);
         }
 
         // We delay entering spring-loaded mode slightly to make sure the UI
         // thready is free of any work.
-        postDelayed(new Runnable()
-        {
+        postDelayed(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 // We don't enter spring-loaded mode if the drag has been
                 // cancelled
-                if (mLauncher.getDragController().isDragging())
-                {
+                if (mLauncher.getDragController().isDragging()) {
                     // Go into spring loaded mode (must happen before we
                     // startDrag())
                     mLauncher.enterSpringLoadedDragMode();
@@ -337,41 +380,34 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
     }
 
     @Override
-    public View getContent()
-    {
-        if (getChildCount() > 0)
-        {
+    public View getContent() {
+        if (getChildCount() > 0) {
             return getChildAt(0);
         }
         return null;
     }
 
     @Override
-    public void onLauncherTransitionPrepare(Launcher l, boolean animated, boolean toWorkspace)
-    {
+    public void onLauncherTransitionPrepare(Launcher l, boolean animated, boolean toWorkspace) {
         mInTransition = true;
     }
 
     @Override
-    public void onLauncherTransitionStart(Launcher l, boolean animated, boolean toWorkspace)
-    {
+    public void onLauncherTransitionStart(Launcher l, boolean animated, boolean toWorkspace) {
     }
 
     @Override
-    public void onLauncherTransitionStep(Launcher l, float t)
-    {
+    public void onLauncherTransitionStep(Launcher l, float t) {
     }
 
     @Override
-    public void onLauncherTransitionEnd(Launcher l, boolean animated, boolean toWorkspace)
-    {
+    public void onLauncherTransitionEnd(Launcher l, boolean animated, boolean toWorkspace) {
         mInTransition = false;
         // mForceDrawAllChildrenNextFrame = !toWorkspace;
     }
 
     @Override
-    public boolean onLongClick(View v)
-    {
+    public boolean onLongClick(View v) {
         // Return early if this is not initiated from a touch
         // if (!v.isInTouchMode()) return false;
         // When we have exited all apps or are in transition, disregard long
@@ -389,8 +425,7 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
     }
 
     @Override
-    public void onDropCompleted(View target, DragObject d, boolean isFlingToDelete, boolean success)
-    {
+    public void onDropCompleted(View target, DragObject d, boolean isFlingToDelete, boolean success) {
         // Return early and wait for onFlingToDeleteCompleted if this was the
         // result of a fling
         if (isFlingToDelete) {
@@ -402,23 +437,19 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
         // Display an error message if the drag failed due to there not being
         // enough space on the
         // target layout we were dropping on.
-        if (!success)
-        {
+        if (!success) {
             boolean showOutOfSpaceMessage = false;
-            if (target instanceof Workspace)
-            {
+            if (target instanceof Workspace) {
                 int currentScreen = mLauncher.getCurrentWorkspaceScreen();
                 Workspace workspace = (Workspace) target;
                 CellLayout layout = (CellLayout) workspace.getChildAt(currentScreen);
                 ItemInfo itemInfo = (ItemInfo) d.dragInfo;
-                if (layout != null)
-                {
+                if (layout != null) {
                     CellLayout.calculateSpans(itemInfo);
                     showOutOfSpaceMessage = !layout.findCellForSpan(null, itemInfo.spanX, itemInfo.spanY);
                 }
             }
-            if (showOutOfSpaceMessage)
-            {
+            if (showOutOfSpaceMessage) {
                 mLauncher.showOutOfSpaceMessage();
             }
 
@@ -427,35 +458,49 @@ public class AppDrawerView extends FrameLayout implements DragSource, LauncherTr
     }
 
     @Override
-    public void onFlingToDeleteCompleted()
-    {
+    public void onFlingToDeleteCompleted() {
         // We just dismiss the drag when we fling, so cleanup here
         endDragging(null, true, true);
     }
 
     @Override
-    public boolean supportsFlingToDelete()
-    {
+    public boolean supportsFlingToDelete() {
         return true;
     }
 
     @Override
-    public boolean supportsAppInfoDropTarget()
-    {
+    public boolean supportsAppInfoDropTarget() {
         return true;
     }
 
     @Override
-    public boolean supportsDeleteDropTarget()
-    {
+    public boolean supportsDeleteDropTarget() {
         return false;
     }
 
     @Override
-    public float getIntrinsicIconScaleFactor()
-    {
+    public float getIntrinsicIconScaleFactor() {
         LauncherAppState app = LauncherAppState.getInstance();
         DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
         return (float) grid.allAppsIconSizePx / grid.iconSizePx;
+    }
+
+    public void hideSearchOrClose() {
+        Log.v(TAG, this.getClass().getName() + ".hideSearchOrClose() -> active=" + mSearchHelper.isActive());
+        if (mSearchHelper.isActive()) {
+            mSearchHelper.smartHide();
+        } else {
+            mLauncher.hideAgingAppDrawer();
+        }
+    }
+
+    @Override
+    public boolean dispatchKeyEventPreIme(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_UP && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            hideSearchOrClose();
+            return true;
+        } else {
+            return super.dispatchKeyEventPreIme(event);
+        }
     }
 }

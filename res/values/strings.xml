@@ -331,6 +331,10 @@ s
 
     <string name="oobe_edit_drag_trade_title">Drag favorites</string>
     <string name="oobe_edit_drag_trade_text">To swap position</string>
+    <string name="no_idle_app_found">No idle apps found</string>
+    <string name="no_active_app_found">No active apps found</string>
+    <string name="magnifying_glass">Magnifying glass</string>
+    <string name="aging_time_menu">Aging time menu</string>
 
     <!--
 
