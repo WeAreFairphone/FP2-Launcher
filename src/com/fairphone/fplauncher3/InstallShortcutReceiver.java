@@ -22,8 +22,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -31,6 +33,7 @@ import android.widget.Toast;
 
 import com.fairphone.fplauncher3.R;
 import com.fairphone.fplauncher3.compat.UserHandleCompat;
+import com.fairphone.fplauncher3.util.PackageManagerHelper;
 
 import org.json.JSONObject;
 import org.json.JSONStringer;
@@ -64,6 +67,48 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
     private static final int INSTALL_SHORTCUT_IS_DUPLICATE = -1;
 
     private static final Object sLock = new Object();
+
+    /**
+     * Returns true if the intent is a valid launch intent for a launcher activity of an app.
+     * This is used to identify shortcuts which are different from the ones exposed by the
+     * applications' manifest file.
+     *
+     * @param launchIntent The intent that will be launched when the shortcut is clicked.
+     */
+    public static boolean isLauncherAppTarget(Intent launchIntent) {
+        if (launchIntent != null
+                && Intent.ACTION_MAIN.equals(launchIntent.getAction())
+                && launchIntent.getComponent() != null
+                && launchIntent.getCategories() != null
+                && launchIntent.getCategories().size() == 1
+                && launchIntent.hasCategory(Intent.CATEGORY_LAUNCHER)
+                && TextUtils.isEmpty(launchIntent.getDataString())) {
+            // An app target can either have no extra or have ItemInfo.EXTRA_PROFILE.
+            Bundle extras = launchIntent.getExtras();
+            if (extras == null) {
+                return true;
+            } else {
+                Set<String> keys = extras.keySet();
+                return keys.size() == 1 && keys.contains(ItemInfo.EXTRA_PROFILE);
+            }
+        };
+        return false;
+    }
+
+    private static boolean isLauncherActivity(Context context, Intent launchIntent) {
+      if (!isLauncherAppTarget(launchIntent)) {
+        return false;
+      }
+      
+      PackageManager pm = context.getPackageManager();
+      ResolveInfo info = pm.resolveActivity(launchIntent, 0);
+
+      if (info == null) {
+            return false;
+      }
+
+      return true;
+    }
 
     private static void addToStringSet(SharedPreferences sharedPrefs,
             SharedPreferences.Editor editor, String key, String value) {
@@ -249,6 +294,18 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
         PendingInstallShortcutInfo info = new PendingInstallShortcutInfo(data, name, intent);
         info.icon = icon;
         info.iconResource = iconResource;
+        
+        if (info != null) {
+           if (!InstallShortcutReceiver.isLauncherActivity(context, intent)) {
+               // Since its a custom shortcut, verify that it is safe to launch.
+               if (!PackageManagerHelper.hasPermissionForActivity(
+                       context, info.launchIntent, null)) {
+                   // Target cannot be launched, or requires some special permission to launch
+                   Log.e(TAG, "Ignoring malicious intent " + info.launchIntent.toUri(0));
+                   return;
+               }
+           }
+       }
 
         String spKey = LauncherAppState.getSharedPreferencesKey();
         SharedPreferences sp = context.getSharedPreferences(spKey, Context.MODE_PRIVATE);
