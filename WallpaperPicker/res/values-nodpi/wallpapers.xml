@@ -19,5 +19,12 @@
     <string-array name="wallpapers" translatable="false">
         <item>wallpaper_press</item>
         <item>wallpaper_pcb</item>
+        <item>fp_stained_glass</item>
+        <item>fp_stained_glass_blue</item>
+        <item>fp_stained_glass_dark_blue</item>
+        <item>fp_stained_glass_dark_grey</item>
+        <item>fp_stained_glass_dark_red</item>
+        <item>fp_stained_glass_grey</item>        
+        <item>fp_stained_glass_red</item>
     </string-array>
 </resources>
