@@ -234,10 +234,6 @@
             android:name="android.nfc.disable_beam_default"
             android:value="true" />
 
-        <meta-data
-            android:name="com.crashlytics.ApiKey"
-            android:value="743d6f60e29372e7b75de8137a5585979710dd7a" />
-
         <activity
             android:name="com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity"
             android:screenOrientation="portrait"

@@ -4,11 +4,9 @@ buildscript {
     repositories {
         jcenter()
         maven { url 'http://repo1.maven.org/maven2' }
-        maven { url 'http://download.crashlytics.com/maven' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.0'
-        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
     }
 }
 
@@ -21,12 +19,6 @@ allprojects {
 // Module level gradle declarations
 
 apply plugin: 'com.android.application'
-
-apply plugin: 'crashlytics'
-
-repositories {
-    maven { url 'http://download.crashlytics.com/maven' }
-}
 
 android {
     compileSdkVersion 22
@@ -78,6 +70,5 @@ android {
 }
     dependencies {
         compile 'com.android.support:support-v13:22.+'
-        compile 'com.crashlytics.android:crashlytics:1.+'
         compile 'com.googlecode.libphonenumber:libphonenumber:6.+'
     }
