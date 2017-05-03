@@ -135,7 +135,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import com.android.internal.telephony.cat.AppInterface;
+//import com.android.internal.telephony.cat.AppInterface;
 
 /**
  * Default launcher application.
@@ -1054,10 +1054,10 @@ public class Launcher extends Activity
             Log.d(TAG, "Time spent in onResume: " + (System.currentTimeMillis() - startTime));
         }
 
-	Intent idleScreenIntent = new Intent(AppInterface.CAT_IDLE_SCREEN_ACTION);
-	idleScreenIntent.putExtra("SCREEN_IDLE", true);
-	Log.d(TAG,"Broadcasting Home Idle Screen Intent ...");
-	sendBroadcast(idleScreenIntent);
+	//Intent idleScreenIntent = new Intent(AppInterface.CAT_IDLE_SCREEN_ACTION);
+	//idleScreenIntent.putExtra("SCREEN_IDLE", true);
+	//og.d(TAG,"Broadcasting Home Idle Screen Intent ...");
+	//sendBroadcast(idleScreenIntent);
 
 
         if (mWorkspace.getCustomContentCallbacks() != null) {
