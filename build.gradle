@@ -25,7 +25,7 @@ android {
     buildToolsVersion '25.0.0'
 
     defaultConfig {
-        applicationId "com.fairphone.fplauncher3"
+        applicationId "community.fairphone.fplauncher3"
         minSdkVersion 17
         targetSdkVersion 25
     }
