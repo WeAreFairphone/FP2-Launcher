@@ -35,7 +35,7 @@ public class AppDiscoverer
 {
     private static final AppDiscoverer _instance = new AppDiscoverer();
 
-    public static final String PREFS_APPS_AGING_DATA = "com.fairphone.fplauncher3.applifecycle.FAIRPHONE_APP_AGING_DATA";
+    public static final String PREFS_APPS_AGING_DATA = "community.fairphone.fplauncher3.applifecycle.FAIRPHONE_APP_AGING_DATA";
 
     private final Map<ComponentName, AppInfo> _allApps;
 

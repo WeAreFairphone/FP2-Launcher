@@ -38,22 +38,22 @@
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="dangerous" />
     <permission
-        android:name="com.android.launcher3.permission.READ_SETTINGS"
+        android:name=".permission.READ_SETTINGS"
         android:description="@string/permdesc_read_settings"
         android:label="@string/permlab_read_settings"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="normal" />
     <permission
-        android:name="com.android.launcher3.permission.WRITE_SETTINGS"
+        android:name=".permission.WRITE_SETTINGS"
         android:description="@string/permdesc_write_settings"
         android:label="@string/permlab_write_settings"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="signatureOrSystem" />
     <permission
-        android:name="com.android.launcher3.permission.RECEIVE_LAUNCH_BROADCASTS"
+        android:name=".permission.RECEIVE_LAUNCH_BROADCASTS"
         android:protectionLevel="signature" />
     <permission
-        android:name="com.android.launcher3.permission.RECEIVE_FIRST_LOAD_BROADCAST"
+        android:name=".permission.RECEIVE_FIRST_LOAD_BROADCAST"
         android:protectionLevel="signatureOrSystem" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -67,10 +67,10 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS" />
-    <uses-permission android:name="com.android.launcher3.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="com.android.launcher3.permission.RECEIVE_LAUNCH_BROADCASTS" />
-    <uses-permission android:name="com.android.launcher3.permission.RECEIVE_FIRST_LOAD_BROADCAST" />
+    <uses-permission android:name=".permission.READ_SETTINGS" />
+    <uses-permission android:name=".permission.WRITE_SETTINGS" />
+    <uses-permission android:name=".permission.RECEIVE_LAUNCH_BROADCASTS" />
+    <uses-permission android:name=".permission.RECEIVE_FIRST_LOAD_BROADCAST" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -79,9 +79,9 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
 
     <application
-        android:name="com.fairphone.fplauncher3.LauncherApplication"
+        android:name=".LauncherApplication"
         android:allowBackup="@bool/enable_backup"
-        android:backupAgent="com.fairphone.fplauncher3.LauncherBackupAgentHelper"
+        android:backupAgent=".fplauncher3.LauncherBackupAgentHelper"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/icon_launcher"
         android:label="@string/application_name"
@@ -90,7 +90,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name="com.fairphone.fplauncher3.Launcher"
+            android:name=".Launcher"
             android:clearTaskOnLaunch="true"
             android:launchMode="singleTask"
             android:screenOrientation="nosensor"
@@ -107,7 +107,7 @@
         </activity>
 
         <activity
-            android:name="com.fairphone.fplauncher3.ToggleWeightWatcher"
+            android:name=".ToggleWeightWatcher"
             android:enabled="@bool/debug_memory_enabled"
             android:icon="@mipmap/icon_launcher"
             android:label="@string/toggle_weight_watcher">
@@ -120,7 +120,7 @@
         </activity>
 
         <activity
-            android:name="com.fairphone.fplauncher3.LauncherWallpaperPickerActivity"
+            android:name=".LauncherWallpaperPickerActivity"
             android:finishOnCloseSystemDialogs="true"
             android:icon="@mipmap/ic_launcher_wallpaper"
             android:label="@string/pick_wallpaper"
@@ -133,7 +133,7 @@
         </activity>
 
         <activity
-            android:name="com.fairphone.fplauncher3.WallpaperCropActivity"
+            android:name=".WallpaperCropActivity"
             android:finishOnCloseSystemDialogs="true"
             android:icon="@mipmap/ic_launcher_wallpaper"
             android:label="@string/crop_wallpaper"
@@ -148,7 +148,7 @@
 
         <!-- Debugging tools -->
         <activity
-            android:name="com.fairphone.fplauncher3.MemoryDumpActivity"
+            android:name=".MemoryDumpActivity"
             android:enabled="@bool/debug_memory_enabled"
             android:excludeFromRecents="true"
             android:icon="@mipmap/icon_launcher"
@@ -163,10 +163,10 @@
         </activity>
 
         <service
-            android:name="com.fairphone.fplauncher3.MemoryTracker"
+            android:name=".MemoryTracker"
             android:enabled="@bool/debug_memory_enabled"></service>
 
-        <receiver android:name="com.fairphone.fplauncher3.WallpaperChangedReceiver">
+        <receiver android:name=".WallpaperChangedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.WALLPAPER_CHANGED" />
             </intent-filter>
@@ -174,7 +174,7 @@
 
         <!-- Intent received used to install shortcuts from other applications -->
         <receiver
-            android:name="com.fairphone.fplauncher3.InstallShortcutReceiver"
+            android:name=".InstallShortcutReceiver"
             android:permission="com.android.launcher.permission.INSTALL_SHORTCUT">
             <intent-filter>
                 <action android:name="com.android.launcher.action.INSTALL_SHORTCUT" />
@@ -183,7 +183,7 @@
 
         <!-- Intent received used to uninstall shortcuts from other applications -->
         <receiver
-            android:name="com.fairphone.fplauncher3.UninstallShortcutReceiver"
+            android:name=".UninstallShortcutReceiver"
             android:permission="com.android.launcher.permission.UNINSTALL_SHORTCUT">
             <intent-filter>
                 <action android:name="com.android.launcher.action.UNINSTALL_SHORTCUT" />
@@ -191,7 +191,7 @@
         </receiver>
 
         <!-- Intent received used to initialize a restored widget -->
-        <receiver android:name="com.fairphone.fplauncher3.AppWidgetsRestoredReceiver">
+        <receiver android:name=".AppWidgetsRestoredReceiver">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED" />
             </intent-filter>
@@ -199,14 +199,14 @@
 
         <!-- New user initialization; set up initial wallpaper -->
         <receiver
-            android:name="com.fairphone.fplauncher3.UserInitializeReceiver"
+            android:name=".UserInitializeReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.USER_INITIALIZE" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.fairphone.fplauncher3.PackageChangedReceiver">
+        <receiver android:name=".PackageChangedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_CHANGED" />
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
@@ -216,7 +216,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.fairphone.fplauncher3.StartupReceiver">
+        <receiver android:name=".StartupReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -224,29 +224,29 @@
 
         <!-- The settings provider contains Home's data, like the workspace favorites -->
         <provider
-            android:name="com.fairphone.fplauncher3.LauncherProvider"
-            android:authorities="com.fairphone.fplauncher3.settings"
+            android:name=".LauncherProvider"
+            android:authorities=".settings"
             android:exported="true"
-            android:readPermission="com.android.launcher3.permission.READ_SETTINGS"
-            android:writePermission="com.android.launcher3.permission.WRITE_SETTINGS" />
+            android:readPermission=".permission.READ_SETTINGS"
+            android:writePermission=".permission.WRITE_SETTINGS" />
 
         <meta-data
             android:name="android.nfc.disable_beam_default"
             android:value="true" />
 
         <activity
-            android:name="com.fairphone.fplauncher3.edgeswipe.editor.EditFavoritesActivity"
+            android:name=".edgeswipe.editor.EditFavoritesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme" />
 
         <activity
-            android:name="com.fairphone.fplauncher3.oobe.OOBEActivity"
+            android:name=".oobe.OOBEActivity"
             android:screenOrientation="portrait"
             android:theme="@style/OOBETheme" />
 
         <!-- Widget -->
         <receiver
-            android:name="com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherWidget"
+            android:name=".widgets.appswitcher.AppSwitcherWidget"
             android:label="@string/app_switcher_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -257,7 +257,7 @@
                 android:resource="@xml/appswitcher_widget" />
         </receiver>
         <receiver
-            android:name="com.fairphone.fplauncher3.widgets.allappswidget.AllAppsWidget"
+            android:name=".widgets.allappswidget.AllAppsWidget"
             android:label="@string/fp_all_apps_widget_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

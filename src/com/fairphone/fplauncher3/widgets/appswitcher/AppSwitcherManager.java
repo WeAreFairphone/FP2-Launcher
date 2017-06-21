@@ -30,7 +30,7 @@ import android.util.Log;
 
 public class AppSwitcherManager {
 	private static final String TAG = AppSwitcherManager.class.getSimpleName();
-	private static final String PREFS_APP_SWITCHER_APPS_DATA = "com.fairphone.fplauncher3.PREFS_APP_SWITCHER_APPS_DATA";
+	private static final String PREFS_APP_SWITCHER_APPS_DATA = "community.fairphone.fplauncher3.PREFS_APP_SWITCHER_APPS_DATA";
 
 	private static final ApplicationRunInfoManager _instance = new ApplicationRunInfoManager(true);
 

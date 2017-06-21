@@ -40,11 +40,11 @@ public class AppSwitcherWidget extends AppWidgetProvider {
     private static final boolean APP_SWITCHER_DEBUG_MODE = false; //BuildConfig.DEBUG;
 
     // AppSwitcher settings
-    public static final String ACTION_APP_SWITCHER_LAUNCH_APP = "com.fairphone.fplauncher3.ACTION_APP_SWITCHER_LAUNCH_APP";
-    public static final String ACTION_APP_SWITCHER_LAUNCH_ALL_APPS = "com.fairphone.fplauncher3.ACTION_APP_SWITCHER_LAUNCH_ALL_APPS";
-    public static final String EXTRA_LAUNCH_APP_NAME = "com.fairphone.fplauncher3.EXTRA_LAUNCH_APP_NAME";
-    public static final String EXTRA_LAUNCH_APP_PACKAGE = "com.fairphone.fplauncher3.EXTRA_LAUNCH_APP_PACKAGE";
-    public static final String EXTRA_LAUNCH_APP_CLASS_NAME = "com.fairphone.fplauncher3.EXTRA_LAUNCH_APP_CLASS_NAME";
+    public static final String ACTION_APP_SWITCHER_LAUNCH_APP = "community.fairphone.fplauncher3.ACTION_APP_SWITCHER_LAUNCH_APP";
+    public static final String ACTION_APP_SWITCHER_LAUNCH_ALL_APPS = "community.fairphone.fplauncher3.ACTION_APP_SWITCHER_LAUNCH_ALL_APPS";
+    public static final String EXTRA_LAUNCH_APP_NAME = "community.fairphone.fplauncher3.EXTRA_LAUNCH_APP_NAME";
+    public static final String EXTRA_LAUNCH_APP_PACKAGE = "community.fairphone.fplauncher3.EXTRA_LAUNCH_APP_PACKAGE";
+    public static final String EXTRA_LAUNCH_APP_CLASS_NAME = "community.fairphone.fplauncher3.EXTRA_LAUNCH_APP_CLASS_NAME";
 
     @Override
     public void onEnabled(Context context) {
