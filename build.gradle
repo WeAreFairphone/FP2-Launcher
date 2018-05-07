@@ -30,6 +30,10 @@ android {
         targetSdkVersion 25
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     buildTypes {
         release {
             minifyEnabled true
