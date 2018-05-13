@@ -48,7 +48,7 @@
         android:description="@string/permdesc_write_settings"
         android:label="@string/permlab_write_settings"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
-        android:protectionLevel="signatureOrSystem" />
+        android:protectionLevel="signature" />
     <permission
         android:name=".permission.RECEIVE_LAUNCH_BROADCASTS"
         android:protectionLevel="signature" />
