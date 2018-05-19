@@ -17,7 +17,7 @@
 <favorites xmlns:launcher="http://schemas.android.com/apk/res-auto/com.android.launcher3">
 
     <appwidget
-        launcher:packageName="com.fairphone.mycontacts"
+        launcher:packageName="community.fairphone.mycontacts"
         launcher:className="com.fairphone.mycontacts.widget.PeopleWidget"
         launcher:screen="1"
         launcher:x="0"
