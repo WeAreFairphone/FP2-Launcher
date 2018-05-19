@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -35,6 +36,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.Manifest;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -73,19 +75,39 @@ public class WallpaperCropActivity extends Activity {
      */
     public static final int MAX_BMAP_IN_INTENT = 750000;
     private static final float WALLPAPER_SCREENS_SPAN = 2f;
-    
+
     protected static Point sDefaultWallpaperSize;
 
     protected CropView mCropView;
     protected Uri mUri;
     protected View mSetWallpaperButton;
 
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
+        if (this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            this.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        } else {
+            init();
+        }
+
         if (!enableRotation()) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    init();
+                } else {
+                    finish();
+                }
+            }
         }
     }
 
@@ -850,7 +872,7 @@ public class WallpaperCropActivity extends Activity {
             }
         }
     }
-    
+
     protected void updateDarknessOverlayAlpha(float alpha){
         String spKey = getSharedPreferencesKey();
         SharedPreferences sp = getSharedPreferences(spKey, Context.MODE_MULTI_PROCESS);
@@ -875,7 +897,7 @@ public class WallpaperCropActivity extends Activity {
         suggestWallpaperDimension(getResources(),
                 sp, getWindowManager(), WallpaperManager.getInstance(this), true);
     }
-    
+
     static public float getDarknessOverlayAlpha(SharedPreferences sharedPrefs){
         float savedAlpha = sharedPrefs.getFloat(WALLPAPER_DARKNESS_ALPHA, 0.f);
         return savedAlpha;
