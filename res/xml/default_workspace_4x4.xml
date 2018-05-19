@@ -96,7 +96,7 @@
         launcher:y="4" />
 
     <appwidget
-        launcher:packageName="com.fairphone.fplauncher3"
+        launcher:packageName="community.fairphone.fplauncher3"
         launcher:className="com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherWidget"
         launcher:screen="3"
         launcher:x="0"
