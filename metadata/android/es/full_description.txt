@@ -1,0 +1,16 @@
+Este lanzador de aplicaciones venía por defecto en los dos sistemas operativos Android 5 oficiales para el smartphone Fairphone 2 (Fairphone OS y Fairphone Open).
+
+Fairphone paró el desarrollo de algunas aplicaciones específicas como esta cuando lanzó Android 6 «Marshmallow» para el Fairphone 2. Como eran de código abierto, la comunidad WeAreFairphone las puso a disposición de los usuarios que quisieran mantener la experiencia Fairphone original.
+
+Quizá quieras instalar también los <em>widgets</em> <a href="https://f-droid.org/packages/community.fairphone.mycontacts">Contactos recientes</a> y <a href="https://f-droid.org/packages/community.fairphone.clock/">Reloj</a> originales de Fairphone.
+
+
+<h1>Características</h1>
+
+<strong>Edge Swipe</strong> (lit. deslizar desde el borde) permite acceder rápidamente a las aplicaciones recientemente utilizadas con solo deslizar un dedo desde los bordes derecho o izquierdo de la pantalla hacia el centro, y levantándolo sobre la aplicación que desees abrir. Con esta función puedes mantener tu pantalla de inicio limpia y ordenada, y acceder solo a tus aplicaciones importantes cuando necesites verlas.
+
+El <strong>ciclo de vida de las aplicaciones</strong> es una sección en el lanzador donde se muestran verticalmente todas las aplicaciones descargadas e instaladas. Esta función hace consciente al usuario de cómo usa su teléfono y sus aplicaciones. Convierte las aplicaciones en «criaturas con vida».
+
+El ciclo de vida de las aplicaciones incluye un algoritmo que monitoriza cuánto usas una aplicación y pone las aplicaciones menos usadas en una sección Apps inactivas después de cierto tiempo. De esta manera, de un vistazo puedes ver cuánto usas tus aplicaciones y puedes fácilmente desinstalar las que no necesitas más. Esta función almacena la información en el propio dispositivo; tu uso de las aplicaciones no se comparte en modo alguno.
+
+Las aplicaciones nuevas o actualizadas se marcan por claridad, y si no quieres que una aplicación se marque como inactiva después de un tiempo (porque no la uses frecuentemente, pero necesites usarla rápidamente en ocasiones) puedes simplemente «fijarla» para que siempre esté en la sección de Apps activas.
