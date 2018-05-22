@@ -1,6 +1,6 @@
-This launcher was the default launcher in official Android 5 OSes for the Fairphone 2 smartphone, both Fairphone OS and Fairphone Open.
+The <strong>Fairphone Launcher 3</strong> was the default launcher in official Android 5 OSes for the Fairphone 2 smartphone, both Fairphone OS and Fairphone Open.
 
-Fairphone stopped developing its Fairphone specific apps since the release of Android 6 Marshmallow for the Fairphone 2. Since they were open source, the WeAreFairphone community make them available for those users who wanted to keep the original Fairphone experience.
+Fairphone stopped the development of some Fairphone specific apps when the Fairphone 2 was updated to Android 6 "Marshmallow". Since they are open source, the WeAreFairphone community make them available for those users who want to keep the original Fairphone experience.
 
 You may want to take a look at Fairphone's <a href="https://f-droid.org/packages/community.fairphone.mycontacts">Recent Contacts</a> and <a href="https://f-droid.org/packages/community.fairphone.clock/">Clock</a> widgets too.
 
