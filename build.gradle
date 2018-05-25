@@ -75,6 +75,6 @@ android {
     }
 }
     dependencies {
-        compile 'com.android.support:support-v13:25.3.+'
-        compile 'com.googlecode.libphonenumber:libphonenumber:6.+'
+        implementation 'com.android.support:support-v13:25.4.0'
+        implementation 'com.googlecode.libphonenumber:libphonenumber:6.3.1'
     }
