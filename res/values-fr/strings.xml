@@ -16,7 +16,7 @@
 * limitations under the License.
 */
  --><resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="application_name" msgid="5181331383435256801">"Fairphone Launcher 3"</string>
+    <string name="application_name" msgid="5181331383435256801">Accueil du Fairphone 2</string>
     <string name="folder_name" msgid="7371454440695724752"/>
     <string name="activity_not_found" msgid="8071924732094499514">"L\'application n\'est pas installée."</string>
     <string name="safemode_shortcut_error" msgid="9160126848219158407">"L\'application téléchargée est désactivée en mode sécurisé."</string>
@@ -69,7 +69,7 @@
     <string name="abandoned_search" msgid="891119232568284442">"Rechercher"</string>
     <string name="abandoned_promises_title" msgid="7096178467971716750">"Cette application n\'est pas installée"</string>
     <string name="abandoned_promise_explanation" msgid="3990027586878167529">"L\'application correspondant à cette icône n\'est pas installée. Vous pouvez supprimer cette dernière, ou essayer de rechercher l\'application et de l\'installer manuellement."</string>
-    
+
     <!-- Fairphone -->
     <!-- Your Apps -->
   <!--  <string name="last_used">Récentes</string>

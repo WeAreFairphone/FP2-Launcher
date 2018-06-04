@@ -30,7 +30,7 @@
     <string name="receive_first_load_broadcast_permission" translatable="false">.permission.RECEIVE_FIRST_LOAD_BROADCAST</string>
 
     <!-- Application name -->
-    <string name="application_name">Fairphone Launcher 3</string>
+    <string name="application_name">Fairphone 2 Launcher</string>
     <!-- Accessibility-facing application name -->
     <!-- Name for all applications running as this uid. -->
     <!-- Default folder name -->

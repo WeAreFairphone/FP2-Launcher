@@ -16,7 +16,6 @@
 * limitations under the License.
 */
  --><resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="application_name" msgid="8424725141379931883">"Fairphone Launcher 3"</string>
     <string name="folder_name" msgid="8551881338202938211"/>
     <string name="wallpaper_instructions" msgid="4215640646180727542">"Tetapkan kertas dinding"</string>
     <string name="pick_wallpaper" msgid="5630222540525626723">"Kertas dinding"</string>

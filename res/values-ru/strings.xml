@@ -16,7 +16,6 @@
 * limitations under the License.
 */
  --><resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="application_name" msgid="5181331383435256801">"Fairphone Launcher 3"</string>
     <string name="folder_name" msgid="7371454440695724752"/>
     <string name="activity_not_found" msgid="8071924732094499514">"Приложение удалено"</string>
     <string name="safemode_shortcut_error" msgid="9160126848219158407">"Скачанное приложение отключено в безопасном режиме"</string>
