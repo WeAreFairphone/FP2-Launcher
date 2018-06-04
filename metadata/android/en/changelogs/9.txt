@@ -1,0 +1,2 @@
+* Fix error installing for conflicting permissions with default launchers (@Rudloff)
+* Fix crash when changing wallpapers (@Rudloff)

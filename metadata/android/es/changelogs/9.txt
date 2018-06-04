@@ -1,0 +1,2 @@
+* Arregla error de instalación por permisos en conflicto con otros launchers (@Rudloff)
+* Arregla error al cambiar de fondo de pantalla (@Rudloff)
