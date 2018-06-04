@@ -1,4 +1,4 @@
-El <strong>Fairphone Launcher 3</strong> era el lanzador de aplicaciones por defecto en Fairphone OS y Fairphone Open, los dos sistemas operativos Android 5 oficiales para el smartphone Fairphone 2.
+La aplicación <strong>Inicio del Fairphone 2</strong> era el lanzador de aplicaciones por defecto en Fairphone OS y Fairphone Open, los dos sistemas operativos Android 5 oficiales para el smartphone Fairphone 2.
 
 Fairphone paró el desarrollo de algunas aplicaciones específicas como esta cuando lanzó Android 6 «Marshmallow» para el Fairphone 2. Como son de código abierto, la comunidad WeAreFairphone las pone a disposición de los usuarios que quisieran mantener la experiencia Fairphone original.
 

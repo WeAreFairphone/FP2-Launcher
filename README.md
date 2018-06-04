@@ -1,4 +1,4 @@
-# Fairphone Launcher 3
+# Fairphone 2 Launcher
 
 Launcher originally designed for the [Fairphone 2][fairphone2].
 
@@ -9,7 +9,7 @@ Launcher originally designed for the [Fairphone 2][fairphone2].
 
 ## Summary
 
-The **Fairphone Launcher 3** was the default launcher in official Android 5 OSes for the Fairphone 2 smartphone, both Fairphone OS and [Fairphone Open][fairphone-open].
+The **Fairphone 2 Launcher** was the default launcher in official Android 5 OSes for the Fairphone 2 smartphone, both Fairphone OS and [Fairphone Open][fairphone-open].
 
 Fairphone stopped the development of some Fairphone-specific apps when the Fairphone 2 was updated to Android 6 "Marshmallow". Since they are open source, the [WeAreFairphone community][wearefairphone] make them available for those users who want to keep the original [Fairphone experience][fairphone-experience].
 
