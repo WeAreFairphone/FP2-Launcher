@@ -43,6 +43,10 @@ android {
             proguardFiles 'proguard.flags'
         }
 
+        debug {
+            applicationIdSuffix ".debug"
+        }
+
         sourceSets {
             main {
                 manifest.srcFile 'AndroidManifest.xml'
