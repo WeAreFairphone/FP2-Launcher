@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.fairphone.fplauncher3.IconPackPreference
+        android:key="pref_iconPack"
+        android:persistent="true"
+        android:summary="@string/icon_pack_preference_summary"
+        android:title="@string/icon_pack_preference_title" />
+</PreferenceScreen>

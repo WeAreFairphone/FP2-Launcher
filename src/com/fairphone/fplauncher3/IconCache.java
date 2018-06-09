@@ -24,11 +24,15 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -46,6 +50,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 /**
@@ -100,6 +106,9 @@ public class IconCache {
             new HashMap<CacheKey, CacheEntry>(INITIAL_ICON_CACHE_CAPACITY);
     private final int mIconDpi;
 
+    private final String mIconPackName;
+    private final Map<String, String> mIconPack;
+
     public IconCache(Context context) {
         ActivityManager activityManager =
                 (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -113,6 +122,10 @@ public class IconCache {
         // need to set mIconDpi before getting default icon
         UserHandleCompat myUser = UserHandleCompat.myUserHandle();
         mDefaultIcons.put(myUser, makeDefaultIcon(myUser));
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mIconPackName = sharedPref.getString(SettingsActivity.KEY_PREF_ICON_PACK, "");
+        mIconPack = parseIconPack();
     }
 
     public Drawable getFullResDefaultActivityIcon() {
@@ -237,6 +250,66 @@ public class IconCache {
         application.contentDescription = entry.contentDescription;
     }
 
+    /**
+     * Parse the appfilter.xml file from the selected icon pack.
+     */
+    private HashMap<String, String> parseIconPack() {
+        HashMap<String, String> iconPack = new HashMap<String, String>();
+
+        try {
+            if (mIconPackName.isEmpty()) {
+                return null;
+            }
+
+            Resources resources = mPackageManager.getResourcesForApplication(mIconPackName);
+            int xmlResId = resources.getIdentifier("appfilter", "xml", mIconPackName);
+
+            if (xmlResId != 0) {
+                XmlResourceParser parser = resources.getXml(xmlResId);
+                try {
+                    while (parser != null && parser.next() != XmlResourceParser.END_DOCUMENT) {
+                        if (parser.getEventType() != XmlResourceParser.START_TAG) {
+                            continue;
+                        }
+                        String name = parser.getName();
+                        if (name.equals("item")) {
+                            String comp = parser.getAttributeValue(null, "component");
+                            String drawable = parser.getAttributeValue(null, "drawable");
+                            if (comp != null && drawable != null) {
+                                iconPack.put(comp, drawable);
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.d(TAG, "Error while parsing icon pack XML: " + e.getMessage());
+                }
+            }
+        } catch (NameNotFoundException e) {
+            Log.d(TAG, "Error while loading icon pack: " + e.getMessage());
+        }
+
+        return iconPack;
+    }
+
+    /**
+     * Check if an icon is available in the current icon pack.
+     */
+    private Bitmap getIconFromIconPack(LauncherActivityInfoCompat launcherActInfo) {
+        String activityName = launcherActInfo.getComponentName().toString();
+
+        if (!mIconPackName.isEmpty() && mIconPack.containsKey(activityName)) {
+            try {
+                Resources resources = mPackageManager.getResourcesForApplication(mIconPackName);
+                int iconDrawableId = resources.getIdentifier(mIconPack.get(activityName), "drawable", mIconPackName);
+                return BitmapFactory.decodeResource(resources, iconDrawableId);
+            } catch (NameNotFoundException e) {
+                Log.d(TAG, "Error while loading icon: " + e.getMessage());
+            }
+        }
+
+        return null;
+    }
+
     public synchronized Bitmap getIcon(Intent intent, UserHandleCompat user) {
         ComponentName component = intent.getComponent();
         // null info means not installed, but if we have a component from the intent then
@@ -320,8 +393,13 @@ public class IconCache {
                 }
 
                 entry.contentDescription = mUserManager.getBadgedLabelForUser(entry.title, user);
-                entry.icon = Utilities.createIconBitmap(
-                        info.getBadgedIcon(mIconDpi), mContext);
+                Bitmap packIcon = getIconFromIconPack(info);
+                if (packIcon == null) {
+                    entry.icon = Utilities.createIconBitmap(
+                            info.getBadgedIcon(mIconDpi), mContext);
+                } else {
+                    entry.icon = packIcon;
+                }
             } else {
                 entry.title = "";
                 Bitmap preloaded = getPreloadedIcon(componentName, user);

@@ -163,6 +163,8 @@ public class Launcher extends Activity
     private static final int REQUEST_BIND_APPWIDGET = 11;
     private static final int REQUEST_RECONFIGURE_APPWIDGET = 12;
 
+    private static final int REQUEST_PREFERENCES = 13;
+
     private static final int REQUEST_PICK_SETTINGS = 98;
     private static final int REQUEST_EDIT_FAVORITES = 99;
 
@@ -553,7 +555,7 @@ public class Launcher extends Activity
             mWorkspace.removeCustomContentPage();
         }
     }
-    
+
     private void checkForLocaleChange() {
         if (sLocaleConfiguration == null) {
             new AsyncTask<Void, Void, LocaleConfiguration>() {
@@ -785,6 +787,10 @@ public class Launcher extends Activity
             return;
         } else if (requestCode == REQUEST_EDIT_FAVORITES) {
             mWaitingForResult = false;
+            return;
+        } else if (requestCode == REQUEST_PREFERENCES) {
+            // Kill the app so it applies the new icon pack (might be a bit overkill).
+            android.os.Process.killProcess(android.os.Process.myPid());
             return;
         }
 
@@ -1123,9 +1129,9 @@ public class Launcher extends Activity
     }
 
     protected static boolean hasSettings() {
-        return false;
+        return true;
     }
-    
+
     protected static boolean hasAllApps()
     {
         // Change to false to hide all apps on the overview pane
@@ -1333,7 +1339,7 @@ public class Launcher extends Activity
         } else {
             settingsButton.setVisibility(View.GONE);
         }
-        
+
         View appsButton = findViewById(R.id.applications_button);
         if (hasAllApps())
         {
@@ -1406,7 +1412,7 @@ public class Launcher extends Activity
             boolean show = shouldShowWeightWatcher();
             mWeightWatcher.setVisibility(show ? View.VISIBLE : View.GONE);
         }
-        
+
 		mAgingAppDrawer = (AppDrawerView) findViewById(R.id.aging_app_drawer);
     }
 
@@ -1721,7 +1727,7 @@ public class Launcher extends Activity
             } finally {}
         }
     }
-    
+
     @TargetApi(19)
     private void setupGrayoutSystemBarsForLmp() {
         if (Utilities.isLmpOrAbove()) {
@@ -1733,7 +1739,7 @@ public class Launcher extends Activity
                     | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
-   
+
 
     @Override
     public void onDetachedFromWindow() {
@@ -2453,7 +2459,7 @@ public class Launcher extends Activity
         	hideAgingAppDrawer();
         	if(mWorkspace.isInWidgetResizeMode()){
 	            mWorkspace.exitWidgetResizeMode();
-	
+
 	            // Back button is a no-op here, but give at least some feedback for the button press
 	            mWorkspace.showOutlinesTemporarily();
         	}
@@ -2614,7 +2620,7 @@ public class Launcher extends Activity
         	hideAgingAppDrawer();
         }
     }
-    
+
     public void showAllAppsDrawer(){
     	onClickAllAppsButton(null);
     }
@@ -2706,7 +2712,7 @@ public class Launcher extends Activity
 
         boolean success = startActivitySafely(v, intent, tag);
         mStats.recordLaunch(intent, shortcut);
-        
+
         if (success && v instanceof BubbleTextView) {
             mWaitingForResume = (BubbleTextView) v;
             mWaitingForResume.setStayPressed(true);
@@ -2792,7 +2798,7 @@ public class Launcher extends Activity
         if (LOGD) {
             Log.d(TAG, "onClickSettingsButton");
         }
-        startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), REQUEST_PICK_SETTINGS);
+        startActivityForResult(new Intent(this, SettingsActivity.class), REQUEST_PREFERENCES);
     }
 
     public static void onTouchDownAllAppsButton(View v) {
@@ -2871,7 +2877,7 @@ public class Launcher extends Activity
             if (user != null) {
                 user.addToIntent(intent, Intent.EXTRA_USER);
             }
-            
+
             startActivity(intent);
             return true;
         }
@@ -2913,12 +2919,12 @@ public class Launcher extends Activity
             	launcherApps.startActivityForProfile(intent.getComponent(), user,
 	                        intent.getSourceBounds(), optsBundle);
             }
-            
+
             if (explicitIntent)
             {
                 updateActivityInfoViaExplicitIntent(component);
             }
-            
+
             return true;
         } catch (SecurityException e) {
             Toast.makeText(this, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
@@ -2929,11 +2935,11 @@ public class Launcher extends Activity
         }
         return false;
     }
-    
+
     public boolean launchActivity(View v, Intent intent, Object tag){
     	return startActivity(v, intent, tag);
     }
-    
+
     boolean startActivitySafely(View v, Intent intent, Object tag) {
         boolean success = false;
         if (mIsSafeModeEnabled && !Utilities.isSystemApp(this, intent)) {
@@ -4676,7 +4682,7 @@ public class Launcher extends Activity
                 mAppsCustomizeContent != null) {
             mAppsCustomizeContent.removeApps(appInfos);
         }
-        
+
         for (AppInfo appInfo : appInfos) {
         	ComponentName componentName = appInfo.getComponentName();
         	if(componentName != null){
@@ -4797,7 +4803,7 @@ public class Launcher extends Activity
     protected static boolean overrideWallpaperDimensions() {
         return true;
     }
-    
+
     /**
      * To be overridden by subclasses to indicate that there is an activity to launch
      * before showing the standard launcher experience.
@@ -5084,13 +5090,13 @@ public class Launcher extends Activity
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, (Void) null);
         }
     }
-    
+
     private void updateActivityInfoViaExplicitIntent(ComponentName component)
     {
         AppSwitcherManager.applicationStarted(this, component);
         AppDiscoverer.getInstance().applicationStarted(this, component);
     }
-    
+
     public void startEditFavorites()
     {
         startActivityForResult(new Intent(this, EditFavoritesActivity.class), REQUEST_EDIT_FAVORITES);
@@ -5098,7 +5104,7 @@ public class Launcher extends Activity
 	public boolean isWorkspaceVisible() {
 		return !isAgingAppDrawerVisible() && !mWorkspace.isInOverviewMode() && !isAllAppsVisible() && (mState == State.WORKSPACE) || (mOnResumeState == State.WORKSPACE);
 	}
-	
+
 	private void setupEdgeSwipeMenu() {
 		mEdgeMenuContainerView = (FrameLayout)findViewById(R.id.edge_menu_container);
         mEdgeSwipeMenu = new EdgeSwipeMenu(this, this, mDragController, mEdgeMenuContainerView);
@@ -5149,11 +5155,11 @@ public class Launcher extends Activity
 
         @TargetApi(21)
 	public void showAgingAppDrawer() {
-	    
+
 	    if (Utilities.isLmpOrAbove()) {
 	        setupGrayoutSystemBarsForLmp();
 	    }
-	    
+
 		mAgingAppDrawer.refreshView(this, this);
 		mAgingAppDrawer.setVisibility(View.VISIBLE);
 
@@ -5183,27 +5189,27 @@ public class Launcher extends Activity
 		translationY.setInterpolator(new OvershootInterpolator(0.5f));
 		translationY.start();
 	}
-	
+
 	@TargetApi(21)
 	public void hideAgingAppDrawer() {
-	    
+
 	    if (Utilities.isLmpOrAbove()) {
 	        setupTransparentSystemBarsForLmp();
         }
-	    
+
 		mAgingAppDrawer.setVisibility(View.GONE);
 	}
-	
+
 	public boolean isAgingAppDrawerVisible(){
 		return mAgingAppDrawer.getVisibility() == View.VISIBLE;
 	}
-	
+
 	public void exitOverviewMode(){
 		if (mWorkspace.isInOverviewMode()) {
 	        mWorkspace.exitOverviewMode(true);
 	    }
 	}
-    
+
     public void updateDarknessOverlay(){
         String spKey = WallpaperCropActivity.getSharedPreferencesKey();
         SharedPreferences sp =

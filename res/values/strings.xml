@@ -358,4 +358,8 @@ s
     <string name="oobe_try_it_yourself">Try it yourself</string>
 -->
 
+    <string name="icon_pack_preference_title">Icon Pack</string>
+    <string name="icon_pack_preference_summary">Apply an icon pack</string>
+    <string name="icon_pack_preference_none">None</string>
+
 </resources>

@@ -146,6 +146,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.fairphone.fplauncher3.SettingsActivity"
+            android:theme="@android:style/Theme.DeviceDefault">
+        </activity>
+
         <!-- Debugging tools -->
         <activity
             android:name="com.fairphone.fplauncher3.MemoryDumpActivity"
