@@ -789,8 +789,10 @@ public class Launcher extends Activity
             mWaitingForResult = false;
             return;
         } else if (requestCode == REQUEST_PREFERENCES) {
-            // Kill the app so it applies the new icon pack (might be a bit overkill).
-            android.os.Process.killProcess(android.os.Process.myPid());
+            mModel.forceReload();
+            if (mWorkspace.isInOverviewMode()) {
+                mWorkspace.exitOverviewMode(false);
+            }
             return;
         }
 

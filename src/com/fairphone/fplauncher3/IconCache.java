@@ -106,8 +106,8 @@ public class IconCache {
             new HashMap<CacheKey, CacheEntry>(INITIAL_ICON_CACHE_CAPACITY);
     private final int mIconDpi;
 
-    private final String mIconPackName;
-    private final Map<String, String> mIconPack;
+    private String mIconPackName;
+    private Map<String, String> mIconPack;
 
     public IconCache(Context context) {
         ActivityManager activityManager =
@@ -123,6 +123,10 @@ public class IconCache {
         UserHandleCompat myUser = UserHandleCompat.myUserHandle();
         mDefaultIcons.put(myUser, makeDefaultIcon(myUser));
 
+        loadIconPack();
+    }
+
+    public void loadIconPack() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
         mIconPackName = sharedPref.getString(SettingsActivity.KEY_PREF_ICON_PACK, "");
         mIconPack = parseIconPack();

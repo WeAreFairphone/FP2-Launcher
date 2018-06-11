@@ -62,9 +62,11 @@ public class IconPackPreference extends ListPreference {
 
     @Override
     protected void onDialogClosed(boolean positiveResult) {
+        super.onDialogClosed(positiveResult);
+
         if (positiveResult) {
             mIconCache.flush();
+            mIconCache.loadIconPack();
         }
-        super.onDialogClosed(positiveResult);
     }
 }
