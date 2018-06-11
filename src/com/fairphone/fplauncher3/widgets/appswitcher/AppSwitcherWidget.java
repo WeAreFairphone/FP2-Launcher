@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.fairphone.fplauncher3.IconCache;
 import com.fairphone.fplauncher3.R;
 
 import java.util.List;
@@ -194,7 +195,14 @@ public class AppSwitcherWidget extends AppWidgetProvider {
         @SuppressWarnings("UnusedAssignment") String fullAppLabel = info.getCount() + "# " + appLabel;
 
         try {
-            Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
+            Bitmap iconBitmap;
+            IconCache iconCache = new IconCache(context);
+            Bitmap packIcon = iconCache.getIconFromIconPack(info.getComponentName());
+            if (packIcon == null) {
+                iconBitmap = ((BitmapDrawable) icon).getBitmap();
+            } else {
+                iconBitmap = packIcon;
+            }
 
             int iconSize = (int) context.getResources().getDimension(R.dimen.edit_favorites_icon_size);
             int w = iconBitmap.getWidth();
@@ -271,6 +279,13 @@ public class AppSwitcherWidget extends AppWidgetProvider {
         recentRow.setTextViewText(R.id.recentButton, APP_SWITCHER_DEBUG_MODE ? fullAppLabel : appLabel);
         try {
             Bitmap iconBitmap = ((BitmapDrawable) icon).getBitmap();
+            IconCache iconCache = new IconCache(context);
+            Bitmap packIcon = iconCache.getIconFromIconPack(info.getComponentName());
+            if (packIcon == null) {
+                iconBitmap = ((BitmapDrawable) icon).getBitmap();
+            } else {
+                iconBitmap = packIcon;
+            }
 
             int iconSize = (int) context.getResources().getDimension(R.dimen.edit_favorites_icon_size);
             int w = iconBitmap.getWidth();

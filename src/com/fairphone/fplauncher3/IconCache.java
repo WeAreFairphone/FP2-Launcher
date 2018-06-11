@@ -298,9 +298,8 @@ public class IconCache {
     /**
      * Check if an icon is available in the current icon pack.
      */
-    private Bitmap getIconFromIconPack(LauncherActivityInfoCompat launcherActInfo) {
-        String activityName = launcherActInfo.getComponentName().toString();
-
+    public Bitmap getIconFromIconPack(ComponentName componentName) {
+        String activityName = componentName.toString();
         if (!mIconPackName.isEmpty() && mIconPack.containsKey(activityName)) {
             try {
                 Resources resources = mPackageManager.getResourcesForApplication(mIconPackName);
@@ -397,7 +396,7 @@ public class IconCache {
                 }
 
                 entry.contentDescription = mUserManager.getBadgedLabelForUser(entry.title, user);
-                Bitmap packIcon = getIconFromIconPack(info);
+                Bitmap packIcon = getIconFromIconPack(info.getComponentName());
                 if (packIcon == null) {
                     entry.icon = Utilities.createIconBitmap(
                             info.getBadgedIcon(mIconDpi), mContext);
