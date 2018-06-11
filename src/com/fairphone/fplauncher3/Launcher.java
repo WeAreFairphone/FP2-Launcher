@@ -790,6 +790,7 @@ public class Launcher extends Activity
             return;
         } else if (requestCode == REQUEST_PREFERENCES) {
             mModel.forceReload();
+            AppSwitcherManager.updateAppSwitcherWidgets(this);
             if (mWorkspace.isInOverviewMode()) {
                 mWorkspace.exitOverviewMode(false);
             }

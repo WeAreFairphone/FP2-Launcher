@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import com.fairphone.fplauncher3.widgets.appswitcher.AppSwitcherManager;
 
 public class PackageChangedReceiver extends BroadcastReceiver {
     @Override
@@ -29,6 +30,7 @@ public class PackageChangedReceiver extends BroadcastReceiver {
             iconCache.flush();
             iconCache.loadIconPack();
             app.getModel().forceReload();
+            AppSwitcherManager.updateAppSwitcherWidgets(context);
         }
     }
 }
