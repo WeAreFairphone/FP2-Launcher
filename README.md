@@ -25,6 +25,8 @@ The App Life Cycle includes an algorithm that keeps track of how much an app is 
 
 New and updated apps are bannered for the sake of clarity, and if you don’t want an app to go into idle after a while (because you don’t use it often, but still need to access it quickly when you need it), you can simply “pin” an app so it stays inside the active section.
 
+**Icon pack** support was added by the WeAreFairphone community. The launcher is the most visited app in your device, so customization is key for making you feel more confortable.
+
 ## Screenshots
 
 -![](https://www.fairphone.com/wp-content/uploads/2016/01/Edge-Swipe2.gif)

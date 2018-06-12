@@ -14,3 +14,5 @@ The <strong>App Life Cycle</strong> is a section in the Fairphone where all down
 The App Life Cycle includes an algorithm that keeps track of how much an app is being used and puts less often used apps in the Idle section after a certain amount of time. This way you get an overview of an app’s usage, and you can easily uninstall apps that are not necessary anymore. This feature only stores information locally on the device; your app usage is not shared in any way.
 
 New and updated apps are bannered for the sake of clarity, and if you don’t want an app to go into idle after a while (because you don’t use it often, but still need to access it quickly when you need it), you can simply “pin” an app so it stays inside the active section.
+
+<strong>Icon pack</strong> support was added by the WeAreFairphone community. The launcher is the most visited app in your device, so customization is key for making you feel more confortable.

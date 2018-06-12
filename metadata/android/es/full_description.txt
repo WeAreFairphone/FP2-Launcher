@@ -14,3 +14,5 @@ El <strong>ciclo de vida de las aplicaciones</strong> es una sección en el lanz
 El ciclo de vida de las aplicaciones incluye un algoritmo que monitoriza cuánto usas una aplicación y pone las aplicaciones menos usadas en una sección Apps inactivas después de cierto tiempo. De esta manera, de un vistazo puedes ver cuánto usas tus aplicaciones y puedes fácilmente desinstalar las que no necesitas más. Esta función almacena la información en el propio dispositivo; tu uso de las aplicaciones no se comparte en modo alguno.
 
 Las aplicaciones nuevas o actualizadas se marcan por claridad, y si no quieres que una aplicación se marque como inactiva después de un tiempo (porque no la uses frecuentemente, pero necesites usarla rápidamente en ocasiones) puedes simplemente «fijarla» para que siempre esté en la sección de Apps activas.
+
+La comunidad WeAreFairphone añadió soporte para <strong>paquetes de iconos</strong>. El launcher es la aplicación más visitada en tu dispositivo, así que la personalización es clave para que te sientas cómodo.
