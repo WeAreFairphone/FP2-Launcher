@@ -76,4 +76,8 @@
     <string name="most_used">Más usadas</string>
     <string name="no_apps_have_been_opened_yet">¿Aún no has usado tus aplicaciones?\nEmpieza a usar tu teléfono y regresa a esta pantalla.</string>
     -->
+
+    <string name="icon_pack_preference_title">Paquete de iconos</string>
+    <string name="icon_pack_preference_summary">Aplicar un paquete de iconos</string>
+    <string name="icon_pack_preference_none">Ninguno</string>
 </resources>
