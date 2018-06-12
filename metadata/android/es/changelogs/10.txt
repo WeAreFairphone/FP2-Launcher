@@ -1,0 +1,5 @@
+Funcionalidad:
+* Añade soporte para paquetes de iconos (@Rudloff)
+
+Menor:
+* Cambiado nombre del paquete a «Inicio del Fairphone 2»

@@ -1,0 +1,5 @@
+Feature:
+* Add support for icon packs (@Rudloff)
+
+Minor:
+* Change package name to Fairphone 2 Launcher
